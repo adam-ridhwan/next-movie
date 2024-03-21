@@ -1,10 +1,10 @@
+import { signIn } from '@/actions/signIn';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AppFonts } from '@/components/app-fonts';
 import { AppIcons } from '@/components/app-icons';
 import { AuthStrings } from '@/components/app-strings';
-
-import { signIn } from '../../actions/signIn';
 
 export default function SignInPage() {
   return (
@@ -15,7 +15,7 @@ export default function SignInPage() {
         </div>
         <div className='flex w-full flex-col items-center rounded-lg bg-darkerBlue p-6'>
           <div className='w-full pb-6'>
-            <AppFonts.headingLarge>{AuthStrings.login}</AppFonts.headingLarge>
+            <AppFonts.headingLarge>{AuthStrings.signIn}</AppFonts.headingLarge>
           </div>
           <form action={signIn} className='w-full'>
             <Input
