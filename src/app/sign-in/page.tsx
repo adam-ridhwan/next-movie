@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AppFonts } from '@/components/app-fonts';
+import { AppIcons } from '@/components/app-icons';
+import { AuthStrings } from '@/components/app-strings';
 
-import { signIn } from '../actions/signIn';
-import { AppFonts } from '../components/app-fonts';
-import { AppIcons } from '../components/app-icons';
-import { AuthStrings } from '../components/app-strings';
+import { signIn } from '../../actions/signIn';
 
 export default function SignInPage() {
   return (
