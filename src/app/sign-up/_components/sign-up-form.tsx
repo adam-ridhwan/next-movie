@@ -1,19 +1,29 @@
 'use client';
 
+import { use, useEffect, useState } from 'react';
 import { signUp } from '@/actions/signUp';
 import { useFormState } from 'react-dom';
 
-import { Button } from '@/components/ui/button';
+import { FormResponse } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { AppFonts } from '@/components/app-fonts';
 import { AuthStrings } from '@/components/app-strings';
 
-const initialState: { response: string } = {
-  response: '',
+import SignUpButton from './sign-up-button';
+
+const formState: FormResponse = {
+  success: false,
+  message: '',
 };
 
 export const SignUpForm = () => {
-  const [state, formAction] = useFormState(signUp, initialState);
+  const [state, formAction] = useFormState(signUp, formState);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    // TODO: Hacky way to do this. Need to fix this when React team releases a better way to handle this.
+    setError(state.message);
+  }, [state]);
 
   return (
     <form action={formAction} className='w-full'>
@@ -22,29 +32,28 @@ export const SignUpForm = () => {
         name='email'
         placeholder={AuthStrings.emailAddress}
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
+        onFocus={() => setError('')}
       />
       <Input
         type='password'
         name='password'
         placeholder={AuthStrings.password}
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
+        onFocus={() => setError('')}
       />
       <Input
         type='password'
         name='repeated-password'
         placeholder={AuthStrings.repeatPassword}
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
+        onFocus={() => setError('')}
       />
 
       <div className='h-10 pt-2 text-red'>
-        {state.response && (
-          <AppFonts.bodyMedium className='font-medium'>{state.response}</AppFonts.bodyMedium>
-        )}
+        {<AppFonts.bodyMedium className='font-medium'>{error}</AppFonts.bodyMedium>}
       </div>
 
-      <Button type='submit' variant='accent' className='mb-5 w-full py-6'>
-        <AppFonts.bodyMedium>{AuthStrings.createAnAccount}</AppFonts.bodyMedium>
-      </Button>
+      <SignUpButton />
     </form>
   );
 };

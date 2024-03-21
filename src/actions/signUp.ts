@@ -1,28 +1,38 @@
 'use server';
 
 import bcrypt from 'bcrypt';
-import { ObjectId } from 'mongodb';
 
 import { connectToDatabase } from '@/lib/connectToDatabase';
-import { TODO, userSchema } from '@/lib/types';
+import { FormResponse, userSchema } from '@/lib/types';
 
 const SALT_ROUNDS = 10;
 
-export async function signUp(_: string, formData: FormData): Promise<TODO> {
+export async function signUp(_: FormResponse, formData: FormData): Promise<FormResponse> {
+  if (!formData.get('email') || !formData.get('password') || !formData.get('repeated-password')) {
+    return {
+      success: false,
+      message: 'All fields are required',
+    };
+  }
+
   const parsedResult = userSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
   });
 
   if (!parsedResult.success) {
-    if (parsedResult.error.issues[0].code === 'too_small')
+    const zodMessage = parsedResult.error.issues[0].message;
+
+    if (parsedResult.error.issues[0].code === 'too_small') {
       return {
-        response: 'Password is too short',
+        success: false,
+        message: zodMessage,
       };
+    }
 
     return {
-      response: 'Validation failed',
-      errors: parsedResult.error.issues,
+      success: false,
+      message: zodMessage,
     };
   }
 
@@ -31,7 +41,8 @@ export async function signUp(_: string, formData: FormData): Promise<TODO> {
   const repeatedPassword = formData.get('repeated-password');
   if (password !== repeatedPassword) {
     return {
-      response: 'Passwords do not match',
+      success: false,
+      message: 'Passwords do not match',
     };
   }
 
@@ -39,7 +50,8 @@ export async function signUp(_: string, formData: FormData): Promise<TODO> {
   const existingUser = await usersCollection.findOne({ email });
   if (existingUser) {
     return {
-      response: 'User already exists',
+      success: false,
+      message: 'User already exists',
     };
   }
 
@@ -56,6 +68,7 @@ export async function signUp(_: string, formData: FormData): Promise<TODO> {
   await usersCollection.insertOne(newUser);
 
   return {
-    response: '',
+    success: true,
+    message: 'User created',
   };
 }

@@ -1,4 +1,3 @@
-import { TODO } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { AppFonts } from '@/components/app-fonts';
 import { AppIcons } from '@/components/app-icons';
@@ -6,7 +5,7 @@ import { AuthStrings } from '@/components/app-strings';
 
 import { SignUpForm } from './_components/sign-up-form';
 
-export default function SignUpPage({ response }: { response: TODO }) {
+export default function SignUpPage() {
   return (
     <>
       <div className='container flex h-full max-w-[500px] flex-col items-center'>
