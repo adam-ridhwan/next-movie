@@ -1,7 +1,6 @@
-import { User } from 'next-auth';
-
 import { env } from './env';
 import { clientPromise } from './mongodb';
+import { User } from './types';
 
 const { MONGODB_DATABASE, USERS_COLLECTION } = env;
 

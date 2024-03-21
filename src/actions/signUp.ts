@@ -1,37 +1,61 @@
 'use server';
 
 import bcrypt from 'bcrypt';
+import { ObjectId } from 'mongodb';
 
 import { connectToDatabase } from '@/lib/connectToDatabase';
+import { TODO, userSchema } from '@/lib/types';
 
-const saltRounds = 10;
+const SALT_ROUNDS = 10;
 
-export async function signUp(_: string, formData: FormData) {
-  const { usersCollection } = await connectToDatabase();
+export async function signUp(_: string, formData: FormData): Promise<TODO> {
+  const parsedResult = userSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
 
-  const email = formData.get('email');
-  const password = formData.get('password');
-  const repeatedPassword = formData.get('repeated-password');
+  if (!parsedResult.success) {
+    if (parsedResult.error.issues[0].code === 'too_small')
+      return {
+        response: 'Password is too short',
+      };
 
-  console.log(email, password, repeatedPassword);
-
-  if (!email || !password || !repeatedPassword) {
     return {
-      response: 'Please fill in all fields',
+      response: 'Validation failed',
+      errors: parsedResult.error.issues,
     };
   }
 
+  const { email, password } = parsedResult.data;
+
+  const repeatedPassword = formData.get('repeated-password');
   if (password !== repeatedPassword) {
     return {
       response: 'Passwords do not match',
     };
   }
 
-  bcrypt.hash(password.toString(), saltRounds, function (err, hash) {
-    console.log(hash);
-  });
+  const { usersCollection } = await connectToDatabase();
+  const existingUser = await usersCollection.findOne({ email });
+  if (existingUser) {
+    return {
+      response: 'User already exists',
+    };
+  }
+
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+  const newUser = {
+    email,
+    password: hashedPassword,
+    name: null,
+    emailVerified: null,
+    image: null,
+  };
+
+  await usersCollection.insertOne(newUser);
 
   return {
-    response: 'success',
+    response: '',
   };
 }
