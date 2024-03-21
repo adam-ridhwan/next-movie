@@ -1,12 +1,12 @@
-import { signUp } from '@/actions/signUp';
-
+import { TODO } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { AppFonts } from '@/components/app-fonts';
 import { AppIcons } from '@/components/app-icons';
 import { AuthStrings } from '@/components/app-strings';
 
-export default function SignUpPage() {
+import { SignUpForm } from './_components/sign-up-form';
+
+export default function SignUpPage({ response }: { response: TODO }) {
   return (
     <>
       <div className='container flex h-full max-w-[500px] flex-col items-center'>
@@ -17,35 +17,11 @@ export default function SignUpPage() {
           <div className='w-full pb-6'>
             <AppFonts.headingLarge>{AuthStrings.signUp}</AppFonts.headingLarge>
           </div>
-          <form action={signUp} className='w-full'>
-            <Input
-              type='email'
-              name='email'
-              placeholder={AuthStrings.emailAddress}
-              className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
-            />
-            <Input
-              type='password'
-              name='password'
-              placeholder={AuthStrings.password}
-              className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
-            />
-            <Input
-              type='password'
-              name='repeated-password'
-              placeholder={AuthStrings.repeatPassword}
-              className='mb-10 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
-            />
-
-            <Button type='submit' variant='accent' className='mb-5 w-full py-6'>
-              <AppFonts.bodyMedium>{AuthStrings.createAnAccount}</AppFonts.bodyMedium>
-            </Button>
-          </form>
-
+          <SignUpForm />
           <div>
             <AppFonts.bodyMedium>{AuthStrings.alreadyHandAnAccount}</AppFonts.bodyMedium>
             <Button variant='link' className='px-2 text-red'>
-              <AppFonts.bodyMedium>{AuthStrings.signIn}</AppFonts.bodyMedium>
+              <AppFonts.bodyMedium className='font-medium'>{AuthStrings.signIn}</AppFonts.bodyMedium>
             </Button>
           </div>
         </div>

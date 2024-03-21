@@ -6,5 +6,5 @@ export const env = cleanEnv(process.env, {
   MONGODB_URI: str(),
   MONGODB_DATABASE: str(),
 
-  USER_COLLECTION: str(),
+  USERS_COLLECTION: str(),
 });
