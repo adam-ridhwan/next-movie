@@ -4,6 +4,6 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
-export const login = async (formData: FormData) => {
+export const signIn = async (formData: FormData) => {
   return;
 };

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { login } from '../actions/login';
+import { signIn } from '../actions/signIn';
 import { AppFonts } from '../components/app-fonts';
 import { AppIcons } from '../components/app-icons';
 import { AuthStrings } from '../components/app-strings';
@@ -17,7 +17,7 @@ export default function SignInPage() {
           <div className='w-full pb-6'>
             <AppFonts.headingLarge>{AuthStrings.login}</AppFonts.headingLarge>
           </div>
-          <form action={login} className='w-full'>
+          <form action={signIn} className='w-full'>
             <Input
               type='email'
               name='email'
