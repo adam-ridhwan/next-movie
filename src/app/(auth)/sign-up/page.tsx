@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { AppFonts } from '@/components/app-fonts';
-import { AppIcons } from '@/components/app-icons';
-import { AuthStrings } from '@/components/app-strings';
+import { AppFonts } from '@/app/_components/app-fonts';
+import { AppIcons } from '@/app/_components/app-icons';
+import { AuthStrings } from '@/app/_components/app-strings';
+import { Button } from '@/app/_components/ui/button';
 
 import { SignUpForm } from './_components/sign-up-form';
 
