@@ -1,4 +1,4 @@
-import './globals.css';
+import '../globals.css';
 
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
@@ -7,7 +7,7 @@ import AuthProvider from '@/providers/auth-provider';
 
 import { cn } from '@/lib/utils';
 
-import AppNavBar from './_components/app-nav-bar';
+import AppNavBar from '../_components/app-nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
 

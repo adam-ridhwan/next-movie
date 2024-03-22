@@ -10,7 +10,11 @@ const SignOutButton = () => {
     window.location.reload();
   };
 
-  return <Button onClick={handleSignOut}>Sign out</Button>;
+  return (
+    <Button onClick={handleSignOut} className='w-full'>
+      Sign out
+    </Button>
+  );
 };
 
 export default SignOutButton;
