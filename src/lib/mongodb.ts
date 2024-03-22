@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { MongoClient, MongoClientOptions } from 'mongodb';
 
 import { env } from './env';

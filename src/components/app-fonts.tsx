@@ -12,7 +12,7 @@ export const AppFonts = {
   headingExtraSmall,
   bodyMedium,
   bodySmall,
-};
+} as const;
 
 function headingLarge({ children, className }: FontProps) {
   return <span className={(cn('text-[32px] font-light'), className)}>{children}</span>;

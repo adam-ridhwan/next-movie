@@ -16,7 +16,7 @@ export const AppIcons = {
   navTvSeries,
   play,
   search,
-};
+} as const;
 
 function logo({ className }: SVGProps) {
   return (
