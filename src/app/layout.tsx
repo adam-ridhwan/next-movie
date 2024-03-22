@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import AuthProvider from '@/providers/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,8 +14,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en'>
-      <body className={`${inter.className} dark min-h-[100dvh] border-4 border-green-500`}>{children}</body>
-    </html>
+    <AuthProvider>
+      <html lang='en'>
+        <body className={`${inter.className} dark max-h-[100dvh] min-h-[100dvh] border-4 border-green-500`}>
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

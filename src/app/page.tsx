@@ -1,14 +1,36 @@
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
 
-export default function Home() {
+import { Button } from '@/components/ui/button';
+import SignOutButton from '@/components/sign-out-button';
+
+export default async function Home() {
+  const session = await getServerSession();
+  console.log(session);
+
   return (
-    <div className='container flex h-screen justify-between'>
-      <Link href='/sign-in' className='h-min border-2 border-white p-10'>
-        sign-in
-      </Link>
-      <Link href='/sign-up' className='h-min border-2 border-white p-10'>
-        sign-up
-      </Link>
+    <div>
+      <h1 className='py-10 text-center text-3xl'>Home</h1>
+      <div className='container flex h-full gap-4'>
+        {session ? (
+          <>
+            <SignOutButton />
+          </>
+        ) : (
+          <>
+            <Button asChild>
+              <Link href='/sign-up' className='border-2 border-white p-10'>
+                Sign up
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href='/sign-in' className='border-2 border-white p-10'>
+                Sign in
+              </Link>
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

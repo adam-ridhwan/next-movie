@@ -1,3 +1,5 @@
+import { getServerSession } from 'next-auth';
+
 import { Button } from '@/components/ui/button';
 import { AppFonts } from '@/components/app-fonts';
 import { AppIcons } from '@/components/app-icons';
@@ -5,7 +7,7 @@ import { AuthStrings } from '@/components/app-strings';
 
 import { SignInForm } from './_components/sign-in-form';
 
-export default function SignInPage() {
+export default async function SignInPage() {
   return (
     <>
       <div className='container flex h-full max-w-[500px] flex-col items-center'>

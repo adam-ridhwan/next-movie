@@ -9,6 +9,7 @@ export const mongoIdSchema = z.string().or(z.instanceof(ObjectId));
 export const formResponseSchema = z.object({
   success: z.boolean(),
   message: z.string(),
+  user: z.any().nullable().optional(),
 });
 
 export type FormResponse = z.infer<typeof formResponseSchema>;

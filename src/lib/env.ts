@@ -7,4 +7,6 @@ export const env = cleanEnv(process.env, {
   MONGODB_DATABASE: str(),
 
   USERS_COLLECTION: str(),
+
+  NEXTAUTH_SECRET: str(),
 });
