@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 import { AppIcons } from './app-icons';
+import AvatarDropdown from './avatar-dropdown';
 
 const ROUTES = {
   home: { path: '/', Icon: AppIcons.navHome },
@@ -41,7 +42,7 @@ const AppNavBar = () => {
             ))}
           </ul>
         </nav>
-        <AppIcons.avatar />
+        <AvatarDropdown />
       </div>
     </>
   );

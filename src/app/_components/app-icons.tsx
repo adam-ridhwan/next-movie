@@ -148,7 +148,7 @@ function search({ className }: SVGProps) {
 function avatar({ className }: SVGProps) {
   return (
     <svg
-      className={cn('h-7 w-7 fill-white', className)}
+      className={cn('h-8 w-8 fill-white', className)}
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 512 512'
     >
