@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signUp } from '@/actions/signUp';
 import { useFormState } from 'react-dom';
 
@@ -11,19 +11,19 @@ import { AuthStrings } from '@/components/app-strings';
 
 import SignUpButton from './sign-up-button';
 
-const formState: FormResponse = {
+const initialFormState: FormResponse = {
   success: false,
   message: '',
 };
 
 export const SignUpForm = () => {
-  const [state, formAction] = useFormState(signUp, formState);
+  const [formState, formAction] = useFormState(signUp, initialFormState);
   const [error, setError] = useState('');
 
+  // TODO: Hacky way to do this. Need to fix this when React team releases a better way to handle this.
   useEffect(() => {
-    // TODO: Hacky way to do this. Need to fix this when React team releases a better way to handle this.
-    if (!state.success) setError(state.message);
-  }, [state]);
+    if (!formState.success) setError(formState.message);
+  }, [formState]);
 
   return (
     <form action={formAction} className='w-full'>
