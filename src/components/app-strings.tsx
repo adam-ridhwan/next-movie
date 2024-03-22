@@ -8,4 +8,4 @@ export const AuthStrings = {
   dontHaveAnAccount: "Don't have an account?",
   createAnAccount: 'Create an account',
   alreadyHandAnAccount: 'Already have an account?',
-};
+} as const;

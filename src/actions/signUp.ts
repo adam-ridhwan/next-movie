@@ -8,7 +8,11 @@ import { FormResponse, userSchema } from '@/lib/types';
 const SALT_ROUNDS = 10;
 
 export async function signUp(_: FormResponse, formData: FormData): Promise<FormResponse> {
-  if (!formData.get('email') || !formData.get('password') || !formData.get('repeated-password')) {
+  const email = formData.get('email');
+  const password = formData.get('password');
+  const repeatedPassword = formData.get('repeated-password');
+
+  if (!email || !password || !repeatedPassword) {
     return {
       success: false,
       message: 'All fields are required',
@@ -22,8 +26,9 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
 
   if (!parsedResult.success) {
     const zodMessage = parsedResult.error.issues[0].message;
+    const zodCode = parsedResult.error.issues[0].code;
 
-    if (parsedResult.error.issues[0].code === 'too_small') {
+    if (zodCode === 'too_small') {
       return {
         success: false,
         message: zodMessage,
@@ -36,10 +41,9 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
     };
   }
 
-  const { email, password } = parsedResult.data;
+  const { email: parsedEmail, password: parsedPassword } = parsedResult.data;
 
-  const repeatedPassword = formData.get('repeated-password');
-  if (password !== repeatedPassword) {
+  if (parsedPassword !== repeatedPassword) {
     return {
       success: false,
       message: 'Passwords do not match',
@@ -47,7 +51,7 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
   }
 
   const { usersCollection } = await connectToDatabase();
-  const existingUser = await usersCollection.findOne({ email });
+  const existingUser = await usersCollection.findOne({ email: parsedEmail });
   if (existingUser) {
     return {
       success: false,
@@ -55,10 +59,10 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
     };
   }
 
-  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+  const hashedPassword = await bcrypt.hash(parsedPassword, SALT_ROUNDS);
 
   const newUser = {
-    email,
+    email: parsedEmail,
     password: hashedPassword,
     name: null,
     emailVerified: null,
