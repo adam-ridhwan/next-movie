@@ -1,36 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { signIn } from '@/actions/signIn';
-import { atom, useAtom } from 'jotai';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useState } from 'react';
+import { signIn, SignInResponse } from 'next-auth/react';
 
-import { FormResponse } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { AppFonts } from '@/components/app-fonts';
 import { AuthStrings } from '@/components/app-strings';
 
 import { SignInButton } from './sign-in-button';
 
-const initialFormState: FormResponse = {
-  success: false,
-  message: '',
-};
-
 export const SignInForm = () => {
-  const [formState, formAction] = useFormState(signIn, initialFormState);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (!formState.success) setError(formState.message);
-  }, [formState]);
+  async function handleSignIn() {
+    const signInResponse: SignInResponse | undefined = await signIn('credentials', {
+      redirect: true,
+      callbackUrl: '/',
+      email,
+      password,
+    });
+    if (signInResponse && signInResponse.error) return setError(signInResponse.error);
+    return;
+  }
 
   return (
     <>
-      <form action={formAction} className='w-full'>
+      <form action={handleSignIn} className='w-full'>
         <Input
           type='email'
           name='email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
           placeholder={AuthStrings.emailAddress}
           autoComplete='email'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
@@ -39,6 +41,8 @@ export const SignInForm = () => {
         <Input
           type='password'
           name='password'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           placeholder={AuthStrings.password}
           autoComplete='current-password'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'

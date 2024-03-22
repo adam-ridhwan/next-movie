@@ -4,24 +4,27 @@ import bcrypt from 'bcrypt';
 
 import { connectToDatabase } from '@/lib/connectToDatabase';
 import { FormResponse, userSchema } from '@/lib/types';
+import { AuthStrings, ErrorStrings } from '@/components/app-strings';
 
 const SALT_ROUNDS = 10;
 
-export async function signUp(_: FormResponse, formData: FormData): Promise<FormResponse> {
-  const email = formData.get('email');
-  const password = formData.get('password');
-  const repeatedPassword = formData.get('repeated-password');
+export type SignUpData = {
+  email: string;
+  password: string;
+  repeatedPassword: string;
+};
 
+export async function signUp({ email, password, repeatedPassword }: SignUpData): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,
-      message: 'All fields are required',
+      message: ErrorStrings.allFieldsAreRequired,
     };
   }
 
   const parsedResult = userSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
+    email,
+    password,
   });
 
   if (!parsedResult.success) {
@@ -46,7 +49,7 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
   if (parsedPassword !== repeatedPassword) {
     return {
       success: false,
-      message: 'Passwords do not match',
+      message: ErrorStrings.passwordsDoNotMatch,
     };
   }
 
@@ -55,7 +58,7 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
   if (existingUser) {
     return {
       success: false,
-      message: 'User already exists',
+      message: ErrorStrings.userAlreadyExists,
     };
   }
 
@@ -73,6 +76,6 @@ export async function signUp(_: FormResponse, formData: FormData): Promise<FormR
 
   return {
     success: true,
-    message: 'User created',
+    message: AuthStrings.userCreatedSuccessfully,
   };
 }

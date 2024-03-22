@@ -3,53 +3,52 @@
 import bcrypt from 'bcrypt';
 
 import { connectToDatabase } from '@/lib/connectToDatabase';
-import { FormResponse, userSchema } from '@/lib/types';
-import { delay } from '@/lib/utils';
+import { FormResponse, TODO, userSchema } from '@/lib/types';
+import { ErrorStrings } from '@/components/app-strings';
 
-const SALT_ROUNDS = 10;
-
-export async function signIn(_: FormResponse, formData: FormData): Promise<FormResponse> {
-  await delay(2000);
-  const email = formData.get('email');
-  const password = formData.get('password');
+export async function signIn({
+  email,
+  password,
+}: {
+  email: string | undefined;
+  password: string | undefined;
+}): Promise<FormResponse> {
+  const { usersCollection } = await connectToDatabase();
 
   if (!email || !password) {
     return {
       success: false,
-      message: 'All fields are required',
+      message: ErrorStrings.allFieldsAreRequired,
     };
   }
 
   const parsedResult = userSchema.safeParse({
-    email: formData.get('email'),
-    password: formData.get('password'),
+    email,
+    password,
   });
-
   if (!parsedResult.success) {
-    const zodMessage = parsedResult.error.issues[0].message;
-    const zodCode = parsedResult.error.issues[0].code;
+    const { message, code } = parsedResult.error.issues[0];
 
-    if (zodCode === 'too_small') {
+    if (code === 'too_small') {
       return {
         success: false,
-        message: zodMessage,
+        message: ErrorStrings.passwordIsTooShort,
       };
     }
 
     return {
       success: false,
-      message: zodMessage,
+      message: message,
     };
   }
 
   const { email: parsedEmail, password: parsedPassword } = parsedResult.data;
 
-  const { usersCollection } = await connectToDatabase();
   const existingUser = await usersCollection.findOne({ email: parsedEmail });
   if (!existingUser) {
     return {
       success: false,
-      message: 'User does not exist',
+      message: ErrorStrings.userDoesNotExists,
     };
   }
 
@@ -57,12 +56,13 @@ export async function signIn(_: FormResponse, formData: FormData): Promise<FormR
   if (!passwordsMatched) {
     return {
       success: false,
-      message: 'Invalid password',
+      message: ErrorStrings.invalidPassword,
     };
   }
 
   return {
     success: true,
-    message: 'User created',
+    message: ErrorStrings.userDoesNotExists,
+    user: existingUser,
   };
 }
