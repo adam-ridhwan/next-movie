@@ -28,9 +28,11 @@ export const SignUpForm = () => {
   return (
     <form action={formAction} className='w-full'>
       <Input
+        id='email'
         type='email'
         name='email'
         placeholder={AuthStrings.emailAddress}
+        autoComplete='email'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
         onFocus={() => setError('')}
       />
@@ -38,6 +40,7 @@ export const SignUpForm = () => {
         type='password'
         name='password'
         placeholder={AuthStrings.password}
+        autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
         onFocus={() => setError('')}
       />
@@ -45,6 +48,7 @@ export const SignUpForm = () => {
         type='password'
         name='repeated-password'
         placeholder={AuthStrings.repeatPassword}
+        autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
         onFocus={() => setError('')}
       />

@@ -32,6 +32,7 @@ export const SignInForm = () => {
           type='email'
           name='email'
           placeholder={AuthStrings.emailAddress}
+          autoComplete='email'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
           onFocus={() => setError('')}
         />
@@ -39,6 +40,7 @@ export const SignInForm = () => {
           type='password'
           name='password'
           placeholder={AuthStrings.password}
+          autoComplete='current-password'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
           onFocus={() => setError('')}
         />
