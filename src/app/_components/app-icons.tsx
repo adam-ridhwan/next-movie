@@ -16,6 +16,7 @@ export const AppIcons = {
   navTvSeries,
   play,
   search,
+  avatar,
 } as const;
 
 function logo({ className }: SVGProps) {
@@ -74,46 +75,50 @@ function categoryTv({ className }: SVGProps) {
   );
 }
 
-function navBookmark({ className }: SVGProps) {
-  return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M15.387 0c.202 0 .396.04.581.119.291.115.522.295.694.542.172.247.258.52.258.82v17.038c0 .3-.086.573-.258.82a1.49 1.49 0 0 1-.694.542 1.49 1.49 0 0 1-.581.106c-.423 0-.79-.141-1.098-.423L8.46 13.959l-5.83 5.605c-.317.29-.682.436-1.097.436-.202 0-.396-.04-.581-.119a1.49 1.49 0 0 1-.694-.542A1.402 1.402 0 0 1 0 18.52V1.481c0-.3.086-.573.258-.82A1.49 1.49 0 0 1 .952.119C1.137.039 1.33 0 1.533 0h13.854Z'
-        fill='#5A698F'
-      />
-    </svg>
-  );
-}
-
 function navHome({ className }: SVGProps) {
   return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M8 0H1C.4 0 0 .4 0 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11H1c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1ZM19 0h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1Z'
-        fill='#5A698F'
-      />
+    <svg
+      className={cn('h-6 w-6 fill-darkBlue', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='-0.5 0 21 20'
+    >
+      <path d='M8 0H1C.4 0 0 .4 0 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11H1c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1ZM19 0h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1Z' />
     </svg>
   );
 }
 
 function navMovies({ className }: SVGProps) {
   return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M16.956 0H3.044A3.044 3.044 0 0 0 0 3.044v13.912A3.044 3.044 0 0 0 3.044 20h13.912A3.044 3.044 0 0 0 20 16.956V3.044A3.044 3.044 0 0 0 16.956 0ZM4 9H2V7h2v2Zm-2 2h2v2H2v-2Zm16-2h-2V7h2v2Zm-2 2h2v2h-2v-2Zm2-8.26V4h-2V2h1.26a.74.74 0 0 1 .74.74ZM2.74 2H4v2H2V2.74A.74.74 0 0 1 2.74 2ZM2 17.26V16h2v2H2.74a.74.74 0 0 1-.74-.74Zm16 0a.74.74 0 0 1-.74.74H16v-2h2v1.26Z'
-        fill='#5A698F'
-      />
+    <svg
+      className={cn('h-6 w-6 fill-darkBlue', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='-0.5 0 21 20'
+    >
+      <path d='M16.956 0H3.044A3.044 3.044 0 0 0 0 3.044v13.912A3.044 3.044 0 0 0 3.044 20h13.912A3.044 3.044 0 0 0 20 16.956V3.044A3.044 3.044 0 0 0 16.956 0ZM4 9H2V7h2v2Zm-2 2h2v2H2v-2Zm16-2h-2V7h2v2Zm-2 2h2v2h-2v-2Zm2-8.26V4h-2V2h1.26a.74.74 0 0 1 .74.74ZM2.74 2H4v2H2V2.74A.74.74 0 0 1 2.74 2ZM2 17.26V16h2v2H2.74a.74.74 0 0 1-.74-.74Zm16 0a.74.74 0 0 1-.74.74H16v-2h2v1.26Z' />
     </svg>
   );
 }
 
 function navTvSeries({ className }: SVGProps) {
   return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='M20 4.481H9.08l2.7-3.278L10.22 0 7 3.909 3.78.029 2.22 1.203l2.7 3.278H0V20h20V4.481Zm-8 13.58H2V6.42h10v11.64Zm5-3.88h-2v-1.94h2v1.94Zm0-3.88h-2V8.36h2v1.94Z'
-        fill='#5A698F'
-      />
+    <svg
+      className={cn('h-6 w-6 fill-darkBlue', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='-0.5 0 21 20'
+    >
+      <path d='M20 4.481H9.08l2.7-3.278L10.22 0 7 3.909 3.78.029 2.22 1.203l2.7 3.278H0V20h20V4.481Zm-8 13.58H2V6.42h10v11.64Zm5-3.88h-2v-1.94h2v1.94Zm0-3.88h-2V8.36h2v1.94Z' />
+    </svg>
+  );
+}
+
+function navBookmark({ className }: SVGProps) {
+  return (
+    <svg
+      className={cn('h-6 w-6 fill-darkBlue', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='-2 0 21 20'
+    >
+      <path d='M15.387 0c.202 0 .396.04.581.119.291.115.522.295.694.542.172.247.258.52.258.82v17.038c0 .3-.086.573-.258.82a1.49 1.49 0 0 1-.694.542 1.49 1.49 0 0 1-.581.106c-.423 0-.79-.141-1.098-.423L8.46 13.959l-5.83 5.605c-.317.29-.682.436-1.097.436-.202 0-.396-.04-.581-.119a1.49 1.49 0 0 1-.694-.542A1.402 1.402 0 0 1 0 18.52V1.481c0-.3.086-.573.258-.82A1.49 1.49 0 0 1 .952.119C1.137.039 1.33 0 1.533 0h13.854Z' />
     </svg>
   );
 }
@@ -136,6 +141,18 @@ function search({ className }: SVGProps) {
         d='M27.613 25.72 23.08 21.2a10.56 10.56 0 0 0 2.253-6.533C25.333 8.776 20.558 4 14.667 4S4 8.776 4 14.667c0 5.89 4.776 10.666 10.667 10.666A10.56 10.56 0 0 0 21.2 23.08l4.52 4.533a1.333 1.333 0 0 0 1.893 0 1.333 1.333 0 0 0 0-1.893ZM6.667 14.667a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z'
         fill='#FFF'
       />
+    </svg>
+  );
+}
+
+function avatar({ className }: SVGProps) {
+  return (
+    <svg
+      className={cn('h-7 w-7 fill-white', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 512 512'
+    >
+      <path d='M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z' />
     </svg>
   );
 }

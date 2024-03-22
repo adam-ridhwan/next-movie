@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { signIn } from '@/actions/signIn';
 import { signUp, SignUpData } from '@/actions/signUp';
 
-import { Input } from '@/components/ui/input';
-import { AppFonts } from '@/components/app-fonts';
-import { AuthStrings } from '@/components/app-strings';
+import { AppFonts } from '@/app/_components/app-fonts';
+import { AuthStrings } from '@/app/_components/app-strings';
+import { Input } from '@/app/_components/ui/input';
 
 import SignUpButton from './sign-up-button';
 

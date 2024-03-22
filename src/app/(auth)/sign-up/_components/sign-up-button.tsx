@@ -1,9 +1,9 @@
 import { useFormStatus } from 'react-dom';
 
-import { Button } from '@/components/ui/button';
-import { AppFonts } from '@/components/app-fonts';
-import { AppSpinner } from '@/components/app-spinner';
-import { AuthStrings } from '@/components/app-strings';
+import { AppFonts } from '@/app/_components/app-fonts';
+import { AppSpinner } from '@/app/_components/app-spinner';
+import { AuthStrings } from '@/app/_components/app-strings';
+import { Button } from '@/app/_components/ui/button';
 
 export default function SignUpButton() {
   const { pending } = useFormStatus();

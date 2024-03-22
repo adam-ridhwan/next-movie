@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 import { connectToDatabase } from '@/lib/connectToDatabase';
 import { FormResponse, TODO, userSchema } from '@/lib/types';
-import { ErrorStrings } from '@/components/app-strings';
+import { ErrorStrings } from '@/app/_components/app-strings';
 
 export async function signIn({
   email,

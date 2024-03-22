@@ -1,18 +1,12 @@
-import Link from 'next/link';
 import { getServerSession } from 'next-auth';
-
-import { Button } from '@/components/ui/button';
-import SignOutButton from '@/components/sign-out-button';
 
 export default async function Home() {
   const session = await getServerSession();
   console.log(session);
 
   return (
-    <div>
-      <h1 className='py-10 text-center text-3xl'>Home</h1>
-      <div className='container flex h-full gap-4'>
-        {session ? (
+    <div className='container flex h-full gap-4 bg-red'>
+      {/* {session ? (
           <>
             <SignOutButton />
           </>
@@ -29,8 +23,7 @@ export default async function Home() {
               </Link>
             </Button>
           </>
-        )}
-      </div>
+        )} */}
     </div>
   );
 }
