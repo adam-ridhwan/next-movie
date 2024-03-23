@@ -20,18 +20,12 @@ const AppNavBar = () => {
 
   return (
     <>
-      <div
-        className={cn(
-          'flex flex-row items-center justify-between bg-darkerBlue px-4 py-4',
-          'md:m-6 md:rounded-lg',
-          'lg:flex-col lg:py-8'
-        )}
-      >
+      <div className={cn('flex flex-row items-center justify-between bg-darkerBlue px-6 py-2 ')}>
         <AppIcons.logo />
-        <nav className='lg:flex-1'>
-          <ul className={cn('flex flex-row', 'lg:flex-col lg:gap-10 lg:pt-20')}>
+        <nav>
+          <ul className={cn('flex flex-row gap-4', 'lg:gap-10')}>
             {Object.entries(ROUTES).map(([key, { path, Icon }]) => (
-              <Link key={key} href={path} className='group rounded-lg p-2 hover:bg-darkBlue/30 lg:p-6'>
+              <Link key={key} href={path} className='group rounded-lg p-2 hover:bg-darkBlue/30 lg:p-5'>
                 <Icon
                   className={cn({
                     'fill-white': pathname === path,

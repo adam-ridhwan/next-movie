@@ -17,6 +17,7 @@ export const AppIcons = {
   play,
   search,
   avatar,
+  dot,
 } as const;
 
 function logo({ className }: SVGProps) {
@@ -29,13 +30,16 @@ function logo({ className }: SVGProps) {
 
 function bookMarkEmpty({ className }: SVGProps) {
   return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
-      <path
-        d='m10.518.75.399 12.214-5.084-4.24-4.535 4.426L.75 1.036l9.768-.285Z'
-        stroke='#FFF'
-        stroke-width='1.5'
-        fill='none'
-      />
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      stroke='currentColor'
+      strokeWidth='3'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={cn('h-5 w-5 fill-transparent', className)}
+    >
+      <path d='m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z' />
     </svg>
   );
 }
@@ -53,7 +57,11 @@ function bookMarkFull({ className }: SVGProps) {
 
 function categoryMovie({ className }: SVGProps) {
   return (
-    <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
+    <svg
+      className={cn('h-3.5 w-3.5 fill-secondary', className)}
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='-0.5 0 13 12'
+    >
       <path
         d='M10.173 0H1.827A1.827 1.827 0 0 0 0 1.827v8.346C0 11.183.818 12 1.827 12h8.346A1.827 1.827 0 0 0 12 10.173V1.827A1.827 1.827 0 0 0 10.173 0ZM2.4 5.4H1.2V4.2h1.2v1.2ZM1.2 6.6h1.2v1.2H1.2V6.6Zm9.6-1.2H9.6V4.2h1.2v1.2ZM9.6 6.6h1.2v1.2H9.6V6.6Zm1.2-4.956V2.4H9.6V1.2h.756a.444.444 0 0 1 .444.444ZM1.644 1.2H2.4v1.2H1.2v-.756a.444.444 0 0 1 .444-.444ZM1.2 10.356V9.6h1.2v1.2h-.756a.444.444 0 0 1-.444-.444Zm9.6 0a.444.444 0 0 1-.444.444H9.6V9.6h1.2v.756Z'
         fill='#FFF'
@@ -153,6 +161,23 @@ function avatar({ className }: SVGProps) {
       viewBox='0 0 512 512'
     >
       <path d='M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z' />
+    </svg>
+  );
+}
+
+function dot({ className }: SVGProps) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={cn('h-4 w-4 fill-white', className)}
+    >
+      <circle cx='12.1' cy='12.1' r='1' />
     </svg>
   );
 }

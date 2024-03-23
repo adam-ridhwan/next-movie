@@ -21,8 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <body
           className={cn(
             `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col bg-darkestBlue`,
-            'lg:flex-row',
-            'border-4 border-green-500'
+            'lg:flex-row'
           )}
         >
           {children}
