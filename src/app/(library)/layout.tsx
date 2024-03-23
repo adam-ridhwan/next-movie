@@ -22,9 +22,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang='en'>
         <body
           className={cn(
-            `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col bg-darkestBlue`,
-            'lg:flex-row',
-            'border-4 border-green-500'
+            `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-darkestBlue`
+            // 'border-4 border-green-500'
           )}
         >
           <AppNavBar />

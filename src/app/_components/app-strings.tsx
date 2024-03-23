@@ -19,3 +19,8 @@ export const ErrorStrings = {
   userAlreadyExists: 'User already exists',
   invalidPassword: 'Invalid password',
 } as const;
+
+export const LibraryStrings = {
+  trending: 'Trending',
+  recommendedForYou: 'Recommended for you',
+};
