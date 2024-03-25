@@ -2,7 +2,7 @@ import { AppFonts } from '../_components/app-fonts';
 import { LibraryStrings } from '../_components/app-strings';
 import TrendingCarousel from './_components/trending-carousel';
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <div className=''>
