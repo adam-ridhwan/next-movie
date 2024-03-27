@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import SliderItem from '@/app/_components/app-slider/app-slider-item';
 import { Button } from '@/app/_components/ui/button';
 
-const CARDS: TODO = Array.from({ length: 13 }, (_, index) => ({
+const CARDS: TODO = Array.from({ length: 5 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -157,38 +157,53 @@ export const Slider = () => {
 
     setTimeout(() => {
       stopAnimation();
+      goToNextPage();
 
-      if (!isLastPage) {
-        setTranslateAmount(0);
-        goToNextPage();
-        return;
+      if (!isLastPage) return setTranslateAmount(0);
+
+      // setTranslateAmount(getTranslatePercentage({ isLastPage }));
+      setTranslateAmount(0);
+
+      const updatedPages: [number, TODO[]][] = [];
+      const totalPages = pages.size;
+      let fetchedCardIndex = FETCHED_CARDS.length - 1;
+
+      console.log('totalPages', totalPages);
+      console.log('FETCHED_CARDS.length', FETCHED_CARDS.length);
+
+      const array = [];
+
+      for (let i = (pages.size - 1) * numberOfVisibleCards; i > 0; i--) {
+        array.unshift(FETCHED_CARDS[fetchedCardIndex--]);
+        if (fetchedCardIndex === -1) fetchedCardIndex = FETCHED_CARDS.length - 1;
       }
 
-      setTranslateAmount(getTranslatePercentage({ isLastPage }));
+      for (let i = 0; i < pages.size; i++) {
+        array.push(FETCHED_CARDS[i]);
+      }
 
-      // const updatedPages: [number, TODO[]][] = [];
-      // const totalPages = Math.ceil(FETCHED_CARDS.length / getCardsPerPage());
-      // let index = FETCHED_CARDS.length - 1;
-      //
-      // for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-      //   const page: TODO = [];
-      //   for (let i = 0; i < numberOfVisibleCards; i++) {
-      //     index = index === 0 ? FETCHED_CARDS.length : index; // Reset index to the end if it reaches 0
-      //     page.unshift(FETCHED_CARDS[--index]); // Decrement index then add the card at that index to the front of the current page
-      //   }
-      //   updatedPages.push([pageIndex + 1, page]); // Add the completed page as a tuple [pageNumber, pageItems]
-      // }
-      //
-      // const extraItems = Array.from({ length: numberOfVisibleCards }, (_, i) => FETCHED_CARDS[i]); // Creates [0,1,2,3,4,5]
-      // updatedPages.push([updatedPages.length + 1, extraItems]); // Add as the last page
-      //
-      // console.log('updatedPages', updatedPages);
+      for (let i = 0; i < array.length; i += 2) {
+        updatedPages.push([updatedPages.length + 2, [array[i], array[i + 1]]]);
+      }
 
-      // pagesAction.setAll(updatedPages);
+      console.log('array', array);
+      console.log('updatedPages', updatedPages);
+
+      pagesAction.reset();
+      pagesAction.setAll(updatedPages);
     }, TIMEOUT_DURATION);
 
     return;
   };
+
+  useEffect(() => {
+    console.log('currentPage', currentPage);
+    console.log('pages', pages);
+
+    console.log('left', pages.get(currentPage - 1));
+    console.log('mid', pages.get(currentPage));
+    console.log('start', pages.get(currentPage + 1));
+  }, [currentPage, pages]);
 
   /** ────────────────────────────────────────────────────────────────────────────────
    * Handles the resize event when the user resizes the window
@@ -241,7 +256,7 @@ export const Slider = () => {
         'bg-yellow-600' // for testing purposes
       )}
     >
-      <div className='fixed left-1/2 top-0  text-4xl'>{currentPage}</div>
+      <div className='fixed left-1/2 top-0  text-[60px] font-bold'>{currentPage}</div>
       <div
         className={cn(
           'slider relative flex w-full flex-row px-10',
@@ -262,30 +277,30 @@ export const Slider = () => {
           //  0 = current page
           //  1 = next page
           const page = currentPage + offset;
-          return pages.get(page)?.map((card: TODO, index: number) => (
-            <SliderItem
-              key={`${page}-${index}`}
-              ref={sliderItemRef}
-              card={card}
-              index={index}
-              currentPage={currentPage}
-              isVisible={offset === 0} // Only mark as visible if on the current page
-            />
-          ));
+          return pages.get(page)?.map((card: TODO, index: number) => {
+            return (
+              <SliderItem
+                key={`${page}-${index}`}
+                ref={sliderItemRef}
+                card={card}
+                index={index}
+                currentPage={currentPage}
+                isVisible={offset === 0} // Only mark as visible if on the current page
+              />
+            );
+          });
         })}
       </div>
 
-      {currentPage > 1 && (
-        <Button
-          disabled={isAnimating}
-          onClick={() => handleLeftScroll()}
-          className='absolute left-0 top-0 flex h-full w-10 items-center justify-center
+      <Button
+        disabled={isAnimating}
+        onClick={() => handleLeftScroll()}
+        className='absolute left-0 top-0 flex h-full w-10 items-center justify-center
           rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
-          variant='ghost'
-        >
-          {'<'}
-        </Button>
-      )}
+        variant='ghost'
+      >
+        {'<'}
+      </Button>
 
       <Button
         disabled={isAnimating}

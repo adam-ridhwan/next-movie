@@ -26,7 +26,7 @@ const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
     <div ref={ref} className={cn('slider-item p-1', `slider-item-${displayNumber}`)}>
       {developmentMode ? (
         <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-5xl outline outline-black'>
-          {card.id}
+          {card?.id ?? 'NaN'}
         </div>
       ) : (
         <>
