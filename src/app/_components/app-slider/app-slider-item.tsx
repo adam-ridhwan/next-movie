@@ -1,3 +1,4 @@
+import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { TODO } from '@/lib/types';
@@ -7,17 +8,29 @@ import { AppIcons } from '@/app/_components/app-icons';
 
 const developmentMode = true;
 
-export const SliderItem = ({ card, section, index, currentPage, cardsPerPage, isVisible }: TODO) => {
+type SliderItemProps = {
+  card: TODO;
+  index: number;
+  currentPage: number;
+  cardsPerPage?: number;
+  isVisible: boolean;
+};
+
+const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
+  { card, index, currentPage, cardsPerPage, isVisible },
+  ref
+) => {
   const displayNumber = isVisible ? index : '';
+
   return (
-    <div className={cn('slider-item', `slider-item-${displayNumber}`)}>
+    <div ref={ref} className={cn('slider-item p-1', `slider-item-${displayNumber}`)}>
       {developmentMode ? (
-        <div className='relative m-1 flex aspect-video flex-col items-center justify-center gap-1 border border-black p-4 text-5xl'>
+        <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-5xl outline outline-black'>
           {card.id}
         </div>
       ) : (
         <>
-          <div className='relative m-1 flex aspect-video flex-col justify-end gap-1 p-4'>
+          <div className='relative flex aspect-video flex-col justify-end gap-1 p-4'>
             <Image
               src={card.imageUrl}
               alt='image'
@@ -46,3 +59,5 @@ export const SliderItem = ({ card, section, index, currentPage, cardsPerPage, is
     </div>
   );
 };
+
+export default forwardRef(SliderItem);

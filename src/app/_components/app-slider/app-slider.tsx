@@ -1,13 +1,12 @@
 'use client';
 
-import { log } from 'console';
 import { useEffect, useRef, useState } from 'react';
 import { atom, useAtom, useAtomValue } from 'jotai';
-import { useMap } from 'usehooks-ts';
+import { useBoolean, useMap, useStep } from 'usehooks-ts';
 
 import { TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { SliderItem } from '@/app/_components/app-slider/app-slider-item';
+import SliderItem from '@/app/_components/app-slider/app-slider-item';
 import { Button } from '@/app/_components/ui/button';
 
 const CARDS: TODO = Array.from({ length: 13 }, (_, index) => ({
@@ -19,23 +18,6 @@ const CARDS: TODO = Array.from({ length: 13 }, (_, index) => ({
   title: `Beyond Earth ${index + 1}`,
 }));
 
-const DIRECTION = {
-  left: 'LEFT',
-  right: 'RIGHT',
-} as const;
-type Direction = (typeof DIRECTION)[keyof typeof DIRECTION];
-
-const LEFT_SECTION = 'left section';
-const MIDDLE_SECTION = 'middle section';
-const RIGHT_SECTION = 'right section';
-
-const SECTION = {
-  page1: LEFT_SECTION,
-  page2: MIDDLE_SECTION,
-  page3: RIGHT_SECTION,
-} as const;
-type Section = (typeof SECTION)[keyof typeof SECTION];
-
 const MEDIA_QUERY = {
   sm: 768,
   md: 1024,
@@ -44,28 +26,27 @@ const MEDIA_QUERY = {
 };
 
 const PADDING = 80;
-const SECTION_LENGTH = Object.keys(SECTION).length;
-const TWO_EXTRA_CARDS = 2;
+
+const TIMEOUT_DURATION = 700;
 
 const fetchedCardsAtom = atom(CARDS);
-const numberOfVisibleCardsAtom = atom(6);
-const currentPageAtom = atom(1);
 
 export const Slider = () => {
-  const fetchedCards = useAtomValue(fetchedCardsAtom);
-  const [numberOfVisibleCards, setNumberOfVisibleCards] = useAtom(numberOfVisibleCardsAtom);
-  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
-  // 3 pages of cards + 2 extra cards
-  const totalCardsPerPage = numberOfVisibleCards * SECTION_LENGTH + TWO_EXTRA_CARDS;
-  const [totalPages, setTotalPages] = useState(Math.ceil(7));
-  const [pages, pagesAction] = useMap<number, TODO>([[1, fetchedCards.slice(0, totalPages)]]);
+  const FETCHED_CARDS = useAtomValue(fetchedCardsAtom);
 
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [translateAmount, setTranslateAmount] = useState(0);
+  const [pages, pagesAction] = useMap<number, TODO>([[1, FETCHED_CARDS.slice(0, 7)]]);
+  const [currentPage, { goToPrevStep: goToPrevPage, goToNextStep: goToNextPage }] = useStep(pages.size);
 
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const prevCardsPerPageRef = useRef(numberOfVisibleCards);
-  const prevWidth = useRef(0);
+  const [visibleCardsLength, setVisibleCardsLength] = useState(6);
+  const [trailingCardsLength, setTrailingCardsLength] = useState<number>(0);
+
+  const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean(false);
+  const [translatePercentage, setTranslateAmount] = useState<number | undefined>(0);
+
+  const sliderRef = useRef<HTMLDivElement | null>(null);
+  const sliderItemRef = useRef<HTMLDivElement | null>(null);
+  const prevCardsPerPageRef = useRef(visibleCardsLength);
+  // const prevWidth = useRef(0);
 
   const getCardsPerPage = () => {
     const windowWidth = window.innerWidth;
@@ -76,66 +57,113 @@ export const Slider = () => {
     return 6;
   };
 
-  // init
+  /** ────────────────────────────────────────────────────────────────────────────────
+   * Initializes the slider with the first page of cards
+   * ────────────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     const initVisibleCardsPerPage = getCardsPerPage();
-    const initTotalPages = Math.ceil(fetchedCards.length / initVisibleCardsPerPage);
-    console.log('initTotalPages', initTotalPages);
+    const initTotalPages = Math.ceil(FETCHED_CARDS.length / initVisibleCardsPerPage);
 
-    const paginatedCards: [number, TODO[]][] = Array.from({ length: initTotalPages }, (_, pageIndex) => {
+    const initPages: [number, TODO[]][] = Array.from({ length: initTotalPages }, (_, pageIndex) => {
       const startIndex = pageIndex * initVisibleCardsPerPage;
       const endIndex = startIndex + initVisibleCardsPerPage;
-      return [pageIndex + 1, fetchedCards.slice(startIndex, endIndex)];
+      return [pageIndex + 1, FETCHED_CARDS.slice(startIndex, endIndex)];
     });
 
-    pagesAction.setAll(paginatedCards);
-    console.log('n', paginatedCards);
+    const initTrailingCardsLength = initPages[initPages.length - 1][1].length;
+    setTrailingCardsLength(initTrailingCardsLength);
+
+    // If the last page has less than the required number of cards, fill it up with the remaining cards
+    if (initPages.length > 1 && initPages[initPages.length - 1][1].length !== initVisibleCardsPerPage) {
+      const itemsNeeded = initVisibleCardsPerPage - initPages[initPages.length - 1][1].length;
+
+      initPages[initPages.length - 1][1] = [
+        ...initPages[initPages.length - 1][1],
+        ...FETCHED_CARDS.slice(0, itemsNeeded),
+      ];
+    }
+    console.log('initVisibleCardsPerPage', initVisibleCardsPerPage);
+    console.log('initTotalPages', initTotalPages);
+    console.log('initPages', initPages);
+    console.log('initTrailingCardsLength', initTrailingCardsLength);
     console.log('───────────────────────────────────────────────────────');
 
-    setTotalPages(initTotalPages);
-    setNumberOfVisibleCards(initVisibleCardsPerPage);
+    pagesAction.setAll(initPages);
+    setVisibleCardsLength(initVisibleCardsPerPage);
     prevCardsPerPageRef.current = initVisibleCardsPerPage;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** ────────────────────────────────────────────────────────────────────────────────
-   * Handles the scroll event when the user clicks the left or right arrow
-   * @param direction - The direction of the scroll
+   * Calculates the percentage of the slider that needs to be translated
+   * @returns number
+   * ────────────────────────────────────────────────────────────────────────────── */
+  const getTranslatePercentage = ({ hasTrailingCards }: { hasTrailingCards?: boolean } = {}): number => {
+    if (!sliderRef.current || !sliderItemRef.current) return 0;
+    const windowWidth = window.innerWidth;
+    const { offsetWidth: sliderWidth } = sliderRef.current;
+    const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
+
+    if (!hasTrailingCards) return ((sliderWidth - PADDING) / windowWidth) * 100;
+
+    const missingCards = visibleCardsLength - trailingCardsLength;
+    console.log('hasTrailingCards');
+    console.log('trailingCardsLength', trailingCardsLength);
+    console.log('missingCards', missingCards);
+    return ((trailingCardsLength * sliderItemWidth) / windowWidth) * 100;
+  };
+
+  /** ────────────────────────────────────────────────────────────────────────────────
+   * Handles the scroll event when the user clicks LEFT arrow
    * @returns void
    * ────────────────────────────────────────────────────────────────────────────── */
-  const handleScroll = (direction: Direction) => {
-    setIsAnimating(true);
-
-    if (!sliderRef.current) return;
-    const isScrollingLeft = direction === DIRECTION.left;
-    const { offsetWidth } = sliderRef.current;
-    const percentage = ((offsetWidth - PADDING) / window.innerWidth) * 100;
-    const translateAmount = isScrollingLeft ? percentage : -percentage;
-    const newPage = isScrollingLeft ? currentPage - 1 : currentPage + 1;
-
-    setTranslateAmount(prev => prev + translateAmount);
+  const handleLeftScroll = () => {
+    startAnimation();
+    setTranslateAmount(getTranslatePercentage());
+    const newPage = currentPage - 1;
+    console.log('previous page', pages.get(newPage - 1));
+    console.log('current page', pages.get(newPage));
+    console.log('next page', pages.get(newPage + 1));
+    console.log('───────────────────────────────────────────────────────');
 
     setTimeout(() => {
-      setIsAnimating(false);
-
-      // const startIndex = isScrollingLeft
-      //   ? Math.max(0, (currentPage - 3) * numberOfVisibleCards)
-      //   : Math.max(0, currentPage * numberOfVisibleCards - numberOfVisibleCards);
-      // const endIndex = startIndex + totalCardsPerPage;
-
-      // console.log('newCards', newCards.length);
-      // console.log('totalCardsPerPage', totalCardsPerPage);
-      // console.log('───────────────────────────────────────────────────────');
-
-      setCurrentPage(newPage);
-      console.log('newPage', newPage);
-      if (newPage === 1) return;
-      console.log('translated');
-
-      console.log('totalPages', totalPages);
-      // setTranslateAmount(isScrollingLeft ? -translateAmount : translateAmount);
+      stopAnimation();
+      goToPrevPage();
       setTranslateAmount(0);
-    }, 700);
+    }, TIMEOUT_DURATION);
+
+    return;
+  };
+
+  /** ────────────────────────────────────────────────────────────────────────────────
+   * Handles the scroll event when the user clicks RIGHT arrow
+   * @returns void
+   * ────────────────────────────────────────────────────────────────────────────── */
+  const handleRightScroll = () => {
+    startAnimation();
+    const newPage = currentPage + 1;
+    const isLastPage = newPage === pages.size;
+
+    isLastPage
+      ? setTranslateAmount(getTranslatePercentage({ hasTrailingCards: isLastPage }) * -1)
+      : setTranslateAmount(getTranslatePercentage() * -1);
+
+    console.log('previous page', pages.get(newPage - 1));
+    console.log('current page', pages.get(newPage));
+    console.log('next page', pages.get(newPage + 1));
+    console.log('───────────────────────────────────────────────────────');
+
+    setTimeout(() => {
+      stopAnimation();
+
+      if (isLastPage)
+        return setTranslateAmount(getTranslatePercentage({ hasTrailingCards: isLastPage }) * -1);
+
+      setTranslateAmount(0);
+      goToNextPage();
+    }, TIMEOUT_DURATION);
+
+    return;
   };
 
   /** ────────────────────────────────────────────────────────────────────────────────
@@ -165,7 +193,7 @@ export const Slider = () => {
   //       console.log('───────────────────────────────────────────────────────');
   //
   //       setCards(newCards);
-  //       setNumberOfVisibleCards(newCardsPerPage);
+  //       setVisibleCardsLength(newCardsPerPage);
   //       prevCardsPerPageRef.current = newCardsPerPage;
   //     }
   //
@@ -178,7 +206,7 @@ export const Slider = () => {
   //
   //   window.addEventListener('resize', handleResize);
   //   return () => window.removeEventListener('resize', handleResize);
-  // }, [cards, numberOfVisibleCards, cards, cards.length, currentPage, setNumberOfVisibleCards, totalCardsPerPage]);
+  // }, [cards, visibleCardsLength, cards, cards.length, currentPage, setVisibleCardsLength, totalCardsPerPage]);
 
   return (
     <div
@@ -199,33 +227,32 @@ export const Slider = () => {
           }
         )}
         style={{
-          transform: `translate3d(${translateAmount}%, 0, 0)`,
+          transform: translatePercentage ? `translate3d(${translatePercentage}%, 0, 0)` : undefined,
         }}
       >
-        {
-          // Iterate through currentPage - 1, currentPage, currentPage + 1
-          [-1, 0, 1].flatMap(offset => {
-            const page = currentPage + offset; // Determine the actual page number based on offset
-            return (
-              pages.get(page)?.map((card: TODO, index: number) => (
-                // Render SliderItem, marking cards on the current page as visible
-                <SliderItem
-                  key={`${page}-${index}`} // Ensure keys are unique across all pages
-                  card={card}
-                  index={index}
-                  currentPage={currentPage}
-                  isVisible={offset === 0} // Only mark as visible if on the current page
-                />
-              )) || []
-            ); // Return an empty array if there are no cards for this page
-          })
-        }
+        {[-1, 0, 1].flatMap(offset => {
+          // Determine the actual page number based on offset
+          // -1 = previous page
+          //  0 = current page
+          //  1 = next page
+          const page = currentPage + offset;
+          return pages.get(page)?.map((card: TODO, index: number) => (
+            <SliderItem
+              key={`${page}-${index}`}
+              ref={sliderItemRef}
+              card={card}
+              index={index}
+              currentPage={currentPage}
+              isVisible={offset === 0} // Only mark as visible if on the current page
+            />
+          ));
+        })}
       </div>
 
       {currentPage > 1 && (
         <Button
           disabled={isAnimating}
-          onClick={() => handleScroll(DIRECTION.left)}
+          onClick={() => handleLeftScroll()}
           className='absolute left-0 top-0 flex h-full w-10 items-center justify-center
           rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
           variant='ghost'
@@ -236,7 +263,7 @@ export const Slider = () => {
 
       <Button
         disabled={isAnimating}
-        onClick={() => handleScroll(DIRECTION.right)}
+        onClick={() => handleRightScroll()}
         className='absolute right-0 top-0 flex h-full w-10 items-center justify-center
         rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
         variant='ghost'
