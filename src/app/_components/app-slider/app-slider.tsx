@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import SliderItem from '@/app/_components/app-slider/slider-item';
 import { Button } from '@/app/_components/ui/button';
-import { useBoolean } from '@/app/_hooks/use-boolean';
-import { useMap } from '@/app/_hooks/use-map';
-import { usePagination } from '@/app/_hooks/use-pagination';
+import { useBoolean, useMap, usePagination } from '@/app/_hooks';
 import { cn } from '@/app/_lib/utils';
 
 const MEDIA_QUERY = {
