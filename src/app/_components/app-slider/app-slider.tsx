@@ -59,10 +59,12 @@ export const Slider = () => {
     return 6;
   };
 
+  const cacheRef = useRef<string>('');
+
   /** ──────────────────────────────────────────────────────────────────────────
    * Initializes the slider with the first page of cards
    * ──────────────────────────────────────────────────────────────────────── */
-  const setInitialValue = () => {
+  useEffect(() => {
     const initNumberOfVisibleCards = getCardsPerPage();
     const initTotalPages = Math.ceil(FETCHED_CARDS.length / initNumberOfVisibleCards);
 
@@ -94,11 +96,8 @@ export const Slider = () => {
 
     pagesAction.setAll(initPages);
     setNumberOfVisibleCards(initNumberOfVisibleCards);
+    cacheRef.current = JSON.stringify(initPages);
     prevCardsPerPageRef.current = initNumberOfVisibleCards;
-  };
-
-  useEffect(() => {
-    setInitialValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -168,7 +167,7 @@ export const Slider = () => {
 
       if (!canGoToNextPage) {
         resetToFirstPage();
-        setInitialValue();
+        pagesAction.setAll(JSON.parse(cacheRef.current));
         setTranslateAmount(0);
         return;
       }
