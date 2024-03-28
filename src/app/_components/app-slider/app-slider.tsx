@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import SliderItem from '@/app/_components/app-slider/app-slider-item';
+import SliderItem from '@/app/_components/app-slider/slider-item';
 import { Button } from '@/app/_components/ui/button';
 import { useBoolean } from '@/app/_hooks/use-boolean';
 import { useMap } from '@/app/_hooks/use-map';
