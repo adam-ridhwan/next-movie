@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { atom, useAtomValue } from 'jotai';
 import { useBoolean, useMap, useStep } from 'usehooks-ts';
 
-import { TODO } from '@/lib/types';
-import { cn } from '@/lib/utils';
 import SliderItem from '@/app/_components/app-slider/app-slider-item';
 import { Button } from '@/app/_components/ui/button';
+import { TODO } from '@/app/_lib/types';
+import { cn } from '@/app/_lib/utils';
 
-const CARDS: TODO = Array.from({ length: 5 }, (_, index) => ({
+const CARDS: TODO = Array.from({ length: 7 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -35,10 +35,11 @@ export const Slider = () => {
   const FETCHED_CARDS = useAtomValue(fetchedCardsAtom);
 
   const [pages, pagesAction] = useMap<number, TODO>([[1, FETCHED_CARDS.slice(0, 7)]]);
+
   const [currentPage, { goToPrevStep: goToPrevPage, goToNextStep: goToNextPage }] = useStep(pages.size);
 
   const [numberOfVisibleCards, setNumberOfVisibleCards] = useState(6);
-  const [trailingCardsLength, setTrailingCardsLength] = useState<number>(0);
+  const [numberOfTrailingCards, setNumberOfTrailingCards] = useState<number>(0);
 
   const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean(false);
   const [translatePercentage, setTranslateAmount] = useState<number | undefined>(0);
@@ -57,9 +58,9 @@ export const Slider = () => {
     return 6;
   };
 
-  /** ────────────────────────────────────────────────────────────────────────────────
+  /** ──────────────────────────────────────────────────────────────────────────
    * Initializes the slider with the first page of cards
-   * ────────────────────────────────────────────────────────────────────────────── */
+   * ──────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
     const initNumberOfVisibleCards = getCardsPerPage();
     const initTotalPages = Math.ceil(FETCHED_CARDS.length / initNumberOfVisibleCards);
@@ -71,9 +72,10 @@ export const Slider = () => {
     });
 
     const initTrailingCardsLength = initPages[initPages.length - 1][1].length;
-    setTrailingCardsLength(initTrailingCardsLength);
+    setNumberOfTrailingCards(initTrailingCardsLength);
 
-    // If the last page has less than the required number of cards, fill it up with the remaining cards
+    // If the last page has less than the required number of cards,
+    // fill it up with the remaining cards
     if (initPages.length > 1 && initPages[initPages.length - 1][1].length !== initNumberOfVisibleCards) {
       const itemsNeeded = initNumberOfVisibleCards - initPages[initPages.length - 1][1].length;
 
@@ -108,13 +110,13 @@ export const Slider = () => {
 
     if (!sliderItemRef.current) return 0;
     const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
-    return ((trailingCardsLength * sliderItemWidth) / windowWidth) * -100;
+    return ((numberOfTrailingCards * sliderItemWidth) / windowWidth) * -100;
   };
 
   /** ────────────────────────────────────────────────────────────────────────────────
    * Handles the scroll event when the user clicks LEFT arrow
    * @returns void
-   * ────────────────────────────────────────────────────────────────────────────── */
+   * * ────────────────────────────────────────────────────────────────────────────── */
   const handleLeftScroll = () => {
     startAnimation();
     const newCurrentPage = currentPage - 1;
@@ -161,10 +163,9 @@ export const Slider = () => {
 
       if (!isLastPage) return setTranslateAmount(0);
 
-      // setTranslateAmount(getTranslatePercentage({ isLastPage }));
       setTranslateAmount(0);
 
-      const updatedPages: [number, TODO[]][] = [];
+      const newPages: [number, TODO[]][] = [];
       const totalPages = pages.size;
       let fetchedCardIndex = FETCHED_CARDS.length - 1;
 
@@ -173,37 +174,51 @@ export const Slider = () => {
 
       const array = [];
 
-      for (let i = (pages.size - 1) * numberOfVisibleCards; i > 0; i--) {
+      const totalLength = pages.size * numberOfVisibleCards;
+      console.log('totalLength', totalLength);
+
+      for (let i = totalLength; i > 0; i--) {
         array.unshift(FETCHED_CARDS[fetchedCardIndex--]);
-        if (fetchedCardIndex === -1) fetchedCardIndex = FETCHED_CARDS.length - 1;
+        if (fetchedCardIndex === -1) {
+          fetchedCardIndex = FETCHED_CARDS.length - 1;
+        }
       }
 
-      for (let i = 0; i < pages.size; i++) {
+      // we need to add one extra page for alignment
+      for (let i = 0; i < numberOfVisibleCards; i++) {
         array.push(FETCHED_CARDS[i]);
       }
 
-      for (let i = 0; i < array.length; i += 2) {
-        updatedPages.push([updatedPages.length + 2, [array[i], array[i + 1]]]);
+      for (let i = 0; i < pages.size + 1; i++) {
+        // Example with 3 visible cards
+        // 0, 3
+        // 3, 6
+        // 6, 9
+        // 9, 12
+        const startIndex = i * numberOfVisibleCards;
+        const endIndex = startIndex + numberOfVisibleCards;
+        const subArray = array.slice(startIndex, endIndex);
+        newPages.push([i + 1, subArray]);
       }
 
       console.log('array', array);
-      console.log('updatedPages', updatedPages);
+      console.log('updatedPages', newPages);
 
       pagesAction.reset();
-      pagesAction.setAll(updatedPages);
+      pagesAction.setAll(newPages);
     }, TIMEOUT_DURATION);
 
     return;
   };
 
-  useEffect(() => {
-    console.log('currentPage', currentPage);
-    console.log('pages', pages);
-
-    console.log('left', pages.get(currentPage - 1));
-    console.log('mid', pages.get(currentPage));
-    console.log('start', pages.get(currentPage + 1));
-  }, [currentPage, pages]);
+  // useEffect(() => {
+  //   console.log('currentPage', currentPage);
+  //   console.log('pages', pages);
+  //
+  //   console.log('left', pages.get(currentPage - 1));
+  //   console.log('mid', pages.get(currentPage));
+  //   console.log('start', pages.get(currentPage + 1));
+  // }, [currentPage, pages]);
 
   /** ────────────────────────────────────────────────────────────────────────────────
    * Handles the resize event when the user resizes the window

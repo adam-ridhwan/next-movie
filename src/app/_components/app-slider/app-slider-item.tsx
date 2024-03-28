@@ -1,10 +1,10 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
-import { TODO } from '@/lib/types';
-import { cn } from '@/lib/utils';
 import { AppFonts } from '@/app/_components/app-fonts';
 import { AppIcons } from '@/app/_components/app-icons';
+import { TODO } from '@/app/_lib/types';
+import { cn } from '@/app/_lib/utils';
 
 const developmentMode = true;
 

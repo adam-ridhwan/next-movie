@@ -2,9 +2,9 @@
 
 import bcrypt from 'bcrypt';
 
-import { connectToDatabase } from '@/lib/connectToDatabase';
-import { FormResponse, TODO, userSchema } from '@/lib/types';
 import { ErrorStrings } from '@/app/_components/app-strings';
+import { connectToDatabase } from '@/app/_lib/connectToDatabase';
+import { FormResponse, TODO, userSchema } from '@/app/_lib/types';
 
 export async function signIn({
   email,
