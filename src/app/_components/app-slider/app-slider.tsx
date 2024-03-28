@@ -34,6 +34,7 @@ export const Slider = () => {
   const FETCHED_CARDS = useAtomValue(fetchedCardsAtom);
 
   const [pages, pagesAction] = useMap<number, TODO>([[1, FETCHED_CARDS.slice(0, 7)]]);
+  const cachedPages = useRef<string>('');
 
   const [currentPage, { goToPrevStep: goToPrevPage, goToNextStep: goToNextPage, reset: resetToFirstPage }] = useStep(
     pages.size
@@ -58,8 +59,6 @@ export const Slider = () => {
     if (windowWidth < MEDIA_QUERY.xl) return 5;
     return 6;
   };
-
-  const cacheRef = useRef<string>('');
 
   /** ──────────────────────────────────────────────────────────────────────────
    * Initializes the slider with the first page of cards
@@ -95,8 +94,8 @@ export const Slider = () => {
     console.log('───────────────────────────────────────────────────────');
 
     pagesAction.setAll(initPages);
+    cachedPages.current = JSON.stringify(initPages);
     setNumberOfVisibleCards(initNumberOfVisibleCards);
-    cacheRef.current = JSON.stringify(initPages);
     prevCardsPerPageRef.current = initNumberOfVisibleCards;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -167,7 +166,7 @@ export const Slider = () => {
 
       if (!canGoToNextPage) {
         resetToFirstPage();
-        pagesAction.setAll(JSON.parse(cacheRef.current));
+        pagesAction.setAll(JSON.parse(cachedPages.current));
         setTranslateAmount(0);
         return;
       }
@@ -178,10 +177,10 @@ export const Slider = () => {
 
       const newPages: [number, TODO[]][] = [];
       const newCardList = [];
-      const numberOfCards = pages.size * numberOfVisibleCards;
+      const totalNumberOfCards = pages.size * numberOfVisibleCards;
 
       let decrementingCardIndex = FETCHED_CARDS.length - 1;
-      for (let i = numberOfCards; i > 0; i--) {
+      for (let i = totalNumberOfCards; i > 0; i--) {
         newCardList.unshift(FETCHED_CARDS[decrementingCardIndex--]);
         if (decrementingCardIndex === -1) {
           decrementingCardIndex = FETCHED_CARDS.length - 1;
