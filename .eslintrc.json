@@ -1,7 +1,15 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended" // Extends the recommended rules from the @typescript-eslint/eslint-plugin
+  ],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
-    "no-console": ["warn", { "allow": ["error"] }],
-    "no-unused-vars": "warn"
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      // Rule options here
+    }],
+    "no-unused-vars": "off" // Make sure to turn off the base rule to avoid conflicts
   }
 }

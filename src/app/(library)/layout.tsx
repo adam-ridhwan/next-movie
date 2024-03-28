@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             )}
           >
             <AppNavBar />
-            <div className='fixed bottom-0 left-1/2 top-0 -translate-x-1/2 border border-pink-500'></div>
+            <div className='fixed bottom-0 left-1/2 top-0 -translate-x-1/2 border border-pink-500' />
 
             {children}
           </body>
