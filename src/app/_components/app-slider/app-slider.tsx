@@ -9,7 +9,7 @@ import { Button } from '@/app/_components/ui/button';
 import { TODO } from '@/app/_lib/types';
 import { cn } from '@/app/_lib/utils';
 
-const CARDS: TODO = Array.from({ length: 7 }, (_, index) => ({
+const CARDS: TODO = Array.from({ length: 21 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -108,14 +108,12 @@ export const Slider = () => {
    * ────────────────────────────────────────────────────────────────────────────── */
   const getTranslatePercentage = ({ isLastPage }: { isLastPage?: boolean } = {}): number => {
     if (!sliderRef.current) return 0;
-    console.log('sliderRef.current exist');
 
     const windowWidth = window.innerWidth;
     const { offsetWidth: sliderWidth } = sliderRef.current;
     if (!isLastPage) return ((sliderWidth - PADDING) / windowWidth) * 100;
 
     if (!sliderItemRef.current) return 0;
-    console.log('sliderItemRef.current exist');
 
     const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
     return ((numberOfTrailingCards * sliderItemWidth) / windowWidth) * -100;
@@ -150,22 +148,15 @@ export const Slider = () => {
    * @returns void
    * ────────────────────────────────────────────────────────────────────────────── */
   const handleRightScroll = () => {
-    console.log(currentPage);
-    console.log('handleRightScroll');
     startAnimation();
+
     const newCurrentPage = currentPage + 1;
     const isLastPage = newCurrentPage === pages.size;
-    const cannotGoToNextPage = newCurrentPage > Math.ceil(FETCHED_CARDS.length / numberOfVisibleCards);
+    const canGoToNextPage = newCurrentPage <= Math.ceil(FETCHED_CARDS.length / numberOfVisibleCards);
 
-    if (cannotGoToNextPage) {
-      console.log('cannotGoToNextPage', cannotGoToNextPage);
-      setTranslateAmount(getTranslatePercentage() * -1);
-    } else {
-      console.log('isLastPage', isLastPage);
-      isLastPage
-        ? setTranslateAmount(getTranslatePercentage({ isLastPage }))
-        : setTranslateAmount(getTranslatePercentage() * -1);
-    }
+    !canGoToNextPage || !isLastPage
+      ? setTranslateAmount(getTranslatePercentage() * -1)
+      : setTranslateAmount(getTranslatePercentage({ isLastPage }));
 
     console.log('previous page', pages.get(newCurrentPage - 1));
     console.log('current page', pages.get(newCurrentPage));
@@ -175,7 +166,7 @@ export const Slider = () => {
     setTimeout(() => {
       stopAnimation();
 
-      if (cannotGoToNextPage) {
+      if (!canGoToNextPage) {
         resetToFirstPage();
         setInitialValue();
         setTranslateAmount(0);
@@ -184,18 +175,17 @@ export const Slider = () => {
 
       goToNextPage();
       setTranslateAmount(0);
-
       if (!isLastPage) return;
 
       const newPages: [number, TODO[]][] = [];
       const newCardList = [];
       const numberOfCards = pages.size * numberOfVisibleCards;
 
-      let fetchedCardIndex = FETCHED_CARDS.length - 1;
+      let decrementingCardIndex = FETCHED_CARDS.length - 1;
       for (let i = numberOfCards; i > 0; i--) {
-        newCardList.unshift(FETCHED_CARDS[fetchedCardIndex--]);
-        if (fetchedCardIndex === -1) {
-          fetchedCardIndex = FETCHED_CARDS.length - 1;
+        newCardList.unshift(FETCHED_CARDS[decrementingCardIndex--]);
+        if (decrementingCardIndex === -1) {
+          decrementingCardIndex = FETCHED_CARDS.length - 1;
         }
       }
 
@@ -228,9 +218,6 @@ export const Slider = () => {
     return;
   };
 
-  useEffect(() => {
-    console.log('isAnimating', isAnimating);
-  }, [isAnimating]);
   // useEffect(() => {
   //   console.log('currentPage', currentPage);
   //   console.log('pages', pages);
@@ -297,7 +284,6 @@ export const Slider = () => {
           'slider relative flex w-full flex-row px-10',
           'bg-green-600', // for testing purposes
           { 'justify-center': currentPage > 1 },
-
           {
             'transition-transform duration-700': isAnimating,
           }
