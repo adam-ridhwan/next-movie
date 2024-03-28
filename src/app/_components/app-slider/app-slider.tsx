@@ -26,7 +26,6 @@ const MEDIA_QUERY = {
 };
 
 const PADDING = 80;
-
 const TIMEOUT_DURATION = 700;
 
 const fetchedCardsAtom = atom(CARDS);
@@ -36,7 +35,9 @@ export const Slider = () => {
 
   const [pages, pagesAction] = useMap<number, TODO>([[1, FETCHED_CARDS.slice(0, 7)]]);
 
-  const [currentPage, { goToPrevStep: goToPrevPage, goToNextStep: goToNextPage }] = useStep(pages.size);
+  const [currentPage, { goToPrevStep: goToPrevPage, goToNextStep: goToNextPage, reset: resetToFirstPage }] = useStep(
+    pages.size
+  );
 
   const [numberOfVisibleCards, setNumberOfVisibleCards] = useState(6);
   const [numberOfTrailingCards, setNumberOfTrailingCards] = useState<number>(0);
@@ -44,8 +45,8 @@ export const Slider = () => {
   const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean(false);
   const [translatePercentage, setTranslateAmount] = useState<number | undefined>(0);
 
-  const sliderRef = useRef<HTMLDivElement | null>(null);
-  const sliderItemRef = useRef<HTMLDivElement | null>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const sliderItemRef = useRef<HTMLDivElement>(null);
   const prevCardsPerPageRef = useRef(numberOfVisibleCards);
   // const prevWidth = useRef(0);
 
@@ -61,7 +62,7 @@ export const Slider = () => {
   /** ──────────────────────────────────────────────────────────────────────────
    * Initializes the slider with the first page of cards
    * ──────────────────────────────────────────────────────────────────────── */
-  useEffect(() => {
+  const setInitialValue = () => {
     const initNumberOfVisibleCards = getCardsPerPage();
     const initTotalPages = Math.ceil(FETCHED_CARDS.length / initNumberOfVisibleCards);
 
@@ -94,6 +95,10 @@ export const Slider = () => {
     pagesAction.setAll(initPages);
     setNumberOfVisibleCards(initNumberOfVisibleCards);
     prevCardsPerPageRef.current = initNumberOfVisibleCards;
+  };
+
+  useEffect(() => {
+    setInitialValue();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,12 +108,15 @@ export const Slider = () => {
    * ────────────────────────────────────────────────────────────────────────────── */
   const getTranslatePercentage = ({ isLastPage }: { isLastPage?: boolean } = {}): number => {
     if (!sliderRef.current) return 0;
+    console.log('sliderRef.current exist');
 
     const windowWidth = window.innerWidth;
     const { offsetWidth: sliderWidth } = sliderRef.current;
     if (!isLastPage) return ((sliderWidth - PADDING) / windowWidth) * 100;
 
     if (!sliderItemRef.current) return 0;
+    console.log('sliderItemRef.current exist');
+
     const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
     return ((numberOfTrailingCards * sliderItemWidth) / windowWidth) * -100;
   };
@@ -120,7 +128,6 @@ export const Slider = () => {
   const handleLeftScroll = () => {
     startAnimation();
     const newCurrentPage = currentPage - 1;
-    const isLastPage = newCurrentPage === pages.size;
 
     setTranslateAmount(getTranslatePercentage());
 
@@ -143,14 +150,22 @@ export const Slider = () => {
    * @returns void
    * ────────────────────────────────────────────────────────────────────────────── */
   const handleRightScroll = () => {
+    console.log(currentPage);
     console.log('handleRightScroll');
     startAnimation();
     const newCurrentPage = currentPage + 1;
     const isLastPage = newCurrentPage === pages.size;
+    const cannotGoToNextPage = newCurrentPage > Math.ceil(FETCHED_CARDS.length / numberOfVisibleCards);
 
-    isLastPage
-      ? setTranslateAmount(getTranslatePercentage({ isLastPage }))
-      : setTranslateAmount(getTranslatePercentage() * -1);
+    if (cannotGoToNextPage) {
+      console.log('cannotGoToNextPage', cannotGoToNextPage);
+      setTranslateAmount(getTranslatePercentage() * -1);
+    } else {
+      console.log('isLastPage', isLastPage);
+      isLastPage
+        ? setTranslateAmount(getTranslatePercentage({ isLastPage }))
+        : setTranslateAmount(getTranslatePercentage() * -1);
+    }
 
     console.log('previous page', pages.get(newCurrentPage - 1));
     console.log('current page', pages.get(newCurrentPage));
@@ -159,36 +174,41 @@ export const Slider = () => {
 
     setTimeout(() => {
       stopAnimation();
+
+      if (cannotGoToNextPage) {
+        resetToFirstPage();
+        setInitialValue();
+        setTranslateAmount(0);
+        return;
+      }
+
       goToNextPage();
-
-      if (!isLastPage) return setTranslateAmount(0);
-
       setTranslateAmount(0);
 
+      if (!isLastPage) return;
+
       const newPages: [number, TODO[]][] = [];
-      const totalPages = pages.size;
+      const newCardList = [];
+      const numberOfCards = pages.size * numberOfVisibleCards;
+
       let fetchedCardIndex = FETCHED_CARDS.length - 1;
-
-      console.log('totalPages', totalPages);
-      console.log('FETCHED_CARDS.length', FETCHED_CARDS.length);
-
-      const array = [];
-
-      const totalLength = pages.size * numberOfVisibleCards;
-      console.log('totalLength', totalLength);
-
-      for (let i = totalLength; i > 0; i--) {
-        array.unshift(FETCHED_CARDS[fetchedCardIndex--]);
+      for (let i = numberOfCards; i > 0; i--) {
+        newCardList.unshift(FETCHED_CARDS[fetchedCardIndex--]);
         if (fetchedCardIndex === -1) {
           fetchedCardIndex = FETCHED_CARDS.length - 1;
         }
       }
 
-      // we need to add one extra page for alignment
+      // Add one extra page for alignment after last page for alignment
       for (let i = 0; i < numberOfVisibleCards; i++) {
-        array.push(FETCHED_CARDS[i]);
+        newCardList.push(FETCHED_CARDS[i]);
       }
 
+      /*
+       * Creates new nested array of pages to update useMap()
+       * Example: [[1, [card1, card2, card3]], [2, [card4, card5, card6]]]
+       * Note: This adds an extra page for alignment
+       */
       for (let i = 0; i < pages.size + 1; i++) {
         // Example with 3 visible cards
         // 0, 3
@@ -197,12 +217,9 @@ export const Slider = () => {
         // 9, 12
         const startIndex = i * numberOfVisibleCards;
         const endIndex = startIndex + numberOfVisibleCards;
-        const subArray = array.slice(startIndex, endIndex);
+        const subArray = newCardList.slice(startIndex, endIndex);
         newPages.push([i + 1, subArray]);
       }
-
-      console.log('array', array);
-      console.log('updatedPages', newPages);
 
       pagesAction.reset();
       pagesAction.setAll(newPages);
@@ -211,6 +228,9 @@ export const Slider = () => {
     return;
   };
 
+  useEffect(() => {
+    console.log('isAnimating', isAnimating);
+  }, [isAnimating]);
   // useEffect(() => {
   //   console.log('currentPage', currentPage);
   //   console.log('pages', pages);
@@ -296,11 +316,11 @@ export const Slider = () => {
             return (
               <SliderItem
                 key={`${page}-${index}`}
-                ref={sliderItemRef}
+                ref={page === currentPage && index === 0 ? sliderItemRef : undefined}
                 card={card}
                 index={index}
                 currentPage={currentPage}
-                isVisible={offset === 0} // Only mark as visible if on the current page
+                isVisible={offset === 0}
               />
             );
           });
