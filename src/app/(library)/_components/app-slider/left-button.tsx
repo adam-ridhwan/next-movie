@@ -1,15 +1,13 @@
 import React from 'react';
 
-import { useBoolean, usePages, usePagination } from '@/app/_components/app-slider/_hooks';
-import {
-  calcTranslatePercentage,
-  useAtoms,
-  useRefContext,
-} from '@/app/_components/app-slider/slider-store';
 import { Button } from '@/app/_components/ui/button';
+import { useBoolean, usePages, usePagination } from '@/app/(library)/_components/app-slider/_hooks';
+import { useRefContext } from '@/app/(library)/_components/app-slider/slider-context';
+import { useAtoms } from '@/app/(library)/_components/app-slider/slider-store';
+import { Utils } from '@/app/(library)/_components/app-slider/utils';
 
 const LeftButton = () => {
-  const [pages, actions, cache] = usePages();
+  const { pages, pageActions, cachePageActions } = usePages();
   const [currentPage, { resetToFirstPage, goToPrevPage }] = usePagination();
   const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean();
   const { CARDS, visibleCardsTotal, trailingCardsTotal, setTranslatePercentage } = useAtoms();
@@ -23,7 +21,7 @@ const LeftButton = () => {
     startAnimation();
 
     setTranslatePercentage(
-      calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+      Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
     );
 
     setTimeout(() => {

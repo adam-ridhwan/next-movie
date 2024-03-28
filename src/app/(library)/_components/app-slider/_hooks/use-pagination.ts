@@ -2,7 +2,12 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useCallback } from 'react';
 import { useAtom } from 'jotai/index';
 
-import { currentPageAtom, pagesAtom, useAtoms } from '@/app/_components/app-slider/slider-store';
+import { usePages } from '@/app/(library)/_components/app-slider/_hooks/use-pages';
+import {
+  currentPageAtom,
+  pagesAtom,
+  useAtoms,
+} from '@/app/(library)/_components/app-slider/slider-store';
 
 type UsePaginationActions = {
   goToNextPage: () => void;
@@ -10,6 +15,8 @@ type UsePaginationActions = {
   resetToFirstPage: () => void;
   canGoToNextPage: boolean;
   canGoToPrevPage: boolean;
+  canResetBackToFirstPage: boolean;
+  isLastPage: boolean;
   setPage: Dispatch<SetStateAction<number>>;
 };
 
@@ -20,9 +27,14 @@ export function usePagination(): [number, UsePaginationActions] {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [pages] = useAtom(pagesAtom);
   const maxPage = pages.size;
+  const { cachePageActions } = usePages();
 
-  const canGoToNextPage = currentPage + 1 <= Math.ceil(CARDS.length / visibleCardsTotal);
+  const canGoToNextPage = currentPage + 1 <= maxPage;
   const canGoToPrevPage = currentPage - 1 > 0;
+
+  const isLastPage = currentPage + 1 === maxPage;
+
+  const canResetBackToFirstPage = currentPage + 1 <= Math.ceil(CARDS.length / visibleCardsTotal);
 
   const setPage = useCallback<SetPageCallbackType>(
     page => {
@@ -53,7 +65,8 @@ export function usePagination(): [number, UsePaginationActions] {
 
   const resetToFirstPage = useCallback(() => {
     setCurrentPage(1);
-  }, [setCurrentPage]);
+    cachePageActions.get();
+  }, [cachePageActions, setCurrentPage]);
 
   return [
     currentPage,
@@ -62,7 +75,9 @@ export function usePagination(): [number, UsePaginationActions] {
       goToPrevPage,
       canGoToNextPage,
       canGoToPrevPage,
+      canResetBackToFirstPage,
       setPage,
+      isLastPage,
       resetToFirstPage,
     },
   ];

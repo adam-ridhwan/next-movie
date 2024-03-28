@@ -1,6 +1,9 @@
-import AppSlider from '@/app/_components/app-slider/app-slider';
-import { SliderProvider } from '@/app/_components/app-slider/slider-provider';
-import RefContextProvider, { SliderStore } from '@/app/_components/app-slider/slider-store';
+import React from 'react';
+
+import AppSlider from '@/app/(library)/_components/app-slider/app-slider';
+import { RefContextProvider } from '@/app/(library)/_components/app-slider/slider-context';
+import { SliderProvider } from '@/app/(library)/_components/app-slider/slider-provider';
+import { SliderStore } from '@/app/(library)/_components/app-slider/slider-store';
 
 import { AppFonts } from '../_components/app-fonts';
 import { LibraryStrings } from '../_components/app-strings';

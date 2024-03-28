@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Provider } from 'jotai';
 
 type SliderProviderProps = {

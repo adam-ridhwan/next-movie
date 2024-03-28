@@ -1,4 +1,4 @@
-import { forwardRef, ForwardRefRenderFunction } from 'react';
+import React, { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { AppFonts } from '@/app/_components/app-fonts';

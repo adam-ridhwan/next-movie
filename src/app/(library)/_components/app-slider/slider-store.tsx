@@ -1,21 +1,13 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import React, { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
 import { atom, useAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/react/utils';
 import { freezeAtom } from 'jotai/vanilla/utils';
 
-import { usePages } from '@/app/_components/app-slider/_hooks';
+import { usePages } from '@/app/(library)/_components/app-slider/_hooks';
+import { Utils } from '@/app/(library)/_components/app-slider/utils';
 import { Card } from '@/app/(library)/page';
-
-const MEDIA_QUERY = {
-  sm: 768,
-  md: 1024,
-  lg: 1280,
-  xl: 1536,
-};
-
-const PADDING = 80;
 
 type SliderStoreProps = {
   cards: Card[];
@@ -60,13 +52,13 @@ export const SliderStore = ({ cards, children }: SliderStoreProps) => {
   ]);
 
   const { setTrailingCardsTotal, setVisibleCardsTotal } = useAtoms();
-  const [_, actions, cache] = usePages();
+  const { pageActions, cachePageActions } = usePages();
 
   /** ──────────────────────────────────────────────────────────────────────────
    * Initializes the slider with the first page of cards
    * ──────────────────────────────────────────────────────────────────────── */
   useEffect(() => {
-    const initVisibleCardsTotal = calcVisibleCardsTotal();
+    const initVisibleCardsTotal = Utils.calcVisibleCardsTotal();
     const initPagesTotal = Math.ceil(cards.length / initVisibleCardsTotal);
 
     const initPages: [number, Card[]][] = Array.from({ length: initPagesTotal }, (_, pageIndex) => {
@@ -84,8 +76,8 @@ export const SliderStore = ({ cards, children }: SliderStoreProps) => {
       initPages[initPages.length - 1][1] = [...lastPage, ...cards.slice(0, cardsNeeded)];
     }
 
-    actions.setAll(initPages);
-    cache.set(initPages);
+    pageActions.setAll(initPages);
+    cachePageActions.set(initPages);
     setVisibleCardsTotal(initVisibleCardsTotal);
     setTrailingCardsTotal(lastPage.length);
 
@@ -95,55 +87,3 @@ export const SliderStore = ({ cards, children }: SliderStoreProps) => {
 
   return children;
 };
-
-export const calcVisibleCardsTotal = () => {
-  const windowWidth = window.innerWidth;
-  if (windowWidth < MEDIA_QUERY.sm) return 2;
-  if (windowWidth < MEDIA_QUERY.md) return 3;
-  if (windowWidth < MEDIA_QUERY.lg) return 4;
-  if (windowWidth < MEDIA_QUERY.xl) return 5;
-  return 6;
-};
-
-export const calcTranslatePercentage = ({
-  trailingCardsTotal,
-  sliderRef,
-  sliderItemRef,
-  isLastPage = false,
-}: {
-  trailingCardsTotal: number;
-  sliderRef: RefObject<HTMLDivElement>;
-  sliderItemRef: RefObject<HTMLDivElement>;
-  isLastPage?: boolean;
-}): number => {
-  if (!sliderRef.current || !sliderItemRef.current) return 0;
-
-  const windowWidth = window.innerWidth;
-  const { offsetWidth: sliderWidth } = sliderRef.current;
-  const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
-
-  if (!isLastPage) return ((sliderWidth - PADDING) / windowWidth) * 100;
-  return ((trailingCardsTotal * sliderItemWidth) / windowWidth) * -100;
-};
-
-export const RefContext = createContext<RefContextType>(null);
-
-type RefContextType = {
-  sliderRef: RefObject<HTMLDivElement>;
-  sliderItemRef: RefObject<HTMLDivElement>;
-} | null;
-
-export default function RefContextProvider({ children }: { children: ReactNode }) {
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderItemRef = useRef<HTMLDivElement>(null);
-
-  return <RefContext.Provider value={{ sliderRef, sliderItemRef }}>{children}</RefContext.Provider>;
-}
-
-export function useRefContext() {
-  const context = useContext(RefContext);
-  if (!context) {
-    throw new Error('useRefContext must be used within a RefContextProvider');
-  }
-  return context;
-}

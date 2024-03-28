@@ -1,15 +1,18 @@
 'use client';
 
-import { useBoolean, usePages, usePagination } from '@/app/_components/app-slider/_hooks';
-import LeftButton from '@/app/_components/app-slider/left-button';
-import RightButton from '@/app/_components/app-slider/right-button';
-import SliderItem from '@/app/_components/app-slider/slider-item';
-import { useAtoms, useRefContext } from '@/app/_components/app-slider/slider-store';
+import React from 'react';
+
 import { cn } from '@/app/_lib/utils';
+import { useBoolean, usePages, usePagination } from '@/app/(library)/_components/app-slider/_hooks';
+import LeftButton from '@/app/(library)/_components/app-slider/left-button';
+import RightButton from '@/app/(library)/_components/app-slider/right-button';
+import { useRefContext } from '@/app/(library)/_components/app-slider/slider-context';
+import SliderItem from '@/app/(library)/_components/app-slider/slider-item';
+import { useAtoms } from '@/app/(library)/_components/app-slider/slider-store';
 import { Card } from '@/app/(library)/page';
 
 const AppSlider = () => {
-  const [pages] = usePages();
+  const { pages } = usePages();
   const [currentPage] = usePagination();
   const { value: isAnimating } = useBoolean();
   const { translatePercentage } = useAtoms();

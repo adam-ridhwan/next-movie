@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useCallback } from 'react';
 import { useAtom } from 'jotai/index';
 
-import { isAnimatingAtom } from '@/app/_components/app-slider/slider-store';
+import { isAnimatingAtom } from '@/app/(library)/_components/app-slider/slider-store';
 
 type UseBooleanReturn = {
   value: boolean;
