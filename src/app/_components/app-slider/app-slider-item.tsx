@@ -11,13 +11,11 @@ const developmentMode = true;
 type SliderItemProps = {
   card: TODO;
   index: number;
-  currentPage: number;
-  cardsPerPage?: number;
   isVisible: boolean;
 };
 
 const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
-  { card, index, currentPage, cardsPerPage, isVisible },
+  { card, index, isVisible },
   ref
 ) => {
   const displayNumber = isVisible ? index : '';
@@ -41,14 +39,20 @@ const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
             />
             <div className='absolute bottom-0 left-0 right-0 top-0 bg-gradient-to-t from-black to-transparent' />
             <div className='relative flex flex-row'>
-              <AppFonts.bodySmall className='text-[12px] opacity-75'>{card.year}</AppFonts.bodySmall>
+              <AppFonts.bodySmall className='text-[12px] opacity-75'>
+                {card.year}
+              </AppFonts.bodySmall>
               <AppIcons.dot />
               <div className='flex flex-row items-center gap-1'>
                 <AppIcons.categoryMovie />
-                <AppFonts.bodySmall className='text-[12px] opacity-75'>{card.category}</AppFonts.bodySmall>
+                <AppFonts.bodySmall className='text-[12px] opacity-75'>
+                  {card.category}
+                </AppFonts.bodySmall>
               </div>
               <AppIcons.dot />
-              <AppFonts.bodySmall className='text-[12px] opacity-75'>{card.rating}</AppFonts.bodySmall>
+              <AppFonts.bodySmall className='text-[12px] opacity-75'>
+                {card.rating}
+              </AppFonts.bodySmall>
             </div>
             <div className='relative'>
               <AppFonts.bodyMedium>{card.title}</AppFonts.bodyMedium>
