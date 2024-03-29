@@ -15,6 +15,7 @@ const RightButton = () => {
   const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
   const currentPage = useSliderStore(state => state.currentPage);
+  const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
 
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const maxPage = useSliderStore(state => state.maxPage);
@@ -28,14 +29,21 @@ const RightButton = () => {
     const canGoToNextPage = currentPage + 1 <= maxPage;
     const isLastPage = newCurrentPage === maxPage;
 
-    const newTranslatePercentage = !isLastPage
-      ? -sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
-      : sliderUtils.getTranslatePercentage({
-          trailingCardsTotal,
-          sliderRef,
-          sliderItemRef,
-          isLastPage,
-        });
+    const newTranslatePercentage =
+      !isLastPage || !isFirstPageVisited
+        ? sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.right,
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+          })
+        : sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.right,
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+            isLastPage,
+          });
 
     setTranslatePercentage(newTranslatePercentage);
 

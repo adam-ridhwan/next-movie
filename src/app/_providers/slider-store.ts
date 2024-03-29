@@ -1,13 +1,14 @@
 'use client';
 
+import chalk from 'chalk';
 import { create } from 'zustand';
 
 import { DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 import { Card } from '@/app/(library)/page';
 
-// eslint-disable-next-line no-console
-const log = (x: string) => DEVELOPMENT_MODE && console.log(x);
+// eslint-disable-next-line no-console,@typescript-eslint/no-unused-vars
+const log = (x: string) => DEVELOPMENT_MODE && console.log(chalk.bgCyan.black(x));
 
 type State = {
   CARDS: Card[];
@@ -18,6 +19,8 @@ type State = {
   cardsPerPage: number;
   trailingCardsTotal: number;
   translatePercentage: number;
+  isFirstPageVisited: boolean;
+  isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
 };
@@ -28,6 +31,7 @@ type Actions = {
   updateCardsWhenOnLastPage: () => void;
   goToNextPage: () => void;
   goToPrevPage: () => void;
+  goToLastPage: () => void;
   setPages: (pages: Map<number, Card[]> | Array<[number, Card[]]>) => void;
   resetPages: () => void;
   setCache: (pages: [number, Card[]][]) => void;
@@ -49,12 +53,16 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
     maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
+    isFirstPageVisited: true,
+    isLastPageVisited: false,
     setPages: pages => {
+      // log('setPages()');
       set(() => {
         return { pages: new Map(pages) };
       });
     },
     resetPages: () => {
+      // log('resetPages()');
       set(() => {
         return { pages: new Map() };
       });
@@ -62,37 +70,48 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     currentPage: 1,
     setCurrentPage: currentPage => {
+      // log('setCurrentPage()');
       set(() => {
         return { currentPage };
       });
     },
-
     goToNextPage: () => {
+      // log('goToNextPage()');
       set(state => {
         return { currentPage: state.currentPage + 1 };
       });
     },
-
     goToPrevPage: () => {
+      // log('goToPrevPage()');
       set(state => {
         return { currentPage: state.currentPage - 1 };
       });
     },
-
-    resetToFirstPage: () => {
+    goToLastPage: () => {
+      // log('goToLastPage()');
       set(state => {
-        log('resetToFirstPage()');
-        const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
-        const cardsAfterFirstIndex = state.getCache();
-        const newPages: [number, Card[]][] = [[0, cardsBeforeFirstIndex], ...cardsAfterFirstIndex];
-        return { currentPage: 1, pages: new Map(newPages) };
+        return { currentPage: state.maxPage };
       });
     },
 
-    updateCardsWhenOnLastPage: () => {
+    resetToFirstPage: () => {
+      // log('resetToFirstPage()');
       set(state => {
-        log('updateCardsWhenOnLastPage()');
+        const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
+        const cardsAfterFirstIndex = state.getCache();
+        const newPages: [number, Card[]][] = [[0, cardsBeforeFirstIndex], ...cardsAfterFirstIndex];
 
+        return {
+          currentPage: 1,
+          pages: new Map(newPages),
+          isFirstPageVisited: true,
+          isLastPageVisited: false,
+        };
+      });
+    },
+    updateCardsWhenOnLastPage: () => {
+      // log('updateCardsWhenOnLastPage()');
+      set(state => {
         const newCards: Card[] = [];
         const cardsTotal = state.maxPage * state.cardsPerPage;
 
@@ -109,7 +128,7 @@ export const createSliderStore = (CARDS: Card[]) => {
         newCards.push(...CARDS.slice(0, state.cardsPerPage));
 
         const newPages: [number, Card[]][] = Array.from(
-          { length: state.pages.size + 1 },
+          { length: state.maxPage + 1 },
           (_, pageIndex) => {
             const startIndex = pageIndex * state.cardsPerPage;
             const endIndex = startIndex + state.cardsPerPage;
@@ -118,17 +137,23 @@ export const createSliderStore = (CARDS: Card[]) => {
           }
         );
 
-        return { pages: new Map<number, Card[]>(newPages) };
+        return {
+          pages: new Map<number, Card[]>(newPages),
+          isFirstPageVisited: false,
+          isLastPageVisited: true,
+        };
       });
     },
 
     cache: '',
     setCache: pages => {
+      // log('setCache()');
       set(() => {
         return { cache: JSON.stringify(pages) };
       });
     },
     getCache: () => {
+      // log('getCache()');
       const state = get();
       try {
         return JSON.parse(state.cache);
@@ -140,6 +165,7 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     cardsPerPage: sliderUtils.getCardsPerPage(),
     setCardsPerPage: cardsPerPage => {
+      // log('setCardsPerPage()');
       set(() => {
         return { cardsPerPage };
       });
@@ -147,6 +173,7 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     trailingCardsTotal: 0,
     setTrailingCardsTotal: trailingCardsTotal => {
+      // log('setTrailingCardsTotal()');
       set(() => {
         return { trailingCardsTotal };
       });
@@ -154,11 +181,13 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     translatePercentage: 0,
     setTranslatePercentage: translatePercentage => {
+      // log('setTranslatePercentage()');
       set(() => ({ translatePercentage }));
     },
 
     hasPaginated: false,
     markAsPaginated: () => {
+      // log('markAsPaginated()');
       set(() => {
         return { hasPaginated: true };
       });
@@ -166,16 +195,19 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     isAnimating: false,
     setIsAnimating: (isAnimating: boolean) => {
+      // log('setIsAnimating()');
       set(() => {
         return { isAnimating };
       });
     },
     enableAnimation: () => {
+      // log('enableAnimation()');
       set(() => {
         return { isAnimating: true };
       });
     },
     disableAnimation: () => {
+      // log('disableAnimation()');
       set(() => {
         return { isAnimating: false };
       });

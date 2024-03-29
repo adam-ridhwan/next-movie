@@ -12,25 +12,40 @@ const MEDIA_QUERY = {
 const PADDING = 80;
 const TIMEOUT_DURATION = 700;
 
+const DIRECTION = {
+  left: 'left',
+  right: 'right',
+} as const;
+
+type Direction = (typeof DIRECTION)[keyof typeof DIRECTION];
+
 const getTranslatePercentage = ({
+  direction,
   trailingCardsTotal,
   sliderRef,
   sliderItemRef,
   isLastPage = false,
+  isFirstPage = false,
 }: {
+  direction?: Direction;
   trailingCardsTotal: number;
   sliderRef: RefObject<HTMLDivElement>;
   sliderItemRef: RefObject<HTMLDivElement>;
   isLastPage?: boolean;
+  isFirstPage?: boolean;
 }): number => {
-  if (!sliderRef.current || !sliderItemRef.current) return 0;
+  if (!sliderRef.current || !sliderItemRef.current) throw new Error('Missing ref');
 
   const windowWidth = window.innerWidth;
   const { offsetWidth: sliderWidth } = sliderRef.current;
   const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
 
-  if (!isLastPage) return ((sliderWidth - PADDING) / windowWidth) * 100;
-  return ((trailingCardsTotal * sliderItemWidth) / windowWidth) * -100;
+  const offsetPercentage = ((trailingCardsTotal * sliderItemWidth) / windowWidth) * 100;
+  if (isLastPage) return -offsetPercentage;
+  if (isFirstPage) return offsetPercentage;
+
+  const sliderWidthPercentage = ((sliderWidth - PADDING) / windowWidth) * 100;
+  return direction === DIRECTION.right ? -sliderWidthPercentage : sliderWidthPercentage;
 };
 
 const getCardsPerPage = () => {
@@ -57,4 +72,5 @@ export const sliderUtils = {
   getCardsPerPage,
   useRenderCount,
   TIMEOUT_DURATION,
+  DIRECTION,
 };

@@ -12,20 +12,48 @@ const LeftButton = () => {
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
+  const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
+  const currentPage = useSliderStore(state => state.currentPage);
+  const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
+  const goToLastPage = useSliderStore(state => state.goToLastPage);
+  const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
   const handleLeftScroll = () => {
     enableAnimation();
+    const newCurrentPage = currentPage - 1;
 
-    setTranslatePercentage(
-      sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
-    );
+    const canGoToPrevPage = currentPage - 1 > 1;
+    const isFirstPage = newCurrentPage === 1;
+    const isGoingLeftAfterFirstPage = newCurrentPage < 1;
+
+    const newTranslatePercentage =
+      !isFirstPage || !isLastPageVisited
+        ? sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.left,
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+          })
+        : sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.left,
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+            isFirstPage,
+          });
+
+    setTranslatePercentage(newTranslatePercentage);
 
     setTimeout(() => {
       disableAnimation();
-      goToPrevPage();
+      canGoToPrevPage ? goToPrevPage() : resetToFirstPage();
       setTranslatePercentage(0);
+      if (isGoingLeftAfterFirstPage) {
+        goToLastPage();
+        updateCardsWhenOnLastPage();
+      }
     }, sliderUtils.TIMEOUT_DURATION);
 
     return;
