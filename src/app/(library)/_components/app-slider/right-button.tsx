@@ -29,8 +29,16 @@ const RightButton = () => {
     const isLastPage = newCurrentPage === maxPage;
 
     const newTranslatePercentage = !isLastPage
-      ? -sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+      ? sliderUtils.getTranslatePercentage({
+          direction: sliderUtils.DIRECTION.right,
+
+          trailingCardsTotal,
+          sliderRef,
+          sliderItemRef,
+        })
       : sliderUtils.getTranslatePercentage({
+          direction: sliderUtils.DIRECTION.right,
+
           trailingCardsTotal,
           sliderRef,
           sliderItemRef,

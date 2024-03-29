@@ -1,4 +1,5 @@
 import React from 'react';
+import chalk from 'chalk';
 
 import { Button } from '@/app/_components/ui/button';
 import { useDomProvider } from '@/app/_providers/dom-provider';
@@ -12,19 +13,41 @@ const LeftButton = () => {
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
+  const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
+  const currentPage = useSliderStore(state => state.currentPage);
+  const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
   const handleLeftScroll = () => {
     enableAnimation();
+    const newCurrentPage = currentPage - 1;
 
-    setTranslatePercentage(
-      sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
-    );
+    const canGoToPrevPage = currentPage - 1 > 1;
+    const isFirstPage = newCurrentPage === 1;
+
+    console.log(chalk.black.bgGreen('currentPage:', currentPage, ' '));
+    console.log(chalk.black.bgYellow('newCurrentPage:', newCurrentPage, ' '));
+
+    console.log('canGoToPrevPage', canGoToPrevPage);
+    console.log('isFirstPage', isFirstPage);
+    console.log('');
+
+    const newTranslatePercentage =
+      !isFirstPage || !isLastPageVisited
+        ? sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+        : sliderUtils.getTranslatePercentage({
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+            isFirstPage,
+          });
+
+    setTranslatePercentage(newTranslatePercentage);
 
     setTimeout(() => {
       disableAnimation();
-      goToPrevPage();
+      canGoToPrevPage ? goToPrevPage() : resetToFirstPage();
       setTranslatePercentage(0);
     }, sliderUtils.TIMEOUT_DURATION);
 

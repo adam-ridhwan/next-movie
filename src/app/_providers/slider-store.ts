@@ -18,6 +18,7 @@ type State = {
   cardsPerPage: number;
   trailingCardsTotal: number;
   translatePercentage: number;
+  isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
 };
@@ -49,6 +50,7 @@ export const createSliderStore = (CARDS: Card[]) => {
 
     pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
     maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
+    isLastPageVisited: false,
     setPages: pages => {
       set(() => {
         return { pages: new Map(pages) };
@@ -63,32 +65,31 @@ export const createSliderStore = (CARDS: Card[]) => {
     currentPage: 1,
     setCurrentPage: currentPage => {
       set(() => {
+        log('setCurrentPage()');
+        // console.log('currentPage:', currentPage);
+        // isLastPageVisited: true
         return { currentPage };
       });
     },
-
     goToNextPage: () => {
       set(state => {
         return { currentPage: state.currentPage + 1 };
       });
     },
-
     goToPrevPage: () => {
       set(state => {
         return { currentPage: state.currentPage - 1 };
       });
     },
-
     resetToFirstPage: () => {
       set(state => {
         log('resetToFirstPage()');
         const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
         const cardsAfterFirstIndex = state.getCache();
         const newPages: [number, Card[]][] = [[0, cardsBeforeFirstIndex], ...cardsAfterFirstIndex];
-        return { currentPage: 1, pages: new Map(newPages) };
+        return { currentPage: 1, pages: new Map(newPages), isLastPageVisited: false };
       });
     },
-
     updateCardsWhenOnLastPage: () => {
       set(state => {
         log('updateCardsWhenOnLastPage()');
@@ -118,7 +119,7 @@ export const createSliderStore = (CARDS: Card[]) => {
           }
         );
 
-        return { pages: new Map<number, Card[]>(newPages) };
+        return { pages: new Map<number, Card[]>(newPages), isLastPageVisited: true };
       });
     },
 
