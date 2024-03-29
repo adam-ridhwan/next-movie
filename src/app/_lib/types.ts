@@ -5,7 +5,6 @@ import { z } from 'zod';
 
 export type TODO = any;
 
-export type MongoId = string | ObjectId;
 export const mongoIdSchema = z.string().or(z.instanceof(ObjectId));
 
 export const formResponseSchema = z.object({

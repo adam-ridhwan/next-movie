@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DomContextProvider } from '@/app/_providers/dom-provider';
 import { SliderProvider } from '@/app/_providers/slider-provider';
 import AppSlider from '@/app/(library)/_components/app-slider/app-slider';
@@ -55,11 +53,11 @@ export default function Home() {
             {LibraryStrings.recommendedForYou}
           </AppFonts.headingMedium>
 
-          {/*<SliderProvider cards={MOCK_RECOMMENDED_CARDS}>*/}
-          {/*  <DomContextProvider>*/}
-          {/*    <AppSlider />*/}
-          {/*  </DomContextProvider>*/}
-          {/*</SliderProvider>*/}
+          <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
+            <DomContextProvider>
+              <AppSlider />
+            </DomContextProvider>
+          </SliderProvider>
         </div>
       </div>
     </>

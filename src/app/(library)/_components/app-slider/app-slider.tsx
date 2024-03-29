@@ -1,13 +1,12 @@
 'use client';
 
-import React, { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { cn } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import LeftButton from '@/app/(library)/_components/app-slider/left-button';
 import RightButton from '@/app/(library)/_components/app-slider/right-button';
-import Tile from '@/app/(library)/_components/app-slider/tile-item';
 import TileList from '@/app/(library)/_components/app-slider/tile-list';
 import { Card } from '@/app/(library)/page';
 

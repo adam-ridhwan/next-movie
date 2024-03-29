@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, ReactNode, useContext, useRef } from 'react';
+import { createContext, ReactNode, useContext, useRef } from 'react';
 import { StoreApi, useStore } from 'zustand';
 
 import { createSliderStore, SliderStore } from '@/app/_providers/slider-store';

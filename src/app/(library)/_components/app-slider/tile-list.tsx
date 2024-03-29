@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';

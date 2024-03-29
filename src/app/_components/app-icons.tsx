@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { cn } from '@/app/_lib/utils';
 
 export type SVGProps = {

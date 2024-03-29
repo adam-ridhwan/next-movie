@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
+import { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
 
 type DomContextType = {
   sliderRef: RefObject<HTMLDivElement>;

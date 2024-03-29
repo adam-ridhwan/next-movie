@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '@/app/_components/ui/button';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
