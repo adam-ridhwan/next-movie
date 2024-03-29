@@ -28,21 +28,13 @@ const LeftButton = () => {
     const isFirstPage = newCurrentPage === 1;
     const isGoingLeftAfterFirstPage = newCurrentPage < 1;
 
-    const newTranslatePercentage =
-      !isFirstPage || !isLastPageVisited
-        ? sliderUtils.getTranslatePercentage({
-            direction: sliderUtils.DIRECTION.left,
-            trailingCardsTotal,
-            sliderRef,
-            sliderItemRef,
-          })
-        : sliderUtils.getTranslatePercentage({
-            direction: sliderUtils.DIRECTION.left,
-            trailingCardsTotal,
-            sliderRef,
-            sliderItemRef,
-            isFirstPage,
-          });
+    const newTranslatePercentage = sliderUtils.getTranslatePercentage({
+      direction: sliderUtils.DIRECTION.left,
+      trailingCardsTotal,
+      sliderRef,
+      sliderItemRef,
+      isFirstPage: isFirstPage && isLastPageVisited,
+    });
 
     setTranslatePercentage(newTranslatePercentage);
 

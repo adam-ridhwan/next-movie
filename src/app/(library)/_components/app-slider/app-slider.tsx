@@ -15,8 +15,6 @@ const AppSlider = () => {
   const pages = useSliderStore(state => state.pages);
   const cardsPerPage = useSliderStore(state => state.cardsPerPage);
   const setPages = useSliderStore(state => state.setPages);
-  const setCache = useSliderStore(state => state.setCache);
-  const setTrailingCardsTotal = useSliderStore(state => state.setTrailingCardsTotal);
   const isAnimating = useSliderStore(state => state.isAnimating);
   const translatePercentage = useSliderStore(state => state.translatePercentage);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -45,9 +43,7 @@ const AppSlider = () => {
       pages[pages.length - 1][1] = [...lastPage, ...CARDS.slice(0, cardsNeeded)];
     }
 
-    setPages(pages);
-    setCache(pages);
-    setTrailingCardsTotal(lastPage.length);
+    setPages(pages, lastPage.length);
 
     // prevCardsPerPageRef.current = cardsPerPage;
     // eslint-disable-next-line react-hooks/exhaustive-deps

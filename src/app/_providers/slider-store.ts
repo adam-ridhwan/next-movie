@@ -32,7 +32,10 @@ type Actions = {
   goToNextPage: () => void;
   goToPrevPage: () => void;
   goToLastPage: () => void;
-  setPages: (pages: Map<number, Card[]> | Array<[number, Card[]]>) => void;
+  setPages: (
+    pages: Map<number, Card[]> | Array<[number, Card[]]>,
+    trailingCardsTotal: number
+  ) => void;
   resetPages: () => void;
   setCache: (pages: [number, Card[]][]) => void;
   getCache: () => Array<[number, Card[]]>;
@@ -55,10 +58,10 @@ export const createSliderStore = (CARDS: Card[]) => {
     maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
     isFirstPageVisited: true,
     isLastPageVisited: false,
-    setPages: pages => {
+    setPages: (pages, trailingCardsTotal) => {
       // log('setPages()');
       set(() => {
-        return { pages: new Map(pages) };
+        return { pages: new Map(pages), cache: JSON.stringify(pages), trailingCardsTotal };
       });
     },
     resetPages: () => {
