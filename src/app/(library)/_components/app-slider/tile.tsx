@@ -3,10 +3,8 @@ import Image from 'next/image';
 
 import { AppFonts } from '@/app/_components/app-fonts';
 import { AppIcons } from '@/app/_components/app-icons';
-import { cn } from '@/app/_lib/utils';
+import { cn, DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { Card } from '@/app/(library)/page';
-
-const developmentMode = true;
 
 type TileProps = {
   card: Card;
@@ -22,7 +20,7 @@ const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
 
   return (
     <div ref={ref} className={cn('slider-tile p-1', `tile-${displayNumber}`)}>
-      {developmentMode ? (
+      {DEVELOPMENT_MODE ? (
         <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-8xl outline outline-black'>
           {card?.id ?? 'NaN'}
         </div>

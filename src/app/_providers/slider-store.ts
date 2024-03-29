@@ -2,13 +2,12 @@
 
 import { create } from 'zustand';
 
+import { DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 import { Card } from '@/app/(library)/page';
 
-const isDevelopmentMode = process.env.NEXT_PUBLIC_NODE_ENV === 'development';
-
 // eslint-disable-next-line no-console
-const log = console.log;
+const log = (x: string) => DEVELOPMENT_MODE && console.log(x);
 
 type State = {
   CARDS: Card[];
