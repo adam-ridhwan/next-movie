@@ -7,7 +7,7 @@ import { DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 import { Card } from '@/app/(library)/page';
 
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console,@typescript-eslint/no-unused-vars
 const log = (x: string) => DEVELOPMENT_MODE && console.log(chalk.bgCyan.black(x));
 
 type State = {
