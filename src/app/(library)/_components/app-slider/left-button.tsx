@@ -1,34 +1,31 @@
 import React from 'react';
 
 import { Button } from '@/app/_components/ui/button';
-import { useBoolean, usePages, usePagination } from '@/app/(library)/_components/app-slider/_hooks';
-import { useRefContext } from '@/app/(library)/_components/app-slider/slider-context';
-import { useAtoms } from '@/app/(library)/_components/app-slider/slider-store';
-import { Utils } from '@/app/(library)/_components/app-slider/utils';
+import { useDomProvider } from '@/app/_providers/dom-provider';
+import { useSliderStore } from '@/app/_providers/slider-provider';
+import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 
 const LeftButton = () => {
-  const { pages, pageActions, cachePageActions } = usePages();
-  const [currentPage, { resetToFirstPage, goToPrevPage }] = usePagination();
-  const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean();
-  const { CARDS, visibleCardsTotal, trailingCardsTotal, setTranslatePercentage } = useAtoms();
-  const { sliderRef, sliderItemRef } = useRefContext();
+  const { sliderRef, sliderItemRef } = useDomProvider();
 
-  // /** ────────────────────────────────────────────────────────────────────────────────
-  //  * Handles the scroll event when the user clicks LEFT arrow
-  //  * @returns void
-  //  * * ────────────────────────────────────────────────────────────────────────────── */
+  const isAnimating = useSliderStore(state => state.isAnimating);
+  const enableAnimation = useSliderStore(state => state.enableAnimation);
+  const disableAnimation = useSliderStore(state => state.disableAnimation);
+  const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
+  const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
+  const goToPrevPage = useSliderStore(state => state.goToPrevPage);
+
   const handleLeftScroll = () => {
-    startAnimation();
-
+    enableAnimation();
     setTranslatePercentage(
-      Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+      sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
     );
 
     setTimeout(() => {
-      stopAnimation();
+      disableAnimation();
       goToPrevPage();
       setTranslatePercentage(0);
-    }, 700);
+    }, sliderUtils.TIMEOUT_DURATION);
 
     return;
   };

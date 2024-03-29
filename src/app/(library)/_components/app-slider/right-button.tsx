@@ -1,41 +1,51 @@
 import React from 'react';
 
 import { Button } from '@/app/_components/ui/button';
-import { useBoolean, usePages, usePagination } from '@/app/(library)/_components/app-slider/_hooks';
-import { useRefContext } from '@/app/(library)/_components/app-slider/slider-context';
-import { useAtoms } from '@/app/(library)/_components/app-slider/slider-store';
-import { Utils } from '@/app/(library)/_components/app-slider/utils';
+import { useDomProvider } from '@/app/_providers/dom-provider';
+import { useSliderStore } from '@/app/_providers/slider-provider';
+import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 
 const RightButton = () => {
-  const { pageActions } = usePages();
-  const [_, { resetToFirstPage, goToNextPage, haveMoreCardsToLoad, isLastPage }] = usePagination();
-  const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean();
-  const { trailingCardsTotal, setTranslatePercentage } = useAtoms();
-  const { sliderRef, sliderItemRef } = useRefContext();
+  const isAnimating = useSliderStore(state => state.isAnimating);
+  const enableAnimation = useSliderStore(state => state.enableAnimation);
+  const disableAnimation = useSliderStore(state => state.disableAnimation);
+  const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
+  const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
+  const goToNextPage = useSliderStore(state => state.goToNextPage);
+  const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
+  const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
+  const currentPage = useSliderStore(state => state.currentPage);
+
+  const markAsPaginated = useSliderStore(state => state.markAsPaginated);
+  const maxPage = useSliderStore(state => state.maxPage);
+
+  const { sliderRef, sliderItemRef } = useDomProvider();
 
   const handleRightScroll = () => {
-    startAnimation();
+    enableAnimation();
+    const newCurrentPage = currentPage + 1;
 
-    const newTranslatePercentage =
-      !isLastPage || !haveMoreCardsToLoad
-        ? -Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
-        : Utils.calcTranslatePercentage({
-            trailingCardsTotal,
-            sliderRef,
-            sliderItemRef,
-            isLastPage,
-          });
+    const canGoToNextPage = currentPage + 1 <= maxPage;
+    const isLastPage = newCurrentPage === maxPage;
+
+    const newTranslatePercentage = !isLastPage
+      ? -sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+      : sliderUtils.getTranslatePercentage({
+          trailingCardsTotal,
+          sliderRef,
+          sliderItemRef,
+          isLastPage,
+        });
 
     setTranslatePercentage(newTranslatePercentage);
 
     setTimeout(() => {
-      stopAnimation();
+      disableAnimation();
+      markAsPaginated();
       setTranslatePercentage(0);
-      goToNextPage();
-      if (!isLastPage) return;
-      if (!haveMoreCardsToLoad) return resetToFirstPage();
-      pageActions.resetToInitial();
-    }, 700);
+      canGoToNextPage ? goToNextPage() : resetToFirstPage();
+      if (isLastPage) updateCardsWhenOnLastPage();
+    }, sliderUtils.TIMEOUT_DURATION);
 
     return;
   };

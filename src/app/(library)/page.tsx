@@ -1,9 +1,8 @@
 import React from 'react';
 
+import { DomContextProvider } from '@/app/_providers/dom-provider';
+import { SliderProvider } from '@/app/_providers/slider-provider';
 import AppSlider from '@/app/(library)/_components/app-slider/app-slider';
-import { RefContextProvider } from '@/app/(library)/_components/app-slider/slider-context';
-import { SliderProvider } from '@/app/(library)/_components/app-slider/slider-provider';
-import { SliderStore } from '@/app/(library)/_components/app-slider/slider-store';
 
 import { AppFonts } from '../_components/app-fonts';
 import { LibraryStrings } from '../_components/app-strings';
@@ -44,12 +43,10 @@ export default function Home() {
             {LibraryStrings.trending}
           </AppFonts.headingMedium>
 
-          <SliderProvider>
-            <SliderStore cards={MOCK_TRENDING_CARDS}>
-              <RefContextProvider>
-                <AppSlider />
-              </RefContextProvider>
-            </SliderStore>
+          <SliderProvider cards={MOCK_TRENDING_CARDS}>
+            <DomContextProvider>
+              <AppSlider />
+            </DomContextProvider>
           </SliderProvider>
         </div>
 
@@ -58,12 +55,10 @@ export default function Home() {
             {LibraryStrings.recommendedForYou}
           </AppFonts.headingMedium>
 
-          <SliderProvider>
-            <SliderStore cards={MOCK_RECOMMENDED_CARDS}>
-              <RefContextProvider>
-                <AppSlider />
-              </RefContextProvider>
-            </SliderStore>
+          <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
+            <DomContextProvider>
+              <AppSlider />
+            </DomContextProvider>
           </SliderProvider>
         </div>
       </div>

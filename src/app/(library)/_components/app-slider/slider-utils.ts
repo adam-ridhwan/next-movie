@@ -1,4 +1,6 @@
-import { RefObject } from 'react';
+'use client';
+
+import { RefObject, useEffect, useRef } from 'react';
 
 const MEDIA_QUERY = {
   sm: 768,
@@ -8,8 +10,9 @@ const MEDIA_QUERY = {
 };
 
 const PADDING = 80;
+const TIMEOUT_DURATION = 700;
 
-const calcTranslatePercentage = ({
+const getTranslatePercentage = ({
   trailingCardsTotal,
   sliderRef,
   sliderItemRef,
@@ -30,8 +33,8 @@ const calcTranslatePercentage = ({
   return ((trailingCardsTotal * sliderItemWidth) / windowWidth) * -100;
 };
 
-const calcVisibleCardsTotal = () => {
-  const windowWidth = window.innerWidth;
+const getCardsPerPage = () => {
+  const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
   if (windowWidth < MEDIA_QUERY.sm) return 2;
   if (windowWidth < MEDIA_QUERY.md) return 3;
   if (windowWidth < MEDIA_QUERY.lg) return 4;
@@ -39,7 +42,19 @@ const calcVisibleCardsTotal = () => {
   return 6;
 };
 
-export const Utils = {
-  calcTranslatePercentage,
-  calcVisibleCardsTotal,
+export const useRenderCount = () => {
+  const ref = useRef(0);
+
+  useEffect(() => {
+    ref.current += 1;
+  });
+
+  return ref.current;
+};
+
+export const sliderUtils = {
+  getTranslatePercentage,
+  getCardsPerPage,
+  useRenderCount,
+  TIMEOUT_DURATION,
 };

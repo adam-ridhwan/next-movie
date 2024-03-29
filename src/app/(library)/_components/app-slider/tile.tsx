@@ -3,27 +3,27 @@ import Image from 'next/image';
 
 import { AppFonts } from '@/app/_components/app-fonts';
 import { AppIcons } from '@/app/_components/app-icons';
-import { TODO } from '@/app/_lib/types';
 import { cn } from '@/app/_lib/utils';
+import { Card } from '@/app/(library)/page';
 
 const developmentMode = true;
 
-type SliderItemProps = {
-  card: TODO;
+type TileProps = {
+  card: Card;
   index: number;
   isVisible: boolean;
 };
 
-const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
+const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
   { card, index, isVisible },
   ref
 ) => {
   const displayNumber = isVisible ? index : '';
 
   return (
-    <div ref={ref} className={cn('slider-item p-1', `slider-item-${displayNumber}`)}>
+    <div ref={ref} className={cn('slider-tile p-1', `tile-${displayNumber}`)}>
       {developmentMode ? (
-        <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-5xl outline outline-black'>
+        <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-8xl outline outline-black'>
           {card?.id ?? 'NaN'}
         </div>
       ) : (
@@ -64,4 +64,4 @@ const SliderItem: ForwardRefRenderFunction<HTMLDivElement, SliderItemProps> = (
   );
 };
 
-export default forwardRef(SliderItem);
+export default forwardRef(Tile);
