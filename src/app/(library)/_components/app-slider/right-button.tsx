@@ -16,18 +16,17 @@ const RightButton = () => {
   const handleRightScroll = () => {
     startAnimation();
 
-    !isLastPage || !haveMoreCardsToLoad
-      ? setTranslatePercentage(
-          Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef }) * -1
-        )
-      : setTranslatePercentage(
-          Utils.calcTranslatePercentage({
+    const newTranslatePercentage =
+      !isLastPage || !haveMoreCardsToLoad
+        ? -Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+        : Utils.calcTranslatePercentage({
             trailingCardsTotal,
             sliderRef,
             sliderItemRef,
             isLastPage,
-          })
-        );
+          });
+
+    setTranslatePercentage(newTranslatePercentage);
 
     setTimeout(() => {
       stopAnimation();
