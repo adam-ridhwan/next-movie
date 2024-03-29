@@ -1,7 +1,26 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
   "rules": {
     "no-console": ["warn", { "allow": ["error"] }],
-    "no-unused-vars": "warn"
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn", {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ]
   }
 }

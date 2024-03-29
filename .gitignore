@@ -20,6 +20,7 @@
 *.pem
 frontendmentor
 data.json
+.idea
 
 # debug
 npm-debug.log*

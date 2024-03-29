@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { env } from '@/lib/env';
 import { signIn } from '@/app/_actions/signIn';
+import { env } from '@/app/_lib/env';
 
 const { NEXTAUTH_SECRET } = env;
 

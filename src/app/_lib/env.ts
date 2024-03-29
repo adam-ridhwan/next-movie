@@ -1,5 +1,6 @@
 import { cleanEnv, str } from 'envalid';
 
+// only works in server side
 export const env = cleanEnv(process.env, {
   NEXT_PUBLIC_NODE_ENV: str(),
 
@@ -9,4 +10,5 @@ export const env = cleanEnv(process.env, {
   USERS_COLLECTION: str(),
 
   NEXTAUTH_SECRET: str(),
+  NEXTAUTH_URL: str(),
 });

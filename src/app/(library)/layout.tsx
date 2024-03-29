@@ -1,11 +1,13 @@
+import React from 'react';
+
 import '../globals.css';
 
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import AuthProvider from '@/providers/auth-provider';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/_lib/utils';
+import AuthProvider from '@/app/_providers/auth-provider';
 
 import AppNavBar from '../_components/app-nav-bar';
 
@@ -27,6 +29,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           )}
         >
           <AppNavBar />
+          <div className='fixed bottom-0 left-1/2 top-0 -translate-x-1/2 border border-pink-500' />
+
           {children}
         </body>
       </html>
