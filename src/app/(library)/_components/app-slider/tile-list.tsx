@@ -36,6 +36,19 @@ const TileList = () => {
             nextCard = CARDS[nextCardIndex];
           }
 
+          let labelIndex;
+          if ((offset === -1 && index === cardsPerPage - 1) || (offset === 1 && index === 0)) {
+            labelIndex = offset === -1 ? -1 : cardsPerPage;
+          } else {
+            labelIndex = index;
+          }
+
+          // Calculate the isVisible condition similarly
+          const isVisible =
+            offset === 0 ||
+            (offset === -1 && index === cardsPerPage - 1) ||
+            (offset === 1 && index === 0);
+
           return (
             <Fragment key={`${page}-${index}`}>
               {offset === -1 && index === 0 && <Tile card={prevCard} index={index} />}
@@ -43,8 +56,8 @@ const TileList = () => {
               <Tile
                 ref={page === currentPage && index === 0 ? sliderItemRef : undefined}
                 card={card}
-                index={index}
-                isVisible={offset === 0}
+                index={labelIndex}
+                isVisible={isVisible}
               />
 
               {offset === 1 && index === cardsPerPage - 1 && <Tile card={nextCard} index={index} />}
