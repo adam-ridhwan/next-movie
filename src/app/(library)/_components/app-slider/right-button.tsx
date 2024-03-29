@@ -8,8 +8,7 @@ import { Utils } from '@/app/(library)/_components/app-slider/utils';
 
 const RightButton = () => {
   const { pageActions } = usePages();
-  const [_, { resetToFirstPage, goToNextPage, canResetBackToFirstPage, isLastPage }] =
-    usePagination();
+  const [_, { resetToFirstPage, goToNextPage, haveMoreCardsToLoad, isLastPage }] = usePagination();
   const { value: isAnimating, setTrue: startAnimation, setFalse: stopAnimation } = useBoolean();
   const { trailingCardsTotal, setTranslatePercentage } = useAtoms();
   const { sliderRef, sliderItemRef } = useRefContext();
@@ -17,7 +16,7 @@ const RightButton = () => {
   const handleRightScroll = () => {
     startAnimation();
 
-    !isLastPage || !canResetBackToFirstPage
+    !isLastPage || !haveMoreCardsToLoad
       ? setTranslatePercentage(
           Utils.calcTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef }) * -1
         )
@@ -33,11 +32,11 @@ const RightButton = () => {
     setTimeout(() => {
       stopAnimation();
       setTranslatePercentage(0);
-      if (!canResetBackToFirstPage) return resetToFirstPage();
       goToNextPage();
       if (!isLastPage) return;
+      if (!haveMoreCardsToLoad) return resetToFirstPage();
       pageActions.resetToInitial();
-    }, 800);
+    }, 700);
 
     return;
   };

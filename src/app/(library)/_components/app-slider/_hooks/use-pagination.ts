@@ -15,7 +15,7 @@ type UsePaginationActions = {
   resetToFirstPage: () => void;
   canGoToNextPage: boolean;
   canGoToPrevPage: boolean;
-  canResetBackToFirstPage: boolean;
+  haveMoreCardsToLoad: boolean;
   isLastPage: boolean;
   setPage: Dispatch<SetStateAction<number>>;
 };
@@ -34,7 +34,16 @@ export function usePagination(): [number, UsePaginationActions] {
 
   const isLastPage = currentPage + 1 === maxPage;
 
-  const canResetBackToFirstPage = currentPage + 1 <= Math.ceil(CARDS.length / visibleCardsTotal);
+  const haveMoreCardsToLoad = currentPage + 1 <= Math.ceil(CARDS.length / visibleCardsTotal);
+
+  console.log('currentPage', currentPage);
+  console.log('maxPage', maxPage);
+  console.log('canGoToNextPage', canGoToNextPage);
+  console.log('isLastPage', isLastPage);
+  console.log('haveMoreCardsToLoad', haveMoreCardsToLoad);
+
+  console.log('newPage', currentPage + 1);
+  console.log('maxPage including one extra', Math.ceil(CARDS.length / visibleCardsTotal));
 
   const setPage = useCallback<SetPageCallbackType>(
     page => {
@@ -75,7 +84,7 @@ export function usePagination(): [number, UsePaginationActions] {
       goToPrevPage,
       canGoToNextPage,
       canGoToPrevPage,
-      canResetBackToFirstPage,
+      haveMoreCardsToLoad,
       setPage,
       isLastPage,
       resetToFirstPage,
