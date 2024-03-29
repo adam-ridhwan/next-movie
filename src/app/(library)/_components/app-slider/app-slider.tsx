@@ -1,22 +1,20 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import { cn } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import LeftButton from '@/app/(library)/_components/app-slider/left-button';
 import RightButton from '@/app/(library)/_components/app-slider/right-button';
-import Tile from '@/app/(library)/_components/app-slider/tile';
+import Tile from '@/app/(library)/_components/app-slider/tile-item';
+import TileList from '@/app/(library)/_components/app-slider/tile-list';
 import { Card } from '@/app/(library)/page';
 
 const AppSlider = () => {
   const CARDS = useSliderStore(state => state.CARDS);
-  const pages = useSliderStore(state => state.pages);
   const cardsPerPage = useSliderStore(state => state.cardsPerPage);
   const setPages = useSliderStore(state => state.setPages);
-  const setCache = useSliderStore(state => state.setCache);
-  const setTrailingCardsTotal = useSliderStore(state => state.setTrailingCardsTotal);
   const isAnimating = useSliderStore(state => state.isAnimating);
   const translatePercentage = useSliderStore(state => state.translatePercentage);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -25,7 +23,7 @@ const AppSlider = () => {
 
   const isSliderPaginated = hasPaginated || currentPage > 1;
 
-  const { sliderRef, sliderItemRef } = useDomProvider();
+  const { sliderRef } = useDomProvider();
 
   // const renderCount = useRenderCount();
 
@@ -45,9 +43,7 @@ const AppSlider = () => {
       pages[pages.length - 1][1] = [...lastPage, ...CARDS.slice(0, cardsNeeded)];
     }
 
-    setPages(pages);
-    setCache(pages);
-    setTrailingCardsTotal(lastPage.length);
+    setPages(pages, lastPage.length);
 
     // prevCardsPerPageRef.current = cardsPerPage;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,24 +71,7 @@ const AppSlider = () => {
           transform: translatePercentage ? `translate3d(${translatePercentage}%, 0, 0)` : undefined,
         }}
       >
-        {[-1, 0, 1].map(offset => {
-          // Determine the actual page number based on offset
-          // -1 = previous page
-          //  0 = current page
-          //  1 = next page
-          const page = currentPage + offset;
-          return pages
-            ?.get(page)
-            ?.map((card: Card, index: number) => (
-              <Tile
-                key={`${page}-${index}`}
-                ref={page === currentPage && index === 0 ? sliderItemRef : undefined}
-                card={card}
-                index={index}
-                isVisible={offset === 0}
-              />
-            ));
-        })}
+        <TileList />
       </div>
 
       {isSliderPaginated && <LeftButton />}

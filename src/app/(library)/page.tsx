@@ -55,11 +55,11 @@ export default function Home() {
             {LibraryStrings.recommendedForYou}
           </AppFonts.headingMedium>
 
-          <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
-            <DomContextProvider>
-              <AppSlider />
-            </DomContextProvider>
-          </SliderProvider>
+          {/*<SliderProvider cards={MOCK_RECOMMENDED_CARDS}>*/}
+          {/*  <DomContextProvider>*/}
+          {/*    <AppSlider />*/}
+          {/*  </DomContextProvider>*/}
+          {/*</SliderProvider>*/}
         </div>
       </div>
     </>
