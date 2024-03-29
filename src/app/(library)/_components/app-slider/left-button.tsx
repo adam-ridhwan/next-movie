@@ -1,5 +1,4 @@
 import React from 'react';
-import chalk from 'chalk';
 
 import { Button } from '@/app/_components/ui/button';
 import { useDomProvider } from '@/app/_providers/dom-provider';
@@ -16,6 +15,8 @@ const LeftButton = () => {
   const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
+  const goToLastPage = useSliderStore(state => state.goToLastPage);
+  const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
@@ -25,18 +26,18 @@ const LeftButton = () => {
 
     const canGoToPrevPage = currentPage - 1 > 1;
     const isFirstPage = newCurrentPage === 1;
-
-    console.log(chalk.black.bgGreen('currentPage:', currentPage, ' '));
-    console.log(chalk.black.bgYellow('newCurrentPage:', newCurrentPage, ' '));
-
-    console.log('canGoToPrevPage', canGoToPrevPage);
-    console.log('isFirstPage', isFirstPage);
-    console.log('');
+    const isGoingLeftAfterFirstPage = newCurrentPage < 1;
 
     const newTranslatePercentage =
       !isFirstPage || !isLastPageVisited
-        ? sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
+        ? sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.left,
+            trailingCardsTotal,
+            sliderRef,
+            sliderItemRef,
+          })
         : sliderUtils.getTranslatePercentage({
+            direction: sliderUtils.DIRECTION.left,
             trailingCardsTotal,
             sliderRef,
             sliderItemRef,
@@ -49,6 +50,10 @@ const LeftButton = () => {
       disableAnimation();
       canGoToPrevPage ? goToPrevPage() : resetToFirstPage();
       setTranslatePercentage(0);
+      if (isGoingLeftAfterFirstPage) {
+        goToLastPage();
+        updateCardsWhenOnLastPage();
+      }
     }, sliderUtils.TIMEOUT_DURATION);
 
     return;
