@@ -43,7 +43,6 @@ const TileList = () => {
             labelIndex = index;
           }
 
-          // Calculate the isVisible condition similarly
           const isVisible =
             offset === 0 ||
             (offset === -1 && index === cardsPerPage - 1) ||
