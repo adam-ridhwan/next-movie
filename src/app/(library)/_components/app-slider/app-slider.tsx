@@ -7,7 +7,7 @@ import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import LeftButton from '@/app/(library)/_components/app-slider/left-button';
 import RightButton from '@/app/(library)/_components/app-slider/right-button';
-import SliderItem from '@/app/(library)/_components/app-slider/tile';
+import Tile from '@/app/(library)/_components/app-slider/tile';
 import { Card } from '@/app/(library)/page';
 
 const AppSlider = () => {
@@ -82,7 +82,7 @@ const AppSlider = () => {
           return pages
             ?.get(page)
             ?.map((card: Card, index: number) => (
-              <SliderItem
+              <Tile
                 key={`${page}-${index}`}
                 ref={page === currentPage && index === 0 ? sliderItemRef : undefined}
                 card={card}
