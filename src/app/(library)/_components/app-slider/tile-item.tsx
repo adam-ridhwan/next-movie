@@ -9,20 +9,22 @@ import { Card } from '@/app/(library)/page';
 type TileProps = {
   card: Card;
   index: number;
-  isVisible: boolean;
+  isVisible?: boolean;
 };
 
-const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
-  { card, index, isVisible },
+const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
+  { card, index, isVisible = false },
   ref
 ) => {
-  const displayNumber = isVisible ? index : '';
+  const displayNumber = isVisible ? index + 1 : '';
 
   return (
     <div ref={ref} className={cn('slider-tile p-1', `tile-${displayNumber}`)}>
       {DEVELOPMENT_MODE ? (
         <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-8xl outline outline-black'>
           {card?.id ?? 'NaN'}
+          <div className='absolute right-1 top-0 text-4xl'>{card?.id ?? 'NaN'}</div>
+          <div className='absolute left-1 top-0 text-4xl'>{card?.id ?? 'NaN'}</div>
         </div>
       ) : (
         <>
@@ -62,4 +64,4 @@ const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
   );
 };
 
-export default forwardRef(Tile);
+export default forwardRef(TileItem);
