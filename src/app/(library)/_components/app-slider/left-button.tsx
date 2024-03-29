@@ -6,8 +6,6 @@ import { useSliderStore } from '@/app/_providers/slider-provider';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 
 const LeftButton = () => {
-  const { sliderRef, sliderItemRef } = useDomProvider();
-
   const isAnimating = useSliderStore(state => state.isAnimating);
   const enableAnimation = useSliderStore(state => state.enableAnimation);
   const disableAnimation = useSliderStore(state => state.disableAnimation);
@@ -15,8 +13,11 @@ const LeftButton = () => {
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
 
+  const { sliderRef, sliderItemRef } = useDomProvider();
+
   const handleLeftScroll = () => {
     enableAnimation();
+
     setTranslatePercentage(
       sliderUtils.getTranslatePercentage({ trailingCardsTotal, sliderRef, sliderItemRef })
     );
