@@ -83,7 +83,7 @@ export const createSliderStore = (CARDS: Card[]) =>
           return new Map();
         }
       },
-      resetToFirstPage: () => {
+      resetToFirstPage: () =>
         set(state => {
           const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
           const cardsAfterFirstIndex = state.getCache();
@@ -98,15 +98,14 @@ export const createSliderStore = (CARDS: Card[]) =>
             isFirstPageVisited: true,
             isLastPageVisited: false,
           };
-        });
-      },
+        }),
       setPages: (pages, trailingCardsTotal) =>
         set(() => ({
           pages: new Map(pages),
           cache: JSON.stringify(pages),
           trailingCardsTotal,
         })),
-      updateCardsWhenOnLastPage: () => {
+      updateCardsWhenOnLastPage: () =>
         set(state => {
           const newCards: Card[] = [];
           const cardsTotal = state.maxPage * state.cardsPerPage;
@@ -138,7 +137,6 @@ export const createSliderStore = (CARDS: Card[]) =>
             isFirstPageVisited: false,
             isLastPageVisited: true,
           };
-        });
-      },
+        }),
     }))
   );
