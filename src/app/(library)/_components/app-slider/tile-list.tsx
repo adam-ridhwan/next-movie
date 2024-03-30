@@ -21,45 +21,65 @@ const TileList = () => {
         //  1 = next page
         const page = currentPage + offset;
         return pages?.get(page)?.map((card: Card, index: number) => {
-          let prevCard: Card = card;
-          let nextCard: Card = card;
+          const isFirstItemCurrentPage = page === currentPage && index === 0;
 
-          const cardIndex = CARDS.indexOf(card);
+          const isFirstPlaceholder = offset === -1 && index === 0;
+          const isLastPlaceholder = offset === 1 && index === cardsPerPage - 1;
 
-          if (offset === -1 && index === 0) {
-            const prevCardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length;
-            prevCard = CARDS[prevCardIndex];
-          }
+          const lastItemPreviousPage = offset === -1 && index === cardsPerPage - 1;
+          const allItemsCurrentPage = offset === 0;
+          const firstItemNextPage = offset === 1 && index === 0;
 
-          if (offset === 1 && index === cardsPerPage - 1) {
-            const nextCardIndex = (cardIndex + 1) % CARDS.length;
-            nextCard = CARDS[nextCardIndex];
-          }
+          const getPrevCard = () => {
+            if (offset !== -1 && index !== 0) return card;
 
-          let labelIndex;
-          if ((offset === -1 && index === cardsPerPage - 1) || (offset === 1 && index === 0)) {
-            labelIndex = offset === -1 ? -1 : cardsPerPage;
-          } else {
-            labelIndex = index;
-          }
+            const prevPage = pages.get(currentPage - 1);
+            if (!prevPage) throw new Error('First item not found');
 
-          const isVisible =
-            offset === 0 ||
-            (offset === -1 && index === cardsPerPage - 1) ||
-            (offset === 1 && index === 0);
+            const indexOfFirstItem = CARDS.findIndex(card => card.id === prevPage[0].id);
+            if (indexOfFirstItem === -1) throw new Error('Index of first item not found');
+
+            const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : CARDS.length - 1;
+            return CARDS[indexOfPreviousItem];
+          };
+
+          const getNextCard = (): Card => {
+            if (offset !== 1 && index !== cardsPerPage - 1) return card;
+
+            const nextPage = pages.get(currentPage + 1);
+            if (!nextPage) throw new Error('Next item not found');
+
+            const indexOfLastItem = CARDS.findIndex(
+              card => card.id === nextPage[cardsPerPage - 1].id
+            );
+            if (indexOfLastItem === -1) throw new Error('Index of last item not found');
+
+            const indexOfNextItem = indexOfLastItem === CARDS.length - 1 ? 0 : indexOfLastItem + 1;
+            return CARDS[indexOfNextItem];
+          };
+
+          const getDisplayNumber = () => {
+            if (offset === 1) return cardsPerPage + 1;
+            if (offset === -1) return 0;
+            return index + 1;
+          };
 
           return (
             <Fragment key={`${page}-${index}`}>
-              {offset === -1 && index === 0 && <Tile card={prevCard} index={index} />}
+              {isFirstPlaceholder && (
+                <Tile card={getPrevCard()} displayNumber={getDisplayNumber()} />
+              )}
 
               <Tile
-                ref={page === currentPage && index === 0 ? sliderItemRef : undefined}
+                ref={isFirstItemCurrentPage ? sliderItemRef : undefined}
                 card={card}
-                index={labelIndex}
-                isVisible={isVisible}
+                displayNumber={getDisplayNumber()}
+                isVisibleOnScreen={lastItemPreviousPage || allItemsCurrentPage || firstItemNextPage}
               />
 
-              {offset === 1 && index === cardsPerPage - 1 && <Tile card={nextCard} index={index} />}
+              {isLastPlaceholder && (
+                <Tile card={getNextCard()} displayNumber={getDisplayNumber()} />
+              )}
             </Fragment>
           );
         });

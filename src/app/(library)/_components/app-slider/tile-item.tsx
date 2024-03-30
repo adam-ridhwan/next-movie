@@ -6,32 +6,33 @@ import { AppIcons } from '@/app/_components/app-icons';
 import { cn, DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { Card } from '@/app/(library)/page';
 
-type TileProps = {
+type TileItemProps = {
   card: Card;
-  index: number;
-  isVisible?: boolean;
+  displayNumber: number;
+  isVisibleOnScreen?: boolean;
 };
 
-const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
-  { card, index, isVisible = false },
+const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
+  { card, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
-  const displayNumber = isVisible ? index + 1 : '';
-
   return (
-    <div ref={ref} className={cn('slider-tile p-1', `tile-${displayNumber}`)}>
+    <div
+      ref={ref}
+      className={cn('slider-tile p-1', `tile-${isVisibleOnScreen ? displayNumber : ''}`)}
+    >
       {DEVELOPMENT_MODE ? (
         <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-8xl outline outline-black'>
-          {card?.id ?? 'NaN'}
-          <div className='absolute right-1 top-0 text-4xl'>{card?.id ?? 'NaN'}</div>
-          <div className='absolute left-1 top-0 text-4xl'>{card?.id ?? 'NaN'}</div>
+          {card.id}
+          <div className='absolute right-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
+          <div className='absolute left-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
         </div>
       ) : (
         <>
           <div className='relative flex aspect-video flex-col justify-end gap-1 p-4'>
             <Image
               src={card.imageUrl}
-              alt='image'
+              alt='thumbnail'
               priority
               fill
               sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
