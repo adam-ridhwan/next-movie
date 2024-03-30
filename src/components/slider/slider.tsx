@@ -23,8 +23,6 @@ const Slider = () => {
 
   const { sliderRef } = useDomProvider();
 
-  // const renderCount = useRenderCount();
-
   useEffect(() => {
     const pages: PagesArray = Array.from({ length: maxPage }, (_, pageIndex) => {
       const startIndex = pageIndex * cardsPerPage;
@@ -42,8 +40,6 @@ const Slider = () => {
     }
 
     setPages(pages, lastPage.length);
-
-    // prevCardsPerPageRef.current = cardsPerPage;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

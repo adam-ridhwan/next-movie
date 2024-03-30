@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Entertainment Web App by Frontend Mentor',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
       <html lang='en'>

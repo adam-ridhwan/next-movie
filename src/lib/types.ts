@@ -14,7 +14,6 @@ export const formResponseSchema = z.object({
   message: z.string(),
   user: z.any().nullable().optional(),
 });
-
 export type FormResponse = z.infer<typeof formResponseSchema>;
 
 export const userSchema = z.object({
@@ -28,3 +27,13 @@ export const userSchema = z.object({
 export type User = z.infer<typeof userSchema>;
 
 export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
+
+export const cardSchema = z.object({
+  id: z.string(),
+  imageUrl: z.string(),
+  year: z.string(),
+  category: z.string(),
+  rating: z.string(),
+  title: z.string(),
+});
+export type Card = z.infer<typeof cardSchema>;

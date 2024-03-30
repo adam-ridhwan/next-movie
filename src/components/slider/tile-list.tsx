@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 import { useDomProvider } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { Card } from '@/lib/types';
 import Tile from '@/components/slider/tile-item';
-import { Card } from '@/app/(library)/page';
 
 const TileList = () => {
   const CARDS = useSliderStore(state => state.CARDS);

@@ -4,7 +4,7 @@ import { LogoIcon } from '@/components/shared/icons';
 import { AuthStrings } from '@/components/shared/strings';
 import { Button } from '@/components/shared/ui/button';
 
-export default function SignUpPage() {
+export default async function SignUpPage() {
   return (
     <>
       <div className='container flex h-full max-w-[500px] flex-col items-center'>

@@ -1,18 +1,10 @@
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
+import { Card } from '@/lib/types';
 import { HeadingMedium } from '@/components/shared/fonts';
 import { LibraryStrings } from '@/components/shared/strings';
 import Slider from '@/components/slider/slider';
-
-export type Card = {
-  id: string;
-  imageUrl: string;
-  year: string;
-  category: string;
-  rating: string;
-  title: string;
-};
 
 const MOCK_TRENDING_CARDS: Card[] = Array.from({ length: 9 }, (_, index) => ({
   id: `${index + 1}`,
@@ -32,7 +24,7 @@ const MOCK_RECOMMENDED_CARDS: Card[] = Array.from({ length: 13 }, (_, index) => 
   title: `Recommended Movie ${index + 1}`,
 }));
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <div className=''>
