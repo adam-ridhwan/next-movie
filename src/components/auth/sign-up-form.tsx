@@ -2,8 +2,8 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from '@/actions/signIn';
-import { signUp, SignUpData } from '@/actions/signUp';
+import { signIn } from '@/actions/sign-in';
+import { signUp, SignUpData } from '@/actions/sign-up';
 
 import { BodyMedium } from '@/components/shared/fonts';
 import { AuthStrings } from '@/components/shared/strings';

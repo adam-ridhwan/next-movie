@@ -2,9 +2,9 @@
 
 import bcrypt from 'bcrypt';
 
-import { AuthStrings, ErrorStrings } from '@/app/components/app-strings';
-import { connectToDatabase } from '@/app/lib/connectToDatabase';
-import { FormResponse, userSchema } from '@/app/lib/types';
+import { connectToDatabase } from '@/lib/connectToDatabase';
+import { FormResponse, userSchema } from '@/lib/types';
+import { AuthStrings, ErrorStrings } from '@/components/shared/strings';
 
 const SALT_ROUNDS = 10;
 

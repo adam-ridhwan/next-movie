@@ -1,4 +1,4 @@
-import { signIn } from '@/actions/signIn';
+import { signIn } from '@/actions/sign-in';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
