@@ -1,9 +1,9 @@
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import AppSlider from '@/components/app-slider/app-slider';
 import { HeadingMedium } from '@/components/shared/fonts';
 import { LibraryStrings } from '@/components/shared/strings';
+import Slider from '@/components/slider/slider';
 
 export type Card = {
   id: string;
@@ -41,7 +41,7 @@ export default function Home() {
 
           <SliderProvider cards={MOCK_TRENDING_CARDS}>
             <DomContextProvider>
-              <AppSlider />
+              <Slider />
             </DomContextProvider>
           </SliderProvider>
         </div>
@@ -51,7 +51,7 @@ export default function Home() {
 
           <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
             <DomContextProvider>
-              <AppSlider />
+              <Slider />
             </DomContextProvider>
           </SliderProvider>
         </div>

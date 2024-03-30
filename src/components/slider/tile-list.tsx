@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useDomProvider } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import Tile from '@/components/app-slider/tile-item';
+import Tile from '@/components/slider/tile-item';
 import { Card } from '@/app/(library)/page';
 
 const TileList = () => {

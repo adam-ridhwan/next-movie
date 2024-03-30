@@ -7,11 +7,11 @@ import { PagesArray } from '@/providers/slider-store';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import LeftButton from '@/components/app-slider/left-button';
-import RightButton from '@/components/app-slider/right-button';
-import TileList from '@/components/app-slider/tile-list';
+import LeftButton from '@/components/slider/left-button';
+import RightButton from '@/components/slider/right-button';
+import TileList from '@/components/slider/tile-list';
 
-const AppSlider = () => {
+const Slider = () => {
   const CARDS = useSliderStore(state => state.CARDS);
   const cardsPerPage = useSliderStore(state => state.cardsPerPage);
   const setPages = useSliderStore(state => state.setPages);
@@ -73,4 +73,4 @@ const AppSlider = () => {
   );
 };
 
-export default AppSlider;
+export default Slider;
