@@ -6,11 +6,12 @@ import { devtools } from 'zustand/middleware';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
 import { Card } from '@/app/(library)/page';
 
-type Pages = Map<number, Card[]> | Array<[number, Card[]]>;
+export type PagesMap = Map<number, Card[]>;
+export type PagesArray = Array<[number, Card[]]>;
 
 type State = {
   CARDS: Card[];
-  pages: Map<number, Card[]>;
+  pages: PagesMap;
   maxPage: number;
   currentPage: number;
   cache: string;
@@ -21,7 +22,6 @@ type State = {
   isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
-  isHoveringSlider: boolean;
 };
 
 type Actions = {
@@ -31,10 +31,10 @@ type Actions = {
   goToNextPage: () => void;
   goToPrevPage: () => void;
   goToLastPage: () => void;
-  setPages: (pages: Pages, trailingCardsTotal: number) => void;
+  setPages: (pages: PagesArray, trailingCardsTotal: number) => void;
   resetPages: () => void;
-  setCache: (pages: [number, Card[]][]) => void;
-  getCache: () => Array<[number, Card[]]>;
+  setCache: (pages: PagesArray) => void;
+  getCache: () => PagesArray;
   setCardsPerPage: (cardsPerPage: number) => void;
   setTrailingCardsTotal: (trailingCardsTotal: number) => void;
   setTranslatePercentage: (translatePercentage: number) => void;
@@ -42,8 +42,6 @@ type Actions = {
   setIsAnimating: (isAnimating: boolean) => void;
   enableAnimation: () => void;
   disableAnimation: () => void;
-  enterSlider: () => void;
-  leaveSlider: () => void;
 };
 
 export type SliderStore = State & Actions;
@@ -52,6 +50,8 @@ export const createSliderStore = (CARDS: Card[]) =>
   create(
     devtools<SliderStore>((set, get) => ({
       CARDS: CARDS,
+      pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
+      maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
       cache: '',
       cardsPerPage: sliderUtils.getCardsPerPage(),
       currentPage: 1,
@@ -59,11 +59,8 @@ export const createSliderStore = (CARDS: Card[]) =>
       isAnimating: false,
       isFirstPageVisited: true,
       isLastPageVisited: false,
-      maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
-      pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
       trailingCardsTotal: 0,
       translatePercentage: 0,
-      isHoveringSlider: false,
 
       disableAnimation: () => set(() => ({ isAnimating: false })),
       enableAnimation: () => set(() => ({ isAnimating: true })),
@@ -78,8 +75,6 @@ export const createSliderStore = (CARDS: Card[]) =>
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
       setCache: pages => set(() => ({ cache: JSON.stringify(pages) })),
-      enterSlider: () => set(() => ({ isHoveringSlider: true })),
-      leaveSlider: () => set(() => ({ isHoveringSlider: false })),
       getCache: () => {
         const state = get();
         try {
@@ -93,10 +88,7 @@ export const createSliderStore = (CARDS: Card[]) =>
         set(state => {
           const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
           const cardsAfterFirstIndex = state.getCache();
-          const newPages: [number, Card[]][] = [
-            [0, cardsBeforeFirstIndex],
-            ...cardsAfterFirstIndex,
-          ];
+          const newPages: PagesArray = [[0, cardsBeforeFirstIndex], ...cardsAfterFirstIndex];
 
           return {
             currentPage: 1,
@@ -128,18 +120,16 @@ export const createSliderStore = (CARDS: Card[]) =>
           // so that the cards are aligned properly
           newCards.push(...CARDS.slice(0, state.cardsPerPage));
 
-          const newPages: [number, Card[]][] = Array.from(
-            { length: state.maxPage + 1 },
-            (_, pageIndex) => {
-              const startIndex = pageIndex * state.cardsPerPage;
-              const endIndex = startIndex + state.cardsPerPage;
-              const newCardsGroup = newCards.slice(startIndex, endIndex);
-              return [pageIndex + 1, newCardsGroup];
-            }
-          );
+          // TODO: Instead of using array, just directly create the pages using a map
+          const newPages: PagesArray = Array.from({ length: state.maxPage + 1 }, (_, pageIndex) => {
+            const startIndex = pageIndex * state.cardsPerPage;
+            const endIndex = startIndex + state.cardsPerPage;
+            const newCardsGroup = newCards.slice(startIndex, endIndex);
+            return [pageIndex + 1, newCardsGroup];
+          });
 
           return {
-            pages: new Map<number, Card[]>(newPages),
+            pages: new Map(newPages),
             isFirstPageVisited: false,
             isLastPageVisited: true,
           };
