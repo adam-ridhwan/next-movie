@@ -2,8 +2,8 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
-import { CategoryMovieIcon, DotIcon } from '@/components/app-icons';
 import { BodyMedium, BodySmall } from '@/components/shared/fonts';
+import { CategoryMovieIcon, DotIcon } from '@/components/shared/icons';
 import { Card } from '@/app/(library)/page';
 
 type TileItemProps = {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import { AvatarIcon } from '@/components/app-icons';
+import { AvatarIcon } from '@/components/shared/icons';
 import { Button } from '@/components/shared/ui/button';
 import {
   DropdownMenu,
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/shared/ui/dropdown-menu';
 
-import SignOutButton from './sign-out-button';
+import SignOutButton from './auth/sign-out-button';
 
 const AvatarDropdown = () => {
   const { data: session, status } = useSession();

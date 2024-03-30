@@ -23,4 +23,4 @@ export const ErrorStrings = {
 export const LibraryStrings = {
   trending: 'Trending',
   recommendedForYou: 'Recommended for you',
-};
+} as const;

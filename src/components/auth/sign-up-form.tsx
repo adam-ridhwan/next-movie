@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { signIn } from '@/actions/signIn';
 import { signUp, SignUpData } from '@/actions/signUp';
 
-import { AppFonts } from '@/app/components/app-fonts';
-import { AuthStrings } from '@/app/components/app-strings';
-import { Input } from '@/app/components/ui/input';
+import { BodyMedium } from '@/components/shared/fonts';
+import { AuthStrings } from '@/components/shared/strings';
+import { Input } from '@/components/shared/ui/input';
 
 import SignUpButton from './sign-up-button';
 
@@ -66,7 +66,7 @@ export const SignUpForm = () => {
         onFocus={() => setError('')}
       />
       <div className='h-10 pt-2'>
-        {<AppFonts.bodyMedium className='font-medium text-red'>{error}</AppFonts.bodyMedium>}
+        <BodyMedium className='font-medium text-red'>{error}</BodyMedium>
       </div>
       <SignUpButton />
     </form>

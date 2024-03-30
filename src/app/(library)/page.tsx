@@ -2,8 +2,8 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import AppSlider from '@/components/app-slider/app-slider';
-import { LibraryStrings } from '@/components/app-strings';
 import { HeadingMedium } from '@/components/shared/fonts';
+import { LibraryStrings } from '@/components/shared/strings';
 
 export type Card = {
   id: string;
