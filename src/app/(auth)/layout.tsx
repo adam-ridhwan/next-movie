@@ -3,9 +3,9 @@ import '../globals.css';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { AuthProvider } from '@/providers/auth-provider';
 
-import { cn } from '@/app/lib/utils';
-import AuthProvider from '@/app/providers/auth-provider';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 

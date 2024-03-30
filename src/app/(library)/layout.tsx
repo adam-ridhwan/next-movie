@@ -3,7 +3,7 @@ import '../globals.css';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import AuthProvider from '@/providers/auth-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 
 import { cn } from '@/lib/utils';
 import NavBar from '@/components/nav-bar';
