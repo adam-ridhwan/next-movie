@@ -54,15 +54,11 @@ const LeftButton = () => {
   return (
     <>
       {hasPaginated && (
-        // eslint-disable-next-line react/jsx-no-undef
         <Button
           disabled={isAnimating}
           onClick={() => handleLeftScroll()}
           variant='ghost'
-          className={
-            'absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-bl-none' +
-            ' rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
-          }
+          className='absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
         >
           <span className='opacity-0 group-hover:opacity-100'>{'<'}</span>
         </Button>

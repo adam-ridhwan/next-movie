@@ -54,10 +54,7 @@ const RightButton = () => {
         disabled={isAnimating}
         onClick={() => handleRightScroll()}
         variant='ghost'
-        className={
-          'absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-br-none' +
-          ' rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30'
-        }
+        className='absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30'
       >
         <span className='opacity-0 group-hover:opacity-100'>{'>'}</span>
       </Button>
