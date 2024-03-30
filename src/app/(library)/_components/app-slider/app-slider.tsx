@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 
-import { cn } from '@/app/_lib/utils';
+import { cn, DEVELOPMENT_MODE } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
+import { PagesArray } from '@/app/_providers/slider-store';
 import LeftButton from '@/app/(library)/_components/app-slider/left-button';
 import RightButton from '@/app/(library)/_components/app-slider/right-button';
 import TileList from '@/app/(library)/_components/app-slider/tile-list';
-import { Card } from '@/app/(library)/page';
 
 const AppSlider = () => {
   const CARDS = useSliderStore(state => state.CARDS);
@@ -20,15 +20,13 @@ const AppSlider = () => {
   const maxPage = useSliderStore(state => state.maxPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isSliderPaginated = hasPaginated || currentPage > 1;
-  const enterSlider = useSliderStore(state => state.enterSlider);
-  const leaveSlider = useSliderStore(state => state.leaveSlider);
 
   const { sliderRef } = useDomProvider();
 
   // const renderCount = useRenderCount();
 
   useEffect(() => {
-    const pages: [number, Card[]][] = Array.from({ length: maxPage }, (_, pageIndex) => {
+    const pages: PagesArray = Array.from({ length: maxPage }, (_, pageIndex) => {
       const startIndex = pageIndex * cardsPerPage;
       const endIndex = startIndex + cardsPerPage;
       return [pageIndex + 1, CARDS.slice(startIndex, endIndex)];
@@ -52,22 +50,15 @@ const AppSlider = () => {
   return (
     <div
       ref={sliderRef}
-      className={cn(
-        'relative flex w-full',
-        'bg-yellow-600' // for testing purposes
-      )}
-      onMouseEnter={() => enterSlider()}
-      onMouseLeave={() => leaveSlider()}
+      className={cn('relative flex w-full', { 'bg-yellow-600': DEVELOPMENT_MODE })}
     >
       <div className='fixed left-1/2 top-0  text-[60px] font-bold'>{currentPage}</div>
       <div
         className={cn(
-          'slider relative flex w-full flex-row px-10',
-          'bg-green-600', // for testing purposes
+          'slider group relative flex w-full flex-row px-10',
           { 'justify-center': isSliderPaginated },
-          {
-            'transition-transform duration-700': isAnimating,
-          }
+          { 'transition-transform duration-700': isAnimating },
+          { 'bg-green-600': DEVELOPMENT_MODE }
         )}
         style={{
           transform: translatePercentage ? `translate3d(${translatePercentage}%, 0, 0)` : undefined,
