@@ -1,7 +1,7 @@
-import { useDomProvider } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { sliderUtils } from '@/components/app-slider/slider-utils';
+import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
+import { useTranslatePercentage } from '@/lib/hooks/use-translate-percentage';
 import { Button } from '@/components/shared/ui/button';
 
 const LeftButton = () => {
@@ -18,7 +18,7 @@ const LeftButton = () => {
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
-  const { sliderRef, sliderItemRef } = useDomProvider();
+  const getTranslatePercentage = useTranslatePercentage();
 
   const handleLeftScroll = () => {
     enableAnimation();
@@ -28,11 +28,9 @@ const LeftButton = () => {
     const isFirstPage = newCurrentPage === 1;
     const isGoingLeftAfterFirstPage = newCurrentPage < 1;
 
-    const newTranslatePercentage = sliderUtils.getTranslatePercentage({
-      direction: sliderUtils.DIRECTION.left,
+    const newTranslatePercentage = getTranslatePercentage({
+      direction: SLIDE_DIRECTION.LEFT,
       trailingCardsTotal,
-      sliderRef,
-      sliderItemRef,
       isFirstPage: isFirstPage && isLastPageVisited,
     });
 
@@ -46,7 +44,7 @@ const LeftButton = () => {
         goToLastPage();
         updateCardsWhenOnLastPage();
       }
-    }, sliderUtils.TIMEOUT_DURATION);
+    }, TIMEOUT_DURATION);
 
     return;
   };

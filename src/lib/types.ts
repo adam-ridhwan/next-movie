@@ -3,6 +3,8 @@
 import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
+import { SLIDE_DIRECTION } from '@/lib/constants';
+
 export type TODO = any;
 
 export const mongoIdSchema = z.string().or(z.instanceof(ObjectId));
@@ -24,3 +26,5 @@ export const userSchema = z.object({
   image: z.string().nullable().optional(),
 });
 export type User = z.infer<typeof userSchema>;
+
+export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
