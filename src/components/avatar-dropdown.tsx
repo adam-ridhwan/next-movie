@@ -2,9 +2,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import { AppIcons } from './app-icons';
-import SignOutButton from './sign-out-button';
-import { Button } from './ui/button';
+import { AvatarIcon } from '@/components/app-icons';
+import { Button } from '@/components/shared/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from '@/components/shared/ui/dropdown-menu';
+
+import SignOutButton from './sign-out-button';
 
 const AvatarDropdown = () => {
   const { data: session, status } = useSession();
@@ -21,9 +22,13 @@ const AvatarDropdown = () => {
 
   return (
     <>
-      <DropdownMenu open={isAvatarDropdownOpen} onOpenChange={setIsAvatarDropdownOpen} modal={false}>
+      <DropdownMenu
+        open={isAvatarDropdownOpen}
+        onOpenChange={setIsAvatarDropdownOpen}
+        modal={false}
+      >
         <DropdownMenuTrigger>
-          <AppIcons.avatar />
+          <AvatarIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuSeparator />
@@ -37,7 +42,7 @@ const AvatarDropdown = () => {
             <>
               <DropdownMenuItem>
                 <Button asChild>
-                  <Link href='/sign-in' className='w-full border-2 border-white p-10'>
+                  <Link href={'/sign-in'} className='w-full border-2 border-white p-10'>
                     Sign in
                   </Link>
                 </Button>

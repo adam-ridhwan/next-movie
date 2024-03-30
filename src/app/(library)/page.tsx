@@ -1,9 +1,9 @@
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { AppFonts } from '@/components/app-fonts';
 import AppSlider from '@/components/app-slider/app-slider';
 import { LibraryStrings } from '@/components/app-strings';
+import { HeadingMedium } from '@/components/shared/fonts';
 
 export type Card = {
   id: string;
@@ -37,9 +37,7 @@ export default function Home() {
     <>
       <div className=''>
         <div className='pt-5'>
-          <AppFonts.headingMedium className='pl-10'>
-            {LibraryStrings.trending}
-          </AppFonts.headingMedium>
+          <HeadingMedium className='pl-10'>{LibraryStrings.trending}</HeadingMedium>
 
           <SliderProvider cards={MOCK_TRENDING_CARDS}>
             <DomContextProvider>
@@ -49,9 +47,7 @@ export default function Home() {
         </div>
 
         <div className='pt-5'>
-          <AppFonts.headingMedium className='pl-10'>
-            {LibraryStrings.recommendedForYou}
-          </AppFonts.headingMedium>
+          <HeadingMedium className='pl-10'>{LibraryStrings.recommendedForYou}</HeadingMedium>
 
           <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
             <DomContextProvider>

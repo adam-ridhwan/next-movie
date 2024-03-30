@@ -1,8 +1,8 @@
 import { useDomProvider } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { Button } from '@/components/ui/button';
 import { sliderUtils } from '@/components/app-slider/slider-utils';
+import { Button } from '@/components/shared/ui/button';
 
 const LeftButton = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);

@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 
-import { Button } from './ui/button';
+import { Button } from '@/components/shared/ui/button';
 
 const SignOutButton = () => {
   const handleSignOut = async () => {

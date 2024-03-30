@@ -5,35 +5,28 @@ type FontProps = {
   className?: string;
 };
 
-const headingLarge = ({ children, className }: FontProps) => (
+const HeadingLarge = ({ children, className }: FontProps) => (
   <span className={cn('text-[32px] font-light', className)}>{children}</span>
 );
 
-const headingMedium = ({ children, className }: FontProps) => (
+const HeadingMedium = ({ children, className }: FontProps) => (
   <span className={cn('text-[24px] font-light', className)}>{children}</span>
 );
 
-const headingSmall = ({ children, className }: FontProps) => (
+const HeadingSmall = ({ children, className }: FontProps) => (
   <span className={cn('text-[24px] font-medium', className)}>{children}</span>
 );
 
-const headingExtraSmall = ({ children, className }: FontProps) => (
+const HeadingExtraSmall = ({ children, className }: FontProps) => (
   <span className={cn('text-[18px] font-medium', className)}>{children}</span>
 );
 
-const bodyMedium = ({ children, className }: FontProps) => (
+const BodyMedium = ({ children, className }: FontProps) => (
   <span className={cn('font-light, className text-[15px]', className)}>{children}</span>
 );
 
-const bodySmall = ({ children, className }: FontProps) => (
+const BodySmall = ({ children, className }: FontProps) => (
   <span className={cn('font-light, className text-[13px]', className)}>{children}</span>
 );
 
-export const AppFonts = {
-  headingLarge,
-  headingMedium,
-  headingSmall,
-  headingExtraSmall,
-  bodyMedium,
-  bodySmall,
-} as const;
+export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall };

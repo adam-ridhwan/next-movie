@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 import AuthProvider from '@/providers/auth-provider';
 
 import { cn } from '@/lib/utils';
-import AppNavBar from '@/components/app-nav-bar';
+import NavBar from '@/components/nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             // 'border-4 border-green-500'
           )}
         >
-          <AppNavBar />
+          <NavBar />
           <div className='fixed bottom-0 left-1/2 top-0 -translate-x-1/2 border border-pink-500' />
 
           {children}

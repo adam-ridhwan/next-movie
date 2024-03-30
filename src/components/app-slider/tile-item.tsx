@@ -2,10 +2,9 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
+import { CategoryMovieIcon, DotIcon } from '@/components/app-icons';
+import { BodyMedium, BodySmall } from '@/components/shared/fonts';
 import { Card } from '@/app/(library)/page';
-
-import { AppFonts } from '../app-fonts';
-import { AppIcons } from '../app-icons';
 
 type TileItemProps = {
   card: Card;
@@ -43,23 +42,17 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
               className='object-cover'
             />
             <div className='relative flex flex-row'>
-              <AppFonts.bodySmall className='text-[12px] opacity-75'>
-                {card.year}
-              </AppFonts.bodySmall>
-              <AppIcons.dot />
+              <BodySmall className='text-[12px] opacity-75'>{card.year}</BodySmall>
+              <DotIcon />
               <div className='flex flex-row items-center gap-1'>
-                <AppIcons.categoryMovie />
-                <AppFonts.bodySmall className='text-[12px] opacity-75'>
-                  {card.category}
-                </AppFonts.bodySmall>
+                <CategoryMovieIcon />
+                <BodySmall className='text-[12px] opacity-75'>{card.category}</BodySmall>
               </div>
-              <AppIcons.dot />
-              <AppFonts.bodySmall className='text-[12px] opacity-75'>
-                {card.rating}
-              </AppFonts.bodySmall>
+              <DotIcon />
+              <BodySmall className='text-[12px] opacity-75'>{card.rating}</BodySmall>
             </div>
             <div className='relative'>
-              <AppFonts.bodyMedium>{card.title}</AppFonts.bodyMedium>
+              <BodyMedium>{card.title}</BodyMedium>
             </div>
           </div>
         </>

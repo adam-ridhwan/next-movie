@@ -4,7 +4,7 @@ export type SVGProps = {
   className?: string;
 };
 
-const logo = ({ className }: SVGProps) => (
+const LogoIcon = ({ className }: SVGProps) => (
   <svg
     width='33'
     height='27'
@@ -15,7 +15,7 @@ const logo = ({ className }: SVGProps) => (
   </svg>
 );
 
-const bookMarkEmpty = ({ className }: SVGProps) => (
+const BookMarkEmptyIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
@@ -29,7 +29,7 @@ const bookMarkEmpty = ({ className }: SVGProps) => (
   </svg>
 );
 
-const bookMarkFull = ({ className }: SVGProps) => (
+const BookMarkFullIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M10.61 0c.14 0 .273.028.4.083a1.03 1.03 0 0 1 .657.953v11.928a1.03 1.03 0 0 1-.656.953c-.116.05-.25.074-.402.074-.291 0-.543-.099-.756-.296L5.833 9.77l-4.02 3.924c-.218.203-.47.305-.756.305a.995.995 0 0 1-.4-.083A1.03 1.03 0 0 1 0 12.964V1.036A1.03 1.03 0 0 1 .656.083.995.995 0 0 1 1.057 0h9.552Z'
@@ -38,7 +38,7 @@ const bookMarkFull = ({ className }: SVGProps) => (
   </svg>
 );
 
-const categoryMovie = ({ className }: SVGProps) => (
+const CategoryMovieIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-3.5 w-3.5 fill-secondary', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -52,7 +52,7 @@ const categoryMovie = ({ className }: SVGProps) => (
   </svg>
 );
 
-const categoryTv = ({ className }: SVGProps) => (
+const CategoryTvIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M12 2.689H5.448L7.068.722 6.132 0 4.2 2.345 2.268.017l-.936.705 1.62 1.967H0V12h12V2.689Zm-4.8 8.147h-6V3.853h6v6.983Zm3-2.328H9V7.344h1.2v1.164Zm0-2.328H9V5.016h1.2V6.18Z'
@@ -62,7 +62,7 @@ const categoryTv = ({ className }: SVGProps) => (
   </svg>
 );
 
-const navHome = ({ className }: SVGProps) => (
+const NavHomeIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -72,7 +72,7 @@ const navHome = ({ className }: SVGProps) => (
   </svg>
 );
 
-const navMovies = ({ className }: SVGProps) => (
+const NavMoviesIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -82,7 +82,7 @@ const navMovies = ({ className }: SVGProps) => (
   </svg>
 );
 
-const navTvSeries = ({ className }: SVGProps) => (
+const NavTvSeriesIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -92,7 +92,7 @@ const navTvSeries = ({ className }: SVGProps) => (
   </svg>
 );
 
-const navBookmark = ({ className }: SVGProps) => (
+const NavBookmarkIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -102,7 +102,7 @@ const navBookmark = ({ className }: SVGProps) => (
   </svg>
 );
 
-const play = ({ className }: SVGProps) => (
+const PlayIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M15 0C6.713 0 0 6.713 0 15c0 8.288 6.713 15 15 15 8.288 0 15-6.712 15-15 0-8.287-6.712-15-15-15Zm-3 21V8l9 6.5-9 6.5Z'
@@ -111,7 +111,7 @@ const play = ({ className }: SVGProps) => (
   </svg>
 );
 
-const search = ({ className }: SVGProps) => (
+const SearchIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M27.613 25.72 23.08 21.2a10.56 10.56 0 0 0 2.253-6.533C25.333 8.776 20.558 4 14.667 4S4 8.776 4 14.667c0 5.89 4.776 10.666 10.667 10.666A10.56 10.56 0 0 0 21.2 23.08l4.52 4.533a1.333 1.333 0 0 0 1.893 0 1.333 1.333 0 0 0 0-1.893ZM6.667 14.667a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z'
@@ -120,7 +120,7 @@ const search = ({ className }: SVGProps) => (
   </svg>
 );
 
-const avatar = ({ className }: SVGProps) => (
+const AvatarIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-8 w-8 fill-white', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -130,7 +130,7 @@ const avatar = ({ className }: SVGProps) => (
   </svg>
 );
 
-const dot = ({ className }: SVGProps) => (
+const DotIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -145,18 +145,18 @@ const dot = ({ className }: SVGProps) => (
   </svg>
 );
 
-export const AppIcons = {
-  logo,
-  bookMarkEmpty,
-  bookMarkFull,
-  categoryMovie,
-  categoryTv,
-  navBookmark,
-  navHome,
-  navMovies,
-  navTvSeries,
-  play,
-  search,
-  avatar,
-  dot,
-} as const;
+export {
+  LogoIcon,
+  BookMarkEmptyIcon,
+  BookMarkFullIcon,
+  CategoryMovieIcon,
+  CategoryTvIcon,
+  NavBookmarkIcon,
+  NavHomeIcon,
+  NavMoviesIcon,
+  NavTvSeriesIcon,
+  PlayIcon,
+  SearchIcon,
+  AvatarIcon,
+  DotIcon,
+};

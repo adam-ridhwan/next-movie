@@ -4,24 +4,30 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
+import {
+  LogoIcon,
+  NavBookmarkIcon,
+  NavHomeIcon,
+  NavMoviesIcon,
+  NavTvSeriesIcon,
+} from '@/components/app-icons';
 
-import { AppIcons } from './app-icons';
 import AvatarDropdown from './avatar-dropdown';
 
 const ROUTES = {
-  home: { path: '/', Icon: AppIcons.navHome },
-  movies: { path: '/movies', Icon: AppIcons.navMovies },
-  tvSeries: { path: '/tv-series', Icon: AppIcons.navTvSeries },
-  bookmarks: { path: '/bookmarks', Icon: AppIcons.navBookmark },
+  home: { path: '/', Icon: NavHomeIcon },
+  movies: { path: '/movies', Icon: NavMoviesIcon },
+  tvSeries: { path: '/tv-series', Icon: NavTvSeriesIcon },
+  bookmarks: { path: '/bookmarks', Icon: NavBookmarkIcon },
 } as const;
 
-const AppNavBar = () => {
+const NavBar = () => {
   const pathname = usePathname();
 
   return (
     <>
       <div className={cn('flex flex-row items-center justify-between bg-darkerBlue px-6 py-2 ')}>
-        <AppIcons.logo />
+        <LogoIcon />
         <nav>
           <ul className={cn('flex flex-row gap-4', 'lg:gap-10')}>
             {Object.entries(ROUTES).map(([key, { path, Icon }]) => (
@@ -46,4 +52,4 @@ const AppNavBar = () => {
   );
 };
 
-export default AppNavBar;
+export default NavBar;
