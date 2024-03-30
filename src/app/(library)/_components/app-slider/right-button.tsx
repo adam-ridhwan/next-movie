@@ -25,7 +25,7 @@ const RightButton = () => {
     enableAnimation();
     const newCurrentPage = currentPage + 1;
 
-    const canGoToNextPage = currentPage + 1 <= maxPage;
+    const canGoToNextPage = newCurrentPage <= maxPage;
     const isLastPage = newCurrentPage === maxPage;
 
     const newTranslatePercentage = sliderUtils.getTranslatePercentage({
