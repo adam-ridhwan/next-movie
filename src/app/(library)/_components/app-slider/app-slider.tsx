@@ -50,12 +50,12 @@ const AppSlider = () => {
   return (
     <div
       ref={sliderRef}
-      className={cn('relative flex w-full', { 'bg-yellow-600': DEVELOPMENT_MODE })}
+      className={cn('group relative flex w-full', { 'bg-yellow-600': DEVELOPMENT_MODE })}
     >
-      <div className='fixed left-1/2 top-0  text-[60px] font-bold'>{currentPage}</div>
+      <div className='fixed left-1/2 top-0 text-[60px] font-bold'>{currentPage}</div>
       <div
         className={cn(
-          'slider group relative flex w-full flex-row px-10',
+          'slider relative flex w-full flex-row px-10',
           { 'justify-center': isSliderPaginated },
           { 'transition-transform duration-700': isAnimating },
           { 'bg-green-600': DEVELOPMENT_MODE }

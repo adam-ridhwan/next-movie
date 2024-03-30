@@ -55,12 +55,12 @@ const LeftButton = () => {
       <Button
         disabled={isAnimating}
         onClick={() => handleLeftScroll()}
-        className={cn(
-          `absolute left-0 top-0 flex h-full w-10 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50`
-        )}
         variant='ghost'
+        className={
+          'absolute left-0 top-0 flex h-full w-10 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
+        }
       >
-        <span className='opacity-0 group-hover:opacity-100 '>{'<'}</span>
+        <span className='opacity-0 group-hover:opacity-100'>{'<'}</span>
       </Button>
     </>
   );

@@ -15,7 +15,6 @@ const RightButton = () => {
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
-  const isHoveringSlider = useSliderStore(state => state.isHoveringSlider);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const maxPage = useSliderStore(state => state.maxPage);
 
@@ -54,16 +53,12 @@ const RightButton = () => {
       <Button
         disabled={isAnimating}
         onClick={() => handleRightScroll()}
-        className={cn(
-          `absolute right-0 top-0 flex h-full w-10 items-center justify-center rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30`
-        )}
         variant='ghost'
+        className={
+          'absolute right-0 top-0 flex h-full w-10 items-center justify-center rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30'
+        }
       >
-        <span
-          className={cn({ 'opacity-0': !isHoveringSlider }, { 'opacity-100': isHoveringSlider })}
-        >
-          {'>'}
-        </span>
+        <span className='opacity-0 group-hover:opacity-100'>{'>'}</span>
       </Button>
     </>
   );

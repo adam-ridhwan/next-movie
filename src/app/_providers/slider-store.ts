@@ -106,10 +106,10 @@ export const createSliderStore = (CARDS: Card[]) =>
       updateCardsWhenOnLastPage: () =>
         set(state => {
           const newCards: Card[] = [];
-          const cardsTotal = state.maxPage * state.cardsPerPage;
+          const totalCards = state.maxPage * state.cardsPerPage;
 
           let decrementingCardIndex = CARDS.length - 1;
-          for (let i = cardsTotal; i > 0; i--) {
+          for (let i = totalCards; i > 0; i--) {
             newCards.unshift(CARDS[decrementingCardIndex--]);
             if (decrementingCardIndex === -1) {
               decrementingCardIndex = CARDS.length - 1;
