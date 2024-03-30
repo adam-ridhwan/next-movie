@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useDomProvider } from '@/providers/dom-provider';
+import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import { PagesArray } from '@/providers/slider-store';
 
@@ -21,7 +21,7 @@ const Slider = () => {
   const maxPage = useSliderStore(state => state.maxPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
-  const { sliderRef } = useDomProvider();
+  const { sliderRef } = useDomContext();
 
   useEffect(() => {
     const pages: PagesArray = Array.from({ length: maxPage }, (_, pageIndex) => {
@@ -48,7 +48,10 @@ const Slider = () => {
       ref={sliderRef}
       className={cn('group relative flex w-full', { 'bg-yellow-600': DEVELOPMENT_MODE })}
     >
-      <div className='fixed left-1/2 top-0 text-[60px] font-bold'>{currentPage}</div>
+      {DEVELOPMENT_MODE && (
+        <div className='fixed left-1/2 top-0 text-[60px] font-bold'>{currentPage}</div>
+      )}
+
       <div
         className={cn(
           'slider relative flex w-full flex-row px-12',

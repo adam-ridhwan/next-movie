@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useDomProvider } from '@/providers/dom-provider';
+import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { Card } from '@/lib/types';
@@ -10,7 +10,7 @@ const TileList = () => {
   const pages = useSliderStore(state => state.pages);
   const cardsPerPage = useSliderStore(state => state.cardsPerPage);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { sliderItemRef } = useDomProvider();
+  const { sliderItemRef } = useDomContext();
 
   return (
     <>

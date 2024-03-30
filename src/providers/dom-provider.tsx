@@ -16,8 +16,8 @@ export const DomContextProvider = ({ children }: { children: ReactNode }) => {
   return <DomContext.Provider value={{ sliderRef, sliderItemRef }}>{children}</DomContext.Provider>;
 };
 
-export const useDomProvider = () => {
+export const useDomContext = () => {
   const context = useContext(DomContext);
-  if (!context) throw new Error('useDomProvider must be used within a RefContextProvider');
+  if (!context) throw new Error('useDomContext must be used within a RefContextProvider');
   return context;
 };

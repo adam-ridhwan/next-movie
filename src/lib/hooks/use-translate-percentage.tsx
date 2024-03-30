@@ -1,6 +1,6 @@
 'use client';
 
-import { useDomProvider } from '@/providers/dom-provider';
+import { useDomContext } from '@/providers/dom-provider';
 
 import { PADDING, SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
@@ -13,7 +13,7 @@ type GetTranslatePercentageParams = {
 };
 
 export const useTranslatePercentage = () => {
-  const { sliderRef, sliderItemRef } = useDomProvider();
+  const { sliderRef, sliderItemRef } = useDomContext();
 
   return ({
     direction,
