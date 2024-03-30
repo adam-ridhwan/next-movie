@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { getCardsPerPage } from '@/lib/getCardsPerPage';
-import { Card } from '@/app/(library)/page';
+import { Card } from '@/lib/types';
 
 export type PagesMap = Map<number, Card[]>;
 export type PagesArray = Array<[number, Card[]]>;
