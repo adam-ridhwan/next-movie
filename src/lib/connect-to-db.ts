@@ -4,7 +4,7 @@ import { User } from './types';
 
 const { MONGODB_DATABASE, USERS_COLLECTION } = env;
 
-export const connectToDatabase = async () => {
+export const connectToDb = async () => {
   const client = await clientPromise;
   const db = client.db(MONGODB_DATABASE);
 

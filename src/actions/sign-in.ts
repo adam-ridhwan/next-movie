@@ -2,7 +2,7 @@
 
 import bcrypt from 'bcrypt';
 
-import { connectToDatabase } from '@/lib/connectToDatabase';
+import { connectToDb } from '@/lib/connect-to-db';
 import { FormResponse, userSchema } from '@/lib/types';
 import { ErrorStrings } from '@/components/shared/strings';
 
@@ -13,7 +13,7 @@ export async function signIn({
   email: string | undefined;
   password: string | undefined;
 }): Promise<FormResponse> {
-  const { usersCollection } = await connectToDatabase();
+  const { usersCollection } = await connectToDb();
 
   if (!email || !password) {
     return {

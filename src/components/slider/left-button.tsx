@@ -11,11 +11,11 @@ const LeftButton = () => {
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
-  const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
+  const setToFirstPage = useSliderStore(state => state.setToFirstPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
-  const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
+  const setToLastPage = useSliderStore(state => state.setToLastPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   const getTranslatePercentage = useTranslatePercentage();
@@ -38,11 +38,11 @@ const LeftButton = () => {
 
     setTimeout(() => {
       disableAnimation();
-      canGoToPrevPage ? goToPrevPage() : resetToFirstPage();
+      canGoToPrevPage ? goToPrevPage() : setToFirstPage();
       setTranslatePercentage(0);
       if (isGoingLeftAfterFirstPage) {
         goToLastPage();
-        updateCardsWhenOnLastPage();
+        setToLastPage();
       }
     }, TIMEOUT_DURATION);
 

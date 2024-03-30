@@ -11,8 +11,8 @@ const RightButton = () => {
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToNextPage = useSliderStore(state => state.goToNextPage);
-  const resetToFirstPage = useSliderStore(state => state.resetToFirstPage);
-  const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
+  const setToFirstPage = useSliderStore(state => state.setToFirstPage);
+  const setToLastPage = useSliderStore(state => state.setToLastPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
@@ -39,8 +39,8 @@ const RightButton = () => {
       disableAnimation();
       markAsPaginated();
       setTranslatePercentage(0);
-      canGoToNextPage ? goToNextPage() : resetToFirstPage();
-      if (isLastPage) updateCardsWhenOnLastPage();
+      canGoToNextPage ? goToNextPage() : setToFirstPage();
+      if (isLastPage) setToLastPage();
     }, TIMEOUT_DURATION);
 
     return;

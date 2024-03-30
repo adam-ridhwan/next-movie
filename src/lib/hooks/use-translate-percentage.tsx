@@ -1,5 +1,3 @@
-'use client';
-
 import { useDomContext } from '@/providers/dom-provider';
 
 import { PADDING, SLIDE_DIRECTION } from '@/lib/constants';

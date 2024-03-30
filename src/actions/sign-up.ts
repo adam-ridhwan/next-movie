@@ -2,7 +2,7 @@
 
 import bcrypt from 'bcrypt';
 
-import { connectToDatabase } from '@/lib/connectToDatabase';
+import { connectToDb } from '@/lib/connect-to-db';
 import { FormResponse, userSchema } from '@/lib/types';
 import { AuthStrings, ErrorStrings } from '@/components/shared/strings';
 
@@ -57,7 +57,7 @@ export async function signUp({
     };
   }
 
-  const { usersCollection } = await connectToDatabase();
+  const { usersCollection } = await connectToDb();
   const existingUser = await usersCollection.findOne({ email: parsedEmail });
   if (existingUser) {
     return {

@@ -3,8 +3,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { getCardsPerPage } from '@/lib/getCardsPerPage';
 import { Card } from '@/lib/types';
+import { getCardsPerPage } from '@/lib/utils';
 
 export type PagesMap = Map<number, Card[]>;
 export type PagesArray = Array<[number, Card[]]>;
@@ -26,12 +26,12 @@ type State = {
 
 type Actions = {
   setCurrentPage: (currentPage: number) => void;
-  resetToFirstPage: () => void;
-  updateCardsWhenOnLastPage: () => void;
+  setToFirstPage: () => void;
+  setToLastPage: () => void;
   goToNextPage: () => void;
   goToPrevPage: () => void;
   goToLastPage: () => void;
-  setPages: (pages: PagesArray, trailingCardsTotal: number) => void;
+  setInitialPages: (pages: PagesArray, trailingCardsTotal: number) => void;
   resetPages: () => void;
   setCache: (pages: PagesArray) => void;
   getCache: () => PagesArray;
@@ -84,7 +84,13 @@ export const createSliderStore = (CARDS: Card[]) =>
           return new Map();
         }
       },
-      resetToFirstPage: () =>
+      setInitialPages: (pages, trailingCardsTotal) =>
+        set(() => ({
+          pages: new Map(pages),
+          cache: JSON.stringify(pages),
+          trailingCardsTotal,
+        })),
+      setToFirstPage: () =>
         set(state => {
           const cardsBeforeFirstIndex = state.CARDS.slice(-state.cardsPerPage);
           const cardsAfterFirstIndex = state.getCache();
@@ -97,13 +103,7 @@ export const createSliderStore = (CARDS: Card[]) =>
             isLastPageVisited: false,
           };
         }),
-      setPages: (pages, trailingCardsTotal) =>
-        set(() => ({
-          pages: new Map(pages),
-          cache: JSON.stringify(pages),
-          trailingCardsTotal,
-        })),
-      updateCardsWhenOnLastPage: () =>
+      setToLastPage: () =>
         set(state => {
           const newCards: Card[] = [];
           const totalCards = state.maxPage * state.cardsPerPage;

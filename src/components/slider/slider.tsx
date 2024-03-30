@@ -14,7 +14,7 @@ import TileList from '@/components/slider/tile-list';
 const Slider = () => {
   const CARDS = useSliderStore(state => state.CARDS);
   const cardsPerPage = useSliderStore(state => state.cardsPerPage);
-  const setPages = useSliderStore(state => state.setPages);
+  const setInitialPages = useSliderStore(state => state.setInitialPages);
   const isAnimating = useSliderStore(state => state.isAnimating);
   const translatePercentage = useSliderStore(state => state.translatePercentage);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -39,7 +39,7 @@ const Slider = () => {
       pages[pages.length - 1][1] = [...lastPage, ...CARDS.slice(0, cardsNeeded)];
     }
 
-    setPages(pages, lastPage.length);
+    setInitialPages(pages, lastPage.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

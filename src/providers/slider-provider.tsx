@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext, useRef } from 'react';
 import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { Card } from '@/app/(library)/page';
+import { Card } from '@/lib/types';
 
 export type SliderProviderProps = {
   children: ReactNode;

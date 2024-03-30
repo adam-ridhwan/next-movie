@@ -1,6 +1,6 @@
 import { cleanEnv, str } from 'envalid';
 
-// only works in server side
+// Only works in server side
 export const env = cleanEnv(process.env, {
   NEXT_PUBLIC_NODE_ENV: str(),
 
