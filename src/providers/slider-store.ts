@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { sliderUtils } from '@/components/app-slider/slider-utils';
+import { getCardsPerPage } from '@/lib/getCardsPerPage';
 import { Card } from '@/app/(library)/page';
 
 export type PagesMap = Map<number, Card[]>;
@@ -51,9 +51,9 @@ export const createSliderStore = (CARDS: Card[]) =>
     devtools<SliderStore>((set, get) => ({
       CARDS: CARDS,
       pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
-      maxPage: Math.ceil(CARDS.length / sliderUtils.getCardsPerPage()),
+      maxPage: Math.ceil(CARDS.length / getCardsPerPage()),
       cache: '',
-      cardsPerPage: sliderUtils.getCardsPerPage(),
+      cardsPerPage: getCardsPerPage(),
       currentPage: 1,
       hasPaginated: false,
       isAnimating: false,

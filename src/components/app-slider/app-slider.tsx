@@ -5,7 +5,8 @@ import { useDomProvider } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import { PagesArray } from '@/providers/slider-store';
 
-import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 import LeftButton from '@/components/app-slider/left-button';
 import RightButton from '@/components/app-slider/right-button';
 import TileList from '@/components/app-slider/tile-list';

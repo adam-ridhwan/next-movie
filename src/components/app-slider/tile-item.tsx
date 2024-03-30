@@ -1,7 +1,8 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
-import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall } from '@/components/shared/fonts';
 import { CategoryMovieIcon, DotIcon } from '@/components/shared/icons';
 import { Card } from '@/app/(library)/page';
