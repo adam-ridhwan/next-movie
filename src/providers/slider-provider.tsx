@@ -1,19 +1,19 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useRef } from 'react';
+import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { createSliderStore, SliderStore } from '@/app/_providers/slider-store';
 import { Card } from '@/app/(library)/page';
 
-export type SliderStoreProviderProps = {
+export type SliderProviderProps = {
   children: ReactNode;
   cards: Card[];
 };
 
 const SliderStoreContext = createContext<StoreApi<SliderStore> | null>(null);
 
-export const SliderProvider = ({ children, cards }: SliderStoreProviderProps) => {
+export const SliderProvider = ({ children, cards }: SliderProviderProps) => {
   const storeRef = useRef<StoreApi<SliderStore>>();
   if (!storeRef.current) storeRef.current = createSliderStore(cards);
 

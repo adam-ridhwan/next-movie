@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
+import { useDomProvider } from '@/providers/dom-provider';
+import { useSliderStore } from '@/providers/slider-provider';
 
-import { useDomProvider } from '@/app/_providers/dom-provider';
-import { useSliderStore } from '@/app/_providers/slider-provider';
-import Tile from '@/app/(library)/_components/app-slider/tile-item';
+import Tile from '@/components/app-slider/tile-item';
 import { Card } from '@/app/(library)/page';
 
 const TileList = () => {
@@ -36,7 +36,7 @@ const TileList = () => {
             if (offset !== -1 && index !== 0) return card;
             const prevPage = pages.get(currentPage - 1);
             if (!prevPage) throw new Error('First item not found');
-            const indexOfFirstItem = CARDS.findIndex(card => card.id === prevPage[0].id);
+            const indexOfFirstItem = CARDS.findIndex(({ id }) => id === prevPage[0].id);
             if (indexOfFirstItem === -1) throw new Error('Index of first item not found');
             const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : CARDS.length - 1;
             return CARDS[indexOfPreviousItem];

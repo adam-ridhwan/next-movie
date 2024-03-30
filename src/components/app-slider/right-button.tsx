@@ -1,8 +1,8 @@
-import { Button } from '@/app/_components/ui/button';
-import { cn } from '@/app/_lib/utils';
-import { useDomProvider } from '@/app/_providers/dom-provider';
-import { useSliderStore } from '@/app/_providers/slider-provider';
-import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
+import { useDomProvider } from '@/providers/dom-provider';
+import { useSliderStore } from '@/providers/slider-provider';
+
+import { Button } from '@/components/ui/button';
+import { sliderUtils } from '@/components/app-slider/slider-utils';
 
 const RightButton = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);

@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useDomProvider } from '@/providers/dom-provider';
+import { useSliderStore } from '@/providers/slider-provider';
+import { PagesArray } from '@/providers/slider-store';
 
-import { cn, DEVELOPMENT_MODE } from '@/app/_lib/utils';
-import { useDomProvider } from '@/app/_providers/dom-provider';
-import { useSliderStore } from '@/app/_providers/slider-provider';
-import { PagesArray } from '@/app/_providers/slider-store';
-import LeftButton from '@/app/(library)/_components/app-slider/left-button';
-import RightButton from '@/app/(library)/_components/app-slider/right-button';
-import TileList from '@/app/(library)/_components/app-slider/tile-list';
+import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
+import LeftButton from '@/components/app-slider/left-button';
+import RightButton from '@/components/app-slider/right-button';
+import TileList from '@/components/app-slider/tile-list';
 
 const AppSlider = () => {
   const CARDS = useSliderStore(state => state.CARDS);

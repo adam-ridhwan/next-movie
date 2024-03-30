@@ -2,12 +2,12 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn } from '@/actions/signIn';
+import { signUp, SignUpData } from '@/actions/signUp';
 
-import { signIn } from '@/app/_actions/signIn';
-import { signUp, SignUpData } from '@/app/_actions/signUp';
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Input } from '@/app/_components/ui/input';
+import { AppFonts } from '@/app/components/app-fonts';
+import { AuthStrings } from '@/app/components/app-strings';
+import { Input } from '@/app/components/ui/input';
 
 import SignUpButton from './sign-up-button';
 

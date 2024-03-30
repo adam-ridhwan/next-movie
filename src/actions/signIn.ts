@@ -2,9 +2,9 @@
 
 import bcrypt from 'bcrypt';
 
-import { ErrorStrings } from '@/app/_components/app-strings';
-import { connectToDatabase } from '@/app/_lib/connectToDatabase';
-import { FormResponse, userSchema } from '@/app/_lib/types';
+import { connectToDatabase } from '@/lib/connectToDatabase';
+import { FormResponse, userSchema } from '@/lib/types';
+import { ErrorStrings } from '@/components/app-strings';
 
 export async function signIn({
   email,

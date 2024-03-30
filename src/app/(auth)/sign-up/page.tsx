@@ -1,7 +1,7 @@
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AppIcons } from '@/app/_components/app-icons';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Button } from '@/app/_components/ui/button';
+import { AppFonts } from '@/app/components/app-fonts';
+import { AppIcons } from '@/app/components/app-icons';
+import { AuthStrings } from '@/app/components/app-strings';
+import { Button } from '@/app/components/ui/button';
 
 import { SignUpForm } from './_components/sign-up-form';
 
@@ -20,7 +20,9 @@ export default function SignUpPage() {
           <div>
             <AppFonts.bodyMedium>{AuthStrings.alreadyHandAnAccount}</AppFonts.bodyMedium>
             <Button variant='link' className='px-2 text-red'>
-              <AppFonts.bodyMedium className='font-medium'>{AuthStrings.signIn}</AppFonts.bodyMedium>
+              <AppFonts.bodyMedium className='font-medium'>
+                {AuthStrings.signIn}
+              </AppFonts.bodyMedium>
             </Button>
           </div>
         </div>

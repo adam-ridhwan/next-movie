@@ -1,9 +1,9 @@
 import { getServerSession } from 'next-auth';
 
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AppIcons } from '@/app/_components/app-icons';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Button } from '@/app/_components/ui/button';
+import { AppFonts } from '@/app/components/app-fonts';
+import { AppIcons } from '@/app/components/app-icons';
+import { AuthStrings } from '@/app/components/app-strings';
+import { Button } from '@/app/components/ui/button';
 
 import { SignInForm } from './_components/sign-in-form';
 

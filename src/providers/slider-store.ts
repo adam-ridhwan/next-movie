@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
+import { sliderUtils } from '@/components/app-slider/slider-utils';
 import { Card } from '@/app/(library)/page';
 
 export type PagesMap = Map<number, Card[]>;

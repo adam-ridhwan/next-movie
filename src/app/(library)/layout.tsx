@@ -3,11 +3,10 @@ import '../globals.css';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import AuthProvider from '@/providers/auth-provider';
 
-import { cn } from '@/app/_lib/utils';
-import AuthProvider from '@/app/_providers/auth-provider';
-
-import AppNavBar from '../_components/app-nav-bar';
+import { cn } from '@/lib/utils';
+import AppNavBar from '@/components/app-nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
 

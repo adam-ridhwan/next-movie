@@ -1,9 +1,9 @@
 import { useFormStatus } from 'react-dom';
 
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AppSpinner } from '@/app/_components/app-spinner';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Button } from '@/app/_components/ui/button';
+import { AppFonts } from '@/app/components/app-fonts';
+import { AppSpinner } from '@/app/components/app-spinner';
+import { AuthStrings } from '@/app/components/app-strings';
+import { Button } from '@/app/components/ui/button';
 
 export default function SignUpButton() {
   const { pending } = useFormStatus();
@@ -11,7 +11,11 @@ export default function SignUpButton() {
   return (
     <>
       <Button type='submit' disabled={pending} variant='accent' className='mb-5 w-full py-6'>
-        {pending ? <AppSpinner /> : <AppFonts.bodyMedium>{AuthStrings.createAnAccount}</AppFonts.bodyMedium>}
+        {pending ? (
+          <AppSpinner />
+        ) : (
+          <AppFonts.bodyMedium>{AuthStrings.createAnAccount}</AppFonts.bodyMedium>
+        )}
       </Button>
     </>
   );

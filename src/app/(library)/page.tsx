@@ -1,9 +1,9 @@
-import { DomContextProvider } from '@/app/_providers/dom-provider';
-import { SliderProvider } from '@/app/_providers/slider-provider';
-import AppSlider from '@/app/(library)/_components/app-slider/app-slider';
+import { DomContextProvider } from '@/providers/dom-provider';
+import { SliderProvider } from '@/providers/slider-provider';
 
-import { AppFonts } from '../_components/app-fonts';
-import { LibraryStrings } from '../_components/app-strings';
+import { AppFonts } from '@/components/app-fonts';
+import AppSlider from '@/components/app-slider/app-slider';
+import { LibraryStrings } from '@/components/app-strings';
 
 export type Card = {
   id: string;

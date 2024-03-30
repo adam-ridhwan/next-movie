@@ -2,9 +2,9 @@
 
 import bcrypt from 'bcrypt';
 
-import { AuthStrings, ErrorStrings } from '@/app/_components/app-strings';
-import { connectToDatabase } from '@/app/_lib/connectToDatabase';
-import { FormResponse, userSchema } from '@/app/_lib/types';
+import { AuthStrings, ErrorStrings } from '@/app/components/app-strings';
+import { connectToDatabase } from '@/app/lib/connectToDatabase';
+import { FormResponse, userSchema } from '@/app/lib/types';
 
 const SALT_ROUNDS = 10;
 
@@ -14,7 +14,11 @@ export type SignUpData = {
   repeatedPassword: string;
 };
 
-export async function signUp({ email, password, repeatedPassword }: SignUpData): Promise<FormResponse> {
+export async function signUp({
+  email,
+  password,
+  repeatedPassword,
+}: SignUpData): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,

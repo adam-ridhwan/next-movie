@@ -1,10 +1,11 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AppIcons } from '@/app/_components/app-icons';
-import { cn, DEVELOPMENT_MODE } from '@/app/_lib/utils';
+import { cn, DEVELOPMENT_MODE } from '@/lib/utils';
 import { Card } from '@/app/(library)/page';
+
+import { AppFonts } from '../app-fonts';
+import { AppIcons } from '../app-icons';
 
 type TileItemProps = {
   card: Card;

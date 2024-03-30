@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { cn } from '@/app/_lib/utils';
+import { cn } from '@/lib/utils';
 
 import { AppIcons } from './app-icons';
 import AvatarDropdown from './avatar-dropdown';
@@ -25,7 +25,11 @@ const AppNavBar = () => {
         <nav>
           <ul className={cn('flex flex-row gap-4', 'lg:gap-10')}>
             {Object.entries(ROUTES).map(([key, { path, Icon }]) => (
-              <Link key={key} href={path} className='group rounded-lg p-2 hover:bg-darkBlue/30 lg:p-5'>
+              <Link
+                key={key}
+                href={path}
+                className='group rounded-lg p-2 hover:bg-darkBlue/30 lg:p-5'
+              >
                 <Icon
                   className={cn({
                     'fill-white': pathname === path,

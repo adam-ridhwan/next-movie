@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { signIn, SignInResponse } from 'next-auth/react';
 
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Input } from '@/app/_components/ui/input';
+import { Input } from '@/components/ui/input';
+import { AppFonts } from '@/components/app-fonts';
+import { AuthStrings } from '@/components/app-strings';
 
 import { SignInButton } from './sign-in-button';
 

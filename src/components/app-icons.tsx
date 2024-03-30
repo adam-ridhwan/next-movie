@@ -1,4 +1,4 @@
-import { cn } from '@/app/_lib/utils';
+import { cn } from '@/lib/utils';
 
 export type SVGProps = {
   className?: string;
