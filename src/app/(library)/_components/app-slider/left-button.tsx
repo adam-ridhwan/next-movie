@@ -24,7 +24,7 @@ const LeftButton = () => {
     enableAnimation();
     const newCurrentPage = currentPage - 1;
 
-    const canGoToPrevPage = currentPage - 1 > 1;
+    const canGoToPrevPage = newCurrentPage > 1;
     const isFirstPage = newCurrentPage === 1;
     const isGoingLeftAfterFirstPage = newCurrentPage < 1;
 
