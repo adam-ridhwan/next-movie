@@ -27,8 +27,8 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
           text-8xl outline outline-black'
         >
           {card.id}
-          <div className='absolute right-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
-          <div className='absolute left-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
+          <div className='absolute right-1 top-0 text-4xl'>{card.id}</div>
+          <div className='absolute left-1 top-0 text-4xl'>{card.id}</div>
         </div>
       ) : (
         <>

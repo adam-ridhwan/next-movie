@@ -16,7 +16,6 @@ const LeftButton = () => {
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
-  const isHoveringSlider = useSliderStore(state => state.isHoveringSlider);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
@@ -61,11 +60,7 @@ const LeftButton = () => {
         )}
         variant='ghost'
       >
-        <span
-          className={cn({ 'opacity-0': !isHoveringSlider }, { 'opacity-100': isHoveringSlider })}
-        >
-          {'<'}
-        </span>
+        <span className='opacity-0 group-hover:opacity-100 '>{'<'}</span>
       </Button>
     </>
   );
