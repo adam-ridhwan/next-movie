@@ -1,5 +1,4 @@
 import { Button } from '@/app/_components/ui/button';
-import { cn } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
@@ -16,6 +15,7 @@ const LeftButton = () => {
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
@@ -52,16 +52,19 @@ const LeftButton = () => {
 
   return (
     <>
-      <Button
-        disabled={isAnimating}
-        onClick={() => handleLeftScroll()}
-        variant='ghost'
-        className={
-          'absolute left-0 top-0 flex h-full w-10 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
-        }
-      >
-        <span className='opacity-0 group-hover:opacity-100'>{'<'}</span>
-      </Button>
+      {hasPaginated && (
+        <Button
+          disabled={isAnimating}
+          onClick={() => handleLeftScroll()}
+          variant='ghost'
+          className={
+            'absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-bl-none' +
+            ' rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
+          }
+        >
+          <span className='opacity-0 group-hover:opacity-100'>{'<'}</span>
+        </Button>
+      )}
     </>
   );
 };

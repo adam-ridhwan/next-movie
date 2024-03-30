@@ -9,7 +9,7 @@ const MEDIA_QUERY = {
   xl: 1536,
 };
 
-const PADDING = 80;
+const PADDING = 98;
 const TIMEOUT_DURATION = 700;
 
 const DIRECTION = {

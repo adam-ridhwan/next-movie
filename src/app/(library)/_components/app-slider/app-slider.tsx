@@ -19,7 +19,6 @@ const AppSlider = () => {
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPage = useSliderStore(state => state.maxPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
-  const isSliderPaginated = hasPaginated || currentPage > 1;
 
   const { sliderRef } = useDomProvider();
 
@@ -55,8 +54,8 @@ const AppSlider = () => {
       <div className='fixed left-1/2 top-0 text-[60px] font-bold'>{currentPage}</div>
       <div
         className={cn(
-          'slider relative flex w-full flex-row px-10',
-          { 'justify-center': isSliderPaginated },
+          'slider relative flex w-full flex-row px-12',
+          { 'justify-center': hasPaginated },
           { 'transition-transform duration-700': isAnimating },
           { 'bg-green-600': DEVELOPMENT_MODE }
         )}
@@ -67,7 +66,7 @@ const AppSlider = () => {
         <TileList />
       </div>
 
-      {isSliderPaginated && <LeftButton />}
+      <LeftButton />
       <RightButton />
     </div>
   );
