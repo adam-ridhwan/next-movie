@@ -22,7 +22,10 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       className={cn('slider-tile p-1', `tile-${isVisibleOnScreen ? displayNumber : ''}`)}
     >
       {DEVELOPMENT_MODE ? (
-        <div className='relative flex aspect-video flex-col items-center justify-center gap-1 p-4 text-8xl outline outline-black'>
+        <div
+          className='relative flex aspect-video flex-col items-center justify-center gap-1
+          text-8xl outline outline-black'
+        >
           {card.id}
           <div className='absolute right-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
           <div className='absolute left-1 top-0 text-4xl'>{card.id ?? 'NaN'}</div>
@@ -38,7 +41,6 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
               sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
               className='object-cover'
             />
-            <div className='absolute bottom-0 left-0 right-0 top-0 bg-gradient-to-t from-black to-transparent' />
             <div className='relative flex flex-row'>
               <AppFonts.bodySmall className='text-[12px] opacity-75'>
                 {card.year}

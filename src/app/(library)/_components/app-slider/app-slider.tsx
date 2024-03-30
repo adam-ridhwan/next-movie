@@ -19,8 +19,9 @@ const AppSlider = () => {
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPage = useSliderStore(state => state.maxPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
-
   const isSliderPaginated = hasPaginated || currentPage > 1;
+  const enterSlider = useSliderStore(state => state.enterSlider);
+  const leaveSlider = useSliderStore(state => state.leaveSlider);
 
   const { sliderRef } = useDomProvider();
 
@@ -55,6 +56,8 @@ const AppSlider = () => {
         'relative flex w-full',
         'bg-yellow-600' // for testing purposes
       )}
+      onMouseEnter={() => enterSlider()}
+      onMouseLeave={() => leaveSlider()}
     >
       <div className='fixed left-1/2 top-0  text-[60px] font-bold'>{currentPage}</div>
       <div

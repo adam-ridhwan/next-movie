@@ -21,6 +21,7 @@ type State = {
   isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
+  isHoveringSlider: boolean;
 };
 
 type Actions = {
@@ -41,6 +42,8 @@ type Actions = {
   setIsAnimating: (isAnimating: boolean) => void;
   enableAnimation: () => void;
   disableAnimation: () => void;
+  enterSlider: () => void;
+  leaveSlider: () => void;
 };
 
 export type SliderStore = State & Actions;
@@ -60,6 +63,7 @@ export const createSliderStore = (CARDS: Card[]) =>
       pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
       trailingCardsTotal: 0,
       translatePercentage: 0,
+      isHoveringSlider: false,
 
       disableAnimation: () => set(() => ({ isAnimating: false })),
       enableAnimation: () => set(() => ({ isAnimating: true })),
@@ -74,6 +78,8 @@ export const createSliderStore = (CARDS: Card[]) =>
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
       setCache: pages => set(() => ({ cache: JSON.stringify(pages) })),
+      enterSlider: () => set(() => ({ isHoveringSlider: true })),
+      leaveSlider: () => set(() => ({ isHoveringSlider: false })),
       getCache: () => {
         const state = get();
         try {

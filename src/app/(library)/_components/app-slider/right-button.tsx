@@ -1,4 +1,5 @@
 import { Button } from '@/app/_components/ui/button';
+import { cn } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
@@ -14,7 +15,7 @@ const RightButton = () => {
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
-
+  const isHoveringSlider = useSliderStore(state => state.isHoveringSlider);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const maxPage = useSliderStore(state => state.maxPage);
 
@@ -53,11 +54,16 @@ const RightButton = () => {
       <Button
         disabled={isAnimating}
         onClick={() => handleRightScroll()}
-        className='absolute right-0 top-0 flex h-full w-10 items-center justify-center
-        rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
+        className={cn(
+          `absolute right-0 top-0 flex h-full w-10 items-center justify-center rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30`
+        )}
         variant='ghost'
       >
-        {'>'}
+        <span
+          className={cn({ 'opacity-0': !isHoveringSlider }, { 'opacity-100': isHoveringSlider })}
+        >
+          {'>'}
+        </span>
       </Button>
     </>
   );

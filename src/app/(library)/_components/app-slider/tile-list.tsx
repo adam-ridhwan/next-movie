@@ -23,37 +23,31 @@ const TileList = () => {
         return pages?.get(page)?.map((card: Card, index: number) => {
           const isFirstItemCurrentPage = page === currentPage && index === 0;
 
-          const isFirstPlaceholder = offset === -1 && index === 0;
-          const isLastPlaceholder = offset === 1 && index === cardsPerPage - 1;
+          const lastIndex = cardsPerPage - 1;
 
-          const lastItemPreviousPage = offset === -1 && index === cardsPerPage - 1;
+          const isFirstPlaceholder = offset === -1 && index === 0;
+          const isLastPlaceholder = offset === 1 && index === lastIndex;
+
+          const lastItemPreviousPage = offset === -1 && index === lastIndex;
           const allItemsCurrentPage = offset === 0;
           const firstItemNextPage = offset === 1 && index === 0;
 
           const getPrevCard = () => {
             if (offset !== -1 && index !== 0) return card;
-
             const prevPage = pages.get(currentPage - 1);
             if (!prevPage) throw new Error('First item not found');
-
             const indexOfFirstItem = CARDS.findIndex(card => card.id === prevPage[0].id);
             if (indexOfFirstItem === -1) throw new Error('Index of first item not found');
-
             const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : CARDS.length - 1;
             return CARDS[indexOfPreviousItem];
           };
 
           const getNextCard = (): Card => {
-            if (offset !== 1 && index !== cardsPerPage - 1) return card;
-
+            if (offset !== 1 && index !== lastIndex) return card;
             const nextPage = pages.get(currentPage + 1);
             if (!nextPage) throw new Error('Next item not found');
-
-            const indexOfLastItem = CARDS.findIndex(
-              card => card.id === nextPage[cardsPerPage - 1].id
-            );
+            const indexOfLastItem = CARDS.findIndex(({ id }) => id === nextPage[lastIndex].id);
             if (indexOfLastItem === -1) throw new Error('Index of last item not found');
-
             const indexOfNextItem = indexOfLastItem === CARDS.length - 1 ? 0 : indexOfLastItem + 1;
             return CARDS[indexOfNextItem];
           };

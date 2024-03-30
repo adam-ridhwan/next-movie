@@ -1,4 +1,5 @@
 import { Button } from '@/app/_components/ui/button';
+import { cn } from '@/app/_lib/utils';
 import { useDomProvider } from '@/app/_providers/dom-provider';
 import { useSliderStore } from '@/app/_providers/slider-provider';
 import { sliderUtils } from '@/app/(library)/_components/app-slider/slider-utils';
@@ -15,6 +16,7 @@ const LeftButton = () => {
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
   const updateCardsWhenOnLastPage = useSliderStore(state => state.updateCardsWhenOnLastPage);
+  const isHoveringSlider = useSliderStore(state => state.isHoveringSlider);
 
   const { sliderRef, sliderItemRef } = useDomProvider();
 
@@ -54,11 +56,16 @@ const LeftButton = () => {
       <Button
         disabled={isAnimating}
         onClick={() => handleLeftScroll()}
-        className='absolute left-0 top-0 flex h-full w-10 items-center justify-center
-        rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
+        className={cn(
+          `absolute left-0 top-0 flex h-full w-10 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50`
+        )}
         variant='ghost'
       >
-        {'<'}
+        <span
+          className={cn({ 'opacity-0': !isHoveringSlider }, { 'opacity-100': isHoveringSlider })}
+        >
+          {'<'}
+        </span>
       </Button>
     </>
   );
