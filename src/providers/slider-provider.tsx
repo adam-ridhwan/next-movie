@@ -4,11 +4,11 @@ import { createContext, ReactNode, useContext, useRef } from 'react';
 import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { Tiles } from '@/lib/types';
+import { TileType } from '@/lib/types';
 
 export type SliderProviderProps = {
   children: ReactNode;
-  tiles: Tiles[];
+  tiles: TileType[];
 };
 
 const SliderStoreContext = createContext<StoreApi<SliderStore> | null>(null);

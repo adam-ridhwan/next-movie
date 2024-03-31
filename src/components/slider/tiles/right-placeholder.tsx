@@ -1,6 +1,6 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { Tiles } from '@/lib/types';
+import { TileType } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import Tile from '@/components/slider/tiles/tile';
 
@@ -12,7 +12,7 @@ const RightPlaceHolder = () => {
   const isMounted = useSliderStore(state => state.isMounted);
   const lastIndex = tilesPerPage - 1;
 
-  const getNextTiles = (): Tiles => {
+  const getNextTiles = (): TileType => {
     if (!isMounted) return TILES[0];
 
     const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });

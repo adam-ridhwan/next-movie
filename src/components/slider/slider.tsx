@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import PaginationButton from '@/components/slider/pagination-button';
 import Tiles from '@/components/slider/tiles/tiles';
 import { useTranslatePercentage } from '@/components/slider/use-translate-percentage';
+import useWindowResize from '@/components/slider/use-window-resize';
 
 const Slider = () => {
   const setInitialPages = useSliderStore(state => state.setInitialPages);
@@ -21,6 +22,7 @@ const Slider = () => {
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => setInitialPages());
+  useWindowResize();
 
   return (
     <>

@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
-import { Tiles } from '@/lib/types';
+import { TileType } from '@/lib/types';
 import { getMapItem, getTilesPerPage } from '@/lib/utils';
 import { GetTranslatePercentageParams } from '@/components/slider/use-translate-percentage';
 
-export type PagesMap = Map<number, Tiles[]>;
+export type PagesMap = Map<number, TileType[]>;
 
 type State = {
-  TILES: Tiles[];
+  TILES: TileType[];
   pages: PagesMap;
   maxPage: number;
   currentPage: number;
@@ -31,6 +31,7 @@ type Actions = {
   goToFirstPage: () => void;
   goToLastPage: () => void;
   setInitialPages: () => void;
+  setPagesAfterResize: (previousTiles: TileType[], newTilesPerPage: number) => void;
   resetPages: () => void;
   setCache: (pages: PagesMap) => void;
   setTilesPerPage: (tilesPerPage: number) => void;
@@ -50,11 +51,11 @@ type Actions = {
 
 export type SliderStore = State & Actions;
 
-export const createSliderStore = (TILES: Tiles[]) =>
+export const createSliderStore = (TILES: TileType[]) =>
   create(
     devtools<SliderStore>((set, get) => ({
       TILES: TILES,
-      pages: new Map<number, Tiles[]>().set(1, TILES.slice(0, 7)),
+      pages: new Map<number, TileType[]>().set(1, TILES.slice(0, 7)),
       maxPage: Math.ceil(TILES.length / getTilesPerPage()),
       cache: new Map(),
       tilesPerPage: getTilesPerPage(),
@@ -84,7 +85,7 @@ export const createSliderStore = (TILES: Tiles[]) =>
       setCache: pages => set(() => ({ cache: pages })),
       setInitialPages: () => {
         set(state => {
-          const pages: PagesMap = new Map<number, Tiles[]>();
+          const pages: PagesMap = new Map<number, TileType[]>();
 
           for (let pageIndex = 0; pageIndex < state.maxPage; pageIndex++) {
             const startIndex = pageIndex * state.tilesPerPage;
@@ -111,6 +112,16 @@ export const createSliderStore = (TILES: Tiles[]) =>
           };
         });
       },
+      setPagesAfterResize: (previousTiles, newTilesPerPage) => {
+        set(state => {
+          console.log('setPagesAfterResize()');
+          console.log('previousTiles', previousTiles);
+          console.log('newTilesPerPage', newTilesPerPage);
+          console.log('state.currentPage', state.currentPage);
+
+          return {};
+        });
+      },
       goToFirstPage: () =>
         set(state => {
           const tilesBeforeFirstIndex = state.TILES.slice(-state.tilesPerPage);
@@ -125,7 +136,7 @@ export const createSliderStore = (TILES: Tiles[]) =>
         }),
       goToLastPage: () =>
         set(state => {
-          const newTiles: Tiles[] = [];
+          const newTiles: TileType[] = [];
           const totalTiles = state.maxPage * state.tilesPerPage;
 
           let decrementingTilesIndex = state.TILES.length - 1;
@@ -137,7 +148,7 @@ export const createSliderStore = (TILES: Tiles[]) =>
           // Add the first few tiles to the end to align properly
           newTiles.push(...state.TILES.slice(0, state.tilesPerPage));
 
-          const newPages: PagesMap = new Map<number, Tiles[]>();
+          const newPages: PagesMap = new Map<number, TileType[]>();
           for (let pageIndex = 0; pageIndex < state.maxPage + 1; pageIndex++) {
             const startIndex = pageIndex * state.tilesPerPage;
             const endIndex = startIndex + state.tilesPerPage;

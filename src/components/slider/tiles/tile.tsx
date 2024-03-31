@@ -2,13 +2,13 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
-import { Tiles } from '@/lib/types';
+import { TileType } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall } from '@/components/fonts';
 import { CategoryMovieIcon, DotIcon } from '@/components/icons';
 
 type TileProps = {
-  tile: Tiles;
+  tile: TileType;
   displayNumber: number | '';
   isVisibleOnScreen?: boolean;
 };

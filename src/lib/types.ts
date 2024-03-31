@@ -28,7 +28,7 @@ export type User = z.infer<typeof userSchema>;
 
 export type SlideDirection = (typeof DIRECTION)[keyof typeof DIRECTION];
 
-export const tileSchema = z.object({
+export const tileModelSchema = z.object({
   id: z.string(),
   imageUrl: z.string(),
   year: z.string(),
@@ -36,4 +36,4 @@ export const tileSchema = z.object({
   rating: z.string(),
   title: z.string(),
 });
-export type Tiles = z.infer<typeof tileSchema>;
+export type TileType = z.infer<typeof tileModelSchema>;
