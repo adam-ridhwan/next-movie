@@ -37,7 +37,7 @@ export const findIndexFromKey = <T, K extends keyof T>({
   return index;
 };
 
-export const getCardsPerPage = () => {
+export const getTilesPerPage = () => {
   const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
   if (windowWidth < MEDIA_QUERY.SM) return 2;
   if (windowWidth < MEDIA_QUERY.MD) return 3;

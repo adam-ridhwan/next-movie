@@ -16,11 +16,11 @@ const CurrentPage = () => {
     key: currentPage,
   });
 
-  return currentPageTiles.map((card, i) => (
-    <Fragment key={`CurrentPage-${card.id}`}>
+  return currentPageTiles.map((tile, i) => (
+    <Fragment key={`CurrentPage-${tile.id}`}>
       <Tile
         ref={i === 0 ? tileRef : undefined}
-        card={card}
+        tile={tile}
         displayNumber={i + 1}
         isVisibleOnScreen={true}
       />

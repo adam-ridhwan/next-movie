@@ -18,9 +18,9 @@ const NextPage = () => {
     key: currentPage + 1,
   });
 
-  return nextPageTiles.map((card, i) => (
-    <Fragment key={`NextPage-${card.id}`}>
-      <Tile card={card} displayNumber={i === 0 ? tilesPerPage + 1 : ''} isVisibleOnScreen={true} />
+  return nextPageTiles.map((tile, i) => (
+    <Fragment key={`NextPage-${tile.id}`}>
+      <Tile tile={tile} displayNumber={i === 0 ? tilesPerPage + 1 : ''} isVisibleOnScreen={true} />
     </Fragment>
   ));
 };

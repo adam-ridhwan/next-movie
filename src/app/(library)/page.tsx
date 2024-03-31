@@ -2,11 +2,11 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { libraryStrings } from '@/lib/constants';
-import { Card } from '@/lib/types';
+import { Tiles } from '@/lib/types';
 import { HeadingMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
-const MOCK_TRENDING_CARDS: Card[] = Array.from({ length: 9 }, (_, index) => ({
+const MOCK_TRENDING_TILES: Tiles[] = Array.from({ length: 9 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -15,7 +15,7 @@ const MOCK_TRENDING_CARDS: Card[] = Array.from({ length: 9 }, (_, index) => ({
   title: `Trending Movie ${index + 1}`,
 }));
 
-const MOCK_RECOMMENDED_CARDS: Card[] = Array.from({ length: 13 }, (_, index) => ({
+const MOCK_RECOMMENDED_TILES: Tiles[] = Array.from({ length: 13 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -31,7 +31,7 @@ export default async function Home() {
         <div className='pt-5'>
           <HeadingMedium className='pl-10'>{libraryStrings.trending}</HeadingMedium>
 
-          <SliderProvider cards={MOCK_TRENDING_CARDS}>
+          <SliderProvider tiles={MOCK_TRENDING_TILES}>
             <DomContextProvider>
               <Slider />
             </DomContextProvider>
@@ -41,7 +41,7 @@ export default async function Home() {
         <div className='pt-5'>
           <HeadingMedium className='pl-10'>{libraryStrings.recommendedForYou}</HeadingMedium>
 
-          <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
+          <SliderProvider tiles={MOCK_RECOMMENDED_TILES}>
             <DomContextProvider>
               <Slider />
             </DomContextProvider>

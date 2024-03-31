@@ -1,34 +1,34 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { Card } from '@/lib/types';
+import { Tiles } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import Tile from '@/components/slider/tiles/tile';
 
 const RightPlaceHolder = () => {
-  const CARDS = useSliderStore(state => state.CARDS);
+  const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const tilesPerPage = useSliderStore(state => state.tilesPerPage);
   const isMounted = useSliderStore(state => state.isMounted);
   const lastIndex = tilesPerPage - 1;
 
-  const getNextCard = (): Card => {
-    if (!isMounted) return CARDS[0];
+  const getNextTiles = (): Tiles => {
+    if (!isMounted) return TILES[0];
 
-    const nextPage = getMapItem({ label: 'getNextCard()', map: pages, key: currentPage + 1 });
+    const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });
 
     const indexOfLastItem = findIndexFromKey({
-      label: 'getPrevCard()',
-      array: CARDS,
+      label: 'getPrevTiles()',
+      array: TILES,
       key: 'id',
       value: nextPage[lastIndex].id,
     });
 
-    const indexOfNextItem = indexOfLastItem === CARDS.length - 1 ? 0 : indexOfLastItem + 1;
-    return CARDS[indexOfNextItem];
+    const indexOfNextItem = indexOfLastItem === TILES.length - 1 ? 0 : indexOfLastItem + 1;
+    return TILES[indexOfNextItem];
   };
 
-  return <Tile card={getNextCard()} displayNumber={''} isVisibleOnScreen={true} />;
+  return <Tile tile={getNextTiles()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
 export default RightPlaceHolder;

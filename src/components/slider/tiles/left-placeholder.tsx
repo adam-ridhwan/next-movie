@@ -4,30 +4,30 @@ import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import Tile from '@/components/slider/tiles/tile';
 
 const LeftPlaceHolder = () => {
-  const CARDS = useSliderStore(state => state.CARDS);
+  const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
-  const getPrevCard = () => {
+  const getPrevTiles = () => {
     const prevPage = getMapItem({
-      label: 'getPrevCard()',
+      label: 'getPrevTiles()',
       map: pages,
       key: currentPage - 1,
     });
 
     const indexOfFirstItem = findIndexFromKey({
-      label: 'getPrevCard()',
-      array: CARDS,
+      label: 'getPrevTiles()',
+      array: TILES,
       key: 'id',
       value: prevPage[0].id,
     });
 
-    const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : CARDS.length - 1;
-    return CARDS[indexOfPreviousItem];
+    const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : TILES.length - 1;
+    return TILES[indexOfPreviousItem];
   };
 
-  return hasPaginated && <Tile card={getPrevCard()} displayNumber={''} isVisibleOnScreen={true} />;
+  return hasPaginated && <Tile tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
 export default LeftPlaceHolder;
