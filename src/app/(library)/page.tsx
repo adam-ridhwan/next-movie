@@ -1,18 +1,10 @@
-import { DomContextProvider } from '@/app/_providers/dom-provider';
-import { SliderProvider } from '@/app/_providers/slider-provider';
-import AppSlider from '@/app/(library)/_components/app-slider/app-slider';
+import { DomContextProvider } from '@/providers/dom-provider';
+import { SliderProvider } from '@/providers/slider-provider';
 
-import { AppFonts } from '../_components/app-fonts';
-import { LibraryStrings } from '../_components/app-strings';
-
-export type Card = {
-  id: string;
-  imageUrl: string;
-  year: string;
-  category: string;
-  rating: string;
-  title: string;
-};
+import { libraryStrings } from '@/lib/constants';
+import { Card } from '@/lib/types';
+import { HeadingMedium } from '@/components/fonts';
+import Slider from '@/components/slider/slider';
 
 const MOCK_TRENDING_CARDS: Card[] = Array.from({ length: 9 }, (_, index) => ({
   id: `${index + 1}`,
@@ -32,30 +24,26 @@ const MOCK_RECOMMENDED_CARDS: Card[] = Array.from({ length: 13 }, (_, index) => 
   title: `Recommended Movie ${index + 1}`,
 }));
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <div className=''>
         <div className='pt-5'>
-          <AppFonts.headingMedium className='pl-10'>
-            {LibraryStrings.trending}
-          </AppFonts.headingMedium>
+          <HeadingMedium className='pl-10'>{libraryStrings.trending}</HeadingMedium>
 
           <SliderProvider cards={MOCK_TRENDING_CARDS}>
             <DomContextProvider>
-              <AppSlider />
+              <Slider />
             </DomContextProvider>
           </SliderProvider>
         </div>
 
         <div className='pt-5'>
-          <AppFonts.headingMedium className='pl-10'>
-            {LibraryStrings.recommendedForYou}
-          </AppFonts.headingMedium>
+          <HeadingMedium className='pl-10'>{libraryStrings.recommendedForYou}</HeadingMedium>
 
           <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
             <DomContextProvider>
-              <AppSlider />
+              <Slider />
             </DomContextProvider>
           </SliderProvider>
         </div>

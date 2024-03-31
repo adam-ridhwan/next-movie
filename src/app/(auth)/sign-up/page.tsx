@@ -1,26 +1,25 @@
-import { AppFonts } from '@/app/_components/app-fonts';
-import { AppIcons } from '@/app/_components/app-icons';
-import { AuthStrings } from '@/app/_components/app-strings';
-import { Button } from '@/app/_components/ui/button';
+import { authStrings } from '@/lib/constants';
+import { Button } from '@/components/ui/button';
+import { SignUpForm } from '@/components/auth/sign-up-form';
+import { BodyMedium, HeadingLarge } from '@/components/fonts';
+import { LogoIcon } from '@/components/icons';
 
-import { SignUpForm } from './_components/sign-up-form';
-
-export default function SignUpPage() {
+export default async function SignUpPage() {
   return (
     <>
       <div className='container flex h-full max-w-[500px] flex-col items-center'>
         <div className='lg:p-25 p-12 md:p-20'>
-          <AppIcons.logo />
+          <LogoIcon />
         </div>
         <div className='flex w-full flex-col items-center rounded-lg bg-darkerBlue p-6'>
           <div className='w-full pb-6'>
-            <AppFonts.headingLarge>{AuthStrings.signUp}</AppFonts.headingLarge>
+            <HeadingLarge>{authStrings.signUp}</HeadingLarge>
           </div>
           <SignUpForm />
           <div>
-            <AppFonts.bodyMedium>{AuthStrings.alreadyHandAnAccount}</AppFonts.bodyMedium>
+            <BodyMedium>{authStrings.alreadyHandAnAccount}</BodyMedium>
             <Button variant='link' className='px-2 text-red'>
-              <AppFonts.bodyMedium className='font-medium'>{AuthStrings.signIn}</AppFonts.bodyMedium>
+              <BodyMedium className='font-medium'>{authStrings.signIn}</BodyMedium>
             </Button>
           </div>
         </div>
