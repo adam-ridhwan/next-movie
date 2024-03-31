@@ -46,7 +46,9 @@ const Slider = () => {
   return (
     <div
       ref={sliderRef}
-      className={cn('group relative flex w-full', { 'bg-yellow-600': DEVELOPMENT_MODE })}
+      className={cn('group relative flex w-full', {
+        'bg-yellow-600': DEVELOPMENT_MODE,
+      })}
     >
       {DEVELOPMENT_MODE && (
         <div className='fixed left-1/2 top-0 text-[60px] font-bold'>{currentPage}</div>

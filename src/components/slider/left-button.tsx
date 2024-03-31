@@ -11,11 +11,10 @@ const LeftButton = () => {
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
-  const setToFirstPage = useSliderStore(state => state.setToFirstPage);
+  const goToFirstPage = useSliderStore(state => state.goToFirstPage);
   const currentPage = useSliderStore(state => state.currentPage);
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
-  const setToLastPage = useSliderStore(state => state.setToLastPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   const getTranslatePercentage = useTranslatePercentage();
@@ -38,12 +37,9 @@ const LeftButton = () => {
 
     setTimeout(() => {
       disableAnimation();
-      canGoToPrevPage ? goToPrevPage() : setToFirstPage();
+      canGoToPrevPage ? goToPrevPage() : goToFirstPage();
       setTranslatePercentage(0);
-      if (isGoingLeftAfterFirstPage) {
-        goToLastPage();
-        setToLastPage();
-      }
+      if (isGoingLeftAfterFirstPage) goToLastPage();
     }, TIMEOUT_DURATION);
 
     return;
@@ -56,7 +52,7 @@ const LeftButton = () => {
           disabled={isAnimating}
           onClick={() => handleLeftScroll()}
           variant='ghost'
-          className='absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-bl-none rounded-tl-none bg-darkerBlue/30 hover:bg-darkestBlue/50'
+          className='absolute left-0 top-0 flex h-full w-12 items-center justify-center rounded-none bg-darkerBlue/30 hover:bg-darkestBlue/30 disabled:opacity-100'
         >
           <span className='opacity-0 group-hover:opacity-100'>{'<'}</span>
         </Button>

@@ -8,15 +8,14 @@ const RightButton = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);
   const enableAnimation = useSliderStore(state => state.enableAnimation);
   const disableAnimation = useSliderStore(state => state.disableAnimation);
+  const currentPage = useSliderStore(state => state.currentPage);
+  const maxPage = useSliderStore(state => state.maxPage);
+  const goToNextPage = useSliderStore(state => state.goToNextPage);
+  const goToLastPage = useSliderStore(state => state.goToLastPage);
+  const goToFirstPage = useSliderStore(state => state.goToFirstPage);
   const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
-  const goToNextPage = useSliderStore(state => state.goToNextPage);
-  const setToFirstPage = useSliderStore(state => state.setToFirstPage);
-  const setToLastPage = useSliderStore(state => state.setToLastPage);
-  const currentPage = useSliderStore(state => state.currentPage);
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
-  const markAsPaginated = useSliderStore(state => state.markAsPaginated);
-  const maxPage = useSliderStore(state => state.maxPage);
 
   const getTranslatePercentage = useTranslatePercentage();
 
@@ -37,10 +36,9 @@ const RightButton = () => {
 
     setTimeout(() => {
       disableAnimation();
-      markAsPaginated();
       setTranslatePercentage(0);
-      canGoToNextPage ? goToNextPage() : setToFirstPage();
-      if (isLastPage) setToLastPage();
+      canGoToNextPage ? goToNextPage() : goToFirstPage();
+      if (isLastPage) goToLastPage();
     }, TIMEOUT_DURATION);
 
     return;
@@ -52,7 +50,7 @@ const RightButton = () => {
         disabled={isAnimating}
         onClick={() => handleRightScroll()}
         variant='ghost'
-        className='absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-br-none rounded-tr-none bg-darkerBlue/30 hover:bg-darkestBlue/30'
+        className='absolute right-0 top-0 flex h-full w-12 items-center justify-center rounded-none bg-darkerBlue/30 hover:bg-darkestBlue/30 disabled:opacity-100'
       >
         <span className='opacity-0 group-hover:opacity-100'>{'>'}</span>
       </Button>
