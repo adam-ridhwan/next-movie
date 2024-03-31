@@ -97,7 +97,8 @@ const RightPlaceHolderCard = () => {
     const nextPage = pages.get(currentPage + 1);
     if (!nextPage) return CARDS[0];
 
-    const indexOfLastItem = CARDS.findIndex(({ id }) => id === nextPage[lastIndex].id);
+    const indexOfLastItem = CARDS.findIndex(({ id }) => id === nextPage[lastIndex]?.id);
+    // console.log('indexOfLastItem', indexOfLastItem);
     if (indexOfLastItem === -1) throw new Error('Index of last item not found');
     const indexOfNextItem = indexOfLastItem === CARDS.length - 1 ? 0 : indexOfLastItem + 1;
     return CARDS[indexOfNextItem];

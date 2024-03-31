@@ -34,8 +34,7 @@ const Slider = () => {
     }
 
     const lastPage = pagesMap.get(maxPage);
-
-    if (lastPage && maxPage < cardsPerPage && pagesMap.size > 1) {
+    if (lastPage && lastPage.length < cardsPerPage && pagesMap.size > 1) {
       const cardsNeeded = cardsPerPage - lastPage.length;
       pagesMap.set(maxPage, [...lastPage, ...CARDS.slice(0, cardsNeeded)]);
     }
