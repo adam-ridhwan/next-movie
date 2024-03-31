@@ -10,7 +10,7 @@ export const MEDIA_QUERY = {
 export const PADDING = 98;
 export const TIMEOUT_DURATION = 700;
 
-export const SLIDE_DIRECTION = {
+export const DIRECTION = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT',
 } as const;

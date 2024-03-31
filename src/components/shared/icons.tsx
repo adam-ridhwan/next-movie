@@ -151,6 +151,36 @@ const LoadingIcon = ({ className }: SVGProps) => (
   <Loader2 className={cn('h-5 w-5 animate-spin', className)} />
 );
 
+const ChevronLeftIcon = ({ className }: SVGProps) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.5'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+    className={cn('h-12 w-12', className)}
+  >
+    <path d='m15 18-6-6 6-6' />
+  </svg>
+);
+
+const ChevronRightIcon = ({ className }: SVGProps) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='1.5'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+    className={cn('h-12 w-12', className)}
+  >
+    <path d='m9 18 6-6-6-6' />
+  </svg>
+);
+
 export {
   LogoIcon,
   BookMarkEmptyIcon,
@@ -166,4 +196,6 @@ export {
   AvatarIcon,
   DotIcon,
   LoadingIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 };

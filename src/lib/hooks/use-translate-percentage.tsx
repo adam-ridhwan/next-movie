@@ -1,6 +1,6 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { PADDING, SLIDE_DIRECTION } from '@/lib/constants';
+import { DIRECTION, PADDING } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 
 type GetTranslatePercentageParams = {
@@ -30,6 +30,6 @@ export const useTranslatePercentage = () => {
     if (isFirstPage) return offsetPercentage;
 
     const sliderWidthPercentage = ((sliderWidth - PADDING) / windowWidth) * 100;
-    return direction === SLIDE_DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
+    return direction === DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
   };
 };

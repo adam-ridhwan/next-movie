@@ -59,8 +59,6 @@ export const createSliderStore = (CARDS: Card[]) =>
       lastPageLength: 0,
       translatePercentage: 0,
 
-      disableAnimation: () => set(() => ({ isAnimating: false })),
-      enableAnimation: () => set(() => ({ isAnimating: true })),
       setCardsPerPage: cardsPerPage => set(() => ({ cardsPerPage })),
       goToNextPage: () =>
         set(state => ({ currentPage: state.currentPage + 1, hasPaginated: true })),
@@ -122,5 +120,13 @@ export const createSliderStore = (CARDS: Card[]) =>
             isLastPageVisited: true,
           };
         }),
+      enableAnimation: () => {
+        document.body.style.pointerEvents = 'none';
+        set(() => ({ isAnimating: true }));
+      },
+      disableAnimation: () => {
+        document.body.style.pointerEvents = '';
+        set(() => ({ isAnimating: false }));
+      },
     }))
   );

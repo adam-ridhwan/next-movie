@@ -2,18 +2,38 @@ import { Fragment } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Card } from '@/lib/types';
+import { cn } from '@/lib/utils';
 import TileItem from '@/components/slider/tile-item';
 
-const TileList = () => (
-  <>
-    <LeftPlaceHolderCard />
-    <PrevPage />
-    <CurrentPage />
-    <NextPage />
-    <RightPlaceHolderCard />
-  </>
-);
+const TileList = () => {
+  const isAnimating = useSliderStore(state => state.isAnimating);
+  const translatePercentage = useSliderStore(state => state.translatePercentage);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
+
+  return (
+    <>
+      <div
+        className={cn(
+          'slider relative flex w-full flex-row px-12',
+          { 'justify-center': hasPaginated },
+          { 'transition-transform duration-700': isAnimating },
+          { 'bg-green-600': DEVELOPMENT_MODE }
+        )}
+        style={{
+          transform: translatePercentage ? `translate3d(${translatePercentage}%, 0, 0)` : undefined,
+        }}
+      >
+        <LeftPlaceHolderCard />
+        <PrevPage />
+        <CurrentPage />
+        <NextPage />
+        <RightPlaceHolderCard />
+      </div>
+    </>
+  );
+};
 
 export default TileList;
 

@@ -3,7 +3,7 @@
 import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
-import { SLIDE_DIRECTION } from '@/lib/constants';
+import { DIRECTION } from '@/lib/constants';
 
 export type TODO = any;
 
@@ -26,7 +26,7 @@ export const userSchema = z.object({
 });
 export type User = z.infer<typeof userSchema>;
 
-export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
+export type SlideDirection = (typeof DIRECTION)[keyof typeof DIRECTION];
 
 export const cardSchema = z.object({
   id: z.string(),
