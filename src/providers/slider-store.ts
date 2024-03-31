@@ -69,11 +69,11 @@ export const createSliderStore = (CARDS: Card[]) =>
 
       setCardsPerPage: cardsPerPage => set(() => ({ cardsPerPage })),
       goToNextPage: () =>
-        set(state => {
-          return state.hasPaginated
+        set(state =>
+          state.hasPaginated
             ? { currentPage: state.currentPage + 1 }
-            : { currentPage: state.currentPage + 1, hasPaginated: true };
-        }),
+            : { currentPage: state.currentPage + 1, hasPaginated: true }
+        ),
 
       goToPrevPage: () => set(state => ({ currentPage: state.currentPage - 1 })),
       resetPages: () => set(() => ({ pages: new Map() })),
