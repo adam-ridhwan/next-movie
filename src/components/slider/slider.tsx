@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import { PagesMap } from '@/providers/slider-store';
 
 import { DEVELOPMENT_MODE, DIRECTION } from '@/lib/constants';
+import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { useTranslatePercentage } from '@/lib/hooks/use-translate-percentage';
 import { Card } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -24,7 +24,7 @@ const Slider = () => {
   const getTranslatePercentage = useTranslatePercentage();
   const { sliderRef } = useDomContext();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const pages: PagesMap = new Map<number, Card[]>();
 
     for (let pageIndex = 0; pageIndex < maxPage; pageIndex++) {
@@ -41,8 +41,7 @@ const Slider = () => {
 
     const lastPageLength = lastPage ? lastPage.length : 0;
     setInitialPages(pages, lastPageLength);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <>
