@@ -9,9 +9,10 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 type PaginationButtonProps = {
   direction: SlideDirection;
   onClick: () => void;
+  className?: string;
 };
 
-const PaginationButton = ({ direction, onClick }: PaginationButtonProps) => {
+const PaginationButton = ({ direction, onClick, className }: PaginationButtonProps) => {
   const isAnimating = useSliderStore(state => state.isAnimating);
 
   const iconClass = cn(
@@ -28,7 +29,8 @@ const PaginationButton = ({ direction, onClick }: PaginationButtonProps) => {
         className={cn(
           `group/button absolute top-0 z-10 flex h-full w-12 items-center justify-center rounded-none bg-darkerBlue/30 px-0 py-0 hover:bg-darkestBlue/30 disabled:pointer-events-auto disabled:opacity-100`,
           { 'right-0': direction === DIRECTION.RIGHT },
-          { 'left-0': direction === DIRECTION.LEFT }
+          { 'left-0': direction === DIRECTION.LEFT },
+          className
         )}
       >
         {direction === DIRECTION.RIGHT ? (

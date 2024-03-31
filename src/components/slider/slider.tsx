@@ -35,13 +35,11 @@ const Slider = () => {
             {currentPage}
           </div>
         )}
-
-        {hasPaginated && (
-          <PaginationButton
-            onClick={() => handleLeftScroll(getTranslatePercentage)}
-            direction={DIRECTION.LEFT}
-          />
-        )}
+        <PaginationButton
+          onClick={() => handleLeftScroll(getTranslatePercentage)}
+          direction={DIRECTION.LEFT}
+          className={cn({ hidden: !hasPaginated })}
+        />
         <Tiles />
         <PaginationButton
           onClick={() => handleRightScroll(getTranslatePercentage)}
