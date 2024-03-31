@@ -11,7 +11,7 @@ export type GetTranslatePercentageParams = {
 };
 
 export const useTranslatePercentage = () => {
-  const { sliderRef, sliderItemRef } = useDomContext();
+  const { sliderRef, tileRef } = useDomContext();
 
   return ({
     direction,
@@ -19,11 +19,11 @@ export const useTranslatePercentage = () => {
     isFirstPage = false,
     isLastPage = false,
   }: GetTranslatePercentageParams) => {
-    if (!sliderRef.current || !sliderItemRef.current) throw new Error('Missing ref');
+    if (!sliderRef.current || !tileRef.current) throw new Error('Missing ref');
 
     const windowWidth = window.innerWidth;
     const { offsetWidth: sliderWidth } = sliderRef.current;
-    const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
+    const { offsetWidth: sliderItemWidth } = tileRef.current;
 
     const offsetPercentage = ((lastPageLength * sliderItemWidth) / windowWidth) * 100;
     if (isLastPage) return -offsetPercentage;

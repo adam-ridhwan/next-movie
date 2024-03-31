@@ -8,7 +8,7 @@ import Tile from '@/components/slider/tiles/tile';
 const CurrentPage = () => {
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { sliderItemRef } = useDomContext();
+  const { tileRef } = useDomContext();
 
   const currentPageTiles = getMapItem({
     label: 'currentPageTiles',
@@ -19,7 +19,7 @@ const CurrentPage = () => {
   return currentPageTiles.map((card, i) => (
     <Fragment key={`CurrentPage-${card.id}`}>
       <Tile
-        ref={i === 0 ? sliderItemRef : undefined}
+        ref={i === 0 ? tileRef : undefined}
         card={card}
         displayNumber={i + 1}
         isVisibleOnScreen={true}

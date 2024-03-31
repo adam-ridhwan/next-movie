@@ -4,16 +4,16 @@ import { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
 
 type DomContextType = {
   sliderRef: RefObject<HTMLDivElement>;
-  sliderItemRef: RefObject<HTMLDivElement>;
+  tileRef: RefObject<HTMLDivElement>;
 } | null;
 
 export const DomContext = createContext<DomContextType>(null);
 
 export const DomContextProvider = ({ children }: { children: ReactNode }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderItemRef = useRef<HTMLDivElement>(null);
+  const tileRef = useRef<HTMLDivElement>(null);
 
-  return <DomContext.Provider value={{ sliderRef, sliderItemRef }}>{children}</DomContext.Provider>;
+  return <DomContext.Provider value={{ sliderRef, tileRef }}>{children}</DomContext.Provider>;
 };
 
 export const useDomContext = () => {
