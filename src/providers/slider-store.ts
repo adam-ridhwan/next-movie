@@ -96,8 +96,8 @@ export const createSliderStore = (CARDS: Card[]) =>
           const newPages: PagesArray = [[0, cardsBeforeFirstIndex], ...cardsAfterFirstIndex];
 
           return {
-            currentPage: 1,
             pages: new Map(newPages),
+            currentPage: 1,
             isFirstPageVisited: true,
             isLastPageVisited: false,
           };
