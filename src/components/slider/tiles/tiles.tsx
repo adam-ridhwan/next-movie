@@ -2,11 +2,11 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import CurrentPage from '@/components/slider/tiles/tile/current-page';
-import LeftPlaceholder from '@/components/slider/tiles/tile/left-placeholder';
-import NextPage from '@/components/slider/tiles/tile/next-page';
-import PrevPage from '@/components/slider/tiles/tile/prev-page';
-import RightPlaceholder from '@/components/slider/tiles/tile/right-placeholder';
+import CurrentPage from '@/components/slider/tiles/current-page';
+import LeftPlaceholder from '@/components/slider/tiles/left-placeholder';
+import NextPage from '@/components/slider/tiles/next-page';
+import PrevPage from '@/components/slider/tiles/prev-page';
+import RightPlaceholder from '@/components/slider/tiles/right-placeholder';
 
 const Tiles = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);

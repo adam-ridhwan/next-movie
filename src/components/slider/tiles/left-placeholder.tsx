@@ -1,7 +1,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { findItemFromIndex, getMapItem } from '@/lib/utils';
-import TileItem from '@/components/slider/tiles/tile/tile';
+import Tile from '@/components/slider/tiles/tile';
 
 const LeftPlaceHolder = () => {
   const CARDS = useSliderStore(state => state.CARDS);
@@ -27,9 +27,7 @@ const LeftPlaceHolder = () => {
     return CARDS[indexOfPreviousItem];
   };
 
-  return (
-    hasPaginated && <TileItem card={getPrevCard()} displayNumber={''} isVisibleOnScreen={true} />
-  );
+  return hasPaginated && <Tile card={getPrevCard()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
 export default LeftPlaceHolder;

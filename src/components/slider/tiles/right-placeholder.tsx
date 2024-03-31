@@ -2,7 +2,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { Card } from '@/lib/types';
 import { findItemFromIndex, getMapItem } from '@/lib/utils';
-import TileItem from '@/components/slider/tiles/tile/tile';
+import Tile from '@/components/slider/tiles/tile';
 
 const RightPlaceHolderCard = () => {
   const CARDS = useSliderStore(state => state.CARDS);
@@ -28,7 +28,7 @@ const RightPlaceHolderCard = () => {
     return CARDS[indexOfNextItem];
   };
 
-  return <TileItem card={getNextCard()} displayNumber={''} isVisibleOnScreen={true} />;
+  return <Tile card={getNextCard()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
 export default RightPlaceHolderCard;

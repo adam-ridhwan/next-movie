@@ -7,13 +7,13 @@ import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall } from '@/components/shared/fonts';
 import { CategoryMovieIcon, DotIcon } from '@/components/shared/icons';
 
-type TileItemProps = {
+type TileProps = {
   card: Card;
   displayNumber: number | '';
   isVisibleOnScreen?: boolean;
 };
 
-const Tile: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
+const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
   { card, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
