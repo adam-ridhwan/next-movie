@@ -13,7 +13,7 @@ const RightButton = () => {
   const goToNextPage = useSliderStore(state => state.goToNextPage);
   const goToLastPage = useSliderStore(state => state.goToLastPage);
   const goToFirstPage = useSliderStore(state => state.goToFirstPage);
-  const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
+  const lastPageLength = useSliderStore(state => state.lastPageLength);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
 
@@ -28,7 +28,7 @@ const RightButton = () => {
 
     const newTranslatePercentage = getTranslatePercentage({
       direction: SLIDE_DIRECTION.RIGHT,
-      trailingCardsTotal,
+      lastPageLength,
       isLastPage: isLastPage && isFirstPageVisited,
     });
 

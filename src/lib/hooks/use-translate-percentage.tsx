@@ -5,7 +5,7 @@ import { SlideDirection } from '@/lib/types';
 
 type GetTranslatePercentageParams = {
   direction?: SlideDirection;
-  trailingCardsTotal: number;
+  lastPageLength: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
 };
@@ -15,7 +15,7 @@ export const useTranslatePercentage = () => {
 
   return ({
     direction,
-    trailingCardsTotal,
+    lastPageLength,
     isFirstPage = false,
     isLastPage = false,
   }: GetTranslatePercentageParams) => {
@@ -25,7 +25,7 @@ export const useTranslatePercentage = () => {
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = sliderItemRef.current;
 
-    const offsetPercentage = ((trailingCardsTotal * sliderItemWidth) / windowWidth) * 100;
+    const offsetPercentage = ((lastPageLength * sliderItemWidth) / windowWidth) * 100;
     if (isLastPage) return -offsetPercentage;
     if (isFirstPage) return offsetPercentage;
 

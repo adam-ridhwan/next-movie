@@ -8,7 +8,7 @@ const LeftButton = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);
   const enableAnimation = useSliderStore(state => state.enableAnimation);
   const disableAnimation = useSliderStore(state => state.disableAnimation);
-  const trailingCardsTotal = useSliderStore(state => state.trailingCardsTotal);
+  const lastPageLength = useSliderStore(state => state.lastPageLength);
   const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
   const goToPrevPage = useSliderStore(state => state.goToPrevPage);
   const goToFirstPage = useSliderStore(state => state.goToFirstPage);
@@ -29,7 +29,7 @@ const LeftButton = () => {
 
     const newTranslatePercentage = getTranslatePercentage({
       direction: SLIDE_DIRECTION.LEFT,
-      trailingCardsTotal,
+      lastPageLength,
       isFirstPage: isFirstPage && isLastPageVisited,
     });
 

@@ -3,9 +3,10 @@
 import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
-import { PagesArray } from '@/providers/slider-store';
+import { PagesMap } from '@/providers/slider-store';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { Card } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import LeftButton from '@/components/slider/left-button';
 import RightButton from '@/components/slider/right-button';
@@ -24,22 +25,23 @@ const Slider = () => {
   const { sliderRef } = useDomContext();
 
   useEffect(() => {
-    const pages: PagesArray = Array.from({ length: maxPage }, (_, pageIndex) => {
+    const pagesMap: PagesMap = new Map<number, Card[]>();
+
+    for (let pageIndex = 0; pageIndex < maxPage; pageIndex++) {
       const startIndex = pageIndex * cardsPerPage;
       const endIndex = startIndex + cardsPerPage;
-      return [pageIndex + 1, CARDS.slice(startIndex, endIndex)];
-    });
-
-    const lastPage = pages[pages.length - 1][1];
-
-    // If the last page has less than the required number of cards,
-    // fill it up with the remaining cards
-    if (pages.length > 1 && lastPage.length !== cardsPerPage) {
-      const cardsNeeded = cardsPerPage - lastPage.length;
-      pages[pages.length - 1][1] = [...lastPage, ...CARDS.slice(0, cardsNeeded)];
+      pagesMap.set(pageIndex + 1, CARDS.slice(startIndex, endIndex));
     }
 
-    setInitialPages(pages, lastPage.length);
+    const lastPage = pagesMap.get(maxPage);
+
+    if (lastPage && maxPage < cardsPerPage && pagesMap.size > 1) {
+      const cardsNeeded = cardsPerPage - lastPage.length;
+      pagesMap.set(maxPage, [...lastPage, ...CARDS.slice(0, cardsNeeded)]);
+    }
+
+    const lastPageLength = lastPage ? lastPage.length : 0;
+    setInitialPages(pagesMap, lastPageLength);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
