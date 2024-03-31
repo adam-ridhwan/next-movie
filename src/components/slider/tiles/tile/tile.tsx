@@ -13,7 +13,7 @@ type TileItemProps = {
   isVisibleOnScreen?: boolean;
 };
 
-const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
+const Tile: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   { card, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
@@ -64,4 +64,4 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   );
 };
 
-export default forwardRef(TileItem);
+export default forwardRef(Tile);

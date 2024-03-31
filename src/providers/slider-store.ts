@@ -6,7 +6,7 @@ import { devtools } from 'zustand/middleware';
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { GetTranslatePercentageParams } from '@/lib/hooks/use-translate-percentage';
 import { Card } from '@/lib/types';
-import { getCardsPerPage, getMapValue } from '@/lib/utils';
+import { getCardsPerPage, getMapItem } from '@/lib/utils';
 
 export type PagesMap = Map<number, Card[]>;
 
@@ -23,6 +23,7 @@ type State = {
   isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
+  isMounted: boolean;
 };
 
 type Actions = {
@@ -66,6 +67,7 @@ export const createSliderStore = (CARDS: Card[]) =>
       isLastPageVisited: false,
       lastPageLength: 0,
       translatePercentage: 0,
+      isMounted: false,
 
       setCardsPerPage: cardsPerPage => set(() => ({ cardsPerPage })),
       goToNextPage: () =>
@@ -93,7 +95,12 @@ export const createSliderStore = (CARDS: Card[]) =>
             pages.set(pageIndex + 1, CARDS.slice(startIndex, endIndex));
           }
 
-          const lastPage = getMapValue(pages, state.maxPage);
+          const lastPage = getMapItem({
+            label: 'setInitialPages()',
+            map: pages,
+            key: state.maxPage,
+          });
+
           if (lastPage.length < state.cardsPerPage && pages.size > 1) {
             const cardsNeeded = state.cardsPerPage - lastPage.length;
             pages.set(state.maxPage, [...lastPage, ...CARDS.slice(0, cardsNeeded)]);
@@ -103,6 +110,7 @@ export const createSliderStore = (CARDS: Card[]) =>
             pages: pages,
             cache: pages,
             lastPageLength: lastPage.length,
+            isMounted: true,
           };
         });
       },

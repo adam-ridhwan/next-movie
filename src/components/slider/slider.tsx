@@ -8,7 +8,7 @@ import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { useTranslatePercentage } from '@/lib/hooks/use-translate-percentage';
 import { cn } from '@/lib/utils';
 import PaginationButton from '@/components/slider/pagination-button';
-import TileList from '@/components/slider/tile-list';
+import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
   const setInitialPages = useSliderStore(state => state.setInitialPages);
@@ -42,7 +42,7 @@ const Slider = () => {
             direction={DIRECTION.LEFT}
           />
         )}
-        <TileList />
+        <Tiles />
         <PaginationButton
           onClick={() => handleRightScroll(getTranslatePercentage)}
           direction={DIRECTION.RIGHT}
