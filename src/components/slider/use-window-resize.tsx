@@ -15,13 +15,13 @@ const useWindowResize = () => {
       const newTilesPerPage = getTilesPerPage();
 
       if (newTilesPerPage !== prevTilesPerPage.current) {
-        const previousTiles = getMapItem({
+        const previousTilesCurrentPage = getMapItem({
           label: 'currentTilesOfPreviousMediaQuery',
           map: pages,
           key: currentPage,
         });
 
-        setPagesAfterResize(previousTiles, newTilesPerPage);
+        setPagesAfterResize(previousTilesCurrentPage);
         prevTilesPerPage.current = newTilesPerPage;
       }
     };

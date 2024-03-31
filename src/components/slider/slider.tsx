@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 

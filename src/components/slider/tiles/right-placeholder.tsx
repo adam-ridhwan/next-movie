@@ -18,7 +18,7 @@ const RightPlaceHolder = () => {
     const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });
 
     const indexOfLastItem = findIndexFromKey({
-      label: 'getPrevTiles()',
+      label: 'getNextTiles()',
       array: TILES,
       key: 'id',
       value: nextPage[lastIndex].id,
