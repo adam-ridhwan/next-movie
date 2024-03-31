@@ -1,8 +1,8 @@
+import { authStrings } from '@/lib/constants';
+import { Button } from '@/components/ui/button';
 import { SignUpForm } from '@/components/auth/sign-up-form';
-import { BodyMedium, HeadingLarge } from '@/components/shared/fonts';
-import { LogoIcon } from '@/components/shared/icons';
-import { AuthStrings } from '@/components/shared/strings';
-import { Button } from '@/components/shared/ui/button';
+import { BodyMedium, HeadingLarge } from '@/components/fonts';
+import { LogoIcon } from '@/components/icons';
 
 export default async function SignUpPage() {
   return (
@@ -13,13 +13,13 @@ export default async function SignUpPage() {
         </div>
         <div className='flex w-full flex-col items-center rounded-lg bg-darkerBlue p-6'>
           <div className='w-full pb-6'>
-            <HeadingLarge>{AuthStrings.signUp}</HeadingLarge>
+            <HeadingLarge>{authStrings.signUp}</HeadingLarge>
           </div>
           <SignUpForm />
           <div>
-            <BodyMedium>{AuthStrings.alreadyHandAnAccount}</BodyMedium>
+            <BodyMedium>{authStrings.alreadyHandAnAccount}</BodyMedium>
             <Button variant='link' className='px-2 text-red'>
-              <BodyMedium className='font-medium'>{AuthStrings.signIn}</BodyMedium>
+              <BodyMedium className='font-medium'>{authStrings.signIn}</BodyMedium>
             </Button>
           </div>
         </div>

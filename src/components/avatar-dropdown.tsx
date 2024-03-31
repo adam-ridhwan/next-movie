@@ -2,8 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import { AvatarIcon } from '@/components/shared/icons';
-import { Button } from '@/components/shared/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/shared/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
+import { AvatarIcon } from '@/components/icons';
 
 import SignOutButton from './auth/sign-out-button';
 

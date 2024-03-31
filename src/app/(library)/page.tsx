@@ -1,9 +1,9 @@
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
+import { libraryStrings } from '@/lib/constants';
 import { Card } from '@/lib/types';
-import { HeadingMedium } from '@/components/shared/fonts';
-import { LibraryStrings } from '@/components/shared/strings';
+import { HeadingMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 const MOCK_TRENDING_CARDS: Card[] = Array.from({ length: 9 }, (_, index) => ({
@@ -29,7 +29,7 @@ export default async function Home() {
     <>
       <div className=''>
         <div className='pt-5'>
-          <HeadingMedium className='pl-10'>{LibraryStrings.trending}</HeadingMedium>
+          <HeadingMedium className='pl-10'>{libraryStrings.trending}</HeadingMedium>
 
           <SliderProvider cards={MOCK_TRENDING_CARDS}>
             <DomContextProvider>
@@ -39,7 +39,7 @@ export default async function Home() {
         </div>
 
         <div className='pt-5'>
-          <HeadingMedium className='pl-10'>{LibraryStrings.recommendedForYou}</HeadingMedium>
+          <HeadingMedium className='pl-10'>{libraryStrings.recommendedForYou}</HeadingMedium>
 
           <SliderProvider cards={MOCK_RECOMMENDED_CARDS}>
             <DomContextProvider>

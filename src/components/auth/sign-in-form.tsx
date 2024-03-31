@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { signIn, SignInResponse } from 'next-auth/react';
 
-import { BodyMedium } from '@/components/shared/fonts';
-import { AuthStrings } from '@/components/shared/strings';
-import { Input } from '@/components/shared/ui/input';
+import { authStrings } from '@/lib/constants';
+import { Input } from '@/components/ui/input';
+import { BodyMedium } from '@/components/fonts';
 
 import { SignInButton } from './sign-in-button';
 
@@ -33,7 +33,7 @@ export const SignInForm = () => {
           name='email'
           value={email}
           onChange={e => setEmail(e.target.value)}
-          placeholder={AuthStrings.emailAddress}
+          placeholder={authStrings.emailAddress}
           autoComplete='email'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
           onFocus={() => setError('')}
@@ -43,7 +43,7 @@ export const SignInForm = () => {
           name='password'
           value={password}
           onChange={e => setPassword(e.target.value)}
-          placeholder={AuthStrings.password}
+          placeholder={authStrings.password}
           autoComplete='current-password'
           className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
           onFocus={() => setError('')}

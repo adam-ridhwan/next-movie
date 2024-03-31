@@ -2,7 +2,8 @@
 
 import { signOut } from 'next-auth/react';
 
-import { Button } from '@/components/shared/ui/button';
+import { authStrings } from '@/lib/constants';
+import { Button } from '@/components/ui/button';
 
 const SignOutButton = () => {
   const handleSignOut = async () => {
@@ -12,7 +13,7 @@ const SignOutButton = () => {
 
   return (
     <Button onClick={handleSignOut} className='w-full'>
-      Sign out
+      {authStrings.signOut}
     </Button>
   );
 };

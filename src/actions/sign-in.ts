@@ -3,8 +3,8 @@
 import bcrypt from 'bcrypt';
 
 import { connectToDb } from '@/lib/connect-to-db';
+import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
-import { ErrorStrings } from '@/components/shared/strings';
 
 export async function signIn({
   email,
@@ -18,7 +18,7 @@ export async function signIn({
   if (!email || !password) {
     return {
       success: false,
-      message: ErrorStrings.allFieldsAreRequired,
+      message: errorStrings.allFieldsAreRequired,
     };
   }
 
@@ -32,7 +32,7 @@ export async function signIn({
     if (code === 'too_small') {
       return {
         success: false,
-        message: ErrorStrings.passwordIsTooShort,
+        message: errorStrings.passwordIsTooShort,
       };
     }
 
@@ -48,7 +48,7 @@ export async function signIn({
   if (!existingUser) {
     return {
       success: false,
-      message: ErrorStrings.userDoesNotExists,
+      message: errorStrings.userDoesNotExists,
     };
   }
 
@@ -56,13 +56,13 @@ export async function signIn({
   if (!passwordsMatched) {
     return {
       success: false,
-      message: ErrorStrings.invalidPassword,
+      message: errorStrings.invalidPassword,
     };
   }
 
   return {
     success: true,
-    message: ErrorStrings.userDoesNotExists,
+    message: authStrings.signedInSuccessfully,
     user: existingUser,
   };
 }

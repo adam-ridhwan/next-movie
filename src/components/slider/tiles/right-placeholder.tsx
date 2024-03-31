@@ -4,7 +4,7 @@ import { Card } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import Tile from '@/components/slider/tiles/tile';
 
-const RightPlaceHolderCard = () => {
+const RightPlaceHolder = () => {
   const CARDS = useSliderStore(state => state.CARDS);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -31,4 +31,4 @@ const RightPlaceHolderCard = () => {
   return <Tile card={getNextCard()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
-export default RightPlaceHolderCard;
+export default RightPlaceHolder;

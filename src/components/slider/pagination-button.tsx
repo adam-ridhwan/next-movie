@@ -3,8 +3,8 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { ChevronLeftIcon, ChevronRightIcon } from '@/components/shared/icons';
-import { Button } from '@/components/shared/ui/button';
+import { Button } from '@/components/ui/button';
+import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 
 type PaginationButtonProps = {
   direction: SlideDirection;

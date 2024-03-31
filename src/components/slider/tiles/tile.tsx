@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Card } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { BodyMedium, BodySmall } from '@/components/shared/fonts';
-import { CategoryMovieIcon, DotIcon } from '@/components/shared/icons';
+import { BodyMedium, BodySmall } from '@/components/fonts';
+import { CategoryMovieIcon, DotIcon } from '@/components/icons';
 
 type TileProps = {
   card: Card;

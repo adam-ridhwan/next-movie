@@ -3,8 +3,8 @@
 import bcrypt from 'bcrypt';
 
 import { connectToDb } from '@/lib/connect-to-db';
+import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
-import { AuthStrings, ErrorStrings } from '@/components/shared/strings';
 
 const SALT_ROUNDS = 10;
 
@@ -22,7 +22,7 @@ export async function signUp({
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,
-      message: ErrorStrings.allFieldsAreRequired,
+      message: errorStrings.allFieldsAreRequired,
     };
   }
 
@@ -53,7 +53,7 @@ export async function signUp({
   if (parsedPassword !== repeatedPassword) {
     return {
       success: false,
-      message: ErrorStrings.passwordsDoNotMatch,
+      message: errorStrings.passwordsDoNotMatch,
     };
   }
 
@@ -62,7 +62,7 @@ export async function signUp({
   if (existingUser) {
     return {
       success: false,
-      message: ErrorStrings.userAlreadyExists,
+      message: errorStrings.userAlreadyExists,
     };
   }
 
@@ -80,6 +80,6 @@ export async function signUp({
 
   return {
     success: true,
-    message: AuthStrings.userCreatedSuccessfully,
+    message: authStrings.userCreatedSuccessfully,
   };
 }

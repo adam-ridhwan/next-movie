@@ -10,7 +10,7 @@ import {
   NavHomeIcon,
   NavMoviesIcon,
   NavTvSeriesIcon,
-} from '@/components/shared/icons';
+} from '@/components/icons';
 
 import AvatarDropdown from './avatar-dropdown';
 
