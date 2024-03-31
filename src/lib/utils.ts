@@ -26,7 +26,7 @@ type FindItemFromIndexParams<T, K extends keyof T> = {
   value: T[K];
 };
 
-export const findItemFromIndex = <T, K extends keyof T>({
+export const findIndexFromKey = <T, K extends keyof T>({
   label,
   array,
   key,

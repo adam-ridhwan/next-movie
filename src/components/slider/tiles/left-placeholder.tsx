@@ -1,6 +1,6 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { findItemFromIndex, getMapItem } from '@/lib/utils';
+import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import Tile from '@/components/slider/tiles/tile';
 
 const LeftPlaceHolder = () => {
@@ -16,7 +16,7 @@ const LeftPlaceHolder = () => {
       key: currentPage - 1,
     });
 
-    const indexOfFirstItem = findItemFromIndex({
+    const indexOfFirstItem = findIndexFromKey({
       label: 'getPrevCard()',
       array: CARDS,
       key: 'id',
