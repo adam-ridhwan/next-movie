@@ -6,7 +6,7 @@ import { devtools } from 'zustand/middleware';
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { GetTranslatePercentageParams } from '@/lib/hooks/use-translate-percentage';
 import { Card } from '@/lib/types';
-import { getCardsPerPage } from '@/lib/utils';
+import { getCardsPerPage, getMapValue } from '@/lib/utils';
 
 export type PagesMap = Map<number, Card[]>;
 
@@ -31,7 +31,7 @@ type Actions = {
   goToPrevPage: () => void;
   goToFirstPage: () => void;
   goToLastPage: () => void;
-  setInitialPages: (pages: PagesMap, lastPageLength: number) => void;
+  setInitialPages: () => void;
   resetPages: () => void;
   setCache: (pages: PagesMap) => void;
   setCardsPerPage: (cardsPerPage: number) => void;
@@ -69,7 +69,12 @@ export const createSliderStore = (CARDS: Card[]) =>
 
       setCardsPerPage: cardsPerPage => set(() => ({ cardsPerPage })),
       goToNextPage: () =>
-        set(state => ({ currentPage: state.currentPage + 1, hasPaginated: true })),
+        set(state => {
+          return state.hasPaginated
+            ? { currentPage: state.currentPage + 1 }
+            : { currentPage: state.currentPage + 1, hasPaginated: true };
+        }),
+
       goToPrevPage: () => set(state => ({ currentPage: state.currentPage - 1 })),
       resetPages: () => set(() => ({ pages: new Map() })),
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
@@ -78,12 +83,28 @@ export const createSliderStore = (CARDS: Card[]) =>
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
       setCache: pages => set(() => ({ cache: pages })),
-      setInitialPages: (pages, lastPageLength) => {
-        set(() => ({
-          pages: pages,
-          cache: pages,
-          lastPageLength,
-        }));
+      setInitialPages: () => {
+        set(state => {
+          const pages: PagesMap = new Map<number, Card[]>();
+
+          for (let pageIndex = 0; pageIndex < state.maxPage; pageIndex++) {
+            const startIndex = pageIndex * state.cardsPerPage;
+            const endIndex = startIndex + state.cardsPerPage;
+            pages.set(pageIndex + 1, CARDS.slice(startIndex, endIndex));
+          }
+
+          const lastPage = getMapValue(pages, state.maxPage);
+          if (lastPage.length < state.cardsPerPage && pages.size > 1) {
+            const cardsNeeded = state.cardsPerPage - lastPage.length;
+            pages.set(state.maxPage, [...lastPage, ...CARDS.slice(0, cardsNeeded)]);
+          }
+
+          return {
+            pages: pages,
+            cache: pages,
+            lastPageLength: lastPage.length,
+          };
+        });
       },
       goToFirstPage: () =>
         set(state => {
