@@ -5,10 +5,10 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE, DIRECTION } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { useTranslatePercentage } from '@/lib/hooks/use-translate-percentage';
 import { cn } from '@/lib/utils';
 import PaginationButton from '@/components/slider/pagination-button';
 import Tiles from '@/components/slider/tiles/tiles';
+import { useTranslatePercentage } from '@/components/slider/use-translate-percentage';
 
 const Slider = () => {
   const setInitialPages = useSliderStore(state => state.setInitialPages);

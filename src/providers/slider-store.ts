@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
-import { GetTranslatePercentageParams } from '@/lib/hooks/use-translate-percentage';
 import { Tiles } from '@/lib/types';
 import { getMapItem, getTilesPerPage } from '@/lib/utils';
+import { GetTranslatePercentageParams } from '@/components/slider/use-translate-percentage';
 
 export type PagesMap = Map<number, Tiles[]>;
 
