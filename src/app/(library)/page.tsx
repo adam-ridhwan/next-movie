@@ -29,7 +29,7 @@ export default async function Home() {
     <>
       <div className=''>
         <div className='pt-5'>
-          <HeadingMedium className='pl-10'>{libraryStrings.trending}</HeadingMedium>
+          <HeadingMedium className='pl-12'>{libraryStrings.trending}</HeadingMedium>
 
           <SliderProvider tiles={MOCK_TRENDING_TILES}>
             <DomContextProvider>
@@ -39,7 +39,7 @@ export default async function Home() {
         </div>
 
         <div className='pt-5'>
-          <HeadingMedium className='pl-10'>{libraryStrings.recommendedForYou}</HeadingMedium>
+          <HeadingMedium className='pl-12'>{libraryStrings.recommendedForYou}</HeadingMedium>
 
           <SliderProvider tiles={MOCK_RECOMMENDED_TILES}>
             <DomContextProvider>
