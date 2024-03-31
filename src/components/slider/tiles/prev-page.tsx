@@ -7,7 +7,7 @@ import Tile from '@/components/slider/tiles/tile';
 const PrevPage = () => {
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const cardsPerPage = useSliderStore(state => state.cardsPerPage);
+  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   if (!hasPaginated) return null;
@@ -20,7 +20,7 @@ const PrevPage = () => {
 
   return prevPageTiles.map((card, i) => (
     <Fragment key={`PrevPage-${card.id}`}>
-      <Tile card={card} displayNumber={i === cardsPerPage - 1 ? 0 : ''} isVisibleOnScreen={true} />
+      <Tile card={card} displayNumber={i === tilesPerPage - 1 ? 0 : ''} isVisibleOnScreen={true} />
     </Fragment>
   ));
 };

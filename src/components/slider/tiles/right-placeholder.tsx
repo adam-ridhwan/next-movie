@@ -8,9 +8,9 @@ const RightPlaceHolder = () => {
   const CARDS = useSliderStore(state => state.CARDS);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const cardsPerPage = useSliderStore(state => state.cardsPerPage);
+  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
   const isMounted = useSliderStore(state => state.isMounted);
-  const lastIndex = cardsPerPage - 1;
+  const lastIndex = tilesPerPage - 1;
 
   const getNextCard = (): Card => {
     if (!isMounted) return CARDS[0];

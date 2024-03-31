@@ -7,7 +7,7 @@ import Tile from '@/components/slider/tiles/tile';
 const NextPage = () => {
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const cardsPerPage = useSliderStore(state => state.cardsPerPage);
+  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
   const isMounted = useSliderStore(state => state.isMounted);
 
   if (!isMounted) return null;
@@ -20,7 +20,7 @@ const NextPage = () => {
 
   return nextPageTiles.map((card, i) => (
     <Fragment key={`NextPage-${card.id}`}>
-      <Tile card={card} displayNumber={i === 0 ? cardsPerPage + 1 : ''} isVisibleOnScreen={true} />
+      <Tile card={card} displayNumber={i === 0 ? tilesPerPage + 1 : ''} isVisibleOnScreen={true} />
     </Fragment>
   ));
 };
