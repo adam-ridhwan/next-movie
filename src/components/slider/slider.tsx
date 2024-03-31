@@ -11,8 +11,8 @@ import PaginationButton from '@/components/slider/pagination-button';
 import TileList from '@/components/slider/tile-list';
 
 const Slider = () => {
-  const currentPage = useSliderStore(state => state.currentPage);
   const setInitialPages = useSliderStore(state => state.setInitialPages);
+  const currentPage = useSliderStore(state => state.currentPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const handleLeftScroll = useSliderStore(state => state.handleLeftScroll);
   const handleRightScroll = useSliderStore(state => state.handleRightScroll);
