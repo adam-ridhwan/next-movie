@@ -35,7 +35,6 @@ const RightButton = () => {
 
     setTimeout(() => {
       disableAnimation();
-      document.body.style.pointerEvents = '';
       setTranslatePercentage(0);
       canGoToNextPage ? goToNextPage() : goToFirstPage();
       if (isLastPage) goToLastPage();
