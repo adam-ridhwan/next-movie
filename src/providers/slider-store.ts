@@ -3,6 +3,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
+import { GetTranslatePercentageParams } from '@/lib/hooks/use-translate-percentage';
 import { Card } from '@/lib/types';
 import { getCardsPerPage } from '@/lib/utils';
 
@@ -39,13 +41,19 @@ type Actions = {
   setIsAnimating: (isAnimating: boolean) => void;
   enableAnimation: () => void;
   disableAnimation: () => void;
+  handleRightScroll: (
+    getTranslatePercentage: (params: GetTranslatePercentageParams) => number
+  ) => void;
+  handleLeftScroll: (
+    getTranslatePercentage: (params: GetTranslatePercentageParams) => number
+  ) => void;
 };
 
 export type SliderStore = State & Actions;
 
 export const createSliderStore = (CARDS: Card[]) =>
   create(
-    devtools<SliderStore>(set => ({
+    devtools<SliderStore>((set, get) => ({
       CARDS: CARDS,
       pages: new Map<number, Card[]>().set(1, CARDS.slice(0, 7)),
       maxPage: Math.ceil(CARDS.length / getCardsPerPage()),
@@ -105,7 +113,7 @@ export const createSliderStore = (CARDS: Card[]) =>
           // Add the first few cards to the end to align properly
           newCards.push(...state.CARDS.slice(0, state.cardsPerPage));
 
-          const newPages = new Map<number, Card[]>();
+          const newPages: PagesMap = new Map<number, Card[]>();
           for (let pageIndex = 0; pageIndex < state.maxPage + 1; pageIndex++) {
             const startIndex = pageIndex * state.cardsPerPage;
             const endIndex = startIndex + state.cardsPerPage;
@@ -121,12 +129,64 @@ export const createSliderStore = (CARDS: Card[]) =>
           };
         }),
       enableAnimation: () => {
-        document.body.style.pointerEvents = 'none';
-        set(() => ({ isAnimating: true }));
+        set(() => {
+          document.body.style.pointerEvents = 'none';
+          return { isAnimating: true };
+        });
       },
       disableAnimation: () => {
-        document.body.style.pointerEvents = '';
-        set(() => ({ isAnimating: false }));
+        set(() => {
+          document.body.style.pointerEvents = '';
+          return { isAnimating: false };
+        });
+      },
+      handleRightScroll: getTranslatePercentage => {
+        get().enableAnimation();
+        const newCurrentPage = get().currentPage + 1;
+        const isLastPage = newCurrentPage === get().maxPage;
+
+        const newTranslatePercentage = getTranslatePercentage({
+          direction: DIRECTION.RIGHT,
+          lastPageLength: get().lastPageLength,
+          isLastPage: isLastPage && get().isFirstPageVisited,
+        });
+
+        get().setTranslatePercentage(newTranslatePercentage);
+
+        setTimeout(() => {
+          get().disableAnimation();
+          get().setTranslatePercentage(0);
+          const canGoToNextPage = newCurrentPage <= get().maxPage;
+          canGoToNextPage ? get().goToNextPage() : get().goToFirstPage();
+          if (isLastPage) get().goToLastPage();
+        }, TIMEOUT_DURATION);
+
+        return;
+      },
+      handleLeftScroll: getTranslatePercentage => {
+        get().enableAnimation();
+        const newCurrentPage = get().currentPage - 1;
+
+        const isFirstPage = newCurrentPage === 1;
+        const isGoingLeftAfterFirstPage = newCurrentPage < 1;
+
+        const newTranslatePercentage = getTranslatePercentage({
+          direction: DIRECTION.LEFT,
+          lastPageLength: get().lastPageLength,
+          isFirstPage: isFirstPage && get().isLastPageVisited,
+        });
+
+        get().setTranslatePercentage(newTranslatePercentage);
+
+        setTimeout(() => {
+          get().disableAnimation();
+          get().setTranslatePercentage(0);
+          const canGoToPrevPage = newCurrentPage > 1;
+          canGoToPrevPage ? get().goToPrevPage() : get().goToFirstPage();
+          if (isGoingLeftAfterFirstPage) get().goToLastPage();
+        }, TIMEOUT_DURATION);
+
+        return;
       },
     }))
   );

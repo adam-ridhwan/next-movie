@@ -5,11 +5,11 @@ import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import { PagesMap } from '@/providers/slider-store';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { DEVELOPMENT_MODE, DIRECTION } from '@/lib/constants';
+import { useTranslatePercentage } from '@/lib/hooks/use-translate-percentage';
 import { Card } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import LeftButton from '@/components/slider/left-button';
-import RightButton from '@/components/slider/right-button';
+import PaginationButton from '@/components/slider/pagination-button';
 import TileList from '@/components/slider/tile-list';
 
 const Slider = () => {
@@ -18,6 +18,10 @@ const Slider = () => {
   const setInitialPages = useSliderStore(state => state.setInitialPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPage = useSliderStore(state => state.maxPage);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
+  const handleLeftScroll = useSliderStore(state => state.handleLeftScroll);
+  const handleRightScroll = useSliderStore(state => state.handleRightScroll);
+  const getTranslatePercentage = useTranslatePercentage();
   const { sliderRef } = useDomContext();
 
   useEffect(() => {
@@ -41,22 +45,32 @@ const Slider = () => {
   }, []);
 
   return (
-    <div
-      ref={sliderRef}
-      className={cn('group/slider relative flex w-full', {
-        'bg-yellow-600': DEVELOPMENT_MODE,
-      })}
-    >
-      {DEVELOPMENT_MODE && (
-        <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[60px] font-bold'>
-          {currentPage}
-        </div>
-      )}
+    <>
+      <div
+        ref={sliderRef}
+        className={cn('group/slider relative flex w-full', {
+          'bg-yellow-600': DEVELOPMENT_MODE,
+        })}
+      >
+        {DEVELOPMENT_MODE && (
+          <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[60px] font-bold'>
+            {currentPage}
+          </div>
+        )}
 
-      <LeftButton />
-      <TileList />
-      <RightButton />
-    </div>
+        {hasPaginated && (
+          <PaginationButton
+            onClick={() => handleLeftScroll(getTranslatePercentage)}
+            direction={DIRECTION.LEFT}
+          />
+        )}
+        <TileList />
+        <PaginationButton
+          onClick={() => handleRightScroll(getTranslatePercentage)}
+          direction={DIRECTION.RIGHT}
+        />
+      </div>
+    </>
   );
 };
 

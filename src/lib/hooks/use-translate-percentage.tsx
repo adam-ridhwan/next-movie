@@ -3,7 +3,7 @@ import { useDomContext } from '@/providers/dom-provider';
 import { DIRECTION, PADDING } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 
-type GetTranslatePercentageParams = {
+export type GetTranslatePercentageParams = {
   direction?: SlideDirection;
   lastPageLength: number;
   isFirstPage?: boolean;
