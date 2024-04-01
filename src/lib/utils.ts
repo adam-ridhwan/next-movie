@@ -34,7 +34,11 @@ export const findIndexFromKey = <T, K extends keyof T>({
   value,
 }: FindItemFromIndexParams<T, K>): number => {
   const index = array.findIndex(item => item[key] === value);
-  if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
+  if (index === -1) {
+    console.log(index);
+    console.error(`${label}: Index of item not found for value: ${value}`);
+    // throw new Error(`${label}: Index of item not found for value: ${value}`);
+  }
   return index;
 };
 
@@ -80,3 +84,20 @@ export function validatePagesMap({
     }
   });
 }
+
+const debounce = <T extends (...args: any[]) => void>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};

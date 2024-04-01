@@ -14,6 +14,7 @@ import {
 import { GetTranslatePercentageParams } from '@/components/slider/use-translate-percentage';
 
 const log = (string: string) =>
+  // eslint-disable-next-line no-console
   DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
 
 type State = {
@@ -138,38 +139,11 @@ export const createSliderStore = (TILES: Tile[]) =>
           };
         });
       },
-      setPagesAfterResize: previousTilesCurrentPage => {
-        // set(state => {
-        log('setPagesAfterResize()');
-        get().resetPages();
-
-        /** ────────────────────────────────────────────────────────────────────────────────
-         * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
-         *  L        1           2           3        R
-         * [9] - [1,2,3,4] - [5,6,7,8] - [9,1,2,3] - [4]
-         * [7] -  [8,9,1]  -  [2,3,4]  -  [5,6,7]  -  [8,9,1]  - [2]
-         *
-         * left - 3 tiles
-         * right - 6 tiles
-         * ────────────────────────────────────────────────────────────────────────────── */
-
-        /** ────────────────────────────────────────────────────────────────────────────────
-         * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 3rd page (last page)
-         *  L        1           2           3        R
-         * [7] - [7,8,9,1] - [2,3,4,5] - [6,7,8,9] - [1]
-         * [8] -  [9,1,2]  -  [3,4,5]  -  [6,7,8]  - [9]
-         *
-         * TODO:
-         * ────────────────────────────────────────────────────────────────────────────── */
-      },
       goToFirstPage: () =>
         set(state => {
           log('GO TO FIRST PAGE');
           state.setInitialPages();
-
-          return {
-            currentPage: 1,
-          };
+          return { currentPage: 1 };
         }),
       goToLastPage: () =>
         set(state => {
@@ -234,6 +208,85 @@ export const createSliderStore = (TILES: Tile[]) =>
             hasPaginated: true,
           };
         }),
+      setPagesAfterResize: previousTilesCurrentPage => {
+        set(state => {
+          log('SET PAGES AFTER RESIZE');
+          /** ────────────────────────────────────────────────────────────────────────────────
+           * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
+           *  L        1           2           3        R
+           * [9] - [1,2,3,4] - [5,6,7,8] - [9,1,2,3] - [4]
+           * [7] -  [8,9,1]  -  [2,3,4]  -  [5,6,7]  -  [8,9,1]  - [2]
+           *
+           * left - 3 tiles
+           * right - 6 tiles
+           * ────────────────────────────────────────────────────────────────────────────── */
+
+          /** ────────────────────────────────────────────────────────────────────────────────
+           * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 3rd page (last page)
+           *  L        1           2           3        R
+           * [7] - [7,8,9,1] - [2,3,4,5] - [6,7,8,9] - [1]
+           * [8] -  [9,1,2]  -  [3,4,5]  -  [6,7,8]  - [9]
+           *
+           * TODO:
+           * ────────────────────────────────────────────────────────────────────────────── */
+          console.log(
+            'Previous tiles:',
+            previousTilesCurrentPage.map(tile => tile.id)
+          );
+
+          get().resetPages();
+          const initialPages: Pages = new Map<number, Tile[]>();
+          const newTilesPerPage = getTilesPerPage();
+
+          // Left page placeholder
+          initialPages.set(0, TILES.slice(-newTilesPerPage));
+
+          // Middle pages
+          for (let pageIndex = 1; pageIndex < state.maxPage; pageIndex++) {
+            const startIndex = (pageIndex - 1) * newTilesPerPage;
+            const endIndex = startIndex + newTilesPerPage;
+            initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
+          }
+
+          const lastPage = getMapItem({
+            label: 'setInitialPages()',
+            map: initialPages,
+            key: state.maxPage - 2,
+          });
+
+          const tilesNeededForLastPage = newTilesPerPage - lastPage.length;
+          if (tilesNeededForLastPage) {
+            initialPages.set(state.maxPage - 2, [
+              ...lastPage,
+              ...TILES.slice(0, tilesNeededForLastPage),
+            ]);
+          }
+
+          // Right page placeholder
+          initialPages.set(
+            state.maxPage - 1,
+            TILES.slice(tilesNeededForLastPage, newTilesPerPage + tilesNeededForLastPage)
+          );
+
+          validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
+
+          [...initialPages.entries()]
+            .sort((a, b) => a[0] - b[0])
+            .forEach(([pageIndex, tiles]) => {
+              console.log(
+                `Page ${pageIndex}:`,
+                tiles.map(card => (card ? card.id : undefined))
+              );
+            });
+
+          return {
+            pages: initialPages,
+            lastPageLength: newTilesPerPage - tilesNeededForLastPage,
+            isFirstPageVisited: true,
+            isMounted: true,
+          };
+        });
+      },
       enableAnimation: () => {
         set(() => {
           document.body.style.pointerEvents = 'none';
