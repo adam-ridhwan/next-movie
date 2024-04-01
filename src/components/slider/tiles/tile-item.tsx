@@ -2,18 +2,18 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
-import { TileType } from '@/lib/types';
+import { Tile } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall } from '@/components/fonts';
 import { CategoryMovieIcon, DotIcon } from '@/components/icons';
 
-type TileProps = {
-  tile: TileType;
+type TileItemProps = {
+  tile: Tile;
   displayNumber: number | '';
   isVisibleOnScreen?: boolean;
 };
 
-const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
+const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   { tile, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
@@ -64,4 +64,4 @@ const Tile: ForwardRefRenderFunction<HTMLDivElement, TileProps> = (
   );
 };
 
-export default forwardRef(Tile);
+export default forwardRef(TileItem);

@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem } from '@/lib/utils';
-import Tile from '@/components/slider/tiles/tile';
+import TileItem from '@/components/slider/tiles/tile-item';
 
 const PrevPage = () => {
   const pages = useSliderStore(state => state.pages);
@@ -20,7 +20,11 @@ const PrevPage = () => {
 
   return prevPageTiles.map((tile, i) => (
     <Fragment key={`PrevPage-${tile.id}`}>
-      <Tile tile={tile} displayNumber={i === tilesPerPage - 1 ? 0 : ''} isVisibleOnScreen={true} />
+      <TileItem
+        tile={tile}
+        displayNumber={i === tilesPerPage - 1 ? 0 : ''}
+        isVisibleOnScreen={true}
+      />
     </Fragment>
   ));
 };

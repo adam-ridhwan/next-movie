@@ -2,11 +2,11 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { libraryStrings } from '@/lib/constants';
-import { TileType } from '@/lib/types';
+import { Tile } from '@/lib/types';
 import { HeadingMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
-const MOCK_TRENDING_TILES: TileType[] = Array.from({ length: 9 }, (_, index) => ({
+const MOCK_TRENDING_TILES: Tile[] = Array.from({ length: 9 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -15,7 +15,7 @@ const MOCK_TRENDING_TILES: TileType[] = Array.from({ length: 9 }, (_, index) => 
   title: `Trending ${index + 1}`,
 }));
 
-const MOCK_RECOMMENDED_TILES: TileType[] = Array.from({ length: 13 }, (_, index) => ({
+const MOCK_RECOMMENDED_TILES: Tile[] = Array.from({ length: 13 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
@@ -24,7 +24,7 @@ const MOCK_RECOMMENDED_TILES: TileType[] = Array.from({ length: 13 }, (_, index)
   title: `Recommended ${index + 1}`,
 }));
 
-const MOCK_NEW_RELEASES_TILES: TileType[] = Array.from({ length: 21 }, (_, index) => ({
+const MOCK_NEW_RELEASES_TILES: Tile[] = Array.from({ length: 21 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',

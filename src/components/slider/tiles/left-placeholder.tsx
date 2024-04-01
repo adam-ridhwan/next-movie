@@ -1,25 +1,13 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import Tile from '@/components/slider/tiles/tile';
+import TileItem from '@/components/slider/tiles/tile-item';
 
 const LeftPlaceHolder = () => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
-
-  const tiles = Array.from(pages);
-
-  const extractedTiles = tiles.map(tile => tile[1]);
-
-  extractedTiles.map(tile => {
-    console.log(
-      extractedTiles.indexOf(tile) + 1,
-      tile.map(t => t.id)
-    );
-  });
-  console.log('');
 
   const getPrevTiles = () => {
     const prevPage = getMapItem({
@@ -39,7 +27,9 @@ const LeftPlaceHolder = () => {
     return TILES[indexOfPreviousItem];
   };
 
-  return hasPaginated && <Tile tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />;
+  return (
+    hasPaginated && <TileItem tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />
+  );
 };
 
 export default LeftPlaceHolder;

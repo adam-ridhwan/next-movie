@@ -3,7 +3,7 @@ import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem } from '@/lib/utils';
-import Tile from '@/components/slider/tiles/tile';
+import TileItem from '@/components/slider/tiles/tile-item';
 
 const CurrentPage = () => {
   const pages = useSliderStore(state => state.pages);
@@ -11,14 +11,14 @@ const CurrentPage = () => {
   const { tileRef } = useDomContext();
 
   const currentPageTiles = getMapItem({
-    label: 'currentPageTiles',
+    label: '<CurrentPage /> currentPageTiles',
     map: pages,
     key: currentPage,
   });
 
   return currentPageTiles.map((tile, i) => (
     <Fragment key={`CurrentPage-${tile.id}`}>
-      <Tile
+      <TileItem
         ref={i === 0 ? tileRef : undefined}
         tile={tile}
         displayNumber={i + 1}

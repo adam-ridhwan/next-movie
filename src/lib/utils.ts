@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { MEDIA_QUERY } from '@/lib/constants';
+import { nonEmptyTilesSchema, Pages, Tile } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -45,3 +46,37 @@ export const getTilesPerPage = () => {
   if (windowWidth < MEDIA_QUERY.XL) return 5;
   return 6;
 };
+
+export const getMaxPages = (tiles: Tile[]) => {
+  // +2 for the left and right placeholder pages
+  return Math.ceil(tiles.length / getTilesPerPage()) + 2;
+};
+
+export function validatePagesMap({
+  label,
+  tiles,
+  pages,
+}: {
+  label: string;
+  tiles: Tile[];
+  pages: Pages;
+}): void {
+  const expectedMaxPage = getMaxPages(tiles);
+  const expectedTilesPerPage = getTilesPerPage();
+
+  if (pages.size !== expectedMaxPage) {
+    // throw new Error(`${label} Expected ${expectedMaxPage} pages, found ${pages.size}.`);
+  }
+
+  pages.forEach((tiles, pageIndex) => {
+    const result = nonEmptyTilesSchema.safeParse(tiles);
+
+    if (!result.success) {
+      // throw new Error(`${label} Validation failed for page ${pageIndex}: ${result.error}`);
+    }
+
+    if (tiles.length !== expectedTilesPerPage) {
+      // throw new Error(`${label} Page ${pageIndex} has ${tiles.length} tiles, expected ${expectedTilesPerPage}`);
+    }
+  });
+}

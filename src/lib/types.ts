@@ -7,7 +7,7 @@ import { DIRECTION } from '@/lib/constants';
 
 export type TODO = any;
 
-export const mongoIdSchema = z.string().or(z.instanceof(ObjectId));
+export const mongoIdSchema = z.string();
 
 export const formResponseSchema = z.object({
   success: z.boolean(),
@@ -28,7 +28,7 @@ export type User = z.infer<typeof userSchema>;
 
 export type SlideDirection = (typeof DIRECTION)[keyof typeof DIRECTION];
 
-export const tileModelSchema = z.object({
+export const tileSchema = z.object({
   id: z.string(),
   imageUrl: z.string(),
   year: z.string(),
@@ -36,4 +36,6 @@ export const tileModelSchema = z.object({
   rating: z.string(),
   title: z.string(),
 });
-export type TileType = z.infer<typeof tileModelSchema>;
+export const nonEmptyTilesSchema = z.array(tileSchema).nonempty();
+export type Tile = z.infer<typeof tileSchema>;
+export type Pages = Map<number, Tile[]>;
