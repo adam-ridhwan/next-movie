@@ -140,132 +140,27 @@ export const createSliderStore = (TILES: Tile[]) =>
       },
       setPagesAfterResize: previousTilesCurrentPage => {
         // set(state => {
-        //   log('setPagesAfterResize()');
-        //   get().resetPages();
-        //
-        //   /** ────────────────────────────────────────────────────────────────────────────────
-        //    * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
-        //    *  L        1           2           3        R
-        //    * [9] - [1,2,3,4] - [5,6,7,8] - [9,1,2,3] - [4]
-        //    * [7] -  [8,9,1]  -  [2,3,4]  -  [5,6,7]  -  [8,9,1]  - [2]
-        //    *
-        //    * left - 3 tiles
-        //    * right - 6 tiles
-        //    * ────────────────────────────────────────────────────────────────────────────── */
-        //
-        //   /** ────────────────────────────────────────────────────────────────────────────────
-        //    * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 3rd page (last page)
-        //    *  L        1           2           3        R
-        //    * [7] - [7,8,9,1] - [2,3,4,5] - [6,7,8,9] - [1]
-        //    * [8] -  [9,1,2]  -  [3,4,5]  -  [6,7,8]  - [9]
-        //    *
-        //    * TODO:
-        //    * ────────────────────────────────────────────────────────────────────────────── */
-        //
-        //   const newTiles: Tile[] = [];
-        //
-        //   const newTilesPerPage = getTilesPerPage();
-        //   const newMaxPage = Math.ceil(TILES.length / newTilesPerPage);
-        //
-        //   const totalTilesToTheLeft = newTilesPerPage * state.currentPage; // 1
-        //   const totalTilesToTheRight = newTilesPerPage * (newMaxPage - state.currentPage + 1); // 2
-        //
-        //   const indexOfFirstItemInCurrentPage = findIndexFromKey({
-        //     label: 'setPagesAfterResize()',
-        //     array: state.TILES,
-        //     key: 'id',
-        //     value: previousTilesCurrentPage[0].id,
-        //   });
-        //
-        //   let decrementingTilesIndex = indexOfFirstItemInCurrentPage - 1;
-        //   for (let i = totalTilesToTheLeft; i > 0; i--) {
-        //     newTiles.unshift(state.TILES[decrementingTilesIndex--]);
-        //     if (decrementingTilesIndex === -1) {
-        //       decrementingTilesIndex = state.TILES.length - 1;
-        //     }
-        //   }
-        //
-        //   let incrementingTilesIndex = indexOfFirstItemInCurrentPage;
-        //   let hasMissingTiles = false;
-        //   let newLastPageLength = newTilesPerPage;
-        //   for (let i = 0; i < totalTilesToTheRight; i++) {
-        //     newTiles.push(state.TILES[incrementingTilesIndex++]);
-        //     if (hasMissingTiles) {
-        //       newLastPageLength--;
-        //     }
-        //     if (incrementingTilesIndex === state.TILES.length) {
-        //       incrementingTilesIndex = 0;
-        //       hasMissingTiles = true;
-        //     }
-        //   }
-        //
-        //   // console.log([totalTilesToTheLeft, totalTilesToTheRight]);
-        //   // console.log(
-        //   //   'previousTilesCurrentPage',
-        //   //   previousTilesCurrentPage.map(tile => tile.id)
-        //   // );
-        //
-        //   console.log('previousTilesCurrentPage', previousTilesCurrentPage);
-        //   console.log('newLastPageLength', newLastPageLength);
-        //
-        //   const newPages: Pages = new Map<number, Tile[]>();
-        //   for (let pageIndex = 0; pageIndex < newMaxPage + 1; pageIndex++) {
-        //     const startIndex = pageIndex * newTilesPerPage;
-        //     const endIndex = startIndex + newTilesPerPage;
-        //     const newTilesGroup = newTiles.slice(startIndex, endIndex);
-        //     newPages.set(pageIndex + 1, newTilesGroup);
-        //   }
-        //
-        //   console.log(newPages);
-        //   console.log(state.currentPage);
-        //
-        //   newPages.forEach((value, key) => {
-        //     console.log(
-        //       ` Page ${key}: `,
-        //       value.map(tile => (tile ? tile.id : undefined))
-        //     );
-        //   });
-        //
-        //   // cache
-        //   const initialPages: Pages = new Map<number, Tile[]>();
-        //
-        //   for (let pageIndex = 0; pageIndex < newMaxPage; pageIndex++) {
-        //     const startIndex = pageIndex * newTilesPerPage;
-        //     const endIndex = startIndex + newTilesPerPage;
-        //     initialPages.set(pageIndex + 1, TILES.slice(startIndex, endIndex));
-        //   }
-        //
-        //   const lastPage = getMapItem({
-        //     label: 'setInitialPages()',
-        //     map: initialPages,
-        //     key: newMaxPage,
-        //   });
-        //
-        //   if (lastPage.length < newTilesPerPage && initialPages.size > 1) {
-        //     const tilesNeeded = newTilesPerPage - lastPage.length;
-        //     initialPages.set(newMaxPage, [...lastPage, ...TILES.slice(0, tilesNeeded)]);
-        //   }
-        //
-        //   console.log(initialPages);
-        //   console.log(state.currentPage);
-        //
-        //   initialPages.forEach((value, key) => {
-        //     console.log(
-        //       ` Page ${key}: `,
-        //       value.map(tile => (tile ? tile.id : undefined))
-        //     );
-        //   });
-        //
-        //   return {
-        //     pages: state.currentPage === 1 ? initialPages : newPages,
-        //     currentPage: state.currentPage === 1 ? 1 : state.currentPage + 1,
-        //     tilesPerPage: newTilesPerPage,
-        //     maxPage: newMaxPage + 1,
-        //     lastPageLength: newLastPageLength,
-        //     isLastPageVisited: true,
-        //     isFirstPageVisited: true,
-        //   };
-        // });
+        log('setPagesAfterResize()');
+        get().resetPages();
+
+        /** ────────────────────────────────────────────────────────────────────────────────
+         * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
+         *  L        1           2           3        R
+         * [9] - [1,2,3,4] - [5,6,7,8] - [9,1,2,3] - [4]
+         * [7] -  [8,9,1]  -  [2,3,4]  -  [5,6,7]  -  [8,9,1]  - [2]
+         *
+         * left - 3 tiles
+         * right - 6 tiles
+         * ────────────────────────────────────────────────────────────────────────────── */
+
+        /** ────────────────────────────────────────────────────────────────────────────────
+         * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 3rd page (last page)
+         *  L        1           2           3        R
+         * [7] - [7,8,9,1] - [2,3,4,5] - [6,7,8,9] - [1]
+         * [8] -  [9,1,2]  -  [3,4,5]  -  [6,7,8]  - [9]
+         *
+         * TODO:
+         * ────────────────────────────────────────────────────────────────────────────── */
       },
       goToFirstPage: () =>
         set(state => {
@@ -320,17 +215,15 @@ export const createSliderStore = (TILES: Tile[]) =>
 
           const leftArray = [];
           for (let i = 0; i < state.tilesPerPage; i++) {
+            if (firstItemIndex < 0) firstItemIndex = TILES.length - 1;
             leftArray.unshift(TILES[firstItemIndex--]);
-            if (firstItemIndex === -1) {
-              firstItemIndex = TILES.length - 1;
-            }
           }
 
           newPages.set(0, leftArray);
 
           validatePagesMap({ label: 'goToLastPage()', tiles: TILES, pages: newPages });
-          const end = performance.now();
 
+          const end = performance.now();
           console.log(`Execution time: ${end - start} milliseconds`);
 
           return {

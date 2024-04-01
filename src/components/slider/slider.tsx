@@ -37,7 +37,7 @@ const Slider = () => {
       .forEach(([pageIndex, tiles]) => {
         console.log(
           `Page ${pageIndex}:`,
-          tiles.map(({ id }) => id || undefined)
+          tiles.map(card => (card ? card.id : undefined))
         );
       });
 
