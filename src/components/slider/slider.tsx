@@ -21,10 +21,7 @@ const Slider = () => {
   const handleRightScroll = useSliderStore(state => state.handleRightScroll);
   const getTranslatePercentage = useTranslatePercentage();
   const pages = useSliderStore(state => state.pages);
-  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
-  const maxPage = useSliderStore(state => state.maxPage);
   const isMounted = useSliderStore(state => state.isMounted);
-  const lastPageLength = useSliderStore(state => state.lastPageLength);
 
   const { sliderRef } = useDomContext();
 
@@ -46,7 +43,7 @@ const Slider = () => {
 
     console.log('─────────────────────────────────────────────────');
   }, [pages, currentPage]);
-  // return null;
+
   return (
     <>
       <div
