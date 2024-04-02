@@ -1,17 +1,19 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { nonEmptyTilesSchema, Pages } from '@/lib/types';
-import { getMaxPages, getTilesPerPage } from '@/lib/utils';
 
 export const useValidators = () => {
-  const TILES = useSliderStore(state => state.TILES);
-
-  const validatePages = ({ label, pages }: { label: string; pages: Pages }): void => {
-    const expectedMaxPage = getMaxPages(TILES);
-    const expectedTilesPerPage = getTilesPerPage();
-
-    if (pages.size !== expectedMaxPage) {
-      throw new Error(`${label} Expected ${expectedMaxPage} pages, found ${pages.size}.`);
+  const validatePages = ({
+    label,
+    pages,
+    expectedMaxPages,
+    expectedTilesPerPage,
+  }: {
+    label: string;
+    pages: Pages;
+    expectedMaxPages: number;
+    expectedTilesPerPage: number;
+  }): void => {
+    if (pages.size !== expectedMaxPages) {
+      throw new Error(`${label} Expected ${expectedMaxPages} pages, found ${pages.size}.`);
     }
 
     pages.forEach((tiles, pageIndex) => {

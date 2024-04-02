@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { Pages, Tile } from '@/lib/types';
-import { getMaxPages, getTilesPerPage } from '@/lib/utils';
 
 type SetPagesParams = {
   pages: Pages;
@@ -51,8 +50,8 @@ export const createSliderStore = (TILES: Tile[]) =>
     devtools<SliderStore>(set => ({
       TILES: TILES,
       pages: new Map<number, Tile[]>().set(1, TILES.slice(0, 7)),
-      maxPage: getMaxPages(TILES),
-      tilesPerPage: getTilesPerPage(),
+      maxPage: 0,
+      tilesPerPage: 0,
       currentPage: 1,
       hasPaginated: false,
       isAnimating: false,

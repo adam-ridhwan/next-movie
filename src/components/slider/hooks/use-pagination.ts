@@ -1,9 +1,9 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { DEVELOPMENT_MODE, MEDIA_QUERY } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
-import { findIndexFromKey, getMapItem, getMaxPages, getTilesPerPage } from '@/lib/utils';
+import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const log = (string: string) =>
@@ -22,6 +22,8 @@ type UsePaginationConfig = {
   isFirstPageVisited: boolean;
   isLastPageVisited: boolean;
   hasPaginated: boolean;
+  getTilesPerPage: () => number;
+  getMaxPages: () => number;
 };
 
 type UsePaginationActions = {
@@ -50,10 +52,24 @@ export const usePagination = (): [
 
   const { validatePages } = useValidators();
 
+  const getTilesPerPage = () => {
+    const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
+    if (windowWidth < MEDIA_QUERY.SM) return 2;
+    if (windowWidth < MEDIA_QUERY.MD) return 3;
+    if (windowWidth < MEDIA_QUERY.LG) return 4;
+    if (windowWidth < MEDIA_QUERY.XL) return 5;
+    return 6;
+  };
+
+  const getMaxPages = () => {
+    // +2 for the left and right placeholder pages
+    return Math.ceil(TILES.length / getTilesPerPage()) + 2;
+  };
+
   const goToFirstPage = () => {
     log('FIRST');
     const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages(TILES);
+    const maxPages = getMaxPages();
 
     const initialPages: Pages = new Map<number, Tile[]>();
 
@@ -79,7 +95,12 @@ export const usePagination = (): [
     // Right page placeholder
     initialPages.set(maxPages - 1, TILES.slice(tilesNeeded, tilesPerPage + tilesNeeded));
 
-    validatePages({ label: 'goToFirstPage()', pages: initialPages });
+    validatePages({
+      label: 'goToFirstPage()',
+      pages: initialPages,
+      expectedMaxPages: maxPages,
+      expectedTilesPerPage: tilesPerPage,
+    });
 
     setAllPages({
       pages: initialPages,
@@ -98,7 +119,7 @@ export const usePagination = (): [
     if (!hasPaginated) markAsPaginated();
 
     const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages(TILES);
+    const maxPages = getMaxPages();
 
     const newPages: Pages = new Map<number, Tile[]>();
 
@@ -142,7 +163,12 @@ export const usePagination = (): [
 
     newPages.set(0, leftArray);
 
-    validatePages({ label: 'goToLastPage()', pages: newPages });
+    validatePages({
+      label: 'goToLastPage()',
+      pages: newPages,
+      expectedMaxPages: maxPages,
+      expectedTilesPerPage: tilesPerPage,
+    });
 
     setAllPages({
       pages: newPages,
@@ -173,6 +199,8 @@ export const usePagination = (): [
       isFirstPageVisited,
       isLastPageVisited,
       hasPaginated,
+      getTilesPerPage,
+      getMaxPages,
     },
     { goToFirstPage, goToLastPage, goToPrevPage, goToNextPage },
   ];

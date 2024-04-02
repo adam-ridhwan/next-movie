@@ -1,13 +1,13 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { getMapItem, getTilesPerPage } from '@/lib/utils';
+import { getMapItem } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const NextPage = () => {
   const isMounted = useSliderStore(state => state.isMounted);
 
-  const [{ currentPage, pages }] = usePagination();
+  const [{ currentPage, pages }, { getTilesPerPage }] = usePagination();
 
   if (!isMounted) return null;
 

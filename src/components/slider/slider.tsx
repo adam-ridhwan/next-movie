@@ -7,18 +7,21 @@ import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { cn, getMaxPages, getTilesPerPage } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
-  const [{ TILES, currentPage, pages }, { hasPaginated }, { goToFirstPage, goToLastPage }] =
-    usePagination();
+  const [
+    { TILES, currentPage, pages },
+    { hasPaginated, getMaxPages, getTilesPerPage },
+    { goToFirstPage, goToLastPage },
+  ] = usePagination();
   const isMounted = useSliderStore(state => state.isMounted);
   const prevTilesPerPage = useRef(getTilesPerPage());
-  const prevMaxPages = useRef(getMaxPages(TILES));
+  const prevMaxPages = useRef(getMaxPages());
 
   const { sliderRef } = useDomContext();
 
@@ -27,7 +30,7 @@ const Slider = () => {
   useEffect(() => {
     const handleResize = () => {
       const tilesPerPage = getTilesPerPage();
-      const maxPages = getMaxPages(TILES);
+      const maxPages = getMaxPages();
 
       if (tilesPerPage === prevTilesPerPage.current) return;
 

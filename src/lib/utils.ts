@@ -43,20 +43,6 @@ export const findIndexFromKey = <T, K extends keyof T>({
   return index;
 };
 
-export const getTilesPerPage = () => {
-  const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
-  if (windowWidth < MEDIA_QUERY.SM) return 2;
-  if (windowWidth < MEDIA_QUERY.MD) return 3;
-  if (windowWidth < MEDIA_QUERY.LG) return 4;
-  if (windowWidth < MEDIA_QUERY.XL) return 5;
-  return 6;
-};
-
-export const getMaxPages = (tiles: Tile[]) => {
-  // +2 for the left and right placeholder pages
-  return Math.ceil(tiles.length / getTilesPerPage()) + 2;
-};
-
 const debounce = <T extends (...args: TODO[]) => void>(
   func: T,
   wait: number
