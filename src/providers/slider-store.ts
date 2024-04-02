@@ -40,7 +40,7 @@ type Actions = {
   goToFirstPage: () => void;
   goToLastPage: () => void;
   setInitialPages: () => void;
-  setPagesAfterResize: (previousTiles: Tile[]) => void;
+  setPagesAfterResize: (previousTilesTile: Tile[]) => void;
   resetPages: () => void;
   setTilesPerPage: (tilesPerPage: number) => void;
   setLastPageLength: (lastPageLength: number) => void;
@@ -208,7 +208,7 @@ export const createSliderStore = (TILES: Tile[]) =>
             hasPaginated: true,
           };
         }),
-      setPagesAfterResize: previousTilesCurrentPage => {
+      setPagesAfterResize: previousTiles => {
         set(state => {
           log('SET PAGES AFTER RESIZE');
           /** ────────────────────────────────────────────────────────────────────────────────
@@ -229,20 +229,18 @@ export const createSliderStore = (TILES: Tile[]) =>
            *
            * TODO:
            * ────────────────────────────────────────────────────────────────────────────── */
-          console.log(
-            'Previous tiles:',
-            previousTilesCurrentPage.map(tile => tile.id)
-          );
 
           get().resetPages();
-          const initialPages: Pages = new Map<number, Tile[]>();
+          const newMaxPages = getMaxPages(TILES);
           const newTilesPerPage = getTilesPerPage();
+
+          const initialPages: Pages = new Map<number, Tile[]>();
 
           // Left page placeholder
           initialPages.set(0, TILES.slice(-newTilesPerPage));
 
           // Middle pages
-          for (let pageIndex = 1; pageIndex < state.maxPage; pageIndex++) {
+          for (let pageIndex = 1; pageIndex < newMaxPages - 1; pageIndex++) {
             const startIndex = (pageIndex - 1) * newTilesPerPage;
             const endIndex = startIndex + newTilesPerPage;
             initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
@@ -251,12 +249,12 @@ export const createSliderStore = (TILES: Tile[]) =>
           const lastPage = getMapItem({
             label: 'setInitialPages()',
             map: initialPages,
-            key: state.maxPage - 2,
+            key: newMaxPages - 2,
           });
 
           const tilesNeededForLastPage = newTilesPerPage - lastPage.length;
           if (tilesNeededForLastPage) {
-            initialPages.set(state.maxPage - 2, [
+            initialPages.set(newMaxPages - 2, [
               ...lastPage,
               ...TILES.slice(0, tilesNeededForLastPage),
             ]);
@@ -264,24 +262,17 @@ export const createSliderStore = (TILES: Tile[]) =>
 
           // Right page placeholder
           initialPages.set(
-            state.maxPage - 1,
-            TILES.slice(tilesNeededForLastPage, newTilesPerPage + tilesNeededForLastPage)
+            newMaxPages - 1,
+            TILES.slice(tilesNeededForLastPage, tilesNeededForLastPage + newTilesPerPage)
           );
 
           validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
 
-          [...initialPages.entries()]
-            .sort((a, b) => a[0] - b[0])
-            .forEach(([pageIndex, tiles]) => {
-              console.log(
-                `Page ${pageIndex}:`,
-                tiles.map(card => (card ? card.id : undefined))
-              );
-            });
-
           return {
             pages: initialPages,
-            lastPageLength: newTilesPerPage - tilesNeededForLastPage,
+            lastPageLength: -tilesNeededForLastPage,
+            maxPage: newMaxPages,
+            tilesPerPage: newTilesPerPage,
             isFirstPageVisited: true,
             isMounted: true,
           };
@@ -350,5 +341,3 @@ export const createSliderStore = (TILES: Tile[]) =>
       },
     }))
   );
-
-export const goToLastPage = () => {};

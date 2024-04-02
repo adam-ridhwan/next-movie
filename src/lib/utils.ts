@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { MEDIA_QUERY } from '@/lib/constants';
-import { nonEmptyTilesSchema, Pages, Tile } from '@/lib/types';
+import { nonEmptyTilesSchema, Pages, Tile, TODO } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -69,23 +69,25 @@ export function validatePagesMap({
   const expectedTilesPerPage = getTilesPerPage();
 
   if (pages.size !== expectedMaxPage) {
-    // throw new Error(`${label} Expected ${expectedMaxPage} pages, found ${pages.size}.`);
+    throw new Error(`${label} Expected ${expectedMaxPage} pages, found ${pages.size}.`);
   }
 
   pages.forEach((tiles, pageIndex) => {
     const result = nonEmptyTilesSchema.safeParse(tiles);
 
     if (!result.success) {
-      // throw new Error(`${label} Validation failed for page ${pageIndex}: ${result.error}`);
+      throw new Error(`${label} Validation failed for page ${pageIndex}: ${result.error}`);
     }
 
     if (tiles.length !== expectedTilesPerPage) {
-      // throw new Error(`${label} Page ${pageIndex} has ${tiles.length} tiles, expected ${expectedTilesPerPage}`);
+      throw new Error(
+        `${label} Page ${pageIndex} has ${tiles.length} tiles, expected ${expectedTilesPerPage}`
+      );
     }
   });
 }
 
-const debounce = <T extends (...args: any[]) => void>(
+const debounce = <T extends (...args: TODO[]) => void>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {

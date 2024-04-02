@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem, getTilesPerPage } from '@/lib/utils';
@@ -10,18 +10,18 @@ const useWindowResize = () => {
   const tilesPerPage = useSliderStore(state => state.tilesPerPage);
   const prevTilesPerPage = useRef(tilesPerPage);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       const newTilesPerPage = getTilesPerPage();
 
       if (newTilesPerPage !== prevTilesPerPage.current) {
-        const previousTilesCurrentPage = getMapItem({
+        const previousTiles = getMapItem({
           label: 'currentTilesOfPreviousMediaQuery',
           map: pages,
           key: currentPage,
         });
 
-        setPagesAfterResize(previousTilesCurrentPage);
+        setPagesAfterResize(previousTiles);
         prevTilesPerPage.current = newTilesPerPage;
       }
     };

@@ -15,11 +15,6 @@ const RightPlaceHolder = () => {
   const getNextTiles = (): Tile => {
     if (!isMounted) return TILES[0];
 
-    // TODO: TypeError: Cannot read properties of undefined (reading 'id')
-    // How to replicate: Set browser to large width and quickly resize to small width
-    // I think it has something to do with how this components is being rendered
-    // using stale state or the wrong stage of the component lifecycle
-
     const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });
 
     const indexOfLastItem = findIndexFromKey({
