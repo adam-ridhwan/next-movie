@@ -4,7 +4,7 @@ import { useSlide } from '@/components/slider/hooks/use-slide';
 import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateRightButton = () => {
-  const [{ TILES }, { getMaxPages }] = usePagination();
+  const [_, { getMaxPages }] = usePagination();
   const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();
 
   const [

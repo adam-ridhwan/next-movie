@@ -39,8 +39,6 @@ type Actions = {
   setSlideAmount: (slideAmount: number) => void;
   markAsPaginated: () => void;
   setIsAnimating: (isAnimating: boolean) => void;
-  enableAnimation: () => void;
-  disableAnimation: () => void;
 };
 
 export type SliderStore = State & Actions;
@@ -70,17 +68,5 @@ export const createSliderStore = (TILES: Tile[]) =>
       setSlideAmount: slideAmount => set(() => ({ slideAmount })),
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
-      enableAnimation: () => {
-        set(() => {
-          document.body.style.pointerEvents = 'none';
-          return { isAnimating: true };
-        });
-      },
-      disableAnimation: () => {
-        set(() => {
-          document.body.style.pointerEvents = '';
-          return { isAnimating: false };
-        });
-      },
     }))
   );

@@ -21,9 +21,10 @@ type SlideConfig = {
 
 export const useSlide = (): [SlideAction, SlideConfig] => {
   const setSlideAmount = useSliderStore(state => state.setSlideAmount);
-  const disableAnimation = useSliderStore(state => state.disableAnimation);
-  const enableAnimation = useSliderStore(state => state.enableAnimation);
+  const setIsAnimating = useSliderStore(state => state.setIsAnimating);
   const { sliderRef, tileRef } = useDomContext();
+
+  const slide = (amount: number) => setSlideAmount(amount);
 
   const calculateSlideAmount = ({
     direction,
@@ -38,16 +39,22 @@ export const useSlide = (): [SlideAction, SlideConfig] => {
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = tileRef.current;
 
-    const offsetPercentage = ((lastPageLength * sliderItemWidth) / windowWidth) * 100;
-    if (isLastPage) return -offsetPercentage;
-    if (isFirstPage) return offsetPercentage;
+    const lastPageLengthPercentage = ((lastPageLength * sliderItemWidth) / windowWidth) * 100;
+    if (isLastPage) return -lastPageLengthPercentage;
+    if (isFirstPage) return lastPageLengthPercentage;
 
     const sliderWidthPercentage = ((sliderWidth - PADDING) / windowWidth) * 100;
     return direction === DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
   };
 
-  const slide = (amount: number) => {
-    setSlideAmount(amount);
+  const enableAnimation = () => {
+    document.body.style.pointerEvents = 'none';
+    return setIsAnimating(true);
+  };
+
+  const disableAnimation = () => {
+    document.body.style.pointerEvents = '';
+    return setIsAnimating(false);
   };
 
   return [slide, { calculateSlideAmount, enableAnimation, disableAnimation }];
