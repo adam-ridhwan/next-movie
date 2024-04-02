@@ -20,7 +20,7 @@ type SlideConfig = {
 };
 
 export const useSlide = (): [SlideAction, SlideConfig] => {
-  const setTranslatePercentage = useSliderStore(state => state.setTranslatePercentage);
+  const setSlideAmount = useSliderStore(state => state.setSlideAmount);
   const disableAnimation = useSliderStore(state => state.disableAnimation);
   const enableAnimation = useSliderStore(state => state.enableAnimation);
   const { sliderRef, tileRef } = useDomContext();
@@ -47,7 +47,7 @@ export const useSlide = (): [SlideAction, SlideConfig] => {
   };
 
   const slide = (amount: number) => {
-    setTranslatePercentage(amount);
+    setSlideAmount(amount);
   };
 
   return [slide, { calculateSlideAmount, enableAnimation, disableAnimation }];

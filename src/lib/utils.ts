@@ -2,8 +2,8 @@ import chalk from 'chalk';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { DEVELOPMENT_MODE, MEDIA_QUERY } from '@/lib/constants';
-import { Tile, TODO } from '@/lib/types';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { TODO } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

@@ -61,10 +61,8 @@ export const usePagination = (): [
     return 6;
   };
 
-  const getMaxPages = () => {
-    // +2 for the left and right placeholder pages
-    return Math.ceil(TILES.length / getTilesPerPage()) + 2;
-  };
+  // +2 for the left and right placeholder pages
+  const getMaxPages = () => Math.ceil(TILES.length / getTilesPerPage()) + 2;
 
   const goToFirstPage = () => {
     log('FIRST');

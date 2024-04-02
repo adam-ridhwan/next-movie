@@ -22,7 +22,7 @@ type State = {
   tilesPerPage: number;
   firstPageLength: number;
   lastPageLength: number;
-  translatePercentage: number;
+  slideAmount: number;
   isFirstPageVisited: boolean;
   isLastPageVisited: boolean;
   hasPaginated: boolean;
@@ -36,7 +36,7 @@ type Actions = {
   resetPages: () => void;
   setTilesPerPage: (tilesPerPage: number) => void;
   setLastPageLength: (lastPageLength: number) => void;
-  setTranslatePercentage: (translatePercentage: number) => void;
+  setSlideAmount: (slideAmount: number) => void;
   markAsPaginated: () => void;
   setIsAnimating: (isAnimating: boolean) => void;
   enableAnimation: () => void;
@@ -59,7 +59,7 @@ export const createSliderStore = (TILES: Tile[]) =>
       isLastPageVisited: false,
       firstPageLength: 0,
       lastPageLength: 0,
-      translatePercentage: 0,
+      slideAmount: 0,
       isMounted: false,
 
       setAllPages: (params: SetPagesParams) => set(() => params),
@@ -67,7 +67,7 @@ export const createSliderStore = (TILES: Tile[]) =>
       resetPages: () => set(() => ({ pages: new Map() })),
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
       setLastPageLength: lastPageLength => set(() => ({ lastPageLength })),
-      setTranslatePercentage: translatePercentage => set(() => ({ translatePercentage })),
+      setSlideAmount: slideAmount => set(() => ({ slideAmount })),
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
       enableAnimation: () => {

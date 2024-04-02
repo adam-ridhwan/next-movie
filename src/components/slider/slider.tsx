@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
@@ -9,47 +9,18 @@ import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
-  const [
-    { TILES, currentPage, pages },
-    { hasPaginated, getMaxPages, getTilesPerPage },
-    { goToFirstPage, goToLastPage },
-  ] = usePagination();
+  const [{ currentPage, pages }, { hasPaginated }, { goToFirstPage }] = usePagination();
   const isMounted = useSliderStore(state => state.isMounted);
-  const prevTilesPerPage = useRef(getTilesPerPage());
-  const prevMaxPages = useRef(getMaxPages());
-
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());
-
-  useEffect(() => {
-    const handleResize = () => {
-      const tilesPerPage = getTilesPerPage();
-      const maxPages = getMaxPages();
-
-      if (tilesPerPage === prevTilesPerPage.current) return;
-
-      // const previousTiles = getMapItem({
-      //   label: 'currentTilesOfPreviousMediaQuery',
-      //   map: pages,
-      //   key: currentPage,
-      // });
-
-      if (currentPage === 1) goToFirstPage();
-      if (currentPage === prevMaxPages.current - 2) goToLastPage();
-
-      prevTilesPerPage.current = tilesPerPage;
-      prevMaxPages.current = maxPages;
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [TILES, currentPage, goToFirstPage, goToLastPage, pages]);
+  useWindowResize();
 
   useEffect(() => {
     if (!isMounted) return;

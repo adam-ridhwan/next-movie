@@ -10,7 +10,7 @@ import RightPlaceholder from '@/components/slider/tiles/right-placeholder';
 
 const Tiles = () => {
   const isAnimating = useSliderStore(state => state.isAnimating);
-  const translatePercentage = useSliderStore(state => state.translatePercentage);
+  const slideAmount = useSliderStore(state => state.slideAmount);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   return (
@@ -23,7 +23,7 @@ const Tiles = () => {
           { 'bg-green-600': DEVELOPMENT_MODE }
         )}
         style={{
-          transform: translatePercentage ? `translate3d(${translatePercentage}%, 0, 0)` : undefined,
+          transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined,
         }}
       >
         <LeftPlaceholder />
