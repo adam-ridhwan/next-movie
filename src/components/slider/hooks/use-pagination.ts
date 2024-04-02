@@ -4,6 +4,12 @@ import { MEDIA_QUERY } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem, log, validatePagesMap } from '@/lib/utils';
 
+type UsePaginationState = {
+  TILES: Tile[];
+  pages: Pages;
+  currentPage: number;
+};
+
 type UsePaginationConfig = {
   lastPageLength: number;
   isFirstPageVisited: boolean;
@@ -20,8 +26,13 @@ type UsePaginationActions = {
   goToLastPage: () => void;
 };
 
-export const usePagination = (): [number, UsePaginationConfig, UsePaginationActions] => {
+export const usePagination = (): [
+  UsePaginationState,
+  UsePaginationConfig,
+  UsePaginationActions,
+] => {
   const TILES = useSliderStore(state => state.TILES);
+  const pages = useSliderStore(state => state.pages);
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
@@ -168,7 +179,7 @@ export const usePagination = (): [number, UsePaginationConfig, UsePaginationActi
   };
 
   return [
-    currentPage,
+    { TILES, currentPage, pages },
     {
       getMaxPages,
       getTilesPerPage,

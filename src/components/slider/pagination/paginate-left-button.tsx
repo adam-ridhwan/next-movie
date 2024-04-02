@@ -8,7 +8,7 @@ const PaginateLeftButton = () => {
   const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();
 
   const [
-    currentPage,
+    { currentPage },
     { lastPageLength, isLastPageVisited, hasPaginated },
     { goToFirstPage, goToLastPage, goToPrevPage },
   ] = usePagination();

@@ -1,13 +1,9 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const LeftPlaceholder = () => {
-  const TILES = useSliderStore(state => state.TILES);
-  const pages = useSliderStore(state => state.pages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
+  const [{ TILES, currentPage, pages }, { hasPaginated }] = usePagination();
 
   const getPrevTiles = () => {
     const prevPage = getMapItem({

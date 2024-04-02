@@ -15,13 +15,11 @@ import PaginateRightButton from '@/components/slider/pagination/paginate-right-b
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
-  const pages = useSliderStore(state => state.pages);
   const isMounted = useSliderStore(state => state.isMounted);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
+
+  const [{ currentPage, pages }, { hasPaginated }, { goToFirstPage }] = usePagination();
 
   const { sliderRef } = useDomContext();
-
-  const [currentPage, _, { goToFirstPage }] = usePagination();
 
   useEffectOnce(() => goToFirstPage());
   useWindowResize();

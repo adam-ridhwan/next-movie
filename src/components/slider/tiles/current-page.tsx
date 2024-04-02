@@ -1,13 +1,12 @@
 import { Fragment } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
-import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem } from '@/lib/utils';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const CurrentPage = () => {
-  const pages = useSliderStore(state => state.pages);
-  const currentPage = useSliderStore(state => state.currentPage);
+  const [{ currentPage, pages }] = usePagination();
   const { tileRef } = useDomContext();
 
   const currentPageTiles = getMapItem({

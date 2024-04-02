@@ -1,5 +1,3 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
@@ -9,8 +7,8 @@ const PaginateRightButton = () => {
   const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();
 
   const [
-    currentPage,
-    { maxPages, lastPageLength, isFirstPageVisited },
+    { currentPage },
+    { getMaxPages, lastPageLength, isFirstPageVisited },
     { goToLastPage, goToFirstPage, goToNextPage },
   ] = usePagination();
 
@@ -18,7 +16,7 @@ const PaginateRightButton = () => {
     const slideAmount = calculateSlideAmount({
       direction: DIRECTION.RIGHT,
       lastPageLength: lastPageLength,
-      isLastPage: currentPage + 1 === maxPages - 2 && isFirstPageVisited,
+      isLastPage: currentPage + 1 === getMaxPages() - 2 && isFirstPageVisited,
     });
     enableAnimation();
     slide(slideAmount);
@@ -26,8 +24,8 @@ const PaginateRightButton = () => {
     setTimeout(() => {
       disableAnimation();
       slide(0);
-      if (currentPage === maxPages - 3) return goToLastPage();
-      if (currentPage === maxPages - 2) return goToFirstPage();
+      if (currentPage === getMaxPages() - 3) return goToLastPage();
+      if (currentPage === getMaxPages() - 2) return goToFirstPage();
       goToNextPage();
     }, TIMEOUT_DURATION);
   };
