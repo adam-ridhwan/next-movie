@@ -270,7 +270,7 @@ export const createSliderStore = (TILES: Tile[]) =>
 
           return {
             pages: initialPages,
-            lastPageLength: -tilesNeededForLastPage,
+            lastPageLength: newTilesPerPage - tilesNeededForLastPage,
             maxPage: newMaxPages,
             tilesPerPage: newTilesPerPage,
             isFirstPageVisited: true,
