@@ -5,24 +5,20 @@ import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
-import { DEVELOPMENT_MODE, DIRECTION } from '@/lib/constants';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
-import PaginationButton from '@/components/slider/pagination-button';
+import PaginateLeftButton from '@/components/slider/paginate-left-button';
+import PaginateRightButton from '@/components/slider/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
-import { useTranslatePercentage } from '@/components/slider/use-translate-percentage';
 import useWindowResize from '@/components/slider/use-window-resize';
 
 const Slider = () => {
   const pages = useSliderStore(state => state.pages);
   const setInitialPages = useSliderStore(state => state.setInitialPages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const handleLeftScroll = useSliderStore(state => state.handleLeftScroll);
-  const handleRightScroll = useSliderStore(state => state.handleRightScroll);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
-  const getTranslatePercentage = useTranslatePercentage();
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => setInitialPages());
@@ -57,16 +53,9 @@ const Slider = () => {
             {currentPage}
           </div>
         )}
-        <PaginationButton
-          onClick={() => handleLeftScroll(getTranslatePercentage)}
-          direction={DIRECTION.LEFT}
-          className={cn({ hidden: !hasPaginated })}
-        />
+        <PaginateLeftButton />
         <Tiles />
-        <PaginationButton
-          onClick={() => handleRightScroll(getTranslatePercentage)}
-          direction={DIRECTION.RIGHT}
-        />
+        <PaginateRightButton />
       </div>
     </>
   );

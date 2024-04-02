@@ -11,12 +11,18 @@ import {
   getTilesPerPage,
   validatePagesMap,
 } from '@/lib/utils';
-import currentPage from '@/components/slider/tiles/current-page';
-import { GetTranslatePercentageParams } from '@/components/slider/use-translate-percentage';
 
-const log = (string: string) =>
+export const log = (string: string) =>
   // eslint-disable-next-line no-console
   DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
+
+type SetPagesAfterResizeParams = {
+  pages: Pages;
+  tilesPerPage: number;
+  maxPage: number;
+  lastPageLength: number;
+  isFirstPageVisited: boolean;
+};
 
 type State = {
   TILES: Tile[];
@@ -41,7 +47,13 @@ type Actions = {
   goToFirstPage: () => void;
   goToLastPage: () => void;
   setInitialPages: () => void;
-  setPagesAfterResize: (previousTilesTile: Tile[]) => void;
+  setPagesAfterResize: ({
+    pages,
+    tilesPerPage,
+    maxPage,
+    lastPageLength,
+    isFirstPageVisited,
+  }: SetPagesAfterResizeParams) => void;
   resetPages: () => void;
   setTilesPerPage: (tilesPerPage: number) => void;
   setLastPageLength: (lastPageLength: number) => void;
@@ -50,12 +62,6 @@ type Actions = {
   setIsAnimating: (isAnimating: boolean) => void;
   enableAnimation: () => void;
   disableAnimation: () => void;
-  handleRightScroll: (
-    getTranslatePercentage: (params: GetTranslatePercentageParams) => number
-  ) => void;
-  handleLeftScroll: (
-    getTranslatePercentage: (params: GetTranslatePercentageParams) => number
-  ) => void;
 };
 
 export type SliderStore = State & Actions;
@@ -90,13 +96,17 @@ export const createSliderStore = (TILES: Tile[]) =>
           log('GO TO PREVIOUS PAGE');
           return { currentPage: state.currentPage - 1 };
         }),
+      setPagesAfterResize: ({ pages, tilesPerPage, maxPage }) =>
+        set(() => {
+          return { pages, tilesPerPage, maxPage };
+        }),
       resetPages: () => set(() => ({ pages: new Map() })),
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
       setLastPageLength: lastPageLength => set(() => ({ lastPageLength })),
       setTranslatePercentage: translatePercentage => set(() => ({ translatePercentage })),
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
-      setInitialPages: () => {
+      setInitialPages: () =>
         set(state => {
           const initialPages: Pages = new Map<number, Tile[]>();
 
@@ -138,8 +148,7 @@ export const createSliderStore = (TILES: Tile[]) =>
             isFirstPageVisited: true,
             isMounted: true,
           };
-        });
-      },
+        }),
       goToFirstPage: () =>
         set(state => {
           log('GO TO FIRST PAGE');
@@ -205,80 +214,7 @@ export const createSliderStore = (TILES: Tile[]) =>
             hasPaginated: true,
           };
         }),
-      setPagesAfterResize: previousTiles => {
-        set(state => {
-          log('SET PAGES AFTER RESIZE');
-          /** ────────────────────────────────────────────────────────────────────────────────
-           * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
-           *  L        1           2           3        R
-           * [9] - [1,2,3,4] - [5,6,7,8] - [9,1,2,3] - [4]
-           * [7] -  [8,9,1]  -  [2,3,4]  -  [5,6,7]  -  [8,9,1]  - [2]
-           *
-           * left - 3 tiles
-           * right - 6 tiles
-           * ────────────────────────────────────────────────────────────────────────────── */
 
-          /** ────────────────────────────────────────────────────────────────────────────────
-           * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 3rd page (last page)
-           *  L        1           2           3        R
-           * [7] - [7,8,9,1] - [2,3,4,5] - [6,7,8,9] - [1]
-           * [8] -  [9,1,2]  -  [3,4,5]  -  [6,7,8]  - [9]
-           *
-           * TODO:
-           * ────────────────────────────────────────────────────────────────────────────── */
-
-          get().resetPages();
-          const newMaxPages = getMaxPages(TILES);
-          const newTilesPerPage = getTilesPerPage();
-
-          const initialPages: Pages = new Map<number, Tile[]>();
-
-          if (state.currentPage === 1) {
-            // Left page placeholder
-            initialPages.set(0, TILES.slice(-newTilesPerPage));
-
-            // Middle pages
-            for (let pageIndex = 1; pageIndex < newMaxPages - 1; pageIndex++) {
-              const startIndex = (pageIndex - 1) * newTilesPerPage;
-              const endIndex = startIndex + newTilesPerPage;
-              initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
-            }
-
-            const lastPage = getMapItem({
-              label: 'setInitialPages()',
-              map: initialPages,
-              key: newMaxPages - 2,
-            });
-
-            const tilesNeededForLastPage = newTilesPerPage - lastPage.length;
-            if (tilesNeededForLastPage) {
-              initialPages.set(newMaxPages - 2, [
-                ...lastPage,
-                ...TILES.slice(0, tilesNeededForLastPage),
-              ]);
-            }
-
-            // Right page placeholder
-            initialPages.set(
-              newMaxPages - 1,
-              TILES.slice(tilesNeededForLastPage, tilesNeededForLastPage + newTilesPerPage)
-            );
-
-            validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
-
-            return {
-              pages: initialPages,
-              lastPageLength: newTilesPerPage - tilesNeededForLastPage,
-              maxPage: newMaxPages,
-              tilesPerPage: newTilesPerPage,
-              isFirstPageVisited: true,
-              isMounted: true,
-            };
-          }
-
-          return {};
-        });
-      },
       enableAnimation: () => {
         set(() => {
           document.body.style.pointerEvents = 'none';
@@ -290,55 +226,6 @@ export const createSliderStore = (TILES: Tile[]) =>
           document.body.style.pointerEvents = '';
           return { isAnimating: false };
         });
-      },
-      handleRightScroll: getTranslatePercentage => {
-        log('HANDLE RIGHT SCROLL');
-        const state = get();
-        state.enableAnimation();
-
-        const newTranslatePercentage = getTranslatePercentage({
-          direction: DIRECTION.RIGHT,
-          lastPageLength: state.lastPageLength,
-          isLastPage: state.currentPage + 1 === state.maxPage - 2 && state.isFirstPageVisited,
-        });
-
-        state.setTranslatePercentage(newTranslatePercentage);
-
-        setTimeout(() => {
-          state.disableAnimation();
-          state.setTranslatePercentage(0);
-
-          if (state.currentPage === state.maxPage - 3) return state.goToLastPage();
-          if (state.currentPage === state.maxPage - 2) return state.goToFirstPage();
-          state.goToNextPage();
-        }, TIMEOUT_DURATION);
-
-        return;
-      },
-      handleLeftScroll: getTranslatePercentage => {
-        log('HANDLE LEFT SCROLL');
-
-        const state = get();
-
-        state.enableAnimation();
-        const newTranslatePercentage = getTranslatePercentage({
-          direction: DIRECTION.LEFT,
-          lastPageLength: state.lastPageLength,
-          isFirstPage: state.currentPage - 1 === 1 && state.isLastPageVisited,
-        });
-
-        state.setTranslatePercentage(newTranslatePercentage);
-
-        setTimeout(() => {
-          state.disableAnimation();
-          state.setTranslatePercentage(0);
-
-          if (state.currentPage === 2) return state.goToFirstPage();
-          if (state.currentPage === 1) return state.goToLastPage();
-          state.goToPrevPage();
-        }, TIMEOUT_DURATION);
-
-        return;
       },
     }))
   );
