@@ -11,6 +11,7 @@ import {
   getTilesPerPage,
   validatePagesMap,
 } from '@/lib/utils';
+import currentPage from '@/components/slider/tiles/current-page';
 import { GetTranslatePercentageParams } from '@/components/slider/use-translate-percentage';
 
 const log = (string: string) =>
@@ -142,6 +143,7 @@ export const createSliderStore = (TILES: Tile[]) =>
       goToFirstPage: () =>
         set(state => {
           log('GO TO FIRST PAGE');
+
           state.setInitialPages();
           return { currentPage: 1 };
         }),
@@ -231,46 +233,50 @@ export const createSliderStore = (TILES: Tile[]) =>
 
           const initialPages: Pages = new Map<number, Tile[]>();
 
-          // Left page placeholder
-          initialPages.set(0, TILES.slice(-newTilesPerPage));
+          if (state.currentPage === 1) {
+            // Left page placeholder
+            initialPages.set(0, TILES.slice(-newTilesPerPage));
 
-          // Middle pages
-          for (let pageIndex = 1; pageIndex < newMaxPages - 1; pageIndex++) {
-            const startIndex = (pageIndex - 1) * newTilesPerPage;
-            const endIndex = startIndex + newTilesPerPage;
-            initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
+            // Middle pages
+            for (let pageIndex = 1; pageIndex < newMaxPages - 1; pageIndex++) {
+              const startIndex = (pageIndex - 1) * newTilesPerPage;
+              const endIndex = startIndex + newTilesPerPage;
+              initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
+            }
+
+            const lastPage = getMapItem({
+              label: 'setInitialPages()',
+              map: initialPages,
+              key: newMaxPages - 2,
+            });
+
+            const tilesNeededForLastPage = newTilesPerPage - lastPage.length;
+            if (tilesNeededForLastPage) {
+              initialPages.set(newMaxPages - 2, [
+                ...lastPage,
+                ...TILES.slice(0, tilesNeededForLastPage),
+              ]);
+            }
+
+            // Right page placeholder
+            initialPages.set(
+              newMaxPages - 1,
+              TILES.slice(tilesNeededForLastPage, tilesNeededForLastPage + newTilesPerPage)
+            );
+
+            validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
+
+            return {
+              pages: initialPages,
+              lastPageLength: newTilesPerPage - tilesNeededForLastPage,
+              maxPage: newMaxPages,
+              tilesPerPage: newTilesPerPage,
+              isFirstPageVisited: true,
+              isMounted: true,
+            };
           }
 
-          const lastPage = getMapItem({
-            label: 'setInitialPages()',
-            map: initialPages,
-            key: newMaxPages - 2,
-          });
-
-          const tilesNeededForLastPage = newTilesPerPage - lastPage.length;
-          if (tilesNeededForLastPage) {
-            initialPages.set(newMaxPages - 2, [
-              ...lastPage,
-              ...TILES.slice(0, tilesNeededForLastPage),
-            ]);
-          }
-
-          // Right page placeholder
-          initialPages.set(
-            newMaxPages - 1,
-            TILES.slice(tilesNeededForLastPage, tilesNeededForLastPage + newTilesPerPage)
-          );
-
-          validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
-
-          return {
-            pages: initialPages,
-            lastPageLength: newTilesPerPage - tilesNeededForLastPage,
-            maxPage: newMaxPages,
-            tilesPerPage: newTilesPerPage,
-            isFirstPageVisited: true,
-            isMounted: true,
-          };
+          return {};
         });
       },
       enableAnimation: () => {
