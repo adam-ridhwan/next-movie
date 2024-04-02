@@ -4,7 +4,11 @@ import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const RightPlaceholder = () => {
-  const [{ TILES, currentPage, pages }, { getTilesPerPage, isMounted }] = usePagination();
+  const {
+    state: { TILES, currentPage, pages },
+    status: { isMounted },
+    config: { getTilesPerPage },
+  } = usePagination();
 
   const lastIndex = getTilesPerPage() - 1;
 

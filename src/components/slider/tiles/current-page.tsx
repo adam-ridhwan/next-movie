@@ -6,7 +6,10 @@ import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const CurrentPage = () => {
-  const [{ currentPage, pages }] = usePagination();
+  const {
+    state: { currentPage, pages },
+  } = usePagination();
+
   const { tileRef } = useDomContext();
 
   const currentPageTiles = getMapItem({

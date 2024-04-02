@@ -15,7 +15,11 @@ import PaginateRightButton from '@/components/slider/pagination-button/paginate-
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
-  const [{ currentPage, pages }, { hasPaginated, isMounted }, { goToFirstPage }] = usePagination();
+  const {
+    state: { pages, currentPage },
+    status: { isMounted, hasPaginated },
+    actions: { goToFirstPage },
+  } = usePagination();
   const { isAnimating } = useAnimation();
 
   const { sliderRef } = useDomContext();

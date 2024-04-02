@@ -10,7 +10,9 @@ import PrevPage from '@/components/slider/tiles/prev-page';
 import RightPlaceholder from '@/components/slider/tiles/right-placeholder';
 
 const Tiles = () => {
-  const [_, { hasPaginated }] = usePagination();
+  const {
+    status: { hasPaginated },
+  } = usePagination();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
 

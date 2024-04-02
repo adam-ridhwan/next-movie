@@ -13,34 +13,32 @@ export const log = (string: string) =>
     ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
     : null;
 
-type UsePaginationState = {
-  TILES: Tile[];
-  pages: Pages;
-  currentPage: number;
+type UsePaginationReturn = {
+  state: {
+    TILES: Tile[];
+    pages: Pages;
+    currentPage: number;
+  };
+  config: {
+    lastPageLength: number;
+    getTilesPerPage: () => number;
+    getMaxPages: () => number;
+  };
+  status: {
+    isFirstPageVisited: boolean;
+    isLastPageVisited: boolean;
+    hasPaginated: boolean;
+    isMounted: boolean;
+  };
+  actions: {
+    goToNextPage: () => void;
+    goToPrevPage: () => void;
+    goToFirstPage: () => void;
+    goToLastPage: () => void;
+  };
 };
 
-type UsePaginationConfig = {
-  lastPageLength: number;
-  isFirstPageVisited: boolean;
-  isLastPageVisited: boolean;
-  hasPaginated: boolean;
-  getTilesPerPage: () => number;
-  getMaxPages: () => number;
-  isMounted: boolean;
-};
-
-type UsePaginationActions = {
-  goToNextPage: () => void;
-  goToPrevPage: () => void;
-  goToFirstPage: () => void;
-  goToLastPage: () => void;
-};
-
-export const usePagination = (): [
-  UsePaginationState,
-  UsePaginationConfig,
-  UsePaginationActions,
-] => {
+export const usePagination = (): UsePaginationReturn => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const setAllPages = useSliderStore(state => state.setAllPages);
@@ -194,17 +192,28 @@ export const usePagination = (): [
     setCurrentPage(currentPage + 1);
   };
 
-  return [
-    { TILES, currentPage, pages },
-    {
+  return {
+    state: {
+      TILES,
+      currentPage,
+      pages,
+    },
+    config: {
       lastPageLength,
+      getTilesPerPage,
+      getMaxPages,
+    },
+    status: {
       isFirstPageVisited,
       isLastPageVisited,
       hasPaginated,
-      getTilesPerPage,
-      getMaxPages,
       isMounted,
     },
-    { goToFirstPage, goToLastPage, goToPrevPage, goToNextPage },
-  ];
+    actions: {
+      goToFirstPage,
+      goToLastPage,
+      goToPrevPage,
+      goToNextPage,
+    },
+  };
 };

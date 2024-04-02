@@ -5,16 +5,15 @@ import { useSlide } from '@/components/slider/hooks/use-slide';
 import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateRightButton = () => {
-  const [_, { getMaxPages }] = usePagination();
+  const {
+    state: { currentPage },
+    status: { isFirstPageVisited },
+    config: { lastPageLength, getMaxPages },
+    actions: { goToFirstPage, goToLastPage, goToNextPage },
+  } = usePagination();
 
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
-
-  const [
-    { currentPage },
-    { lastPageLength, isFirstPageVisited },
-    { goToLastPage, goToFirstPage, goToNextPage },
-  ] = usePagination();
 
   const handlePaginateRight = () => {
     const maxPages = getMaxPages();

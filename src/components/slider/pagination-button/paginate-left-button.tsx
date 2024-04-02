@@ -9,11 +9,12 @@ const PaginateLeftButton = () => {
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 
-  const [
-    { currentPage },
-    { lastPageLength, isLastPageVisited, hasPaginated },
-    { goToFirstPage, goToLastPage, goToPrevPage },
-  ] = usePagination();
+  const {
+    state: { currentPage },
+    status: { isLastPageVisited, hasPaginated },
+    config: { lastPageLength },
+    actions: { goToFirstPage, goToLastPage, goToPrevPage },
+  } = usePagination();
 
   const handlePaginateLeft = () => {
     const newSlideAmount = getSlideAmount({

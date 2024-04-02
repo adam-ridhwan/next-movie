@@ -2,18 +2,20 @@
 
 import { nonEmptyTilesSchema, Pages } from '@/lib/types';
 
+type validatePagesParams = {
+  label: string;
+  pages: Pages;
+  expectedMaxPages: number;
+  expectedTilesPerPage: number;
+};
+
 export const useValidators = () => {
   const validatePages = ({
     label,
     pages,
     expectedMaxPages,
     expectedTilesPerPage,
-  }: {
-    label: string;
-    pages: Pages;
-    expectedMaxPages: number;
-    expectedTilesPerPage: number;
-  }): void => {
+  }: validatePagesParams): void => {
     if (pages.size !== expectedMaxPages) {
       throw new Error(`${label} Expected ${expectedMaxPages} pages, found ${pages.size}.`);
     }

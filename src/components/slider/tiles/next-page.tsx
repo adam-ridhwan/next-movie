@@ -3,7 +3,11 @@ import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const NextPage = () => {
-  const [{ currentPage, pages }, { getTilesPerPage, isMounted }] = usePagination();
+  const {
+    state: { currentPage, pages },
+    status: { isMounted },
+    config: { getTilesPerPage },
+  } = usePagination();
 
   if (!isMounted) return null;
 
