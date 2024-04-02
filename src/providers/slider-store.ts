@@ -149,8 +149,6 @@ export const createSliderStore = (TILES: Tile[]) =>
         set(state => {
           log('GO TO LAST PAGE');
 
-          const start = performance.now();
-
           const newPages: Pages = new Map<number, Tile[]>();
 
           // Right page placeholder
@@ -196,9 +194,6 @@ export const createSliderStore = (TILES: Tile[]) =>
           newPages.set(0, leftArray);
 
           validatePagesMap({ label: 'goToLastPage()', tiles: TILES, pages: newPages });
-
-          const end = performance.now();
-          console.log(`Execution time: ${end - start} milliseconds`);
 
           return {
             pages: newPages,
