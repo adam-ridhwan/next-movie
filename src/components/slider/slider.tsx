@@ -2,12 +2,12 @@
 
 import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
-import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
+import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
@@ -15,8 +15,9 @@ import PaginateRightButton from '@/components/slider/pagination-button/paginate-
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {
-  const [{ currentPage, pages }, { hasPaginated }, { goToFirstPage }] = usePagination();
-  const isMounted = useSliderStore(state => state.isMounted);
+  const [{ currentPage, pages }, { hasPaginated, isMounted }, { goToFirstPage }] = usePagination();
+  const { isAnimating } = useAnimation();
+
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());
@@ -37,7 +38,7 @@ const Slider = () => {
 
     console.log('hasPaginated:', hasPaginated);
     console.log('─────────────────────────────────────────────────');
-  }, [pages, currentPage]);
+  }, [pages, currentPage, isAnimating]);
 
   return (
     <>

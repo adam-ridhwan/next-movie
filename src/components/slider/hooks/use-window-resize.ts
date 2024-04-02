@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useEffect, useRef } from 'react';
 
 import { usePagination } from '@/components/slider/hooks/use-pagination';

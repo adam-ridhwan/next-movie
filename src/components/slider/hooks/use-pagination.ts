@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
@@ -24,6 +26,7 @@ type UsePaginationConfig = {
   hasPaginated: boolean;
   getTilesPerPage: () => number;
   getMaxPages: () => number;
+  isMounted: boolean;
 };
 
 type UsePaginationActions = {
@@ -49,6 +52,7 @@ export const usePagination = (): [
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
+  const isMounted = useSliderStore(state => state.isMounted);
 
   const { validatePages } = useValidators();
 
@@ -199,6 +203,7 @@ export const usePagination = (): [
       hasPaginated,
       getTilesPerPage,
       getMaxPages,
+      isMounted,
     },
     { goToFirstPage, goToLastPage, goToPrevPage, goToNextPage },
   ];

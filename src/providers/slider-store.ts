@@ -14,7 +14,7 @@ type SetPagesParams = {
   isMounted?: boolean;
 };
 
-type State = {
+type SliderState = {
   TILES: Tile[];
   pages: Pages;
   maxPage: number;
@@ -30,7 +30,7 @@ type State = {
   isMounted: boolean;
 };
 
-type Actions = {
+type SliderActions = {
   setCurrentPage: (currentPage: number) => void;
   setAllPages: (params: SetPagesParams) => void;
   resetPages: () => void;
@@ -41,7 +41,7 @@ type Actions = {
   setIsAnimating: (isAnimating: boolean) => void;
 };
 
-export type SliderStore = State & Actions;
+export type SliderStore = SliderState & SliderActions;
 
 export const createSliderStore = (TILES: Tile[]) =>
   create(

@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { nonEmptyTilesSchema, Pages } from '@/lib/types';
 
 export const useValidators = () => {
