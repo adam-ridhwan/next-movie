@@ -31,7 +31,7 @@ export const useWindowResize = () => {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [currentPage, pages]);
+  }, [TILES, currentPage, goToFirstPage, goToLastPage, pages]);
 
   //   const setAllPages = (previousTiles: Tile[]) => {
   //     log('SET PAGES AFTER RESIZE');

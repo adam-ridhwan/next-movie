@@ -2,7 +2,6 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem, getTilesPerPage } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const NextPage = () => {

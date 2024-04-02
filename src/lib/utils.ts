@@ -3,7 +3,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { DEVELOPMENT_MODE, MEDIA_QUERY } from '@/lib/constants';
-import { nonEmptyTilesSchema, Pages, Tile, TODO } from '@/lib/types';
+import { Tile, TODO } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
