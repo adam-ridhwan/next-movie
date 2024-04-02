@@ -1,10 +1,9 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
+import { useAnimation } from '@/components/slider/hooks/use-animation';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -13,7 +12,7 @@ type PaginationButtonProps = {
 };
 
 const PaginationButton = ({ direction, onClick, className }: PaginationButtonProps) => {
-  const isAnimating = useSliderStore(state => state.isAnimating);
+  const { isAnimating } = useAnimation();
 
   const iconClass = cn(
     `opacity-0 transition-transform group-hover/button:scale-125 group-hover/slider:opacity-100`,

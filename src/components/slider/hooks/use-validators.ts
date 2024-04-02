@@ -1,4 +1,13 @@
+/* eslint no-restricted-imports: 0 */
+
 import { nonEmptyTilesSchema, Pages } from '@/lib/types';
+
+type validatePagesParams = {
+  label: string;
+  pages: Pages;
+  expectedMaxPages: number;
+  expectedTilesPerPage: number;
+};
 
 export const useValidators = () => {
   const validatePages = ({
@@ -6,12 +15,7 @@ export const useValidators = () => {
     pages,
     expectedMaxPages,
     expectedTilesPerPage,
-  }: {
-    label: string;
-    pages: Pages;
-    expectedMaxPages: number;
-    expectedTilesPerPage: number;
-  }): void => {
+  }: validatePagesParams): void => {
     if (pages.size !== expectedMaxPages) {
       throw new Error(`${label} Expected ${expectedMaxPages} pages, found ${pages.size}.`);
     }

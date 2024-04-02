@@ -1,13 +1,15 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useEffect, useRef } from 'react';
 
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 export const useWindowResize = () => {
-  const [
-    { TILES, currentPage, pages },
-    { getTilesPerPage, getMaxPages },
-    { goToFirstPage, goToLastPage },
-  ] = usePagination();
+  const {
+    state: { TILES, currentPage, pages },
+    config: { getTilesPerPage, getMaxPages },
+    actions: { goToFirstPage, goToLastPage },
+  } = usePagination();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
   const prevMaxPages = useRef(getMaxPages());

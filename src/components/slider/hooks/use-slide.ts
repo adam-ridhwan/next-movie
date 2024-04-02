@@ -1,37 +1,38 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { DIRECTION, PADDING } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 
-export type CalculateSlideAmountParams = {
+export type getSlideAmountParams = {
   direction?: SlideDirection;
   lastPageLength: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
 };
 
-type SlideAction = (amount: number) => void;
-
-type SlideConfig = {
-  calculateSlideAmount: (params: CalculateSlideAmountParams) => number;
-  disableAnimation: () => void;
-  enableAnimation: () => void;
+type UseSlideReturn = {
+  slideAmount: number;
+  slide: (amount: number) => void;
+  getSlideAmount: (params: getSlideAmountParams) => number;
 };
 
-export const useSlide = (): [SlideAction, SlideConfig] => {
+export const useSlide = (): UseSlideReturn => {
+  const slideAmount = useSliderStore(state => state.slideAmount);
   const setSlideAmount = useSliderStore(state => state.setSlideAmount);
-  const setIsAnimating = useSliderStore(state => state.setIsAnimating);
+
   const { sliderRef, tileRef } = useDomContext();
 
   const slide = (amount: number) => setSlideAmount(amount);
 
-  const calculateSlideAmount = ({
+  const getSlideAmount = ({
     direction,
     lastPageLength,
     isFirstPage = false,
     isLastPage = false,
-  }: CalculateSlideAmountParams) => {
+  }: getSlideAmountParams) => {
     if (!sliderRef.current) throw new Error('sliderRef is missing');
     if (!tileRef.current) throw new Error('tileRef is missing');
 
@@ -47,15 +48,9 @@ export const useSlide = (): [SlideAction, SlideConfig] => {
     return direction === DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
   };
 
-  const enableAnimation = () => {
-    document.body.style.pointerEvents = 'none';
-    return setIsAnimating(true);
+  return {
+    slide,
+    slideAmount,
+    getSlideAmount,
   };
-
-  const disableAnimation = () => {
-    document.body.style.pointerEvents = '';
-    return setIsAnimating(false);
-  };
-
-  return [slide, { calculateSlideAmount, enableAnimation, disableAnimation }];
 };

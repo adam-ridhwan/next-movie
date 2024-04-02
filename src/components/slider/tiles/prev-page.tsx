@@ -3,7 +3,11 @@ import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const PrevPage = () => {
-  const [{ currentPage, pages }, { hasPaginated, getTilesPerPage }] = usePagination();
+  const {
+    state: { currentPage, pages },
+    status: { hasPaginated },
+    config: { getTilesPerPage },
+  } = usePagination();
 
   if (!hasPaginated) return null;
 

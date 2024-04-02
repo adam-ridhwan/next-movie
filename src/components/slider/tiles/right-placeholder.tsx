@@ -1,14 +1,14 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const RightPlaceholder = () => {
-  const isMounted = useSliderStore(state => state.isMounted);
-
-  const [{ TILES, currentPage, pages }, { getTilesPerPage }] = usePagination();
+  const {
+    state: { TILES, currentPage, pages },
+    status: { isMounted },
+    config: { getTilesPerPage },
+  } = usePagination();
 
   const lastIndex = getTilesPerPage() - 1;
 

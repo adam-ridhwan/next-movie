@@ -1,26 +1,29 @@
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
 import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateLeftButton = () => {
-  const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();
+  const { slide, getSlideAmount } = useSlide();
+  const { enableAnimation, disableAnimation } = useAnimation();
 
-  const [
-    { currentPage },
-    { lastPageLength, isLastPageVisited, hasPaginated },
-    { goToFirstPage, goToLastPage, goToPrevPage },
-  ] = usePagination();
+  const {
+    state: { currentPage },
+    status: { isLastPageVisited, hasPaginated },
+    config: { lastPageLength },
+    actions: { goToFirstPage, goToLastPage, goToPrevPage },
+  } = usePagination();
 
   const handlePaginateLeft = () => {
-    const slideAmount = calculateSlideAmount({
+    const newSlideAmount = getSlideAmount({
       direction: DIRECTION.LEFT,
       lastPageLength: lastPageLength,
       isFirstPage: currentPage - 1 === 1 && isLastPageVisited,
     });
     enableAnimation();
-    slide(slideAmount);
+    slide(newSlideAmount);
 
     setTimeout(() => {
       disableAnimation();
