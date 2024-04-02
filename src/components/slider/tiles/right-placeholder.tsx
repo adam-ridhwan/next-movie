@@ -4,7 +4,7 @@ import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import TileItem from '@/components/slider/tiles/tile-item';
 
-const RightPlaceHolder = () => {
+const RightPlaceholder = () => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -15,10 +15,14 @@ const RightPlaceHolder = () => {
   const getNextTiles = (): Tile => {
     if (!isMounted) return TILES[0];
 
-    const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });
+    const nextPage = getMapItem({
+      label: 'RightPlaceholder: nextPage',
+      map: pages,
+      key: currentPage + 1,
+    });
 
     const indexOfLastItem = findIndexFromKey({
-      label: 'getNextTiles()',
+      label: 'RightPlaceholder: indexOfLastItem',
       array: TILES,
       key: 'id',
       value: nextPage[lastIndex].id,
@@ -31,4 +35,4 @@ const RightPlaceHolder = () => {
   return <TileItem tile={getNextTiles()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
-export default RightPlaceHolder;
+export default RightPlaceholder;

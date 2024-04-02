@@ -11,7 +11,7 @@ const CurrentPage = () => {
   const { tileRef } = useDomContext();
 
   const currentPageTiles = getMapItem({
-    label: '<CurrentPage /> currentPageTiles',
+    label: 'CurrentPage: currentPageTiles',
     map: pages,
     key: currentPage,
   });

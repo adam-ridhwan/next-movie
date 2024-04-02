@@ -3,7 +3,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import TileItem from '@/components/slider/tiles/tile-item';
 
-const LeftPlaceHolder = () => {
+const LeftPlaceholder = () => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -11,13 +11,13 @@ const LeftPlaceHolder = () => {
 
   const getPrevTiles = () => {
     const prevPage = getMapItem({
-      label: 'LeftPlaceHolder - getPrevPage',
+      label: 'LeftPlaceholder: prevPage',
       map: pages,
       key: currentPage - 1,
     });
 
     const indexOfFirstItem = findIndexFromKey({
-      label: 'LeftPlaceHolder - getIndexOfFirstItem',
+      label: 'LeftPlaceholder: indexOfFirstItem',
       array: TILES,
       key: 'id',
       value: prevPage[0].id,
@@ -32,4 +32,4 @@ const LeftPlaceHolder = () => {
   );
 };
 
-export default LeftPlaceHolder;
+export default LeftPlaceholder;

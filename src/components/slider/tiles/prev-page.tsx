@@ -13,7 +13,7 @@ const PrevPage = () => {
   if (!hasPaginated) return null;
 
   const prevPageTiles = getMapItem({
-    label: 'prevPageTiles',
+    label: 'PrevPage: prevPageTiles',
     map: pages,
     key: currentPage - 1,
   });

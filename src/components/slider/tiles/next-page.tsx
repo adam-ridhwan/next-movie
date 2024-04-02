@@ -13,7 +13,7 @@ const NextPage = () => {
   if (!isMounted) return null;
 
   const nextPageTiles = getMapItem({
-    label: 'nextPageTiles',
+    label: 'NextPage: nextPageTiles',
     map: pages,
     key: currentPage + 1,
   });
