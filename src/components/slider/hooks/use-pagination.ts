@@ -7,7 +7,6 @@ import { findIndexFromKey, getMapItem, getMaxPages, getTilesPerPage } from '@/li
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const log = (string: string) =>
-  // eslint-disable-next-line no-console
   DEVELOPMENT_MODE
     ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
     : null;
