@@ -1,8 +1,16 @@
 import { useSliderStore } from '@/providers/slider-provider';
+import chalk from 'chalk';
 
-import { MEDIA_QUERY } from '@/lib/constants';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
-import { findIndexFromKey, getMapItem, log, validatePagesMap } from '@/lib/utils';
+import { findIndexFromKey, getMapItem, getMaxPages, getTilesPerPage } from '@/lib/utils';
+import { useValidators } from '@/components/slider/hooks/use-validators';
+
+export const log = (string: string) =>
+  // eslint-disable-next-line no-console
+  DEVELOPMENT_MODE
+    ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
+    : null;
 
 type UsePaginationState = {
   TILES: Tile[];
@@ -15,8 +23,6 @@ type UsePaginationConfig = {
   isFirstPageVisited: boolean;
   isLastPageVisited: boolean;
   hasPaginated: boolean;
-  getTilesPerPage: () => number;
-  getMaxPages: () => number;
 };
 
 type UsePaginationActions = {
@@ -43,24 +49,12 @@ export const usePagination = (): [
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
-  function getTilesPerPage() {
-    const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
-    if (windowWidth < MEDIA_QUERY.SM) return 2;
-    if (windowWidth < MEDIA_QUERY.MD) return 3;
-    if (windowWidth < MEDIA_QUERY.LG) return 4;
-    if (windowWidth < MEDIA_QUERY.XL) return 5;
-    return 6;
-  }
-
-  function getMaxPages() {
-    // +2 for the left and right placeholder pages
-    return Math.ceil(TILES.length / getTilesPerPage()) + 2;
-  }
+  const { validatePages } = useValidators();
 
   const goToFirstPage = () => {
-    log('GO TO FIRST PAGE');
+    log('FIRST');
     const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages();
+    const maxPages = getMaxPages(TILES);
 
     const initialPages: Pages = new Map<number, Tile[]>();
 
@@ -75,30 +69,25 @@ export const usePagination = (): [
     }
 
     const lastPage = getMapItem({
-      label: 'setInitialPages()',
+      label: 'goToFirstPage()',
       map: initialPages,
       key: maxPages - 2,
     });
 
-    const tilesNeededForLastPage = tilesPerPage - lastPage.length;
-    if (tilesNeededForLastPage) {
-      initialPages.set(maxPages - 2, [...lastPage, ...TILES.slice(0, tilesNeededForLastPage)]);
-    }
+    const tilesNeeded = tilesPerPage - lastPage.length;
+    if (tilesNeeded) initialPages.set(maxPages - 2, [...lastPage, ...TILES.slice(0, tilesNeeded)]);
 
     // Right page placeholder
-    initialPages.set(
-      maxPages - 1,
-      TILES.slice(tilesNeededForLastPage, tilesPerPage + tilesNeededForLastPage)
-    );
+    initialPages.set(maxPages - 1, TILES.slice(tilesNeeded, tilesPerPage + tilesNeeded));
 
-    validatePagesMap({ label: 'setInitialPages()', tiles: TILES, pages: initialPages });
+    validatePages({ label: 'goToFirstPage()', pages: initialPages });
 
     setAllPages({
       pages: initialPages,
       currentPage: 1,
       maxPages: maxPages,
       tilesPerPage: tilesPerPage,
-      lastPageLength: tilesPerPage - tilesNeededForLastPage,
+      lastPageLength: tilesPerPage - tilesNeeded,
       isFirstPageVisited: true,
       isLastPageVisited: false,
       isMounted: true,
@@ -106,9 +95,11 @@ export const usePagination = (): [
   };
 
   const goToLastPage = () => {
-    log('GO TO LAST PAGE');
+    log('LAST');
+    if (!hasPaginated) markAsPaginated();
+
     const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages();
+    const maxPages = getMaxPages(TILES);
 
     const newPages: Pages = new Map<number, Tile[]>();
 
@@ -131,13 +122,11 @@ export const usePagination = (): [
       key: 1,
     });
 
-    const totalTilesNeededToComplete = tilesPerPage - firstPage.length;
-    if (totalTilesNeededToComplete) {
-      newPages.set(1, [...TILES.slice(-totalTilesNeededToComplete), ...firstPage]);
-    }
+    const tilesNeeded = tilesPerPage - firstPage.length;
+    if (tilesNeeded) newPages.set(1, [...TILES.slice(-tilesNeeded), ...firstPage]);
 
     // Left page placeholder
-    const firstItem = TILES.slice(-totalTilesNeededToComplete)[0];
+    const firstItem = TILES.slice(-tilesNeeded)[0];
     let firstItemIndex =
       findIndexFromKey({
         label: 'Left page placeholder goToLastPage()',
@@ -154,26 +143,26 @@ export const usePagination = (): [
 
     newPages.set(0, leftArray);
 
-    validatePagesMap({ label: 'goToLastPage()', tiles: TILES, pages: newPages });
+    validatePages({ label: 'goToLastPage()', pages: newPages });
 
     setAllPages({
       pages: newPages,
       tilesPerPage: tilesPerPage,
       maxPages: maxPages,
       currentPage: maxPages - 2,
-      lastPageLength: tilesPerPage - totalTilesNeededToComplete,
+      lastPageLength: tilesPerPage - tilesNeeded,
       isFirstPageVisited: false,
       isLastPageVisited: true,
     });
   };
 
   const goToPrevPage = () => {
-    log('GO TO PREV PAGE');
+    log('PREV');
     setCurrentPage(currentPage - 1);
   };
 
   const goToNextPage = () => {
-    log('GO TO NEXT PAGE');
+    log('NEXT');
     if (!hasPaginated) markAsPaginated();
     setCurrentPage(currentPage + 1);
   };
@@ -181,8 +170,6 @@ export const usePagination = (): [
   return [
     { TILES, currentPage, pages },
     {
-      getMaxPages,
-      getTilesPerPage,
       lastPageLength,
       isFirstPageVisited,
       isLastPageVisited,

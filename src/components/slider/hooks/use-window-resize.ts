@@ -1,30 +1,32 @@
 import { useEffect, useRef } from 'react';
-import { useSliderStore } from '@/providers/slider-provider';
 
-import { getMapItem } from '@/lib/utils';
+import { getMapItem, getMaxPages, getTilesPerPage } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 
-const useWindowResize = () => {
-  const pages = useSliderStore(state => state.pages);
-
-  const [{ currentPage }, { getTilesPerPage }, { goToFirstPage }] = usePagination();
+export const useWindowResize = () => {
+  const [{ TILES, currentPage, pages }, _, { goToFirstPage, goToLastPage }] = usePagination();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
+  const prevMaxPages = useRef(getMaxPages(TILES));
+
   useEffect(() => {
     const handleResize = () => {
       const tilesPerPage = getTilesPerPage();
+      const maxPages = getMaxPages(TILES);
 
-      if (tilesPerPage !== prevTilesPerPage.current) {
-        prevTilesPerPage.current = tilesPerPage;
+      if (tilesPerPage === prevTilesPerPage.current) return;
 
-        const previousTiles = getMapItem({
-          label: 'currentTilesOfPreviousMediaQuery',
-          map: pages,
-          key: currentPage,
-        });
+      const previousTiles = getMapItem({
+        label: 'currentTilesOfPreviousMediaQuery',
+        map: pages,
+        key: currentPage,
+      });
 
-        if (currentPage === 1) return goToFirstPage();
-      }
+      if (currentPage === 1) goToFirstPage();
+      if (currentPage === prevMaxPages.current - 2) goToLastPage();
+
+      prevTilesPerPage.current = tilesPerPage;
+      prevMaxPages.current = maxPages;
     };
 
     window.addEventListener('resize', handleResize);
@@ -55,5 +57,3 @@ const useWindowResize = () => {
   //     if (currentPage === 1) return handleResetToInitialPage();
   //   };
 };
-
-export default useWindowResize;

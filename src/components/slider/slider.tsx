@@ -9,9 +9,9 @@ import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import useWindowResize from '@/components/slider/hooks/use-window-resize';
-import PaginateLeftButton from '@/components/slider/pagination/paginate-left-button';
-import PaginateRightButton from '@/components/slider/pagination/paginate-right-button';
+import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
+import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
+import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
 
 const Slider = () => {

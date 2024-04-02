@@ -1,9 +1,10 @@
-import { getMapItem } from '@/lib/utils';
+import { getMapItem, getTilesPerPage } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const PrevPage = () => {
-  const [{ currentPage, pages }, { hasPaginated, getTilesPerPage }] = usePagination();
+  const [{ currentPage, pages }, { hasPaginated }] = usePagination();
 
   if (!hasPaginated) return null;
 

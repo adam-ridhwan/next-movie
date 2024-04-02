@@ -2,7 +2,7 @@ import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
-import PaginationButton from '@/components/slider/pagination/pagination-button';
+import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateLeftButton = () => {
   const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();

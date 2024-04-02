@@ -57,37 +57,6 @@ export const getMaxPages = (tiles: Tile[]) => {
   return Math.ceil(tiles.length / getTilesPerPage()) + 2;
 };
 
-export function validatePagesMap({
-  label,
-  tiles,
-  pages,
-}: {
-  label: string;
-  tiles: Tile[];
-  pages: Pages;
-}): void {
-  const expectedMaxPage = getMaxPages(tiles);
-  const expectedTilesPerPage = getTilesPerPage();
-
-  if (pages.size !== expectedMaxPage) {
-    throw new Error(`${label} Expected ${expectedMaxPage} pages, found ${pages.size}.`);
-  }
-
-  pages.forEach((tiles, pageIndex) => {
-    const result = nonEmptyTilesSchema.safeParse(tiles);
-
-    if (!result.success) {
-      throw new Error(`${label} Validation failed for page ${pageIndex}: ${result.error}`);
-    }
-
-    if (tiles.length !== expectedTilesPerPage) {
-      throw new Error(
-        `${label} Page ${pageIndex} has ${tiles.length} tiles, expected ${expectedTilesPerPage}`
-      );
-    }
-  });
-}
-
 const debounce = <T extends (...args: TODO[]) => void>(
   func: T,
   wait: number
