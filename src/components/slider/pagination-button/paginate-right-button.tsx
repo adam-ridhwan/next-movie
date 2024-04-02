@@ -2,7 +2,6 @@ import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { getMaxPages } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
-import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateRightButton = () => {
