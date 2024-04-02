@@ -14,15 +14,15 @@ import { useTranslatePercentage } from '@/components/slider/use-translate-percen
 import useWindowResize from '@/components/slider/use-window-resize';
 
 const Slider = () => {
+  const pages = useSliderStore(state => state.pages);
   const setInitialPages = useSliderStore(state => state.setInitialPages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
   const handleLeftScroll = useSliderStore(state => state.handleLeftScroll);
   const handleRightScroll = useSliderStore(state => state.handleRightScroll);
-  const getTranslatePercentage = useTranslatePercentage();
-  const pages = useSliderStore(state => state.pages);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
+  const getTranslatePercentage = useTranslatePercentage();
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => setInitialPages());
