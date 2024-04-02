@@ -1,12 +1,17 @@
+import chalk from 'chalk';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { MEDIA_QUERY } from '@/lib/constants';
+import { DEVELOPMENT_MODE, MEDIA_QUERY } from '@/lib/constants';
 import { nonEmptyTilesSchema, Pages, Tile, TODO } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+
+export const log = (string: string) =>
+  // eslint-disable-next-line no-console
+  DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
 
 type GetMapValueParams<K, V> = {
   label: string;
@@ -34,11 +39,7 @@ export const findIndexFromKey = <T, K extends keyof T>({
   value,
 }: FindItemFromIndexParams<T, K>): number => {
   const index = array.findIndex(item => item[key] === value);
-  if (index === -1) {
-    console.log(index);
-    console.error(`${label}: Index of item not found for value: ${value}`);
-    // throw new Error(`${label}: Index of item not found for value: ${value}`);
-  }
+  if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;
 };
 

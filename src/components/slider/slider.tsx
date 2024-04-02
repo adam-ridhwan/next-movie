@@ -11,17 +11,19 @@ import { cn } from '@/lib/utils';
 import PaginateLeftButton from '@/components/slider/paginate-left-button';
 import PaginateRightButton from '@/components/slider/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
+import { usePagination } from '@/components/slider/use-pagination';
 import useWindowResize from '@/components/slider/use-window-resize';
 
 const Slider = () => {
   const pages = useSliderStore(state => state.pages);
-  const setInitialPages = useSliderStore(state => state.setInitialPages);
-  const currentPage = useSliderStore(state => state.currentPage);
   const isMounted = useSliderStore(state => state.isMounted);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
 
   const { sliderRef } = useDomContext();
 
-  useEffectOnce(() => setInitialPages());
+  const [currentPage, _, { goToFirstPage }] = usePagination();
+
+  useEffectOnce(() => goToFirstPage());
   useWindowResize();
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const Slider = () => {
         );
       });
 
+    console.log('hasPaginated:', hasPaginated);
     console.log('─────────────────────────────────────────────────');
   }, [pages, currentPage]);
 

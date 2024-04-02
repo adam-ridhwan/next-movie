@@ -1,25 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { getMapItem, getMaxPages, getTilesPerPage } from '@/lib/utils';
-import { useResetToInitialPage } from '@/components/slider/use-reset-to-initial-page';
+import { getMapItem, log } from '@/lib/utils';
+import { usePagination } from '@/components/slider/use-pagination';
 
 const useWindowResize = () => {
-  const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
-  const prevTilesPerPage = useRef(tilesPerPage);
 
-  const handleResetToInitialPage = useResetToInitialPage();
+  const [currentPage, { getTilesPerPage }, { goToFirstPage }] = usePagination();
 
+  const prevTilesPerPage = useRef(getTilesPerPage());
   useEffect(() => {
     const handleResize = () => {
-      const newTilesPerPage = getTilesPerPage();
-      const newMaxPages = getMaxPages(TILES);
+      const tilesPerPage = getTilesPerPage();
 
-      if (newTilesPerPage !== prevTilesPerPage.current) {
-        prevTilesPerPage.current = newTilesPerPage;
+      if (tilesPerPage !== prevTilesPerPage.current) {
+        prevTilesPerPage.current = tilesPerPage;
 
         const previousTiles = getMapItem({
           label: 'currentTilesOfPreviousMediaQuery',
@@ -27,7 +23,7 @@ const useWindowResize = () => {
           key: currentPage,
         });
 
-        if (currentPage === 1) return handleResetToInitialPage();
+        if (currentPage === 1) return goToFirstPage();
       }
     };
 
@@ -35,7 +31,7 @@ const useWindowResize = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [currentPage, pages]);
 
-  //   const setPages = (previousTiles: Tile[]) => {
+  //   const setAllPages = (previousTiles: Tile[]) => {
   //     log('SET PAGES AFTER RESIZE');
   //     /** ────────────────────────────────────────────────────────────────────────────────
   //      * FOUR tilesPerPage to THREE tilesPerPage - when resizing from 2nd page
