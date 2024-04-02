@@ -1,13 +1,12 @@
 /* eslint-disable */
 
-import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 import { DIRECTION } from '@/lib/constants';
 
 export type TODO = any;
 
-export const mongoIdSchema = z.string().or(z.instanceof(ObjectId));
+export const mongoIdSchema = z.string();
 
 export const formResponseSchema = z.object({
   success: z.boolean(),
@@ -36,4 +35,6 @@ export const tileSchema = z.object({
   rating: z.string(),
   title: z.string(),
 });
-export type Tiles = z.infer<typeof tileSchema>;
+export const nonEmptyTilesSchema = z.array(tileSchema).nonempty();
+export type Tile = z.infer<typeof tileSchema>;
+export type Pages = Map<number, Tile[]>;

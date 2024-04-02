@@ -1,24 +1,28 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { Tiles } from '@/lib/types';
+import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import Tile from '@/components/slider/tiles/tile';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import TileItem from '@/components/slider/tiles/tile-item';
 
-const RightPlaceHolder = () => {
-  const TILES = useSliderStore(state => state.TILES);
-  const pages = useSliderStore(state => state.pages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const tilesPerPage = useSliderStore(state => state.tilesPerPage);
+const RightPlaceholder = () => {
   const isMounted = useSliderStore(state => state.isMounted);
-  const lastIndex = tilesPerPage - 1;
 
-  const getNextTiles = (): Tiles => {
+  const [{ TILES, currentPage, pages }, { getTilesPerPage }] = usePagination();
+
+  const lastIndex = getTilesPerPage() - 1;
+
+  const getNextTiles = (): Tile => {
     if (!isMounted) return TILES[0];
 
-    const nextPage = getMapItem({ label: 'getNextTiles()', map: pages, key: currentPage + 1 });
+    const nextPage = getMapItem({
+      label: 'RightPlaceholder: nextPage',
+      map: pages,
+      key: currentPage + 1,
+    });
 
     const indexOfLastItem = findIndexFromKey({
-      label: 'getPrevTiles()',
+      label: 'RightPlaceholder: indexOfLastItem',
       array: TILES,
       key: 'id',
       value: nextPage[lastIndex].id,
@@ -28,7 +32,7 @@ const RightPlaceHolder = () => {
     return TILES[indexOfNextItem];
   };
 
-  return <Tile tile={getNextTiles()} displayNumber={''} isVisibleOnScreen={true} />;
+  return <TileItem tile={getNextTiles()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
-export default RightPlaceHolder;
+export default RightPlaceholder;

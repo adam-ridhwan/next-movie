@@ -1,26 +1,43 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
+import chalk from 'chalk';
 
-import { DEVELOPMENT_MODE, DIRECTION } from '@/lib/constants';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
-import PaginationButton from '@/components/slider/pagination-button';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
+import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
+import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
-import { useTranslatePercentage } from '@/components/slider/use-translate-percentage';
 
 const Slider = () => {
-  const setInitialPages = useSliderStore(state => state.setInitialPages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
-  const handleLeftScroll = useSliderStore(state => state.handleLeftScroll);
-  const handleRightScroll = useSliderStore(state => state.handleRightScroll);
-  const getTranslatePercentage = useTranslatePercentage();
-
+  const [{ currentPage, pages }, { hasPaginated }, { goToFirstPage }] = usePagination();
+  const isMounted = useSliderStore(state => state.isMounted);
   const { sliderRef } = useDomContext();
 
-  useEffectOnce(() => setInitialPages());
+  useEffectOnce(() => goToFirstPage());
+  useWindowResize();
+
+  useEffect(() => {
+    if (!isMounted) return;
+    console.log(chalk.bgGreen.black(' SLIDER PAGES '), '──────────────────────────────────');
+
+    [...pages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.id : undefined))
+        );
+      });
+
+    console.log('hasPaginated:', hasPaginated);
+    console.log('─────────────────────────────────────────────────');
+  }, [pages, currentPage]);
 
   return (
     <>
@@ -31,20 +48,13 @@ const Slider = () => {
         })}
       >
         {DEVELOPMENT_MODE && (
-          <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[60px] font-bold'>
+          <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
             {currentPage}
           </div>
         )}
-        <PaginationButton
-          onClick={() => handleLeftScroll(getTranslatePercentage)}
-          direction={DIRECTION.LEFT}
-          className={cn({ hidden: !hasPaginated })}
-        />
+        <PaginateLeftButton />
         <Tiles />
-        <PaginationButton
-          onClick={() => handleRightScroll(getTranslatePercentage)}
-          direction={DIRECTION.RIGHT}
-        />
+        <PaginateRightButton />
       </div>
     </>
   );

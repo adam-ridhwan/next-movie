@@ -1,23 +1,19 @@
-import { useSliderStore } from '@/providers/slider-provider';
-
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import Tile from '@/components/slider/tiles/tile';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import TileItem from '@/components/slider/tiles/tile-item';
 
-const LeftPlaceHolder = () => {
-  const TILES = useSliderStore(state => state.TILES);
-  const pages = useSliderStore(state => state.pages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
+const LeftPlaceholder = () => {
+  const [{ TILES, currentPage, pages }, { hasPaginated }] = usePagination();
 
   const getPrevTiles = () => {
     const prevPage = getMapItem({
-      label: 'getPrevTiles()',
+      label: 'LeftPlaceholder: prevPage',
       map: pages,
       key: currentPage - 1,
     });
 
     const indexOfFirstItem = findIndexFromKey({
-      label: 'getPrevTiles()',
+      label: 'LeftPlaceholder: indexOfFirstItem',
       array: TILES,
       key: 'id',
       value: prevPage[0].id,
@@ -27,7 +23,9 @@ const LeftPlaceHolder = () => {
     return TILES[indexOfPreviousItem];
   };
 
-  return hasPaginated && <Tile tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />;
+  return (
+    hasPaginated && <TileItem tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />
+  );
 };
 
-export default LeftPlaceHolder;
+export default LeftPlaceholder;

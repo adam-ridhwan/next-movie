@@ -1,11 +1,17 @@
+import chalk from 'chalk';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { MEDIA_QUERY } from '@/lib/constants';
+import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { TODO } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+
+export const log = (string: string) =>
+  // eslint-disable-next-line no-console
+  DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
 
 type GetMapValueParams<K, V> = {
   label: string;
@@ -37,11 +43,19 @@ export const findIndexFromKey = <T, K extends keyof T>({
   return index;
 };
 
-export const getTilesPerPage = () => {
-  const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
-  if (windowWidth < MEDIA_QUERY.SM) return 2;
-  if (windowWidth < MEDIA_QUERY.MD) return 3;
-  if (windowWidth < MEDIA_QUERY.LG) return 4;
-  if (windowWidth < MEDIA_QUERY.XL) return 5;
-  return 6;
+const debounce = <T extends (...args: TODO[]) => void>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
+  return function executedFunction(...args: Parameters<T>) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 };
