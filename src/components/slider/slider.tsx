@@ -35,7 +35,6 @@ const Slider = () => {
         );
       });
 
-    console.log('hasPaginated:', hasPaginated);
     console.log('─────────────────────────────────────────────────');
   }, [pages, currentPage]);
 

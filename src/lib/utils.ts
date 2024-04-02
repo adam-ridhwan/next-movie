@@ -11,7 +11,7 @@ export const delay = (ms: number): Promise<void> => new Promise(resolve => setTi
 
 export const log = (string: string) =>
   // eslint-disable-next-line no-console
-  DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
+  DEVELOPMENT_MODE ? console.log(chalk.bgMagentaBright.black(` ${string} `)) : null;
 
 type GetMapValueParams<K, V> = {
   label: string;

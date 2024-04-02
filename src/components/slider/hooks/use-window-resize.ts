@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
+import chalk from 'chalk';
 
+import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { getMapItem, log } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
+
+export const logWindowResize = (string: string) =>
+  // eslint-disable-next-line no-console
+  DEVELOPMENT_MODE ? console.log(chalk.bgYellow.black(` ${string} `)) : null;
 
 export const useWindowResize = () => {
   const [
@@ -9,8 +16,9 @@ export const useWindowResize = () => {
     { goToFirstPage, goToLastPage },
   ] = usePagination();
 
+  // const prevCurrentPage = useRef(currentPage);
   const prevTilesPerPage = useRef(getTilesPerPage());
-  const prevMaxPages = useRef(getMaxPages());
+  // const prevMaxPages = useRef(getMaxPages());
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,18 +26,22 @@ export const useWindowResize = () => {
       const maxPages = getMaxPages();
 
       if (tilesPerPage === prevTilesPerPage.current) return;
+      log('RESIZE');
 
-      // const previousTiles = getMapItem({
-      //   label: 'currentTilesOfPreviousMediaQuery',
-      //   map: pages,
-      //   key: currentPage,
-      // });
+      const previousTiles = getMapItem({
+        label: 'currentTilesOfPreviousMediaQuery',
+        map: pages,
+        key: currentPage,
+      });
+
+      console.log('currentPage:', currentPage, 'maxPages', maxPages, 'tilesPerPage', tilesPerPage);
 
       if (currentPage === 1) goToFirstPage();
-      if (currentPage === prevMaxPages.current - 2) goToLastPage();
+      if (currentPage === maxPages - 2) goToLastPage();
 
+      logWindowResize('NOT FIRST/LAST PAGE');
       prevTilesPerPage.current = tilesPerPage;
-      prevMaxPages.current = maxPages;
+      console.log('previousTiles:', previousTiles);
     };
 
     window.addEventListener('resize', handleResize);

@@ -8,7 +8,7 @@ import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const log = (string: string) =>
   DEVELOPMENT_MODE
-    ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
+    ? console.log(chalk.bgRedBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
     : null;
 
 type UsePaginationState = {
