@@ -1,9 +1,9 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
-import PaginationButton from '@/components/slider/pagination-button';
-import { usePagination } from '@/components/slider/use-pagination';
-import { useSlide } from '@/components/slider/use-slide';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { useSlide } from '@/components/slider/hooks/use-slide';
+import PaginationButton from '@/components/slider/pagination/pagination-button';
 
 const PaginateRightButton = () => {
   const [slide, { calculateSlideAmount, enableAnimation, disableAnimation }] = useSlide();

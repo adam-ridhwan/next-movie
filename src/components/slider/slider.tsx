@@ -8,11 +8,11 @@ import chalk from 'chalk';
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
-import PaginateLeftButton from '@/components/slider/paginate-left-button';
-import PaginateRightButton from '@/components/slider/paginate-right-button';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import useWindowResize from '@/components/slider/hooks/use-window-resize';
+import PaginateLeftButton from '@/components/slider/pagination/paginate-left-button';
+import PaginateRightButton from '@/components/slider/pagination/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
-import { usePagination } from '@/components/slider/use-pagination';
-import useWindowResize from '@/components/slider/use-window-resize';
 
 const Slider = () => {
   const pages = useSliderStore(state => state.pages);

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { getMapItem, log } from '@/lib/utils';
-import { usePagination } from '@/components/slider/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 const useWindowResize = () => {
   const pages = useSliderStore(state => state.pages);
