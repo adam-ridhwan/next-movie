@@ -48,7 +48,3 @@ export const useWindowResize = () => {
     goToResizedPage,
   ]);
 };
-
-// const maxPages = getMaxPages();
-
-// if (currentPage === prevMaxPages.current - 2) goToLastPage();

@@ -28,7 +28,7 @@ type FindItemFromIndexParams<T, K extends keyof T> = {
   label: string;
   array: T[];
   key: K;
-  value: T[K];
+  value: T[K] | undefined;
 };
 
 export const findIndexFromKey = <T, K extends keyof T>({
@@ -37,6 +37,7 @@ export const findIndexFromKey = <T, K extends keyof T>({
   key,
   value,
 }: FindItemFromIndexParams<T, K>): number => {
+  if (value === undefined) throw new Error(`${label}: Value is undefined`);
   const index = array.findIndex(item => item[key] === value);
   if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;
