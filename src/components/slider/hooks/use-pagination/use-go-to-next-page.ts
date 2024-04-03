@@ -1,6 +1,6 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { logToConsoleUsePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const useGoToNextPage = () => {
   const currentPage = useSliderStore(state => state.currentPage);
@@ -9,7 +9,7 @@ export const useGoToNextPage = () => {
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
   const goToNextPage = () => {
-    logToConsoleUsePagination('NEXT');
+    log('NEXT');
     if (!hasPaginated) markAsPaginated();
     setCurrentPage(currentPage + 1);
   };

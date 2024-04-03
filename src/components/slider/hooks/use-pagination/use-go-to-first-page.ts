@@ -3,7 +3,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { Pages, Tile } from '@/lib/types';
 import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { logToConsoleUsePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useGoToFirstPage = () => {
@@ -13,7 +13,7 @@ export const useGoToFirstPage = () => {
   const { validatePages } = useValidators();
 
   const goToFirstPage = () => {
-    logToConsoleUsePagination('FIRST');
+    log('FIRST');
 
     const tilesPerPage = getTilesPerPage();
     const maxPages = getMaxPages();

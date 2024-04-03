@@ -3,18 +3,16 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
+import { logger } from '@/lib/utils';
 import { useGoToFirstPage } from '@/components/slider/hooks/use-pagination/use-go-to-first-page';
 import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go-to-last-page';
 import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
 import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
 import { useGoToResizedPage } from '@/components/slider/hooks/use-pagination/use-go-to-resized-page';
 
-export const logToConsoleUsePagination = (string: string) =>
-  DEVELOPMENT_MODE
-    ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
-    : null;
+export const log = (string: string) =>
+  logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
 
 type UsePaginationReturn = {
   state: {

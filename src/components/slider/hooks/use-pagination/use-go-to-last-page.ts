@@ -3,7 +3,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { logToConsoleUsePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useGoToLastPage = () => {
@@ -15,7 +15,7 @@ export const useGoToLastPage = () => {
   const { validatePages } = useValidators();
 
   const goToLastPage = () => {
-    logToConsoleUsePagination('LAST');
+    log('LAST');
 
     if (!hasPaginated) markAsPaginated();
 
