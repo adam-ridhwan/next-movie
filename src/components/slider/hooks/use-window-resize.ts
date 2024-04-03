@@ -3,61 +3,83 @@
 import { useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
+import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const useWindowResize = () => {
   const {
     state: { TILES, currentPage, pages },
-    actions: { goToFirstPage, goToLastPage },
+    actions: { goToFirstPage, goToLastPage, goToResizedPage },
   } = usePagination();
   const { getTilesPerPage, getMaxPages } = usePages();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
 
   useEffect(() => {
-    console.log('currentPage', currentPage);
     const handleResize = () => {
       const tilesPerPage = getTilesPerPage();
-      const maxPages = getMaxPages();
 
       if (tilesPerPage === prevTilesPerPage.current) return;
-
       console.log(chalk.bgHex('#FC86F3').black(' USE WINDOW RESIZE '));
 
-      // const previousTiles = getMapItem({
-      //   label: 'currentTilesOfPreviousMediaQuery',
-      //   map: pages,
-      //   key: currentPage,
-      // });
+      const previousTiles = getMapItem({
+        label: 'handleResize() - previousTiles',
+        map: pages,
+        key: currentPage,
+      });
 
       /* ────────────────────────────────────────────────────────────────────
        * RESIZING FROM 4 TILES TO 3 TILES
        *
-       * FIRST PAGE
-       * if the new current page is 1
-       * - go to the first page
+       * ────── FIRST PAGE ──────
+       * if the new current page is 1 => { goToFirstPage() }
        *
-       * SECOND PAGE
-       * - if the current page is > 1
-       * - get the previous current tiles
-       * - update the new current tiles with the previous current tiles
-       * - example: [1,2,3,4], [5,6,7,8] => [2,3,4], [5,6,7]
        *
-       * LAST PAGE
-       * if the current page is the last page
-       * - get the previous current tiles
-       * - update the new current tiles with the previous current tiles
-       * - example: [2,3,4,5], [6,7,8,9] => [3,4,5], [6,7,8]
+       * ────── SECOND PAGE ──────
+       * if the current page is > 1 => { goToResizedPage(previousTiles) }
+       *
+       * 1) get the previous current tiles
+       * 2) update the new current tiles with the previous current tiles
+       *
+       *     PAGE 0: [6, 7, 8, 9] => PAGE 0: [8, 9, 1]
+       *     PAGE 1: [1, 2, 3, 4] => PAGE 1: [2, 3, 4]
+       *  -> PAGE 2: [5, 6, 7, 8] => PAGE 2: [5, 6, 7] <-
+       *     PAGE 3: [9, 1, 2, 3] => PAGE 3: [8, 9, 1]
+       *     PAGE 4: [4, 5, 6, 7] => PAGE 4: [2, 3, 4]
+       *
+       *
+       * ────── LAST PAGE ──────
+       * if the current page is the last page => { goToResizedPage(previousTiles) }
+       *
+       * 1) Get the previous current tiles
+       * 2) Update the new current tiles with the previous current tiles
+       *
+       *     PAGE 0: [7, 8, 9, 1] => PAGE 0: [9, 1, 2]
+       *     PAGE 1: [2, 3, 4, 5] => PAGE 1: [3, 4, 5]
+       *  -> PAGE 2: [6, 7, 8, 9] => PAGE 2: [6, 7, 8] <-
+       *     PAGE 3: [9, 1, 2, 3] => PAGE 3: [9, 1, 2]
+       *     PAGE 4: [4, 5, 6, 7] => PAGE 4: [3, 4, 5]
        * ────────────────────────────────────────────────────────────────── */
 
-      if (currentPage === 1) goToFirstPage();
-      // if (currentPage === prevMaxPages.current - 2) goToLastPage();
-
+      currentPage === 1 ? goToFirstPage() : goToResizedPage(previousTiles);
       prevTilesPerPage.current = tilesPerPage;
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [TILES, currentPage, pages, getMaxPages, getTilesPerPage, goToFirstPage, goToLastPage]);
+  }, [
+    TILES,
+    currentPage,
+    pages,
+    getMaxPages,
+    getTilesPerPage,
+    goToFirstPage,
+    goToLastPage,
+    goToResizedPage,
+  ]);
 };
+
+// const maxPages = getMaxPages();
+
+// if (currentPage === prevMaxPages.current - 2) goToLastPage();

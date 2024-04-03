@@ -9,6 +9,7 @@ import { useGoToFirstPage } from '@/components/slider/hooks/use-pagination/use-g
 import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go-to-last-page';
 import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
 import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
+import { useGoToResizedPage } from '@/components/slider/hooks/use-pagination/use-go-to-resized-page';
 
 export const logToConsoleUsePagination = (string: string) =>
   DEVELOPMENT_MODE
@@ -32,6 +33,7 @@ type UsePaginationReturn = {
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
+    goToResizedPage: (previousTiles: Tile[]) => void;
   };
 };
 
@@ -49,6 +51,7 @@ export const usePagination = (): UsePaginationReturn => {
   const { goToLastPage } = useGoToLastPage();
   const { goToNextPage } = useGoToNextPage();
   const { goToPrevPage } = useGoToPrevPage();
+  const { goToResizedPage } = useGoToResizedPage();
 
   return {
     state: {
@@ -67,6 +70,7 @@ export const usePagination = (): UsePaginationReturn => {
       goToLastPage,
       goToPrevPage,
       goToNextPage,
+      goToResizedPage,
     },
   };
 };
