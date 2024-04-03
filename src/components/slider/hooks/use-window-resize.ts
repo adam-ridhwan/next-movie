@@ -3,11 +3,11 @@
 import { useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
-import { getMapItem, log } from '@/lib/utils';
+import { getMapItem, logger } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 
-const logToConsole = (label: string) => log(chalk.bgHex('#FC86F3').black(`${label}`));
+const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 
 export const useWindowResize = () => {
   const {
@@ -23,7 +23,7 @@ export const useWindowResize = () => {
       const tilesPerPage = getTilesPerPage();
 
       if (tilesPerPage === prevTilesPerPage.current) return;
-      logToConsole(' USE WINDOW RESIZE ');
+      log(' USE WINDOW RESIZE ');
 
       const previousTiles = getMapItem({
         label: 'handleResize() - previousTiles',

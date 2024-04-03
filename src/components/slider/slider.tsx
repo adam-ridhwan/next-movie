@@ -6,12 +6,21 @@ import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { cn } from '@/lib/utils';
+import { cn, logger } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
+
+function log(...args: string[]) {
+  if (args.length > 1 && typeof args[0] === 'string') {
+    const [label, ...rest] = args;
+    logger([chalk.bgGreen.black(label), ...rest].join(' '));
+  } else {
+    logger(args.join(' '));
+  }
+}
 
 const Slider = () => {
   const {
@@ -27,7 +36,7 @@ const Slider = () => {
 
   useEffect(() => {
     if (!isMounted) return;
-    console.log(chalk.bgGreen.black(' SLIDER PAGES '), '──────────────────────────────────');
+    log(' SLIDER PAGES ', '──────────────────────────────────');
 
     [...pages.entries()]
       .sort((a, b) => a[0] - b[0])
@@ -38,27 +47,25 @@ const Slider = () => {
         );
       });
 
-    console.log('─────────────────────────────────────────────────');
+    log('─────────────────────────────────────────────────');
   }, [pages, isMounted]);
 
   return (
-    <>
-      <div
-        ref={sliderRef}
-        className={cn('group/slider relative flex w-full', {
-          'bg-yellow-600': DEVELOPMENT_MODE,
-        })}
-      >
-        {DEVELOPMENT_MODE && (
-          <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
-            {currentPage}
-          </div>
-        )}
-        <PaginateLeftButton />
-        <Tiles />
-        <PaginateRightButton />
-      </div>
-    </>
+    <div
+      ref={sliderRef}
+      className={cn('group/slider relative flex w-full', {
+        'bg-yellow-600': DEVELOPMENT_MODE,
+      })}
+    >
+      {DEVELOPMENT_MODE && (
+        <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
+          {currentPage}
+        </div>
+      )}
+      <PaginateLeftButton />
+      <Tiles />
+      <PaginateRightButton />
+    </div>
   );
 };
 

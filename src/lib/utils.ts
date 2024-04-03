@@ -10,7 +10,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
-export const log = (message: string) => (DEVELOPMENT_MODE ? console.log(message) : null);
+export const logger = (message: string) => (DEVELOPMENT_MODE ? console.log(message) : null);
 
 type GetMapValueParams<K, V> = {
   label: string;
