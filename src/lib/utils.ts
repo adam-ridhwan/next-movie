@@ -1,4 +1,5 @@
-import chalk from 'chalk';
+/* eslint-disable */
+
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -9,9 +10,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
-export const log = (string: string) =>
-  // eslint-disable-next-line no-console
-  DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
+export const logger = (message: string) => (DEVELOPMENT_MODE ? console.log(message) : null);
 
 type GetMapValueParams<K, V> = {
   label: string;
@@ -29,7 +28,7 @@ type FindItemFromIndexParams<T, K extends keyof T> = {
   label: string;
   array: T[];
   key: K;
-  value: T[K];
+  value: T[K] | undefined;
 };
 
 export const findIndexFromKey = <T, K extends keyof T>({
@@ -38,6 +37,7 @@ export const findIndexFromKey = <T, K extends keyof T>({
   key,
   value,
 }: FindItemFromIndexParams<T, K>): number => {
+  if (value === undefined) throw new Error(`${label}: Value is undefined`);
   const index = array.findIndex(item => item[key] === value);
   if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;

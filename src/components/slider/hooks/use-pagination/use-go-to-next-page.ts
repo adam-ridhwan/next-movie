@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { log } from '@/components/slider/hooks/use-pagination/use-pagination';

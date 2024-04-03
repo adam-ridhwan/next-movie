@@ -3,17 +3,16 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
+import { logger } from '@/lib/utils';
 import { useGoToFirstPage } from '@/components/slider/hooks/use-pagination/use-go-to-first-page';
 import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go-to-last-page';
 import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
 import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
+import { useGoToResizedPage } from '@/components/slider/hooks/use-pagination/use-go-to-resized-page';
 
 export const log = (string: string) =>
-  DEVELOPMENT_MODE
-    ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
-    : null;
+  logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
 
 type UsePaginationReturn = {
   state: {
@@ -21,11 +20,6 @@ type UsePaginationReturn = {
     pages: Pages;
     currentPage: number;
   };
-  // config: {
-  //   lastPageLength: number;
-  //   getTilesPerPage: () => number;
-  //   getMaxPages: () => number;
-  // };
   status: {
     isFirstPageVisited: boolean;
     isLastPageVisited: boolean;
@@ -37,6 +31,7 @@ type UsePaginationReturn = {
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
+    goToResizedPage: (previousTiles: Tile[]) => void;
   };
 };
 
@@ -54,6 +49,7 @@ export const usePagination = (): UsePaginationReturn => {
   const { goToLastPage } = useGoToLastPage();
   const { goToNextPage } = useGoToNextPage();
   const { goToPrevPage } = useGoToPrevPage();
+  const { goToResizedPage } = useGoToResizedPage();
 
   return {
     state: {
@@ -72,6 +68,7 @@ export const usePagination = (): UsePaginationReturn => {
       goToLastPage,
       goToPrevPage,
       goToNextPage,
+      goToResizedPage,
     },
   };
 };

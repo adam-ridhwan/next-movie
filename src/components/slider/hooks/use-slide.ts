@@ -3,7 +3,7 @@
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { DIRECTION, PADDING } from '@/lib/constants';
+import { PADDING, SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 
 export type getSlideAmountParams = {
@@ -45,7 +45,7 @@ export const useSlide = (): UseSlideReturn => {
     if (isFirstPage) return lastPageLengthPercentage;
 
     const sliderWidthPercentage = ((sliderWidth - PADDING) / windowWidth) * 100;
-    return direction === DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
+    return direction === SLIDE_DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
   };
 
   return {

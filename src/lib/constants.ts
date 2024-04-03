@@ -10,9 +10,14 @@ export const MEDIA_QUERY = {
 export const PADDING = 98;
 export const TIMEOUT_DURATION = 700;
 
-export const DIRECTION = {
+export const SLIDE_DIRECTION = {
   LEFT: 'LEFT',
   RIGHT: 'RIGHT',
+} as const;
+
+export const RESIZE_DIRECTION = {
+  INCREASE: 'INCREASE',
+  DECREASE: 'DECREASE',
 } as const;
 
 export const authStrings = {

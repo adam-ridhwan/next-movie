@@ -1,4 +1,4 @@
-import { DIRECTION } from '@/lib/constants';
+import { SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -27,12 +27,12 @@ const PaginationButton = ({ direction, onClick, className }: PaginationButtonPro
         onClick={onClick}
         className={cn(
           `group/button absolute top-0 z-10 flex h-full w-12 items-center justify-center rounded-none bg-darkerBlue/30 px-0 py-0 hover:bg-darkestBlue/30 disabled:pointer-events-auto disabled:opacity-100`,
-          { 'right-0': direction === DIRECTION.RIGHT },
-          { 'left-0': direction === DIRECTION.LEFT },
+          { 'right-0': direction === SLIDE_DIRECTION.RIGHT },
+          { 'left-0': direction === SLIDE_DIRECTION.LEFT },
           className
         )}
       >
-        {direction === DIRECTION.RIGHT ? (
+        {direction === SLIDE_DIRECTION.RIGHT ? (
           <ChevronRightIcon className={iconClass} />
         ) : (
           <ChevronLeftIcon className={iconClass} />

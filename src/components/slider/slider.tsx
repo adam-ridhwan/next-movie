@@ -6,61 +6,66 @@ import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { cn } from '@/lib/utils';
-import { useAnimation } from '@/components/slider/hooks/use-animation';
+import { cn, logger } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
-import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
+import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import Tiles from '@/components/slider/tiles/tiles';
 
+function log(...args: string[]) {
+  if (args.length > 1 && typeof args[0] === 'string') {
+    const [label, ...rest] = args;
+    logger([chalk.bgGreen.black(label), ...rest].join(' '));
+  } else {
+    logger(args.join(' '));
+  }
+}
+
 const Slider = () => {
   const {
     state: { pages, currentPage },
-    status: { isMounted, hasPaginated },
+    status: { isMounted },
     actions: { goToFirstPage },
   } = usePagination();
-  const { isAnimating } = useAnimation();
 
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());
-  useWindowResize();
+  useResizeWindow();
 
-  useEffect(() => {
-    if (!isMounted) return;
-    console.log(chalk.bgGreen.black(' SLIDER PAGES '), '──────────────────────────────────');
-
-    [...pages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
-      });
-
-    console.log('─────────────────────────────────────────────────');
-  }, [pages, currentPage, isAnimating]);
+  // useEffect(() => {
+  //   if (!isMounted) return;
+  //   log(' SLIDER PAGES ', '──────────────────────────────────');
+  //
+  //   [...pages.entries()]
+  //     .sort((a, b) => a[0] - b[0])
+  //     .forEach(([pageIndex, tiles]) => {
+  //       console.log(
+  //         `Page ${pageIndex}:`,
+  //         tiles.map(card => (card ? card.id : undefined))
+  //       );
+  //     });
+  //
+  //   log('─────────────────────────────────────────────────');
+  // }, [pages, isMounted]);
 
   return (
-    <>
-      <div
-        ref={sliderRef}
-        className={cn('group/slider relative flex w-full', {
-          'bg-yellow-600': DEVELOPMENT_MODE,
-        })}
-      >
-        {DEVELOPMENT_MODE && (
-          <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
-            {currentPage}
-          </div>
-        )}
-        <PaginateLeftButton />
-        <Tiles />
-        <PaginateRightButton />
-      </div>
-    </>
+    <div
+      ref={sliderRef}
+      className={cn('group/slider relative flex w-full', {
+        'bg-yellow-600': DEVELOPMENT_MODE,
+      })}
+    >
+      {DEVELOPMENT_MODE && (
+        <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
+          {currentPage}
+        </div>
+      )}
+      <PaginateLeftButton />
+      <Tiles />
+      <PaginateRightButton />
+    </div>
   );
 };
 
