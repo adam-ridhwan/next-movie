@@ -1,7 +1,7 @@
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
 import CurrentPage from '@/components/slider/tiles/current-page';
 import LeftPlaceholder from '@/components/slider/tiles/left-placeholder';

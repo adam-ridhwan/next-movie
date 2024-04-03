@@ -8,7 +8,7 @@ import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
@@ -40,7 +40,6 @@ const Slider = () => {
         );
       });
 
-    console.log('hasPaginated:', hasPaginated);
     console.log('─────────────────────────────────────────────────');
   }, [pages, currentPage, isAnimating]);
 
