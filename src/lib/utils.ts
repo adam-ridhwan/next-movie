@@ -1,4 +1,5 @@
-import chalk from 'chalk';
+/* eslint-disable */
+
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -9,9 +10,7 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
-export const log = (string: string) =>
-  // eslint-disable-next-line no-console
-  DEVELOPMENT_MODE ? console.log(chalk.bgBlueBright.black(` ${string} `)) : null;
+export const log = (message: string) => (DEVELOPMENT_MODE ? console.log(message) : null);
 
 type GetMapValueParams<K, V> = {
   label: string;
