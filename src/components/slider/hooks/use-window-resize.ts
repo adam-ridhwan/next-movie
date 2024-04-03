@@ -25,13 +25,13 @@ export const useWindowResize = () => {
       if (tilesPerPage === prevTilesPerPage.current) return;
       log(' USE WINDOW RESIZE ');
 
-      const previousTiles = getMapItem({
-        label: 'handleResize() - previousTiles',
+      const prevPage = getMapItem({
+        label: 'handleResize() - prevPage',
         map: pages,
         key: currentPage,
       });
 
-      currentPage === 1 ? goToFirstPage() : goToResizedPage(previousTiles);
+      currentPage === 1 ? goToFirstPage() : goToResizedPage(prevPage);
       prevTilesPerPage.current = tilesPerPage;
     };
 
