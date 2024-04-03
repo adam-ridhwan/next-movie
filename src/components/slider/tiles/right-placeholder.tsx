@@ -1,14 +1,15 @@
 import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const RightPlaceholder = () => {
   const {
     state: { TILES, currentPage, pages },
     status: { isMounted },
-    config: { getTilesPerPage },
   } = usePagination();
+  const { getTilesPerPage } = usePages();
 
   const lastIndex = getTilesPerPage() - 1;
 

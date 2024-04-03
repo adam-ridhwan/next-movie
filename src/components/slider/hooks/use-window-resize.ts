@@ -2,14 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 
-import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const useWindowResize = () => {
   const {
     state: { TILES, currentPage, pages },
-    config: { getTilesPerPage, getMaxPages },
     actions: { goToFirstPage, goToLastPage },
   } = usePagination();
+  const { getTilesPerPage, getMaxPages } = usePages();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
   const prevMaxPages = useRef(getMaxPages());
