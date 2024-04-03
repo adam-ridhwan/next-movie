@@ -46,6 +46,7 @@ export const useResizeWindow = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [
     TILES,
+    resizeDirection,
     currentPage,
     pages,
     getMaxPages,

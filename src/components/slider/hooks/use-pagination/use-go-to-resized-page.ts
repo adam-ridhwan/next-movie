@@ -25,6 +25,14 @@ export const useGoToResizedPage = () => {
    *     page 4: [4, 5, 6, 7] => page 4: [8, 9, 1]
    *                          => page 5: [2, 3, 4]
    *
+   * 2nd page: -
+   *     page 0: [5, 6, 7] => page 0: [7,8]
+   *     page 1: [8, 9, 1] => page 1: [9,1]
+   *     page 2: [2, 3, 4] => page 2: [2,3]
+   *  -> PAGE 3: [5, 6, 7] => page 3: [3,4]
+   *     page 4: [8, 9, 1] => PAGE 4: [5,6] <-
+         page 5: [2, 3, 4] => page 5: [7,8]
+   *                       => page 6: [9,1]
    * 3rd page: -
    *     page 0: [3, 4, 5, 6] => page 0: [6, 7, 8]
    *     page 1: [7, 8, 9, 1] => page 1: [9, 1, 2]
