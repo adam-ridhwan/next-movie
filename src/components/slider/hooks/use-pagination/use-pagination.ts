@@ -10,7 +10,7 @@ import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go
 import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
 import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
 
-export const log = (string: string) =>
+export const logToConsoleUsePagination = (string: string) =>
   DEVELOPMENT_MODE
     ? console.log(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '))
     : null;
@@ -21,11 +21,6 @@ type UsePaginationReturn = {
     pages: Pages;
     currentPage: number;
   };
-  // config: {
-  //   lastPageLength: number;
-  //   getTilesPerPage: () => number;
-  //   getMaxPages: () => number;
-  // };
   status: {
     isFirstPageVisited: boolean;
     isLastPageVisited: boolean;

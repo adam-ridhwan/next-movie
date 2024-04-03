@@ -7,7 +7,6 @@ import chalk from 'chalk';
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { cn } from '@/lib/utils';
-import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useWindowResize } from '@/components/slider/hooks/use-window-resize';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
@@ -17,10 +16,9 @@ import Tiles from '@/components/slider/tiles/tiles';
 const Slider = () => {
   const {
     state: { pages, currentPage },
-    status: { isMounted, hasPaginated },
+    status: { isMounted },
     actions: { goToFirstPage },
   } = usePagination();
-  const { isAnimating } = useAnimation();
 
   const { sliderRef } = useDomContext();
 
@@ -41,7 +39,7 @@ const Slider = () => {
       });
 
     console.log('─────────────────────────────────────────────────');
-  }, [pages, currentPage, isAnimating]);
+  }, [pages, isMounted]);
 
   return (
     <>
