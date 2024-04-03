@@ -12,7 +12,7 @@ const RightPlaceholder = () => {
 
   const lastIndex = getTilesPerPage() - 1;
 
-  const getNextTiles = (): Tile => {
+  const getNextTile = (): Tile => {
     if (!isMounted) return TILES[0];
 
     const nextPage = getMapItem({
@@ -32,7 +32,7 @@ const RightPlaceholder = () => {
     return TILES[indexOfNextItem];
   };
 
-  return <TileItem tile={getNextTiles()} displayNumber={''} isVisibleOnScreen={true} />;
+  return <TileItem tile={getNextTile()} displayNumber={''} isVisibleOnScreen={true} />;
 };
 
 export default RightPlaceholder;

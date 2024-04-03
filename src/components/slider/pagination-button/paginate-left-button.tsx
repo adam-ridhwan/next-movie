@@ -6,9 +6,6 @@ import { useSlide } from '@/components/slider/hooks/use-slide';
 import PaginationButton from '@/components/slider/pagination-button/pagination-button';
 
 const PaginateLeftButton = () => {
-  const { slide, getSlideAmount } = useSlide();
-  const { enableAnimation, disableAnimation } = useAnimation();
-
   const {
     state: { currentPage },
     status: { isLastPageVisited, hasPaginated },
@@ -16,7 +13,13 @@ const PaginateLeftButton = () => {
     actions: { goToFirstPage, goToLastPage, goToPrevPage },
   } = usePagination();
 
+  const { slide, getSlideAmount } = useSlide();
+  const { enableAnimation, disableAnimation } = useAnimation();
+
   const handlePaginateLeft = () => {
+    const isSecondPage = currentPage === 2;
+    const isFirstPage = currentPage === 1;
+
     const newSlideAmount = getSlideAmount({
       direction: DIRECTION.LEFT,
       lastPageLength: lastPageLength,
@@ -28,8 +31,8 @@ const PaginateLeftButton = () => {
     setTimeout(() => {
       disableAnimation();
       slide(0);
-      if (currentPage === 2) return goToFirstPage();
-      if (currentPage === 1) return goToLastPage();
+      if (isSecondPage) return goToFirstPage();
+      if (isFirstPage) return goToLastPage();
       goToPrevPage();
     }, TIMEOUT_DURATION);
   };
