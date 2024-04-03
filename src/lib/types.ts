@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { DIRECTION } from '@/lib/constants';
+import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/lib/constants';
 
 export type TODO = any;
 
@@ -25,7 +25,9 @@ export const userSchema = z.object({
 });
 export type User = z.infer<typeof userSchema>;
 
-export type SlideDirection = (typeof DIRECTION)[keyof typeof DIRECTION];
+export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
+
+export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
 
 export const tileSchema = z.object({
   id: z.string(),

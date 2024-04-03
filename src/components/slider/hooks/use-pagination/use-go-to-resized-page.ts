@@ -90,16 +90,6 @@ export const useGoToResizedPage = () => {
 
     const newPages: Pages = new Map<number, Tile[]>();
 
-    /**
-     * 2nd page: -
-     *     page 0: [6, 7, 8, 9] => page 0: [5, 6, 7]
-     *     page 1: [1, 2, 3, 4] => page 1: [8, 9, 1]
-     *  -> PAGE 2: [5, 6, 7, 8] => page 2: [2, 3, 4]
-     *     page 3: [9, 1, 2, 3] => PAGE 3: [5, 6, 7] <-
-     *     page 4: [4, 5, 6, 7] => page 4: [8, 9, 1]
-     *                          => page 5: [2, 3, 4]
-     * */
-
     let temporaryArrayHolder = [];
 
     const leftPageTotal = maxPages - 2;

@@ -1,4 +1,4 @@
-import { DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
+import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePages } from '@/components/slider/hooks/use-pages';
@@ -22,7 +22,7 @@ const PaginateLeftButton = () => {
     const isFirstPage = currentPage === 1;
 
     const newSlideAmount = getSlideAmount({
-      direction: DIRECTION.LEFT,
+      direction: SLIDE_DIRECTION.LEFT,
       lastPageLength: lastPageLength,
       isFirstPage: currentPage - 1 === 1 && isLastPageVisited,
     });
@@ -41,7 +41,7 @@ const PaginateLeftButton = () => {
   return (
     <PaginationButton
       onClick={() => handlePaginateLeft()}
-      direction={DIRECTION.LEFT}
+      direction={SLIDE_DIRECTION.LEFT}
       className={cn({ hidden: !hasPaginated })}
     />
   );
