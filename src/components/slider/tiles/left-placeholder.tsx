@@ -8,7 +8,7 @@ const LeftPlaceholder = () => {
     status: { hasPaginated },
   } = usePagination();
 
-  const getPrevTiles = () => {
+  const getPrevTile = () => {
     const prevPage = getMapItem({
       label: 'LeftPlaceholder: prevPage',
       map: pages,
@@ -27,7 +27,7 @@ const LeftPlaceholder = () => {
   };
 
   return (
-    hasPaginated && <TileItem tile={getPrevTiles()} displayNumber={''} isVisibleOnScreen={true} />
+    hasPaginated && <TileItem tile={getPrevTile()} displayNumber={''} isVisibleOnScreen={true} />
   );
 };
 
