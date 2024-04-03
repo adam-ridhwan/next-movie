@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { Pages, Tile } from '@/lib/types';
