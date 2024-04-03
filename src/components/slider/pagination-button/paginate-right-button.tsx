@@ -9,7 +9,6 @@ const PaginateRightButton = () => {
   const {
     state: { currentPage },
     status: { isFirstPageVisited },
-
     actions: { goToFirstPage, goToLastPage, goToNextPage },
   } = usePagination();
   const { getMaxPages, lastPageLength } = usePages();
