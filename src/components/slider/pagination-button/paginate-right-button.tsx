@@ -17,6 +17,9 @@ const PaginateRightButton = () => {
 
   const handlePaginateRight = () => {
     const maxPages = getMaxPages();
+    const isSecondToLastPage = currentPage === maxPages - 3;
+    const isLastPage = currentPage === maxPages - 2;
+
     const slideAmount = getSlideAmount({
       direction: DIRECTION.RIGHT,
       lastPageLength: lastPageLength,
@@ -28,8 +31,8 @@ const PaginateRightButton = () => {
     setTimeout(() => {
       disableAnimation();
       slide(0);
-      if (currentPage === maxPages - 3) return goToLastPage();
-      if (currentPage === maxPages - 2) return goToFirstPage();
+      if (isSecondToLastPage) return goToLastPage();
+      if (isLastPage) return goToFirstPage();
       goToNextPage();
     }, TIMEOUT_DURATION);
   };
