@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
+import { RESIZE_DIRECTION } from '@/lib/constants';
 import { getMapItem, logger } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
@@ -13,9 +14,10 @@ const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 export const useResizeWindow = () => {
   const {
     state: { TILES, currentPage, pages },
-    actions: { goToFirstPage, goToLastPage, goToResizedPage },
+    actions: { goToFirstPage, goToLastPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
   const { getTilesPerPage, getMaxPages } = usePages();
+  const { resizeDirection } = useResizeDirection();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
   const prevWindowWidth = useRef(typeof window === 'undefined' ? 0 : window.innerWidth);
@@ -36,7 +38,14 @@ export const useResizeWindow = () => {
         key: currentPage,
       });
 
-      currentPage === 1 ? goToFirstPage() : goToResizedPage(prevPage);
+      if (currentPage === 1) {
+        goToFirstPage();
+      } else {
+        resizeDirection === RESIZE_DIRECTION.MINIMIZING
+          ? goToMinimizedPage(prevPage)
+          : goToMaximizedPage(prevPage);
+      }
+
       prevWindowWidth.current = currentWidth;
     };
 
@@ -50,6 +59,6 @@ export const useResizeWindow = () => {
     getTilesPerPage,
     goToFirstPage,
     goToLastPage,
-    goToResizedPage,
+    goToMinimizedPage,
   ]);
 };

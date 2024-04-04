@@ -7,9 +7,10 @@ import { Pages, Tile } from '@/lib/types';
 import { logger } from '@/lib/utils';
 import { useFirstPage } from '@/components/slider/hooks/use-pagination/use-first-page';
 import { useLastPage } from '@/components/slider/hooks/use-pagination/use-last-page';
+import { useMaximizedPage } from '@/components/slider/hooks/use-pagination/use-maximized-page';
+import { useMinimizedPage } from '@/components/slider/hooks/use-pagination/use-minimized-page';
 import { useNextPage } from '@/components/slider/hooks/use-pagination/use-next-page';
 import { usePrevPage } from '@/components/slider/hooks/use-pagination/use-prev-page';
-import { useResizedPage } from '@/components/slider/hooks/use-pagination/use-resized-page';
 
 export const log = (string: string) =>
   logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
@@ -31,7 +32,8 @@ type UsePaginationReturn = {
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
-    goToResizedPage: (prevTiles: Tile[]) => void;
+    goToMaximizedPage: (prevTiles: Tile[]) => void;
+    goToMinimizedPage: (prevTiles: Tile[]) => void;
   };
 };
 
@@ -49,7 +51,8 @@ export const usePagination = (): UsePaginationReturn => {
   const { goToLastPage } = useLastPage();
   const { goToNextPage } = useNextPage();
   const { goToPrevPage } = usePrevPage();
-  const { goToResizedPage } = useResizedPage();
+  const { goToMaximizedPage } = useMaximizedPage();
+  const { goToMinimizedPage } = useMinimizedPage();
 
   return {
     state: {
@@ -68,7 +71,8 @@ export const usePagination = (): UsePaginationReturn => {
       goToLastPage,
       goToPrevPage,
       goToNextPage,
-      goToResizedPage,
+      goToMaximizedPage,
+      goToMinimizedPage,
     },
   };
 };
