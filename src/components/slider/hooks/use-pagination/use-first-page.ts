@@ -17,48 +17,48 @@ export const useFirstPage = () => {
   const goToFirstPage = () => {
     usePaginationLogger.first();
 
-    const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages();
+    const newTilesPerPage = getTilesPerPage();
+    const newMaxPages = getMaxPages();
 
     const initialPages: Pages = new Map<number, Tile[]>();
 
     // Left page placeholder
-    initialPages.set(0, TILES.slice(-tilesPerPage));
+    initialPages.set(0, TILES.slice(-newTilesPerPage));
 
     // Middle pages
-    for (let pageIndex = 1; pageIndex < maxPages; pageIndex++) {
-      const startIndex = (pageIndex - 1) * tilesPerPage;
-      const endIndex = startIndex + tilesPerPage;
+    for (let pageIndex = 1; pageIndex < newMaxPages; pageIndex++) {
+      const startIndex = (pageIndex - 1) * newTilesPerPage;
+      const endIndex = startIndex + newTilesPerPage;
       initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
     }
 
     const lastPage = getMapItem({
       label: 'goToFirstPage()',
       map: initialPages,
-      key: maxPages - 2,
+      key: newMaxPages - 2,
     });
 
-    const tilesNeeded = tilesPerPage - lastPage.length;
-    if (tilesNeeded) initialPages.set(maxPages - 2, [...lastPage, ...TILES.slice(0, tilesNeeded)]);
+    const tilesNeeded = newTilesPerPage - lastPage.length;
+    if (tilesNeeded)
+      initialPages.set(newMaxPages - 2, [...lastPage, ...TILES.slice(0, tilesNeeded)]);
 
     // Right page placeholder
-    initialPages.set(maxPages - 1, TILES.slice(tilesNeeded, tilesPerPage + tilesNeeded));
+    initialPages.set(newMaxPages - 1, TILES.slice(tilesNeeded, newTilesPerPage + tilesNeeded));
 
     validatePages({
       label: 'goToFirstPage()',
       pages: initialPages,
-      expectedMaxPages: maxPages,
-      expectedTilesPerPage: tilesPerPage,
+      expectedMaxPages: newMaxPages,
+      expectedTilesPerPage: newTilesPerPage,
     });
-    console.log('maxPages:', maxPages, 'at goToFirstPage()');
 
     setAllPages({
       pages: initialPages,
       currentPage: 1,
-      maxPages: maxPages,
-      tilesPerPage: tilesPerPage,
-      firstPageLength: tilesPerPage - tilesNeeded,
-      lastPageLength: tilesPerPage - tilesNeeded,
+      maxPages: newMaxPages,
+      tilesPerPage: newTilesPerPage,
+      firstPageLength: newTilesPerPage - tilesNeeded,
+      lastPageLength: newTilesPerPage - tilesNeeded,
       isMounted: true,
     });
   };
