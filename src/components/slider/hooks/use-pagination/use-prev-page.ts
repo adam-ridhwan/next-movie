@@ -2,7 +2,7 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePaginationLogger } from '@/lib/logger';
 
 export const usePrevPage = () => {
   const currentPage = useSliderStore(state => state.currentPage);
