@@ -26,7 +26,7 @@ const RightPlaceholder = () => {
       label: 'RightPlaceholder: indexOfLastItem',
       array: TILES,
       key: 'id',
-      value: nextPage[lastIndex].id,
+      value: nextPage[lastIndex]?.id,
     });
 
     const indexOfNextItem = indexOfLastItem === TILES.length - 1 ? 0 : indexOfLastItem + 1;

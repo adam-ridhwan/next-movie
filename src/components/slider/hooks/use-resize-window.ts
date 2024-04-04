@@ -24,6 +24,13 @@ export const useResizeWindow = () => {
 
   useEffect(() => {
     const handleResize = () => {
+      /*
+       * TODO: When using shortcut to adjust the window size, it breaks the slider.
+       *  The component getting the error is the right placeholder component.
+       *  1) To replicate: Minimize the browser until there is only 2 tiles per page.
+       *  2) Then, use keyboard shortcut to adjust the browser, there should be 4 tiles per page.
+       *  3) The right placeholder component will break.
+       */
       const currentWidth = window.innerWidth;
       const tilesPerPage = getTilesPerPage();
 
@@ -55,10 +62,12 @@ export const useResizeWindow = () => {
     TILES,
     currentPage,
     pages,
+    resizeDirection,
     getMaxPages,
     getTilesPerPage,
     goToFirstPage,
     goToLastPage,
     goToMinimizedPage,
+    goToMaximizedPage,
   ]);
 };
