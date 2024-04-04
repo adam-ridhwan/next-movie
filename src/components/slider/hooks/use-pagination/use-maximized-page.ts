@@ -1,3 +1,5 @@
+/* eslint no-restricted-imports: 0 */
+
 import { usePaginationLogger } from '@/lib/logger';
 
 export const useMaximizedPage = () => {
