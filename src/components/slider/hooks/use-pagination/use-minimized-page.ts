@@ -81,17 +81,17 @@ export const useMinimizedPage = () => {
     let newCurrentPage = currentPage;
 
     let startIndex = (index - leftTilesTotal + totalTiles) % totalTiles;
-    let temp: Tile[] = [];
+    let tiles: Tile[] = [];
 
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= totalTiles) startIndex = 0;
-      temp.push(TILES[startIndex++]);
-      if (temp.length !== newTilesPerPage) continue;
+      tiles.push(TILES[startIndex++]);
+      if (tiles.length !== newTilesPerPage) continue;
       const page = Math.floor(i / newTilesPerPage);
-      const idMatches = temp.some(tile => tile.id === firstTile.id);
+      const idMatches = tiles.some(tile => tile.id === firstTile.id);
       if (idMatches && page > 0) newCurrentPage = page;
-      newPages.set(page, temp);
-      temp = [];
+      newPages.set(page, tiles);
+      tiles = [];
     }
 
     console.table({
