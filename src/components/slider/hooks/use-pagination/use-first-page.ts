@@ -33,7 +33,7 @@ export const useFirstPage = () => {
     }
 
     const lastPage = getMapItem({
-      label: 'goToFirstPage()',
+      label: 'goToFirstPage() ',
       map: initialPages,
       key: newMaxPages - 2,
     });
