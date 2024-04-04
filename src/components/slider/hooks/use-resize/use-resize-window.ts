@@ -7,7 +7,7 @@ import { RESIZE_DIRECTION } from '@/lib/constants';
 import { getMapItem, logger } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
-import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
+import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 
