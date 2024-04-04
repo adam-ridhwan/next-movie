@@ -8,6 +8,7 @@ type SetPagesParams = {
   maxPages: number;
   currentPage: number;
   tilesPerPage: number;
+  firstPageLength?: number;
   lastPageLength?: number;
   isFirstPageVisited?: boolean;
   isLastPageVisited?: boolean;
@@ -35,7 +36,6 @@ type SliderActions = {
   setAllPages: (params: SetPagesParams) => void;
   resetPages: () => void;
   setTilesPerPage: (tilesPerPage: number) => void;
-  setLastPageLength: (lastPageLength: number) => void;
   setSlideAmount: (slideAmount: number) => void;
   markAsPaginated: () => void;
   setIsAnimating: (isAnimating: boolean) => void;
@@ -64,7 +64,6 @@ export const createSliderStore = (TILES: Tile[]) =>
       setTilesPerPage: tilesPerPage => set(() => ({ tilesPerPage })),
       resetPages: () => set(() => ({ pages: new Map() })),
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
-      setLastPageLength: lastPageLength => set(() => ({ lastPageLength })),
       setSlideAmount: slideAmount => set(() => ({ slideAmount })),
       setCurrentPage: currentPage => set(() => ({ currentPage })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),

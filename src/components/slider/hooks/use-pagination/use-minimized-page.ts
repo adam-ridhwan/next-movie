@@ -9,7 +9,7 @@ import { usePages } from '@/components/slider/hooks/use-pages';
 
 export const useMinimizedPage = () => {
   /** ────────────────────────────────────────────────────────────────────
-   * From 4 tiles to 3 tiles per page (minimizing) ✅
+   * ✅ From 4 tiles to 3 tiles per page (minimizing)
    *
    * 2nd page: -
    *     page 0: [6, 7, 8, 9] => page 0: [5, 6, 7]
@@ -57,18 +57,20 @@ export const useMinimizedPage = () => {
   const goToMinimizedPage = (prevTiles: Tile[]) => {
     usePaginationLogger.minimized();
 
-    const firstTile = prevTiles.at(0);
-    if (!firstTile) throw new Error('First tile of the previous page is missing');
+    const firstTileOfPrevTiles = prevTiles.at(0);
+    if (!firstTileOfPrevTiles) throw new Error('First tile of the previous page is missing');
 
     const index = findIndexFromKey({
       label: 'goToResizedPage()',
       array: TILES,
       key: 'id',
-      value: firstTile?.id,
+      value: firstTileOfPrevTiles?.id,
     });
 
     const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
+    let newFirstPageLength = 0;
+    let newLastPageLength = 0;
     const totalTiles = TILES.length;
 
     // Plus 1 because we need to include the left and right page placeholders
@@ -81,17 +83,27 @@ export const useMinimizedPage = () => {
     let newCurrentPage = currentPage;
 
     let startIndex = (index - leftTilesTotal + totalTiles) % totalTiles;
-    let tiles: Tile[] = [];
+    let tempTiles: Tile[] = [];
 
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= totalTiles) startIndex = 0;
-      tiles.push(TILES[startIndex++]);
-      if (tiles.length !== newTilesPerPage) continue;
+
       const page = Math.floor(i / newTilesPerPage);
-      const idMatches = tiles.some(tile => tile.id === firstTile.id);
+      const idMatches = tempTiles.some(tile => tile.id === firstTileOfPrevTiles.id);
       if (idMatches && page > 0) newCurrentPage = page;
-      newPages.set(page, tiles);
-      tiles = [];
+
+      tempTiles.push(TILES[startIndex++]);
+      if (tempTiles.length !== newTilesPerPage) continue;
+
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
+      const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
+      if (firstTileIndex !== -1) {
+        if (page === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
+        if (page !== newMaxPages - 1) newLastPageLength = tilesNeeded;
+      }
+
+      newPages.set(page, tempTiles);
+      tempTiles = [];
     }
 
     console.table({
@@ -106,6 +118,8 @@ export const useMinimizedPage = () => {
       rightTilesTotal: rightTilesTotal,
       totalTiles: leftTilesTotal + rightTilesTotal,
       newMaxPages: newMaxPages,
+      newFirstPageLength: newFirstPageLength,
+      newLastPageLength: newLastPageLength,
     });
 
     [...newPages.entries()]
@@ -122,7 +136,8 @@ export const useMinimizedPage = () => {
       currentPage: newCurrentPage,
       maxPages: newTilesTotal / newTilesPerPage,
       tilesPerPage: newTilesPerPage,
-      // lastPageLength: tilesPerPage - tilesNeeded,
+      firstPageLength: newFirstPageLength,
+      lastPageLength: newLastPageLength,
     });
   };
 
