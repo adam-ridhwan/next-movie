@@ -10,8 +10,6 @@ type SetPagesParams = {
   tilesPerPage: number;
   firstPageLength: number;
   lastPageLength: number;
-  isFirstPageVisited?: boolean;
-  isLastPageVisited?: boolean;
   isMounted?: boolean;
 };
 
@@ -24,8 +22,6 @@ type SliderState = {
   firstPageLength: number;
   lastPageLength: number;
   slideAmount: number;
-  isFirstPageVisited: boolean;
-  isLastPageVisited: boolean;
   hasPaginated: boolean;
   isAnimating: boolean;
   isMounted: boolean;
@@ -53,8 +49,6 @@ export const createSliderStore = (TILES: Tile[]) =>
       currentPage: 1,
       hasPaginated: false,
       isAnimating: false,
-      isFirstPageVisited: false,
-      isLastPageVisited: false,
       firstPageLength: 0,
       lastPageLength: 0,
       slideAmount: 0,
