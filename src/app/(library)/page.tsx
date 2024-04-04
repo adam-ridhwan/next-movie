@@ -7,30 +7,30 @@ import { HeadingMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 const MOCK_TRENDING_TILES: Tile[] = Array.from({ length: 9 }, (_, index) => ({
-  id: `${index + 1}`,
+  id: `${index}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
   category: 'Movie',
   rating: 'PG',
-  title: `Trending ${index + 1}`,
+  title: `Trending ${index}`,
 }));
 
 const MOCK_RECOMMENDED_TILES: Tile[] = Array.from({ length: 13 }, (_, index) => ({
-  id: `${index + 1}`,
+  id: `${index}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
   category: 'Movie',
   rating: 'PG',
-  title: `Recommended ${index + 1}`,
+  title: `Recommended ${index}`,
 }));
 
 const MOCK_NEW_RELEASES_TILES: Tile[] = Array.from({ length: 21 }, (_, index) => ({
-  id: `${index + 1}`,
+  id: `${index}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',
   category: 'Movie',
   rating: 'PG',
-  title: `New Releases Movie ${index + 1}`,
+  title: `New Releases Movie ${index}`,
 }));
 
 export default async function Home() {
