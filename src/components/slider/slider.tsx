@@ -34,21 +34,21 @@ const Slider = () => {
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
 
-  // useEffect(() => {
-  //   if (!isMounted) return;
-  //   log(' SLIDER PAGES ', '──────────────────────────────────');
-  //
-  //   [...pages.entries()]
-  //     .sort((a, b) => a[0] - b[0])
-  //     .forEach(([pageIndex, tiles]) => {
-  //       console.log(
-  //         `Page ${pageIndex}:`,
-  //         tiles.map(card => (card ? card.id : undefined))
-  //       );
-  //     });
-  //
-  //   log('─────────────────────────────────────────────────');
-  // }, [pages, isMounted]);
+  useEffect(() => {
+    if (!isMounted) return;
+    log(' SLIDER PAGES ', '──────────────────────────────────');
+
+    [...pages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.id : undefined))
+        );
+      });
+
+    log('─────────────────────────────────────────────────');
+  }, [pages, isMounted]);
 
   return (
     <div

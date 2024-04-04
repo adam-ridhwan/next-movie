@@ -5,7 +5,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { Pages, Tile } from '@/lib/types';
 import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useFirstPage = () => {
@@ -15,7 +15,7 @@ export const useFirstPage = () => {
   const { validatePages } = useValidators();
 
   const goToFirstPage = () => {
-    log('FIRST');
+    usePaginationLogger.first();
 
     const tilesPerPage = getTilesPerPage();
     const maxPages = getMaxPages();

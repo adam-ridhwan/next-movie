@@ -33,7 +33,7 @@ const RightPlaceholder = () => {
     return TILES[indexOfNextItem];
   };
 
-  return <TileItem tile={getNextTile()} displayNumber={''} isVisibleOnScreen={true} />;
+  return <TileItem tile={getNextTile()} />;
 };
 
 export default RightPlaceholder;

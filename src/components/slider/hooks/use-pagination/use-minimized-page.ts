@@ -5,7 +5,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const useMinimizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);
@@ -83,7 +83,7 @@ export const useMinimizedPage = () => {
    * ────────────────────────────────────────────────────────────────── */
 
   const goToMinimizedPage = (prevTiles: Tile[]) => {
-    log('RESIZED');
+    usePaginationLogger.minimized();
 
     const firstItemPrevPage = prevTiles.at(0);
     if (!firstItemPrevPage) throw new Error('First item of the previous page is missing');

@@ -2,14 +2,14 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const usePrevPage = () => {
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
 
   const goToPrevPage = () => {
-    log('PREV');
+    usePaginationLogger.prev();
     setCurrentPage(currentPage - 1);
   };
 

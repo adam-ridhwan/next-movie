@@ -4,7 +4,6 @@ import { useSliderStore } from '@/providers/slider-provider';
 import chalk from 'chalk';
 
 import { Pages, Tile } from '@/lib/types';
-import { logger } from '@/lib/utils';
 import { useFirstPage } from '@/components/slider/hooks/use-pagination/use-first-page';
 import { useLastPage } from '@/components/slider/hooks/use-pagination/use-last-page';
 import { useMaximizedPage } from '@/components/slider/hooks/use-pagination/use-maximized-page';
@@ -12,8 +11,19 @@ import { useMinimizedPage } from '@/components/slider/hooks/use-pagination/use-m
 import { useNextPage } from '@/components/slider/hooks/use-pagination/use-next-page';
 import { usePrevPage } from '@/components/slider/hooks/use-pagination/use-prev-page';
 
-export const log = (string: string) =>
-  logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
+const bold = (text: string) => chalk.underline.bold(text);
+const GO_TO = ' GO TO';
+const PAGE = 'PAGE ';
+const VIEW = ' VIEW';
+
+export const usePaginationLogger = {
+  first: () => console.log(chalk.bgGreenBright.black(GO_TO, bold('FIRST'), PAGE)),
+  last: () => console.log(chalk.bgBlueBright.black(GO_TO, bold('LAST'), PAGE)),
+  next: () => console.log(chalk.bgYellowBright.black(GO_TO, bold('NEXT'), PAGE)),
+  prev: () => console.log(chalk.bgMagentaBright.black(GO_TO, bold('PREV'), PAGE)),
+  maximized: () => console.log(chalk.bgCyanBright.black(VIEW, bold('MAXIMIZED'), '')),
+  minimized: () => console.log(chalk.bgRedBright.black(VIEW, bold('MINIMIZED'), '')),
+};
 
 type UsePaginationReturn = {
   state: {
