@@ -2,20 +2,22 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { RESIZE_DIRECTION } from '@/lib/constants';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
 
 export const useResizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
-
+  const { resizeDirection } = useResizeDirection();
   const { getTilesPerPage, getMaxPages } = usePages();
 
   /** ────────────────────────────────────────────────────────────────────
-   * From 4 tiles to 3 tiles per page (minimizing)
+   * From 4 tiles to 3 tiles per page (minimizing) ✅
    *
    * 2nd page: -
    *     page 0: [6, 7, 8, 9] => page 0: [5, 6, 7]
@@ -26,13 +28,14 @@ export const useResizedPage = () => {
    *                          => page 5: [2, 3, 4]
    *
    * 2nd page: -
-   *     page 0: [5, 6, 7] => page 0: [7,8]
-   *     page 1: [8, 9, 1] => page 1: [9,1]
-   *     page 2: [2, 3, 4] => page 2: [2,3]
-   *  -> PAGE 3: [5, 6, 7] => page 3: [3,4]
-   *     page 4: [8, 9, 1] => PAGE 4: [5,6] <-
-         page 5: [2, 3, 4] => page 5: [7,8]
-   *                       => page 6: [9,1]
+   *     page 0: [5, 6, 7] => page 0: [8,9]
+   *     page 1: [8, 9, 1] => page 1: [1,2]
+   *     page 2: [2, 3, 4] => page 2: [3,4]
+   *  -> PAGE 3: [5, 6, 7] => page 3: [5,6] <-
+   *     page 4: [8, 9, 1] => PAGE 4: [7,8]
+         page 5: [2, 3, 4] => page 5: [9,1]
+   *                       => page 6: [2,3]
+
    * 3rd page: -
    *     page 0: [3, 4, 5, 6] => page 0: [6, 7, 8]
    *     page 1: [7, 8, 9, 1] => page 1: [9, 1, 2]
@@ -84,73 +87,81 @@ export const useResizedPage = () => {
 
   const goToResizedPage = (prevTiles: Tile[]) => {
     log('RESIZED');
+    console.log('resizeDirection:', resizeDirection);
 
-    const firstItemPrevPage = prevTiles.at(0)?.id;
-    const firstItemPrevPageIndex = findIndexFromKey({
-      label: 'goToResizedPage()',
-      array: TILES,
-      key: 'id',
-      value: firstItemPrevPage,
-    });
-
-    const tilesPerPage = getTilesPerPage();
-    const maxPages = getMaxPages();
-
-    const newPages: Pages = new Map<number, Tile[]>();
-
-    let temp = [];
-
-    const leftPageTotal = maxPages - 2;
-    let leftIndex = firstItemPrevPageIndex - 1;
-    for (let i = leftPageTotal * tilesPerPage; i > 0; i--) {
-      if (leftIndex < 0) leftIndex = TILES.length - 1;
-      temp.unshift(TILES[leftIndex--]);
-      if (temp.length !== tilesPerPage) continue;
-      const pageIndex = Math.floor(i / tilesPerPage);
-      newPages.set(pageIndex, temp);
-      temp = [];
-    }
-
-    const rightPageTotal = maxPages - leftPageTotal + 1;
-    let rightIndex = firstItemPrevPageIndex;
-    for (let i = 0; i < rightPageTotal * tilesPerPage; i++) {
-      if (rightIndex > TILES.length - 1) rightIndex = 0;
-      temp.push(TILES[rightIndex++]);
-      if (temp.length !== tilesPerPage) continue;
-      const pageIndex = Math.floor(i / tilesPerPage);
-      newPages.set(rightPageTotal + pageIndex, temp);
-      temp = [];
-    }
-
-    console.table({
-      prevTiles: prevTiles
-        .map(({ id }) => id)
-        .toString()
-        .replace(/,/g, ', '),
-      firstItemPrevPageIndex: firstItemPrevPageIndex,
-      tilesPerPage: tilesPerPage.toString(),
-      maxPages: maxPages.toString(),
-    });
-
-    [...newPages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
+    const adjustPagesMinimize = () => {
+      const firstItemPrevPage = prevTiles.at(0);
+      if (!firstItemPrevPage) throw new Error('First item of the previous page is missing');
+      const currentIndex = findIndexFromKey({
+        label: 'goToResizedPage()',
+        array: TILES,
+        key: 'id',
+        value: firstItemPrevPage?.id,
       });
 
-    setAllPages({
-      pages: newPages,
-      currentPage: currentPage + 1,
-      maxPages: maxPages,
-      tilesPerPage: tilesPerPage,
-      // lastPageLength: tilesPerPage - tilesNeeded,
-      // isFirstPageVisited: true,
-      // isLastPageVisited: false,
-      // isMounted: true,
-    });
+      const newPages: Pages = new Map<number, Tile[]>();
+
+      const tilesPerPage = getTilesPerPage();
+
+      const leftPageTotal = Math.ceil(currentIndex / tilesPerPage) + 1;
+      const leftTilesTotal = leftPageTotal * tilesPerPage;
+
+      const rightPageTotal = Math.ceil((TILES.length - leftPageTotal) / tilesPerPage) + 1;
+      const rightTilesTotal = rightPageTotal * tilesPerPage;
+
+      const totalTiles = leftTilesTotal + rightTilesTotal;
+      const newMaxPages = totalTiles / tilesPerPage;
+
+      let tileIndexToStartFrom = (currentIndex - leftTilesTotal + TILES.length) % TILES.length;
+
+      let newCurrentPage = currentPage;
+      let temp: Tile[] = [];
+      for (let i = 0; i < totalTiles; i++) {
+        if (tileIndexToStartFrom >= TILES.length) tileIndexToStartFrom = 0;
+        temp.push(TILES[tileIndexToStartFrom++]);
+        if (temp.length !== tilesPerPage) continue;
+        const pageIndex = Math.floor(i / tilesPerPage);
+        const idMatches = temp.some(tile => tile.id === firstItemPrevPage.id);
+        if (idMatches && pageIndex > 0) newCurrentPage = pageIndex;
+        newPages.set(pageIndex, temp);
+        temp = [];
+      }
+
+      console.table({
+        prevTiles: prevTiles
+          .map(({ id }) => id)
+          .toString()
+          .replace(/,/g, ', '),
+        currentIndex: currentIndex,
+        tileIndexToStartFrom: tileIndexToStartFrom,
+        newCurrentPage: newCurrentPage,
+        leftTilesTotal: leftTilesTotal,
+        rightTilesTotal: rightTilesTotal,
+        totalTiles: leftTilesTotal + rightTilesTotal,
+        newMaxPages: newMaxPages,
+      });
+
+      [...newPages.entries()]
+        .sort((a, b) => a[0] - b[0])
+        .forEach(([pageIndex, tiles]) => {
+          console.log(
+            `Page ${pageIndex}:`,
+            tiles.map(card => (card ? card.id : undefined))
+          );
+        });
+
+      setAllPages({
+        pages: newPages,
+        currentPage: newCurrentPage,
+        maxPages: totalTiles / tilesPerPage,
+        tilesPerPage: tilesPerPage,
+        // lastPageLength: tilesPerPage - tilesNeeded,
+        // isFirstPageVisited: true,
+        // isLastPageVisited: false,
+      });
+    };
+
+    if (resizeDirection === RESIZE_DIRECTION.MINIMIZING) adjustPagesMinimize();
   };
 
   return { goToResizedPage };

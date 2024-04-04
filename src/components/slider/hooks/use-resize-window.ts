@@ -16,7 +16,6 @@ export const useResizeWindow = () => {
     actions: { goToFirstPage, goToLastPage, goToResizedPage },
   } = usePagination();
   const { getTilesPerPage, getMaxPages } = usePages();
-  const { resizeDirection } = useResizeDirection();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
   const prevWindowWidth = useRef(typeof window === 'undefined' ? 0 : window.innerWidth);
@@ -25,7 +24,6 @@ export const useResizeWindow = () => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
       const tilesPerPage = getTilesPerPage();
-      console.log('resizeDirection:', resizeDirection);
 
       if (tilesPerPage === prevTilesPerPage.current) return;
       prevTilesPerPage.current = tilesPerPage;
@@ -46,7 +44,6 @@ export const useResizeWindow = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [
     TILES,
-    resizeDirection,
     currentPage,
     pages,
     getMaxPages,

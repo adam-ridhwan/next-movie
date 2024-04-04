@@ -13,8 +13,8 @@ export const useResizeDirection = () => {
 
       const direction =
         currentWidth > prevWindowWidth.current
-          ? RESIZE_DIRECTION.INCREASE
-          : RESIZE_DIRECTION.DECREASE;
+          ? RESIZE_DIRECTION.MAXIMIZING
+          : RESIZE_DIRECTION.MINIMIZING;
       setResizeDirection(direction);
 
       prevWindowWidth.current = currentWidth;

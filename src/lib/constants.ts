@@ -16,8 +16,8 @@ export const SLIDE_DIRECTION = {
 } as const;
 
 export const RESIZE_DIRECTION = {
-  INCREASE: 'INCREASE',
-  DECREASE: 'DECREASE',
+  MAXIMIZING: 'MAXIMIZING',
+  MINIMIZING: 'MINIMIZING',
 } as const;
 
 export const authStrings = {
