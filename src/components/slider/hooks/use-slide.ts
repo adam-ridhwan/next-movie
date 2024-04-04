@@ -40,9 +40,8 @@ export const useSlide = (): UseSlideReturn => {
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = tileRef.current;
 
-    const trailingLength = isFirstPage ? firstPageLength : lastPageLength;
-    const trailingPercentage = ((trailingLength * sliderItemWidth) / windowWidth) * 100;
-
+    const pageLength = isFirstPage ? firstPageLength : lastPageLength;
+    const trailingPercentage = ((pageLength * sliderItemWidth) / windowWidth) * 100;
     if (isFirstPage) return trailingPercentage;
     if (isLastPage) return -trailingPercentage;
 

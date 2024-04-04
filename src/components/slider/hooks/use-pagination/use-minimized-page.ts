@@ -69,8 +69,8 @@ export const useMinimizedPage = () => {
 
     const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
-    let newFirstPageLength = 0;
-    let newLastPageLength = 0;
+    let newFirstPageLength = newTilesPerPage;
+    let newLastPageLength = newTilesPerPage;
     const totalTiles = TILES.length;
 
     // Plus 1 because we need to include the left and right page placeholders
@@ -95,11 +95,14 @@ export const useMinimizedPage = () => {
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
+      console.log(page, tempTiles);
+      console.log('newMaxPages - 2', newMaxPages - 2);
+
       const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
-      const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
-      if (firstTileIndex !== -1) {
+      if (firstTileIndex > 0) {
+        const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
         if (page === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
-        if (page !== newMaxPages - 1) newLastPageLength = tilesNeeded;
+        if (page === newMaxPages - 2) newLastPageLength = tilesNeeded;
       }
 
       newPages.set(page, tempTiles);

@@ -8,8 +8,8 @@ type SetPagesParams = {
   maxPages: number;
   currentPage: number;
   tilesPerPage: number;
-  firstPageLength?: number;
-  lastPageLength?: number;
+  firstPageLength: number;
+  lastPageLength: number;
   isFirstPageVisited?: boolean;
   isLastPageVisited?: boolean;
   isMounted?: boolean;
