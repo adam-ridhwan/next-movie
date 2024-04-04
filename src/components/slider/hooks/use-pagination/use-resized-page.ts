@@ -82,10 +82,10 @@ export const useResizedPage = () => {
    *
    * ────────────────────────────────────────────────────────────────── */
 
-  const goToResizedPage = (prevPage: Tile[]) => {
+  const goToResizedPage = (prevTiles: Tile[]) => {
     log('RESIZED');
 
-    const firstItemPrevPage = prevPage.at(0)?.id;
+    const firstItemPrevPage = prevTiles.at(0)?.id;
     const firstItemPrevPageIndex = findIndexFromKey({
       label: 'goToResizedPage()',
       array: TILES,
@@ -98,32 +98,32 @@ export const useResizedPage = () => {
 
     const newPages: Pages = new Map<number, Tile[]>();
 
-    let temporaryArrayHolder = [];
+    let temp = [];
 
     const leftPageTotal = maxPages - 2;
     let leftIndex = firstItemPrevPageIndex - 1;
     for (let i = leftPageTotal * tilesPerPage; i > 0; i--) {
       if (leftIndex < 0) leftIndex = TILES.length - 1;
-      temporaryArrayHolder.unshift(TILES[leftIndex--]);
-      if (temporaryArrayHolder.length !== tilesPerPage) continue;
+      temp.unshift(TILES[leftIndex--]);
+      if (temp.length !== tilesPerPage) continue;
       const pageIndex = Math.floor(i / tilesPerPage);
-      newPages.set(pageIndex, temporaryArrayHolder);
-      temporaryArrayHolder = [];
+      newPages.set(pageIndex, temp);
+      temp = [];
     }
 
     const rightPageTotal = maxPages - leftPageTotal + 1;
     let rightIndex = firstItemPrevPageIndex;
     for (let i = 0; i < rightPageTotal * tilesPerPage; i++) {
       if (rightIndex > TILES.length - 1) rightIndex = 0;
-      temporaryArrayHolder.push(TILES[rightIndex++]);
-      if (temporaryArrayHolder.length !== tilesPerPage) continue;
+      temp.push(TILES[rightIndex++]);
+      if (temp.length !== tilesPerPage) continue;
       const pageIndex = Math.floor(i / tilesPerPage);
-      newPages.set(rightPageTotal + pageIndex, temporaryArrayHolder);
-      temporaryArrayHolder = [];
+      newPages.set(rightPageTotal + pageIndex, temp);
+      temp = [];
     }
 
     console.table({
-      prevPage: prevPage
+      prevTiles: prevTiles
         .map(({ id }) => id)
         .toString()
         .replace(/,/g, ', '),

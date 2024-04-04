@@ -31,7 +31,7 @@ type UsePaginationReturn = {
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
-    goToResizedPage: (previousTiles: Tile[]) => void;
+    goToResizedPage: (prevTiles: Tile[]) => void;
   };
 };
 
