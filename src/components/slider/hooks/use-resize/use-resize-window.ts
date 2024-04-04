@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
 import { RESIZE_DIRECTION } from '@/lib/constants';
-import { getMapItem, logger } from '@/lib/utils';
+import { logger } from '@/lib/logger';
+import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
