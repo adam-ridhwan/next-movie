@@ -101,7 +101,7 @@ export const useMinimizedPage = () => {
     const leftPageTotal = Math.ceil(currentIndex / tilesPerPage) + 1;
     const leftTilesTotal = leftPageTotal * tilesPerPage;
 
-    const rightPageTotal = Math.ceil((TILES.length - leftPageTotal) / tilesPerPage) + 1;
+    const rightPageTotal = Math.ceil((TILES.length - currentIndex) / tilesPerPage) + 1;
     const rightTilesTotal = rightPageTotal * tilesPerPage;
 
     const totalTiles = leftTilesTotal + rightTilesTotal;
