@@ -18,7 +18,7 @@ type SetPagesParams = {
 type SliderState = {
   TILES: Tile[];
   pages: Pages;
-  maxPage: number;
+  maxPages: number;
   currentPage: number;
   tilesPerPage: number;
   firstPageLength: number;
@@ -48,7 +48,7 @@ export const createSliderStore = (TILES: Tile[]) =>
     devtools<SliderStore>(set => ({
       TILES: TILES,
       pages: new Map<number, Tile[]>().set(1, TILES.slice(0, 7)),
-      maxPage: 0,
+      maxPages: 0,
       tilesPerPage: 0,
       currentPage: 1,
       hasPaginated: false,

@@ -78,6 +78,7 @@ export const useLastPage = () => {
       tilesPerPage: tilesPerPage,
       maxPages: maxPages,
       currentPage: maxPages - 2,
+      firstPageLength: tilesPerPage - tilesNeeded,
       lastPageLength: tilesPerPage - tilesNeeded,
       isFirstPageVisited: false,
       isLastPageVisited: true,

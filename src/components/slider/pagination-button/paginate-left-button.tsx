@@ -9,11 +9,9 @@ import PaginationButton from '@/components/slider/pagination-button/pagination-b
 const PaginateLeftButton = () => {
   const {
     state: { currentPage },
-    status: { isLastPageVisited, hasPaginated },
-
+    status: { hasPaginated },
     actions: { goToFirstPage, goToLastPage, goToPrevPage },
   } = usePagination();
-  const { lastPageLength } = usePages();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 
@@ -23,8 +21,7 @@ const PaginateLeftButton = () => {
 
     const newSlideAmount = getSlideAmount({
       direction: SLIDE_DIRECTION.LEFT,
-      lastPageLength: lastPageLength,
-      isFirstPage: currentPage - 1 === 1 && isLastPageVisited,
+      isFirstPage: currentPage - 1 === 1,
     });
     enableAnimation();
     slide(newSlideAmount);

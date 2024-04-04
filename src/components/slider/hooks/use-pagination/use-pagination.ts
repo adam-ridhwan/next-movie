@@ -15,6 +15,7 @@ type UsePaginationReturn = {
     TILES: Tile[];
     pages: Pages;
     currentPage: number;
+    maxPages: number;
   };
   status: {
     isFirstPageVisited: boolean;
@@ -36,6 +37,7 @@ export const usePagination = (): UsePaginationReturn => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
+  const maxPages = useSliderStore(state => state.maxPages);
 
   const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
   const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
@@ -54,6 +56,7 @@ export const usePagination = (): UsePaginationReturn => {
       TILES,
       currentPage,
       pages,
+      maxPages,
     },
     status: {
       isFirstPageVisited,

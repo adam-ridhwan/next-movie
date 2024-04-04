@@ -50,12 +50,14 @@ export const useFirstPage = () => {
       expectedMaxPages: maxPages,
       expectedTilesPerPage: tilesPerPage,
     });
+    console.log('maxPages:', maxPages, 'at goToFirstPage()');
 
     setAllPages({
       pages: initialPages,
       currentPage: 1,
       maxPages: maxPages,
       tilesPerPage: tilesPerPage,
+      firstPageLength: tilesPerPage - tilesNeeded,
       lastPageLength: tilesPerPage - tilesNeeded,
       isFirstPageVisited: true,
       isLastPageVisited: false,

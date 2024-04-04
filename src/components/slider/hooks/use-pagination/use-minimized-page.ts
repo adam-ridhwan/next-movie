@@ -134,7 +134,7 @@ export const useMinimizedPage = () => {
     setAllPages({
       pages: newPages,
       currentPage: newCurrentPage,
-      maxPages: newTilesTotal / newTilesPerPage,
+      maxPages: newMaxPages,
       tilesPerPage: newTilesPerPage,
       firstPageLength: newFirstPageLength,
       lastPageLength: newLastPageLength,
