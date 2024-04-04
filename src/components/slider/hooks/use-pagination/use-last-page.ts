@@ -1,12 +1,11 @@
 /* eslint no-restricted-imports: 0 */
 
 import { useSliderStore } from '@/providers/slider-provider';
-import chalk from 'chalk';
 
+import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
-import { findIndexFromKey, getMapItem, logger } from '@/lib/utils';
+import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useLastPage = () => {

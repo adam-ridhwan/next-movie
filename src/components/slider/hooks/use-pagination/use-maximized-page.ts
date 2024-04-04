@@ -1,4 +1,4 @@
-import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePaginationLogger } from '@/lib/logger';
 
 export const useMaximizedPage = () => {
   const goToMaximizedPage = () => {

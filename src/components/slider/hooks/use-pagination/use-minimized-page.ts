@@ -2,10 +2,10 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
-import { usePaginationLogger } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 export const useMinimizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);

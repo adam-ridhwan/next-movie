@@ -6,7 +6,8 @@ import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { cn, logger } from '@/lib/utils';
+import { logger } from '@/lib/logger';
+import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize/use-resize-window';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
