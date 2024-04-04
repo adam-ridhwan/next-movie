@@ -57,36 +57,38 @@ export const useMinimizedPage = () => {
   const goToMinimizedPage = (prevTiles: Tile[]) => {
     usePaginationLogger.minimized();
 
-    const firstItem = prevTiles.at(0);
-    if (!firstItem) throw new Error('First item of the previous page is missing');
+    const firstTile = prevTiles.at(0);
+    if (!firstTile) throw new Error('First tile of the previous page is missing');
+
     const index = findIndexFromKey({
       label: 'goToResizedPage()',
       array: TILES,
       key: 'id',
-      value: firstItem?.id,
+      value: firstTile?.id,
     });
+
     const newPages: Pages = new Map<number, Tile[]>();
-    const tilesPerPage = getTilesPerPage();
-    const total = TILES.length;
+    const newTilesPerPage = getTilesPerPage();
+    const totalTiles = TILES.length;
 
-    // plus 1 because we need to include the left and right page placeholders
-    const calc = (num: number) => (Math.ceil(num) + 1) * tilesPerPage;
-    const leftTilesTotal = calc(index / tilesPerPage);
-    const rightTilesTotal = calc((total - index) / tilesPerPage);
+    // Plus 1 because we need to include the left and right page placeholders
+    const calc = (num: number) => (Math.ceil(num) + 1) * newTilesPerPage;
+    const leftTilesTotal = calc(index / newTilesPerPage);
+    const rightTilesTotal = calc((totalTiles - index) / newTilesPerPage);
 
-    const tilesTotal = leftTilesTotal + rightTilesTotal;
-    const newMaxPages = tilesTotal / tilesPerPage;
-
-    let startIndex = (index - leftTilesTotal + total) % total;
-
+    const newTilesTotal = leftTilesTotal + rightTilesTotal;
+    const newMaxPages = newTilesTotal / newTilesPerPage;
     let newCurrentPage = currentPage;
+
+    let startIndex = (index - leftTilesTotal + totalTiles) % totalTiles;
     let temp: Tile[] = [];
-    for (let i = 0; i < tilesTotal; i++) {
-      if (startIndex >= total) startIndex = 0;
+
+    for (let i = 0; i < newTilesTotal; i++) {
+      if (startIndex >= totalTiles) startIndex = 0;
       temp.push(TILES[startIndex++]);
-      if (temp.length !== tilesPerPage) continue;
-      const page = Math.floor(i / tilesPerPage);
-      const idMatches = temp.some(tile => tile.id === firstItem.id);
+      if (temp.length !== newTilesPerPage) continue;
+      const page = Math.floor(i / newTilesPerPage);
+      const idMatches = temp.some(tile => tile.id === firstTile.id);
       if (idMatches && page > 0) newCurrentPage = page;
       newPages.set(page, temp);
       temp = [];
@@ -118,8 +120,8 @@ export const useMinimizedPage = () => {
     setAllPages({
       pages: newPages,
       currentPage: newCurrentPage,
-      maxPages: tilesTotal / tilesPerPage,
-      tilesPerPage: tilesPerPage,
+      maxPages: newTilesTotal / newTilesPerPage,
+      tilesPerPage: newTilesPerPage,
       // lastPageLength: tilesPerPage - tilesNeeded,
       // isFirstPageVisited: true,
       // isLastPageVisited: false,
