@@ -7,7 +7,7 @@ import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 
-export const useGoToResizedPage = () => {
+export const useResizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);

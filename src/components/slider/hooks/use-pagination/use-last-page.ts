@@ -8,7 +8,7 @@ import { usePages } from '@/components/slider/hooks/use-pages';
 import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
-export const useGoToLastPage = () => {
+export const useLastPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);

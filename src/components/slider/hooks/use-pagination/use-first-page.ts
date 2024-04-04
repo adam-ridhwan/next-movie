@@ -8,7 +8,7 @@ import { usePages } from '@/components/slider/hooks/use-pages';
 import { log } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
-export const useGoToFirstPage = () => {
+export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
   const { getTilesPerPage, getMaxPages } = usePages();

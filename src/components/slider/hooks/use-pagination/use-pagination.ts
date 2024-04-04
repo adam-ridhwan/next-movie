@@ -5,11 +5,11 @@ import chalk from 'chalk';
 
 import { Pages, Tile } from '@/lib/types';
 import { logger } from '@/lib/utils';
-import { useGoToFirstPage } from '@/components/slider/hooks/use-pagination/use-go-to-first-page';
-import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go-to-last-page';
-import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
-import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
-import { useGoToResizedPage } from '@/components/slider/hooks/use-pagination/use-go-to-resized-page';
+import { useFirstPage } from '@/components/slider/hooks/use-pagination/use-first-page';
+import { useLastPage } from '@/components/slider/hooks/use-pagination/use-last-page';
+import { useNextPage } from '@/components/slider/hooks/use-pagination/use-next-page';
+import { usePrevPage } from '@/components/slider/hooks/use-pagination/use-prev-page';
+import { useResizedPage } from '@/components/slider/hooks/use-pagination/use-resized-page';
 
 export const log = (string: string) =>
   logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
@@ -45,11 +45,11 @@ export const usePagination = (): UsePaginationReturn => {
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
-  const { goToFirstPage } = useGoToFirstPage();
-  const { goToLastPage } = useGoToLastPage();
-  const { goToNextPage } = useGoToNextPage();
-  const { goToPrevPage } = useGoToPrevPage();
-  const { goToResizedPage } = useGoToResizedPage();
+  const { goToFirstPage } = useFirstPage();
+  const { goToLastPage } = useLastPage();
+  const { goToNextPage } = useNextPage();
+  const { goToPrevPage } = usePrevPage();
+  const { goToResizedPage } = useResizedPage();
 
   return {
     state: {
