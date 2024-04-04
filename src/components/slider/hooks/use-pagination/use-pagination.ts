@@ -18,8 +18,6 @@ type UsePaginationReturn = {
     maxPages: number;
   };
   status: {
-    isFirstPageVisited: boolean;
-    isLastPageVisited: boolean;
     hasPaginated: boolean;
     isMounted: boolean;
   };
@@ -39,8 +37,6 @@ export const usePagination = (): UsePaginationReturn => {
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPages = useSliderStore(state => state.maxPages);
 
-  const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
-  const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
@@ -59,8 +55,6 @@ export const usePagination = (): UsePaginationReturn => {
       maxPages,
     },
     status: {
-      isFirstPageVisited,
-      isLastPageVisited,
       hasPaginated,
       isMounted,
     },

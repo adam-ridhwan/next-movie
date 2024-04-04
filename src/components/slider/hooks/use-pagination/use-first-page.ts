@@ -59,8 +59,6 @@ export const useFirstPage = () => {
       tilesPerPage: tilesPerPage,
       firstPageLength: tilesPerPage - tilesNeeded,
       lastPageLength: tilesPerPage - tilesNeeded,
-      isFirstPageVisited: true,
-      isLastPageVisited: false,
       isMounted: true,
     });
   };
