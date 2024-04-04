@@ -17,6 +17,8 @@ export const useFirstPage = () => {
   const goToFirstPage = () => {
     usePaginationLogger.first();
 
+    // TODO: use one for loop only
+
     const newTilesPerPage = getTilesPerPage();
     const newMaxPages = getMaxPages();
 
