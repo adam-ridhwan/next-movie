@@ -25,13 +25,13 @@ export const useMinimizedPage = () => {
    *                          => page 5: [2, 3, 4]
    *
    * 2nd page: -
-   *     page 0: [5, 6, 7] => page 0: [8,9]
-   *     page 1: [8, 9, 1] => page 1: [1,2]
-   *     page 2: [2, 3, 4] => page 2: [3,4]
-   *  -> PAGE 3: [5, 6, 7] => page 3: [5,6] <-
-   *     page 4: [8, 9, 1] => PAGE 4: [7,8]
-   *     page 5: [2, 3, 4] => page 5: [9,1]
-   *                       => page 6: [2,3]
+   *     page 0: [5, 6, 7] => page 0: [8, 9]
+   *     page 1: [8, 9, 1] => page 1: [1, 2]
+   *     page 2: [2, 3, 4] => page 2: [3, 4]
+   *  -> PAGE 3: [5, 6, 7] => page 3: [5, 6] <-
+   *     page 4: [8, 9, 1] => PAGE 4: [7, 8]
+   *     page 5: [2, 3, 4] => page 5: [9, 1]
+   *                       => page 6: [2, 3]
 
    * 3rd page: -
    *     page 0: [3, 4, 5, 6] => page 0: [6, 7, 8]
