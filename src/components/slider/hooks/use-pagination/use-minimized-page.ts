@@ -8,11 +8,6 @@ import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 
 export const useMinimizedPage = () => {
-  const TILES = useSliderStore(state => state.TILES);
-  const setAllPages = useSliderStore(state => state.setAllPages);
-  const currentPage = useSliderStore(state => state.currentPage);
-  const { getTilesPerPage } = usePages();
-
   /** ────────────────────────────────────────────────────────────────────
    * From 4 tiles to 3 tiles per page (minimizing) ✅
    *
@@ -53,6 +48,11 @@ export const useMinimizedPage = () => {
    *     page 5: [3, 4, 5] => page 5: [8, 9]
    *                       => page 6: [1, 2]
    * ────────────────────────────────────────────────────────────────── */
+
+  const TILES = useSliderStore(state => state.TILES);
+  const setAllPages = useSliderStore(state => state.setAllPages);
+  const currentPage = useSliderStore(state => state.currentPage);
+  const { getTilesPerPage } = usePages();
 
   const goToMinimizedPage = (prevTiles: Tile[]) => {
     usePaginationLogger.minimized();
@@ -123,8 +123,6 @@ export const useMinimizedPage = () => {
       maxPages: newTilesTotal / newTilesPerPage,
       tilesPerPage: newTilesPerPage,
       // lastPageLength: tilesPerPage - tilesNeeded,
-      // isFirstPageVisited: true,
-      // isLastPageVisited: false,
     });
   };
 
