@@ -26,9 +26,7 @@ const LeftPlaceholder = () => {
     return TILES[indexOfPreviousItem];
   };
 
-  return (
-    hasPaginated && <TileItem tile={getPrevTile()} displayNumber={''} isVisibleOnScreen={true} />
-  );
+  return hasPaginated && <TileItem tile={getPrevTile()} />;
 };
 
 export default LeftPlaceholder;

@@ -1,28 +1,23 @@
 /* eslint no-restricted-imports: 0 */
 
 import { useSliderStore } from '@/providers/slider-provider';
-import chalk from 'chalk';
 
 import { Pages, Tile } from '@/lib/types';
-import { logger } from '@/lib/utils';
-import { useGoToFirstPage } from '@/components/slider/hooks/use-pagination/use-go-to-first-page';
-import { useGoToLastPage } from '@/components/slider/hooks/use-pagination/use-go-to-last-page';
-import { useGoToNextPage } from '@/components/slider/hooks/use-pagination/use-go-to-next-page';
-import { useGoToPrevPage } from '@/components/slider/hooks/use-pagination/use-go-to-prev-page';
-import { useGoToResizedPage } from '@/components/slider/hooks/use-pagination/use-go-to-resized-page';
-
-export const log = (string: string) =>
-  logger(chalk.bgGreenBright.black(' GO TO', chalk.underline.bold(`${string}`), 'PAGE '));
+import { useFirstPage } from '@/components/slider/hooks/use-pagination/use-first-page';
+import { useLastPage } from '@/components/slider/hooks/use-pagination/use-last-page';
+import { useMaximizedPage } from '@/components/slider/hooks/use-pagination/use-maximized-page';
+import { useMinimizedPage } from '@/components/slider/hooks/use-pagination/use-minimized-page';
+import { useNextPage } from '@/components/slider/hooks/use-pagination/use-next-page';
+import { usePrevPage } from '@/components/slider/hooks/use-pagination/use-prev-page';
 
 type UsePaginationReturn = {
   state: {
     TILES: Tile[];
     pages: Pages;
     currentPage: number;
+    maxPages: number;
   };
   status: {
-    isFirstPageVisited: boolean;
-    isLastPageVisited: boolean;
     hasPaginated: boolean;
     isMounted: boolean;
   };
@@ -31,7 +26,8 @@ type UsePaginationReturn = {
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
-    goToResizedPage: (previousTiles: Tile[]) => void;
+    goToMaximizedPage: (prevTiles: Tile[]) => void;
+    goToMinimizedPage: (prevTiles: Tile[]) => void;
   };
 };
 
@@ -39,27 +35,26 @@ export const usePagination = (): UsePaginationReturn => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
+  const maxPages = useSliderStore(state => state.maxPages);
 
-  const isFirstPageVisited = useSliderStore(state => state.isFirstPageVisited);
-  const isLastPageVisited = useSliderStore(state => state.isLastPageVisited);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
-  const { goToFirstPage } = useGoToFirstPage();
-  const { goToLastPage } = useGoToLastPage();
-  const { goToNextPage } = useGoToNextPage();
-  const { goToPrevPage } = useGoToPrevPage();
-  const { goToResizedPage } = useGoToResizedPage();
+  const { goToFirstPage } = useFirstPage();
+  const { goToLastPage } = useLastPage();
+  const { goToNextPage } = useNextPage();
+  const { goToPrevPage } = usePrevPage();
+  const { goToMaximizedPage } = useMaximizedPage();
+  const { goToMinimizedPage } = useMinimizedPage();
 
   return {
     state: {
       TILES,
       currentPage,
       pages,
+      maxPages,
     },
     status: {
-      isFirstPageVisited,
-      isLastPageVisited,
       hasPaginated,
       isMounted,
     },
@@ -68,7 +63,8 @@ export const usePagination = (): UsePaginationReturn => {
       goToLastPage,
       goToPrevPage,
       goToNextPage,
-      goToResizedPage,
+      goToMaximizedPage,
+      goToMinimizedPage,
     },
   };
 };

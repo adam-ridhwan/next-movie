@@ -9,7 +9,7 @@ import { CategoryMovieIcon, DotIcon } from '@/components/icons';
 
 type TileItemProps = {
   tile: Tile;
-  displayNumber: number | '';
+  displayNumber?: number | '';
   isVisibleOnScreen?: boolean;
 };
 

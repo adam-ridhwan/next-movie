@@ -3,17 +3,19 @@
 import { useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
-import { getMapItem, logger } from '@/lib/utils';
+import { RESIZE_DIRECTION } from '@/lib/constants';
+import { logger } from '@/lib/logger';
+import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
-import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
+import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 
 export const useResizeWindow = () => {
   const {
     state: { TILES, currentPage, pages },
-    actions: { goToFirstPage, goToLastPage, goToResizedPage },
+    actions: { goToFirstPage, goToLastPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
   const { getTilesPerPage, getMaxPages } = usePages();
   const { resizeDirection } = useResizeDirection();
@@ -23,9 +25,15 @@ export const useResizeWindow = () => {
 
   useEffect(() => {
     const handleResize = () => {
+      /*
+       * TODO: When using shortcut to adjust the window size, it breaks the slider.
+       *  The component getting the error is the right placeholder component.
+       *  1) To replicate: Minimize the browser until there is only 2 tiles per page.
+       *  2) Then, use keyboard shortcut to adjust the browser, there should be 4 tiles per page.
+       *  3) The right placeholder component will break.
+       */
       const currentWidth = window.innerWidth;
       const tilesPerPage = getTilesPerPage();
-      console.log('resizeDirection:', resizeDirection);
 
       if (tilesPerPage === prevTilesPerPage.current) return;
       prevTilesPerPage.current = tilesPerPage;
@@ -38,7 +46,14 @@ export const useResizeWindow = () => {
         key: currentPage,
       });
 
-      currentPage === 1 ? goToFirstPage() : goToResizedPage(prevPage);
+      if (currentPage === 1) {
+        goToFirstPage();
+      } else {
+        resizeDirection === RESIZE_DIRECTION.MINIMIZING
+          ? goToMinimizedPage(prevPage)
+          : goToMaximizedPage(prevPage);
+      }
+
       prevWindowWidth.current = currentWidth;
     };
 
@@ -46,13 +61,14 @@ export const useResizeWindow = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [
     TILES,
-    resizeDirection,
     currentPage,
     pages,
+    resizeDirection,
     getMaxPages,
     getTilesPerPage,
     goToFirstPage,
     goToLastPage,
-    goToResizedPage,
+    goToMinimizedPage,
+    goToMaximizedPage,
   ]);
 };
