@@ -31,7 +31,6 @@ export const useLastPage = () => {
       (TILES.length - firstTileLastPageIndex) / newTilesPerPage
     );
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
-    const newMaxPages = newTilesTotal / newTilesPerPage;
 
     let startIndex = (firstTileLastPageIndex - leftTilesTotal + TILES.length) % TILES.length;
     let tempTiles: Tile[] = [];
@@ -52,6 +51,8 @@ export const useLastPage = () => {
       newPages.set(pageNumber, tempTiles);
       tempTiles = [];
     }
+
+    const newMaxPages = newPages.size;
 
     validatePages({
       label: 'goToLastPage()',

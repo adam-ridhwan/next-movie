@@ -46,6 +46,27 @@ export const useFirstPage = () => {
       tempTiles = [];
     }
 
+    console.table({
+      startIndex: startIndex,
+      newCurrentPage: 1,
+      leftTilesTotal: leftTilesTotal,
+      rightTilesTotal: rightTilesTotal,
+      totalTiles: leftTilesTotal + rightTilesTotal,
+      newTilesPerPage: newTilesPerPage,
+      newMaxPages: newMaxPages,
+      newFirstPageLength: newTilesPerPage,
+      newLastPageLength: newLastPageLength,
+    });
+
+    [...newPages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.id : undefined))
+        );
+      });
+
     validatePages({
       label: 'goToFirstPage()',
       pages: newPages,
