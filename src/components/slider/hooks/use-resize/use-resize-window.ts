@@ -17,7 +17,7 @@ export const useResizeWindow = () => {
     state: { TILES, currentPage, pages },
     actions: { goToFirstPage, goToLastPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
-  const { getTilesPerPage, getMaxPages } = usePages();
+  const { getTilesPerPage } = usePages();
   const { resizeDirection } = useResizeDirection();
 
   const prevTilesPerPage = useRef(getTilesPerPage());
@@ -64,7 +64,7 @@ export const useResizeWindow = () => {
     currentPage,
     pages,
     resizeDirection,
-    getMaxPages,
+
     getTilesPerPage,
     goToFirstPage,
     goToLastPage,

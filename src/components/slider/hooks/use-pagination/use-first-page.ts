@@ -10,7 +10,7 @@ import { useValidators } from '@/components/slider/hooks/use-validators';
 export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getMaxPages, getTotalTiles } = usePages();
+  const { getTilesPerPage, getTotalTiles } = usePages();
   const { validatePages } = useValidators();
 
   const goToFirstPage = () => {
@@ -18,15 +18,12 @@ export const useFirstPage = () => {
 
     const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
-    const newMaxPages = getMaxPages();
     let newLastPageLength = newTilesPerPage;
-
-    const firstTile = TILES.at(0);
-    if (!firstTile) throw new Error('First tile is missing');
 
     const leftTilesTotal = getTotalTiles(0 / newTilesPerPage);
     const rightTilesTotal = getTotalTiles(TILES.length / newTilesPerPage);
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
+    const newMaxPages = newTilesTotal / newTilesPerPage;
 
     let startIndex = (0 - leftTilesTotal + TILES.length) % TILES.length;
     let tempTiles: Tile[] = [];
@@ -38,7 +35,7 @@ export const useFirstPage = () => {
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
-      const firstTileIndex = tempTiles.findIndex(tile => tile.id === firstTile.id);
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
       if (firstTileIndex > 0) {
         const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
         if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;

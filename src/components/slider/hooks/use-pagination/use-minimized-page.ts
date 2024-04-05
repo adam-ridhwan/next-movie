@@ -60,9 +60,7 @@ export const useMinimizedPage = () => {
     usePaginationLogger.minimized();
 
     const firstTilePrevPage = prevPage.at(0);
-    const firstTile = TILES.at(0);
     if (!firstTilePrevPage) throw new Error('First tile of the previous page is missing');
-    if (!firstTile) throw new Error('First tile is missing');
 
     const firstTileIndex = findIndexFromKey({
       label: 'goToResizedPage()',
@@ -95,7 +93,7 @@ export const useMinimizedPage = () => {
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
-      const firstTileIndex = tempTiles.findIndex(tile => tile.id === firstTile.id);
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
       if (firstTileIndex > 0) {
         const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
         if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
