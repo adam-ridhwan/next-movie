@@ -64,7 +64,6 @@ export const useResizeWindow = () => {
     currentPage,
     pages,
     resizeDirection,
-
     getTilesPerPage,
     goToFirstPage,
     goToLastPage,
