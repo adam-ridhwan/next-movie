@@ -124,27 +124,6 @@ export const useMaximizedPage = () => {
       tempTiles = [];
     }
 
-    console.table({
-      index: index,
-      startIndex: startIndex,
-      newCurrentPage: newCurrentPage,
-      leftTilesTotal: leftTilesTotal,
-      rightTilesTotal: rightTilesTotal,
-      totalTiles: leftTilesTotal + rightTilesTotal,
-      newMaxPages: newMaxPages,
-      newFirstPageLength: newFirstPageLength,
-      newLastPageLength: newLastPageLength,
-    });
-
-    [...newPages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
-      });
-
     validatePages({
       label: 'useMinimizedPage()',
       pages: newPages,
