@@ -12,7 +12,6 @@ export const useNextPage = () => {
 
   const goToNextPage = () => {
     usePaginationLogger.next();
-
     if (!hasPaginated) markAsPaginated();
     setCurrentPage(currentPage + 1);
   };
