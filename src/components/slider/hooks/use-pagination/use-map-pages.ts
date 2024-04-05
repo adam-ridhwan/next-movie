@@ -63,25 +63,25 @@ export const useMapPages = () => {
       tempTiles = [];
     }
 
-    // console.table({
-    //   startIndex: startIndex,
-    //   newCurrentPage: newCurrentPage,
-    //   leftTilesTotal: leftTilesTotal,
-    //   rightTilesTotal: rightTilesTotal,
-    //   totalTiles: leftTilesTotal + rightTilesTotal,
-    //   newMaxPages: newMaxPages,
-    //   newFirstPageLength: newFirstPageLength,
-    //   newLastPageLength: newLastPageLength,
-    // });
-    //
-    // [...newPages.entries()]
-    //   .sort((a, b) => a[0] - b[0])
-    //   .forEach(([pageIndex, tiles]) => {
-    //     console.log(
-    //       `Page ${pageIndex}:`,
-    //       tiles.map(card => (card ? card.id : undefined))
-    //     );
-    //   });
+    console.table({
+      startIndex: startIndex,
+      newCurrentPage: newCurrentPage,
+      leftTilesTotal: leftTilesTotal,
+      rightTilesTotal: rightTilesTotal,
+      totalTiles: leftTilesTotal + rightTilesTotal,
+      newMaxPages: newMaxPages,
+      newFirstPageLength: newFirstPageLength,
+      newLastPageLength: newLastPageLength,
+    });
+
+    [...newPages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.id : undefined))
+        );
+      });
 
     validatePages({
       label: 'useMinimizedPage()',
