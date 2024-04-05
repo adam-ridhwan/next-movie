@@ -98,6 +98,7 @@ export const useMaximizedPage = () => {
     const rightTilesTotal = getTotalTiles((TILES.length - index) / newTilesPerPage);
 
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
+    const newMaxPages = newTilesTotal / newTilesPerPage;
     let newCurrentPage = -1;
 
     let startIndex = (index - leftTilesTotal + TILES.length) % TILES.length;
@@ -121,8 +122,6 @@ export const useMaximizedPage = () => {
       newPages.set(pageNumber, tempTiles);
       tempTiles = [];
     }
-
-    const newMaxPages = newPages.size;
 
     validatePages({
       label: 'useMinimizedPage()',

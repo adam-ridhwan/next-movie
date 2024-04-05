@@ -101,9 +101,9 @@ export const useMinimizedPage = () => {
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
-      const firstTileIndex2 = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
-      if (firstTileIndex2 > 0) {
-        const tilesNeeded = tempTiles.slice(0, firstTileIndex2).length;
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
+      if (firstTileIndex > 0) {
+        const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
         if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
         if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;
       }
