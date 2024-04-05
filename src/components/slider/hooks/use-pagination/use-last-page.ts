@@ -64,7 +64,7 @@ export const useLastPage = () => {
     setAllPages({
       pages: newPages,
       currentPage: newMaxPages - 2,
-      maxPages: newMaxPages,
+      maxPages: newPages.size,
       tilesPerPage: newTilesPerPage,
       firstPageLength: newFirstPageLength,
       lastPageLength: newTilesPerPage,

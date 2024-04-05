@@ -63,13 +63,13 @@ export const useMinimizedPage = () => {
     usePaginationLogger.minimized();
 
     const firstTileCurrentPage = getMapItem({
-      label: 'goToMaximizedPage() - firstTilePrevPage',
+      label: 'goToMinimizedPage(): firstTileCurrentPage',
       map: pages,
       key: currentPage,
     })[0];
 
-    const firstTileIndex = findIndexFromKey({
-      label: 'goToResizedPage()',
+    const firstTileCurrentPageIndex = findIndexFromKey({
+      label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
       array: TILES,
       key: 'id',
       value: firstTileCurrentPage.id,
@@ -80,21 +80,23 @@ export const useMinimizedPage = () => {
     let newFirstPageLength = newTilesPerPage;
     let newLastPageLength = newTilesPerPage;
 
-    const leftTilesTotal = getTotalTiles(firstTileIndex / newTilesPerPage);
-    const rightTilesTotal = getTotalTiles((TILES.length - firstTileIndex) / newTilesPerPage);
+    const leftTilesTotal = getTotalTiles(firstTileCurrentPageIndex / newTilesPerPage);
+    const rightTilesTotal = getTotalTiles(
+      (TILES.length - firstTileCurrentPageIndex) / newTilesPerPage
+    );
 
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
     const newMaxPages = newTilesTotal / newTilesPerPage;
-    let newCurrentPage = 0;
+    let newCurrentPage = -1;
 
-    let startIndex = (firstTileIndex - leftTilesTotal + TILES.length) % TILES.length;
+    let startIndex = (firstTileCurrentPageIndex - leftTilesTotal + TILES.length) % TILES.length;
     let tempTiles: Tile[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTilesPerPage);
-      const idMatches = tempTiles.some(tile => tile.id === TILES[firstTileIndex].id);
-      if (idMatches && pageNumber > 0 && newCurrentPage === 0) newCurrentPage = pageNumber;
+      const idMatches = tempTiles.some(tile => tile.id === TILES[firstTileCurrentPageIndex].id);
+      if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
@@ -109,27 +111,6 @@ export const useMinimizedPage = () => {
       newPages.set(pageNumber, tempTiles);
       tempTiles = [];
     }
-
-    console.table({
-      startIndex: startIndex,
-      newCurrentPage: newCurrentPage,
-      leftTilesTotal: leftTilesTotal,
-      rightTilesTotal: rightTilesTotal,
-      totalTiles: leftTilesTotal + rightTilesTotal,
-      newTilesPerPage: newTilesPerPage,
-      newMaxPages: newMaxPages,
-      newFirstPageLength: newFirstPageLength,
-      newLastPageLength: newLastPageLength,
-    });
-
-    [...newPages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
-      });
 
     validatePages({
       label: 'useMinimizedPage()',
