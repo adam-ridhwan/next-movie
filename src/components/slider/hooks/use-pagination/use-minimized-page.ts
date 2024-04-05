@@ -6,6 +6,7 @@ import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
+import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useMinimizedPage = () => {
   /** ────────────────────────────────────────────────────────────────────
@@ -52,84 +53,65 @@ export const useMinimizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { getTilesPerPage } = usePages();
+  const { validatePages } = useValidators();
+  const { getTilesPerPage, getTotalTiles } = usePages();
 
-  const goToMinimizedPage = (prevTiles: Tile[]) => {
+  const goToMinimizedPage = (prevPage: Tile[]) => {
     usePaginationLogger.minimized();
 
-    const firstTileOfPrevTiles = prevTiles.at(0);
-    if (!firstTileOfPrevTiles) throw new Error('First tile of the previous page is missing');
+    const firstTilePrevPage = prevPage.at(0);
+    const firstTile = TILES.at(0);
+    if (!firstTilePrevPage) throw new Error('First tile of the previous page is missing');
+    if (!firstTile) throw new Error('First tile is missing');
 
-    const index = findIndexFromKey({
+    const firstTileIndex = findIndexFromKey({
       label: 'goToResizedPage()',
       array: TILES,
       key: 'id',
-      value: firstTileOfPrevTiles?.id,
+      value: firstTilePrevPage.id,
     });
 
     const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
     let newFirstPageLength = newTilesPerPage;
     let newLastPageLength = newTilesPerPage;
-    const totalTiles = TILES.length;
 
-    // Plus 1 because we need to include the left and right page placeholders
-    const calc = (num: number) => (Math.ceil(num) + 1) * newTilesPerPage;
-    const leftTilesTotal = calc(index / newTilesPerPage);
-    const rightTilesTotal = calc((totalTiles - index) / newTilesPerPage);
+    const leftTilesTotal = getTotalTiles(firstTileIndex / newTilesPerPage);
+    const rightTilesTotal = getTotalTiles((TILES.length - firstTileIndex) / newTilesPerPage);
 
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
     const newMaxPages = newTilesTotal / newTilesPerPage;
     let newCurrentPage = currentPage;
 
-    let startIndex = (index - leftTilesTotal + totalTiles) % totalTiles;
+    let startIndex = (firstTileIndex - leftTilesTotal + TILES.length) % TILES.length;
     let tempTiles: Tile[] = [];
-
     for (let i = 0; i < newTilesTotal; i++) {
-      if (startIndex >= totalTiles) startIndex = 0;
+      if (startIndex >= TILES.length) startIndex = 0;
 
-      const page = Math.floor(i / newTilesPerPage);
-      const idMatches = tempTiles.some(tile => tile.id === firstTileOfPrevTiles.id);
-      if (idMatches && page > 0) newCurrentPage = page;
+      const pageNumber = Math.floor(i / newTilesPerPage);
+      const idMatches = tempTiles.some(tile => tile.id === firstTilePrevPage.id);
+      if (idMatches && pageNumber > 0) newCurrentPage = pageNumber;
 
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
-      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === firstTile.id);
       if (firstTileIndex > 0) {
         const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
-        if (page === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
-        if (page === newMaxPages - 2) newLastPageLength = tilesNeeded;
+        if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
+        if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;
       }
 
-      newPages.set(page, tempTiles);
+      newPages.set(pageNumber, tempTiles);
       tempTiles = [];
     }
 
-    console.table({
-      prevTiles: prevTiles
-        .map(({ id }) => id)
-        .toString()
-        .replace(/,/g, ', '),
-      index: index,
-      startIndex: startIndex,
-      newCurrentPage: newCurrentPage,
-      leftTilesTotal: leftTilesTotal,
-      rightTilesTotal: rightTilesTotal,
-      totalTiles: leftTilesTotal + rightTilesTotal,
-      newMaxPages: newMaxPages,
-      newFirstPageLength: newFirstPageLength,
-      newLastPageLength: newLastPageLength,
+    validatePages({
+      label: 'useMinimizedPage()',
+      pages: newPages,
+      expectedMaxPages: newMaxPages,
+      expectedTilesPerPage: newTilesPerPage,
     });
-
-    [...newPages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
-      });
 
     setAllPages({
       pages: newPages,
