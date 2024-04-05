@@ -6,7 +6,7 @@ import chalk from 'chalk';
 import { RESIZE_DIRECTION } from '@/lib/constants';
 import { logger } from '@/lib/logger';
 import { getMapItem } from '@/lib/utils';
-import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
 
@@ -17,7 +17,7 @@ export const useResizeWindow = () => {
     state: { TILES, currentPage, pages },
     actions: { goToFirstPage, goToLastPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
-  const { getTilesPerPage } = usePages();
+  const { getTilesPerPage } = usePageUtils();
   const { resizeDirection } = useResizeDirection();
 
   const prevTilesPerPage = useRef(getTilesPerPage());

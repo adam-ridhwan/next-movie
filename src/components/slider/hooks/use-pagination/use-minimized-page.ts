@@ -5,7 +5,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useMinimizedPage = () => {
@@ -56,7 +56,7 @@ export const useMinimizedPage = () => {
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const { validatePages } = useValidators();
-  const { getTilesPerPage, getTotalTiles } = usePages();
+  const { getTilesPerPage, getTotalTiles } = usePageUtils();
 
   // TODO: Extract this to a reusable helper function
   const goToMinimizedPage = () => {

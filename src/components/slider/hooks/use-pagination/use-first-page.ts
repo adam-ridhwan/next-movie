@@ -4,13 +4,13 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
-import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getTotalTiles } = usePages();
+  const { getTilesPerPage, getTotalTiles } = usePageUtils();
   const { validatePages } = useValidators();
 
   // TODO: Extract this to a reusable helper function

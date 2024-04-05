@@ -4,7 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { MEDIA_QUERY } from '@/lib/constants';
 
-export const usePages = () => {
+export const usePageUtils = () => {
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
 
