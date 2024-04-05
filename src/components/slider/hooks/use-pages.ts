@@ -6,6 +6,7 @@ import { MEDIA_QUERY } from '@/lib/constants';
 
 export const usePages = () => {
   const TILES = useSliderStore(state => state.TILES);
+  const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
 
   const getTilesPerPage = () => {
@@ -20,5 +21,8 @@ export const usePages = () => {
   // +2 for the left and right placeholder pages
   const getMaxPages = () => Math.ceil(TILES.length / getTilesPerPage()) + 2;
 
-  return { getTilesPerPage, getMaxPages, lastPageLength };
+  // +1 for left/right placeholders
+  const getTotalTiles = (num: number) => (Math.ceil(num) + 1) * getTilesPerPage();
+
+  return { getTilesPerPage, getMaxPages, getTotalTiles, firstPageLength, lastPageLength };
 };

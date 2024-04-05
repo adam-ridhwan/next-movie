@@ -4,63 +4,64 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
-import { getMapItem } from '@/lib/utils';
 import { usePages } from '@/components/slider/hooks/use-pages';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getMaxPages } = usePages();
+  const { getTilesPerPage, getMaxPages, getTotalTiles } = usePages();
   const { validatePages } = useValidators();
 
   const goToFirstPage = () => {
     usePaginationLogger.first();
 
-    // TODO: use one for loop only
-
+    const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
     const newMaxPages = getMaxPages();
+    let newLastPageLength = newTilesPerPage;
 
-    const initialPages: Pages = new Map<number, Tile[]>();
+    const firstTile = TILES.at(0);
+    if (!firstTile) throw new Error('First tile is missing');
 
-    // Left page placeholder
-    initialPages.set(0, TILES.slice(-newTilesPerPage));
+    const leftTilesTotal = getTotalTiles(0 / newTilesPerPage);
+    const rightTilesTotal = getTotalTiles(TILES.length / newTilesPerPage);
+    const newTilesTotal = leftTilesTotal + rightTilesTotal;
 
-    // Middle pages
-    for (let pageIndex = 1; pageIndex < newMaxPages; pageIndex++) {
-      const startIndex = (pageIndex - 1) * newTilesPerPage;
-      const endIndex = startIndex + newTilesPerPage;
-      initialPages.set(pageIndex, TILES.slice(startIndex, endIndex));
+    let startIndex = (0 - leftTilesTotal + TILES.length) % TILES.length;
+    let tempTiles: Tile[] = [];
+    for (let i = 0; i < newTilesTotal; i++) {
+      if (startIndex >= TILES.length) startIndex = 0;
+
+      const pageNumber = Math.floor(i / newTilesPerPage);
+
+      tempTiles.push(TILES[startIndex++]);
+      if (tempTiles.length !== newTilesPerPage) continue;
+
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === firstTile.id);
+      if (firstTileIndex > 0) {
+        const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
+        if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;
+      }
+
+      newPages.set(pageNumber, tempTiles);
+      tempTiles = [];
     }
-
-    const lastPage = getMapItem({
-      label: 'goToFirstPage() ',
-      map: initialPages,
-      key: newMaxPages - 2,
-    });
-
-    const tilesNeeded = newTilesPerPage - lastPage.length;
-    if (tilesNeeded)
-      initialPages.set(newMaxPages - 2, [...lastPage, ...TILES.slice(0, tilesNeeded)]);
-
-    // Right page placeholder
-    initialPages.set(newMaxPages - 1, TILES.slice(tilesNeeded, newTilesPerPage + tilesNeeded));
 
     validatePages({
       label: 'goToFirstPage()',
-      pages: initialPages,
+      pages: newPages,
       expectedMaxPages: newMaxPages,
       expectedTilesPerPage: newTilesPerPage,
     });
 
     setAllPages({
-      pages: initialPages,
+      pages: newPages,
       currentPage: 1,
       maxPages: newMaxPages,
       tilesPerPage: newTilesPerPage,
-      firstPageLength: newTilesPerPage - tilesNeeded,
-      lastPageLength: newTilesPerPage - tilesNeeded,
+      firstPageLength: 0,
+      lastPageLength: newLastPageLength,
       isMounted: true,
     });
   };
