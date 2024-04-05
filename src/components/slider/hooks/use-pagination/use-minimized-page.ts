@@ -56,6 +56,7 @@ export const useMinimizedPage = () => {
   const { validatePages } = useValidators();
   const { getTilesPerPage, getTotalTiles } = usePages();
 
+  // TODO: Extract this to a reusable helper function
   const goToMinimizedPage = (prevPage: Tile[]) => {
     usePaginationLogger.minimized();
 

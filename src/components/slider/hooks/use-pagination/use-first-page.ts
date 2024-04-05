@@ -13,6 +13,7 @@ export const useFirstPage = () => {
   const { getTilesPerPage, getTotalTiles } = usePages();
   const { validatePages } = useValidators();
 
+  // TODO: Extract this to a reusable helper function
   const goToFirstPage = () => {
     usePaginationLogger.first();
 
