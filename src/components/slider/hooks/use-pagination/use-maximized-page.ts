@@ -67,7 +67,7 @@ export const useMaximizedPage = () => {
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const { validatePages } = useValidators();
-  const { getTilesPerPage, getTotalTiles } = usePageUtils();
+  const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
 
   // TODO: Extract this to a reusable helper function
   const goToMaximizedPage = () => {
@@ -92,7 +92,7 @@ export const useMaximizedPage = () => {
     const newPages: Pages = new Map<number, Tile[]>();
     const newTilesPerPage = getTilesPerPage();
     let newFirstPageLength = newTilesPerPage;
-    const newLastPageLength = newTilesPerPage;
+    let newLastPageLength = newTilesPerPage;
 
     const leftTilesTotal = getTotalTiles(index / newTilesPerPage);
     const rightTilesTotal = getTotalTiles((TILES.length - index) / newTilesPerPage);
@@ -101,7 +101,7 @@ export const useMaximizedPage = () => {
     const newMaxPages = newTilesTotal / newTilesPerPage;
     let newCurrentPage = -1;
 
-    let startIndex = (index - leftTilesTotal + TILES.length) % TILES.length;
+    let startIndex = getStartIndex(index, leftTilesTotal);
     let tempTiles: Tile[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;
@@ -117,11 +117,33 @@ export const useMaximizedPage = () => {
       if (firstTileIndex > 0) {
         const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
         if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
+        if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;
       }
 
       newPages.set(pageNumber, tempTiles);
       tempTiles = [];
     }
+
+    console.table({
+      index: index,
+      startIndex: startIndex,
+      newCurrentPage: newCurrentPage,
+      leftTilesTotal: leftTilesTotal,
+      rightTilesTotal: rightTilesTotal,
+      totalTiles: leftTilesTotal + rightTilesTotal,
+      newMaxPages: newMaxPages,
+      newFirstPageLength: newFirstPageLength,
+      newLastPageLength: newLastPageLength,
+    });
+
+    [...newPages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.id : undefined))
+        );
+      });
 
     validatePages({
       label: 'useMinimizedPage()',

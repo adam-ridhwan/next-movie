@@ -56,7 +56,7 @@ export const useMinimizedPage = () => {
   const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const { validatePages } = useValidators();
-  const { getTilesPerPage, getTotalTiles } = usePageUtils();
+  const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
 
   // TODO: Extract this to a reusable helper function
   const goToMinimizedPage = () => {
@@ -89,7 +89,7 @@ export const useMinimizedPage = () => {
     const newMaxPages = newTilesTotal / newTilesPerPage;
     let newCurrentPage = -1;
 
-    let startIndex = (firstTileCurrentPageIndex - leftTilesTotal + TILES.length) % TILES.length;
+    let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTilesTotal);
     let tempTiles: Tile[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;

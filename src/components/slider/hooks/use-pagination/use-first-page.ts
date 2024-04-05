@@ -10,7 +10,7 @@ import { useValidators } from '@/components/slider/hooks/use-validators';
 export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getTotalTiles } = usePageUtils();
+  const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
   const { validatePages } = useValidators();
 
   // TODO: Extract this to a reusable helper function
@@ -26,7 +26,7 @@ export const useFirstPage = () => {
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
     const newMaxPages = newTilesTotal / newTilesPerPage;
 
-    let startIndex = (0 - leftTilesTotal + TILES.length) % TILES.length;
+    let startIndex = getStartIndex(0, leftTilesTotal);
     let tempTiles: Tile[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;

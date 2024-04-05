@@ -12,7 +12,7 @@ export const useLastPage = () => {
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getTotalTiles } = usePageUtils();
+  const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
   const { validatePages } = useValidators();
 
   // TODO: Extract this to a reusable helper function
@@ -33,7 +33,7 @@ export const useLastPage = () => {
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
     const newMaxPages = newTilesTotal / newTilesPerPage;
 
-    let startIndex = (firstTileLastPageIndex - leftTilesTotal + TILES.length) % TILES.length;
+    let startIndex = getStartIndex(firstTileLastPageIndex, leftTilesTotal);
     let tempTiles: Tile[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;
