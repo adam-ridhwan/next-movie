@@ -95,9 +95,6 @@ export const useMinimizedPage = () => {
       tempTiles.push(TILES[startIndex++]);
       if (tempTiles.length !== newTilesPerPage) continue;
 
-      console.log(page, tempTiles);
-      console.log('newMaxPages - 2', newMaxPages - 2);
-
       const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
       if (firstTileIndex > 0) {
         const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
