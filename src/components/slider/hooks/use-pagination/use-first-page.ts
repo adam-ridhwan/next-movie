@@ -3,7 +3,6 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { findIndexFromKey } from '@/lib/utils';
 import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pages';
 
 export const useFirstPage = () => {
@@ -18,12 +17,7 @@ export const useFirstPage = () => {
       throw new Error('goToFirstPage(): firstTileCurrentPage is undefined');
     }
 
-    const firstTileCurrentPageIndex = findIndexFromKey({
-      label: 'goToFirstPage(): firstTileCurrentPageIndex',
-      array: TILES,
-      key: 'id',
-      value: firstTileCurrentPage.id,
-    });
+    const firstTileCurrentPageIndex = 0;
 
     setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex, isFirstPage: true });
   };

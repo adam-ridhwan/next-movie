@@ -36,7 +36,6 @@ export const usePagination = (): UsePaginationReturn => {
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPages = useSliderStore(state => state.maxPages);
-
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 

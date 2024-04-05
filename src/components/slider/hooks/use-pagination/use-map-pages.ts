@@ -16,7 +16,6 @@ type SetMapTilesParams = {
 export const useMapPages = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const currentPage = useSliderStore(state => state.currentPage);
 
   const { validatePages } = useValidators();
   const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
