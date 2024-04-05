@@ -9,8 +9,9 @@ import { usePages } from '@/components/slider/hooks/use-pages';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useMinimizedPage = () => {
-  /** ────────────────────────────────────────────────────────────────────
-   * From [4] tiles to [3] tiles per page
+  /** ─────────────────────────────────────────────────────────────────
+   *     From [4] tiles to [3] tiles per page
+   * ──────────────────────────────────────────────────────────────────
    *
    *     page 0: [6, 7, 8, 9] => page 0: [5, 6, 7]
    *     page 1: [1, 2, 3, 4] => page 1: [8, 9, 1]
@@ -19,7 +20,7 @@ export const useMinimizedPage = () => {
    *     page 4: [4, 5, 6, 7] => page 4: [8, 9, 1]
    *                          => page 5: [2, 3, 4]
    *
-   * continue minimizing...
+   *     continue minimizing...
    *
    *     page 0: [5, 6, 7] => page 0: [8, 9]
    *     page 1: [8, 9, 1] => page 1: [1, 2]
@@ -28,7 +29,9 @@ export const useMinimizedPage = () => {
    *     page 4: [8, 9, 1] => page 4: [7, 8]
    *     page 5: [2, 3, 4] => page 5: [9, 1]
    *                       => page 6: [2, 3]
+   *
    * ──────────────────────────────────────────────────────────────────
+   *
    *     page 0: [3, 4, 5, 6] => page 0: [6, 7, 8]
    *     page 1: [7, 8, 9, 1] => page 1: [9, 1, 2]
    *     page 2: [2, 3, 4, 5] => page 2: [3, 4, 5]
@@ -36,7 +39,7 @@ export const useMinimizedPage = () => {
    *     page 4: [1, 2, 3, 4] => page 4: [9, 1, 2]
    *                          => page 5: [3, 4, 5]
    *
-   * continue minimizing...
+   *     continue minimizing...
    *
    *     page 0: [6, 7, 8] => page 0: [7, 8]
    *     page 1: [9, 1, 2] => page 1: [9, 1]
@@ -45,6 +48,7 @@ export const useMinimizedPage = () => {
    *     page 4: [9, 1, 2] => PAGE 4: [6, 7] <-
    *     page 5: [3, 4, 5] => page 5: [8, 9]
    *                       => page 6: [1, 2]
+   *
    * ────────────────────────────────────────────────────────────────── */
 
   const TILES = useSliderStore(state => state.TILES);
