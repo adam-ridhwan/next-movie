@@ -3,10 +3,8 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { Pages, Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { useValidators } from '@/components/slider/hooks/use-validators';
+import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pages';
 
 export const useMinimizedPage = () => {
   /** ─────────────────────────────────────────────────────────────────
@@ -53,12 +51,9 @@ export const useMinimizedPage = () => {
 
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
-  const setAllPages = useSliderStore(state => state.setAllPages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { validatePages } = useValidators();
-  const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
+  const { setMapTiles } = useMapPages();
 
-  // TODO: Extract this to a reusable helper function
   const goToMinimizedPage = () => {
     usePaginationLogger.minimized();
 
@@ -75,58 +70,7 @@ export const useMinimizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    const newPages: Pages = new Map<number, Tile[]>();
-    const newTilesPerPage = getTilesPerPage();
-    let newFirstPageLength = newTilesPerPage;
-    let newLastPageLength = newTilesPerPage;
-
-    const leftTilesTotal = getTotalTiles(firstTileCurrentPageIndex / newTilesPerPage);
-    const rightTilesTotal = getTotalTiles(
-      (TILES.length - firstTileCurrentPageIndex) / newTilesPerPage
-    );
-
-    const newTilesTotal = leftTilesTotal + rightTilesTotal;
-    const newMaxPages = newTilesTotal / newTilesPerPage;
-    let newCurrentPage = -1;
-
-    let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTilesTotal);
-    let tempTiles: Tile[] = [];
-    for (let i = 0; i < newTilesTotal; i++) {
-      if (startIndex >= TILES.length) startIndex = 0;
-
-      const pageNumber = Math.floor(i / newTilesPerPage);
-      const idMatches = tempTiles.some(tile => tile.id === TILES[firstTileCurrentPageIndex].id);
-      if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
-
-      tempTiles.push(TILES[startIndex++]);
-      if (tempTiles.length !== newTilesPerPage) continue;
-
-      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
-      if (firstTileIndex > 0) {
-        const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
-        if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
-        if (pageNumber === newMaxPages - 2) newLastPageLength = tilesNeeded;
-      }
-
-      newPages.set(pageNumber, tempTiles);
-      tempTiles = [];
-    }
-
-    validatePages({
-      label: 'useMinimizedPage()',
-      pages: newPages,
-      expectedMaxPages: newMaxPages,
-      expectedTilesPerPage: newTilesPerPage,
-    });
-
-    setAllPages({
-      pages: newPages,
-      currentPage: newCurrentPage,
-      maxPages: newMaxPages,
-      tilesPerPage: newTilesPerPage,
-      firstPageLength: newFirstPageLength,
-      lastPageLength: newLastPageLength,
-    });
+    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex });
   };
 
   return { goToMinimizedPage };
