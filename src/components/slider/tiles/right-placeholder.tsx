@@ -1,6 +1,6 @@
 import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
@@ -9,7 +9,7 @@ const RightPlaceholder = () => {
     state: { TILES, currentPage, pages },
     status: { isMounted },
   } = usePagination();
-  const { getTilesPerPage } = usePages();
+  const { getTilesPerPage } = usePageUtils();
 
   const lastIndex = getTilesPerPage() - 1;
 

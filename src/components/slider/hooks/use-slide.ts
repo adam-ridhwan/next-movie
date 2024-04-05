@@ -8,8 +8,8 @@ import { SlideDirection } from '@/lib/types';
 
 export type GetSlideAmountParams = {
   direction?: SlideDirection;
-  isFirstPage?: boolean;
-  isLastPage?: boolean;
+  isSecondPage?: boolean;
+  isSecondToLastPage?: boolean;
 };
 
 type UseSlideReturn = {
@@ -30,8 +30,8 @@ export const useSlide = (): UseSlideReturn => {
 
   const getSlideAmount = ({
     direction,
-    isFirstPage = false,
-    isLastPage = false,
+    isSecondPage = false,
+    isSecondToLastPage = false,
   }: GetSlideAmountParams) => {
     if (!sliderRef.current) throw new Error('sliderRef is missing');
     if (!tileRef.current) throw new Error('tileRef is missing');
@@ -40,10 +40,10 @@ export const useSlide = (): UseSlideReturn => {
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = tileRef.current;
 
-    const pageLength = isFirstPage ? firstPageLength : lastPageLength;
+    const pageLength = isSecondPage ? firstPageLength : lastPageLength;
     const trailingPercentage = ((pageLength * sliderItemWidth) / windowWidth) * 100;
-    if (isFirstPage) return trailingPercentage;
-    if (isLastPage) return -trailingPercentage;
+    if (isSecondPage && trailingPercentage) return trailingPercentage;
+    if (isSecondToLastPage && trailingPercentage) return -trailingPercentage;
 
     const sliderWidthPercentage = ((sliderWidth - PADDING) / windowWidth) * 100;
     return direction === SLIDE_DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;

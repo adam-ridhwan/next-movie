@@ -4,8 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages, Tile } from '@/lib/types';
-import { findIndexFromKey, getMapItem } from '@/lib/utils';
-import { usePages } from '@/components/slider/hooks/use-pages';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 export const useLastPage = () => {
@@ -13,58 +12,47 @@ export const useLastPage = () => {
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const setAllPages = useSliderStore(state => state.setAllPages);
-  const { getTilesPerPage, getMaxPages } = usePages();
+  const { getTilesPerPage, getTotalTiles } = usePageUtils();
   const { validatePages } = useValidators();
 
+  // TODO: Extract this to a reusable helper function
   const goToLastPage = () => {
     usePaginationLogger.last();
 
     if (!hasPaginated) markAsPaginated();
 
-    const newTilesPerPage = getTilesPerPage();
-    const newMaxPages = getMaxPages();
-
     const newPages: Pages = new Map<number, Tile[]>();
+    const newTilesPerPage = getTilesPerPage();
+    let newFirstPageLength = newTilesPerPage;
 
-    // Right page placeholder
-    newPages.set(newMaxPages - 1, TILES.slice(0, newTilesPerPage));
+    const firstTileLastPageIndex = TILES.length - newTilesPerPage;
+    const leftTilesTotal = getTotalTiles((TILES.length - newTilesPerPage) / newTilesPerPage);
+    const rightTilesTotal = getTotalTiles(
+      (TILES.length - firstTileLastPageIndex) / newTilesPerPage
+    );
+    const newTilesTotal = leftTilesTotal + rightTilesTotal;
 
-    // Middle pages
-    let endIndex = TILES.length;
-    let startIndex = TILES.length - newTilesPerPage;
-    const middlePagesLength = newMaxPages - 2;
-    for (let i = middlePagesLength; i > 0; i--) {
-      newPages.set(i, TILES.slice(Math.max(0, startIndex), endIndex));
-      startIndex -= newTilesPerPage;
-      endIndex -= newTilesPerPage;
+    let startIndex = (firstTileLastPageIndex - leftTilesTotal + TILES.length) % TILES.length;
+    let tempTiles: Tile[] = [];
+    for (let i = 0; i < newTilesTotal; i++) {
+      if (startIndex >= TILES.length) startIndex = 0;
+
+      const pageNumber = Math.floor(i / newTilesPerPage);
+
+      tempTiles.push(TILES[startIndex++]);
+      if (tempTiles.length !== newTilesPerPage) continue;
+
+      const firstTileIndex = tempTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
+      if (firstTileIndex > 0) {
+        const tilesNeeded = tempTiles.slice(0, firstTileIndex).length;
+        if (pageNumber === 1) newFirstPageLength = newTilesPerPage - tilesNeeded;
+      }
+
+      newPages.set(pageNumber, tempTiles);
+      tempTiles = [];
     }
 
-    const firstPage = getMapItem({
-      label: 'goToLastPage()',
-      map: newPages,
-      key: 1,
-    });
-
-    const tilesNeeded = newTilesPerPage - firstPage.length;
-    if (tilesNeeded) newPages.set(1, [...TILES.slice(-tilesNeeded), ...firstPage]);
-
-    // Left page placeholder
-    const firstItem = TILES.slice(-tilesNeeded)[0];
-    let firstItemIndex =
-      findIndexFromKey({
-        label: 'Left page placeholder goToLastPage()',
-        array: TILES,
-        key: 'id',
-        value: firstItem.id,
-      }) - 1;
-
-    const leftArray = [];
-    for (let i = 0; i < newTilesPerPage; i++) {
-      if (firstItemIndex < 0) firstItemIndex = TILES.length - 1;
-      leftArray.unshift(TILES[firstItemIndex--]);
-    }
-
-    newPages.set(0, leftArray);
+    const newMaxPages = newPages.size;
 
     validatePages({
       label: 'goToLastPage()',
@@ -75,11 +63,11 @@ export const useLastPage = () => {
 
     setAllPages({
       pages: newPages,
-      tilesPerPage: newTilesPerPage,
-      maxPages: newMaxPages,
       currentPage: newMaxPages - 2,
-      firstPageLength: newTilesPerPage - tilesNeeded,
-      lastPageLength: newTilesPerPage - tilesNeeded,
+      maxPages: newPages.size,
+      tilesPerPage: newTilesPerPage,
+      firstPageLength: newFirstPageLength,
+      lastPageLength: newTilesPerPage,
     });
   };
 

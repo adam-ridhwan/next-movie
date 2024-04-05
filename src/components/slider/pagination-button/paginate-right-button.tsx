@@ -16,10 +16,7 @@ const PaginateRightButton = () => {
     const isSecondToLastPage = currentPage === maxPages - 3;
     const isLastPage = currentPage === maxPages - 2;
 
-    const slideAmount = getSlideAmount({
-      direction: SLIDE_DIRECTION.RIGHT,
-      isLastPage: currentPage + 1 === maxPages - 2,
-    });
+    const slideAmount = getSlideAmount({ direction: SLIDE_DIRECTION.RIGHT, isSecondToLastPage });
     enableAnimation();
     slide(slideAmount);
 

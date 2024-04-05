@@ -19,15 +19,15 @@
         "paths": [{
           "name": "@/providers/slider-provider",
           "importNames": ["useSliderStore"],
-          "message": "Import `useSliderStore` within hooks only."
+          "message": "Import `useSliderStore` within custom hooks only."
         }]
       }
     ],
     "no-console": ["warn", { "allow": ["error"] }],
-    "no-unused-vars": "off",
     "react/no-unescaped-entities": "off",
     "react/react-in-jsx-scope": "off",
     "@next/next/no-page-custom-font": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn", {
         "varsIgnorePattern": "^_",
