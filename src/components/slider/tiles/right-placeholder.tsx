@@ -13,14 +13,16 @@ const RightPlaceholder = () => {
 
   const lastIndex = getTilesPerPage() - 1;
 
-  const getNextTile = (): Tile => {
-    if (!isMounted) return TILES[0];
+  const getNextTile = (): Tile | void => {
+    if (!isMounted) return;
 
     const nextPage = getMapItem({
       label: 'RightPlaceholder: nextPage',
       map: pages,
       key: currentPage + 1,
     });
+
+    if (nextPage.length !== getTilesPerPage()) return;
 
     const indexOfLastItem = findIndexFromKey({
       label: 'RightPlaceholder: indexOfLastItem',

@@ -4,6 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pages';
 
 export const useMaximizedPage = () => {
@@ -63,7 +64,9 @@ export const useMaximizedPage = () => {
   const pages = useSliderStore(state => state.pages);
   const maxPages = useSliderStore(state => state.maxPages);
   const currentPage = useSliderStore(state => state.currentPage);
+  const currentTilesPerPage = useSliderStore(state => state.tilesPerPage);
   const { setMapTiles } = useMapPages();
+  const { getTilesPerPage } = usePageUtils();
 
   const goToMaximizedPage = () => {
     usePaginationLogger.maximized();
@@ -81,8 +84,12 @@ export const useMaximizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
+    const tilesToDecrement = getTilesPerPage() - currentTilesPerPage;
+
     const index =
-      currentPage === maxPages - 2 ? firstTileCurrentPageIndex - 1 : firstTileCurrentPageIndex;
+      currentPage === maxPages - 2
+        ? firstTileCurrentPageIndex - tilesToDecrement
+        : firstTileCurrentPageIndex;
 
     setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex: index });
   };
