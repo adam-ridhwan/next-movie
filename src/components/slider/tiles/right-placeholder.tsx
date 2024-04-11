@@ -7,9 +7,8 @@ import TileItem from '@/components/slider/tiles/tile-item';
 const RightPlaceholder = () => {
   const {
     state: { TILES, currentPage, pages },
-    status: { isMounted },
   } = usePagination();
-  const { getTilesPerPage } = usePageUtils();
+  const { getTilesPerPage, isMounted } = usePageUtils();
 
   const lastIndex = getTilesPerPage() - 1;
 

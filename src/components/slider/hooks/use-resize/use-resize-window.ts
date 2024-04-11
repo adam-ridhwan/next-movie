@@ -24,28 +24,16 @@ export const useResizeWindow = () => {
 
   const handleResize = useCallback(() => {
     const currentWidth = window.innerWidth;
-    const tilesPerPage = getTilesPerPage();
+    const newTilesPerPage = getTilesPerPage();
 
-    if (tilesPerPage === prevTilesPerPage.current) return;
-    prevTilesPerPage.current = tilesPerPage;
-
+    if (newTilesPerPage === prevTilesPerPage.current) return;
     log(' USE WINDOW RESIZE ');
-
-    if (currentPage === 1) {
-      goToFirstPage();
-    } else {
-      resizeDirection === RESIZE_DIRECTION.MINIMIZING ? goToMinimizedPage() : goToMaximizedPage();
-    }
-
+    prevTilesPerPage.current = newTilesPerPage;
     prevWindowWidth.current = currentWidth;
-  }, [
-    currentPage,
-    resizeDirection,
-    getTilesPerPage,
-    goToFirstPage,
-    goToMaximizedPage,
-    goToMinimizedPage,
-  ]);
+
+    if (currentPage === 1) return goToFirstPage();
+    return resizeDirection === RESIZE_DIRECTION.MINIMIZING ? goToMinimizedPage() : goToMaximizedPage();
+  }, [currentPage, resizeDirection, getTilesPerPage, goToFirstPage, goToMaximizedPage, goToMinimizedPage]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => handleResize());

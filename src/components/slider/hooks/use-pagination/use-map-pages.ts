@@ -16,7 +16,6 @@ type SetMapTilesParams = {
 export const useMapPages = () => {
   const TILES = useSliderStore(state => state.TILES);
   const setAllPages = useSliderStore(state => state.setAllPages);
-
   const { validatePages } = useValidators();
   const { getTilesPerPage, getTotalTiles, getStartIndex } = usePageUtils();
 
@@ -32,9 +31,7 @@ export const useMapPages = () => {
     let newLastPageLength = newTilesPerPage;
 
     const leftTilesTotal = getTotalTiles(firstTileCurrentPageIndex / newTilesPerPage);
-    const rightTilesTotal = getTotalTiles(
-      (TILES.length - firstTileCurrentPageIndex) / newTilesPerPage
-    );
+    const rightTilesTotal = getTotalTiles((TILES.length - firstTileCurrentPageIndex) / newTilesPerPage);
 
     const newTilesTotal = leftTilesTotal + rightTilesTotal;
     const newMaxPages = newTilesTotal / newTilesPerPage;

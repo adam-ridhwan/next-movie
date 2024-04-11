@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import chalk from 'chalk';
 
@@ -25,8 +24,7 @@ function log(...args: string[]) {
 
 const Slider = () => {
   const {
-    state: { pages, currentPage },
-    status: { isMounted },
+    state: { currentPage },
     actions: { goToFirstPage },
   } = usePagination();
 

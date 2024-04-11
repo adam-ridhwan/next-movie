@@ -8,6 +8,9 @@ export const usePageUtils = () => {
   const TILES = useSliderStore(state => state.TILES);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
+  const hasPaginated = useSliderStore(state => state.hasPaginated);
+  const markAsPaginated = useSliderStore(state => state.markAsPaginated);
+  const isMounted = useSliderStore(state => state.isMounted);
 
   const getTilesPerPage = () => {
     const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
@@ -23,11 +26,17 @@ export const usePageUtils = () => {
 
   const getStartIndex = (currentIndex: number, leftTilesTotal: number) => {
     // Prevents negative modulo
-    return (
-      (((currentIndex - leftTilesTotal + TILES.length) % TILES.length) + TILES.length) %
-      TILES.length
-    );
+    return (((currentIndex - leftTilesTotal + TILES.length) % TILES.length) + TILES.length) % TILES.length;
   };
 
-  return { getTilesPerPage, getTotalTiles, getStartIndex, firstPageLength, lastPageLength };
+  return {
+    getTilesPerPage,
+    getTotalTiles,
+    getStartIndex,
+    firstPageLength,
+    lastPageLength,
+    hasPaginated,
+    markAsPaginated,
+    isMounted,
+  };
 };
