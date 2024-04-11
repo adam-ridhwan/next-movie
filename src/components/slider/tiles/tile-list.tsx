@@ -127,14 +127,6 @@ const TileList = () => {
             />
           </Fragment>
         ))}
-        {/*{pagesArray.map((page, i) => (*/}
-        {/*  <TileItem key={`TileItem-${i}`} tile={page} />*/}
-        {/*))}*/}
-        {/*<LeftPlaceholder />*/}
-        {/*<PrevPage />*/}
-        {/*<CurrentPage />*/}
-        {/*<NextPage />*/}
-        {/*<RightPlaceholder />*/}
       </div>
     </>
   );
