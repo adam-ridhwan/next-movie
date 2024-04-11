@@ -15,8 +15,6 @@ const PaginateRightButton = () => {
   const { enableAnimation, disableAnimation } = useAnimation();
 
   const handlePaginateRight = () => {
-    if (!hasPaginated) markAsPaginated();
-
     enableAnimation();
     const slideAmount = getSlideAmount({
       direction: SLIDE_DIRECTION.RIGHT,
@@ -25,6 +23,7 @@ const PaginateRightButton = () => {
     slide(slideAmount);
 
     setTimeout(() => {
+      if (!hasPaginated) markAsPaginated();
       disableAnimation();
       slide(0);
       if (isSecondToLastPage) return goToLastPage();

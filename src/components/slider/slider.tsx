@@ -11,7 +11,7 @@ import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagi
 import { useResizeWindow } from '@/components/slider/hooks/use-resize/use-resize-window';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
-import Tiles from '@/components/slider/tiles/tiles';
+import TileList from '@/components/slider/tiles/tile-list';
 
 function log(...args: string[]) {
   if (args.length > 1 && typeof args[0] === 'string') {
@@ -62,7 +62,7 @@ const Slider = () => {
         </div>
       )}
       <PaginateLeftButton />
-      <Tiles />
+      <TileList />
       <PaginateRightButton />
     </div>
   );
