@@ -6,8 +6,8 @@ import TileItem from '@/components/slider/tiles/tile-item';
 const PrevPage = () => {
   const {
     state: { currentPage, pages },
-    status: { hasPaginated },
   } = usePagination();
+  const { hasPaginated } = usePageUtils();
   const { getTilesPerPage } = usePageUtils();
 
   if (!hasPaginated) return null;

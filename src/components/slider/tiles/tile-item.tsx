@@ -8,7 +8,7 @@ import { BodyMedium, BodySmall } from '@/components/fonts';
 import { CategoryMovieIcon, DotIcon } from '@/components/icons';
 
 type TileItemProps = {
-  tile: Tile;
+  tile: Tile | void;
   displayNumber?: number | '';
   isVisibleOnScreen?: boolean;
 };
@@ -17,6 +17,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   { tile, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
+  if (!tile) return null;
   return (
     <div
       ref={ref}

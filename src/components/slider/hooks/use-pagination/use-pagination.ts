@@ -18,26 +18,28 @@ type UsePaginationReturn = {
     maxPages: number;
   };
   status: {
-    hasPaginated: boolean;
-    isMounted: boolean;
+    isFirstPage: boolean;
+    isSecondPage: boolean;
+    isLastPage: boolean;
+    isSecondToLastPage: boolean;
   };
   actions: {
     goToNextPage: () => void;
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
-    goToMaximizedPage: (prevTiles: Tile[]) => void;
-    goToMinimizedPage: (prevTiles: Tile[]) => void;
+    goToMaximizedPage: () => void;
+    goToMinimizedPage: () => void;
   };
 };
+
+// IMPORTANT: Only import from UI components. Do not import from other hooks.
 
 export const usePagination = (): UsePaginationReturn => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPages = useSliderStore(state => state.maxPages);
-  const hasPaginated = useSliderStore(state => state.hasPaginated);
-  const isMounted = useSliderStore(state => state.isMounted);
 
   const { goToFirstPage } = useFirstPage();
   const { goToLastPage } = useLastPage();
@@ -45,6 +47,11 @@ export const usePagination = (): UsePaginationReturn => {
   const { goToPrevPage } = usePrevPage();
   const { goToMaximizedPage } = useMaximizedPage();
   const { goToMinimizedPage } = useMinimizedPage();
+
+  const isFirstPage = currentPage === 1;
+  const isSecondPage = currentPage === 2;
+  const isLastPage = currentPage === maxPages - 2;
+  const isSecondToLastPage = currentPage === maxPages - 3;
 
   return {
     state: {
@@ -54,8 +61,10 @@ export const usePagination = (): UsePaginationReturn => {
       maxPages,
     },
     status: {
-      hasPaginated,
-      isMounted,
+      isFirstPage,
+      isSecondPage,
+      isLastPage,
+      isSecondToLastPage,
     },
     actions: {
       goToFirstPage,

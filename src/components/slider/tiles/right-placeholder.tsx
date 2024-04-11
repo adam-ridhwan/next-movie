@@ -7,20 +7,21 @@ import TileItem from '@/components/slider/tiles/tile-item';
 const RightPlaceholder = () => {
   const {
     state: { TILES, currentPage, pages },
-    status: { isMounted },
   } = usePagination();
-  const { getTilesPerPage } = usePageUtils();
+  const { getTilesPerPage, isMounted } = usePageUtils();
 
   const lastIndex = getTilesPerPage() - 1;
 
-  const getNextTile = (): Tile => {
-    if (!isMounted) return TILES[0];
+  const getNextTile = (): Tile | void => {
+    if (!isMounted) return;
 
     const nextPage = getMapItem({
       label: 'RightPlaceholder: nextPage',
       map: pages,
       key: currentPage + 1,
     });
+
+    if (nextPage.length !== getTilesPerPage()) return;
 
     const indexOfLastItem = findIndexFromKey({
       label: 'RightPlaceholder: indexOfLastItem',

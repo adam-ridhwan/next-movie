@@ -6,9 +6,8 @@ import TileItem from '@/components/slider/tiles/tile-item';
 const NextPage = () => {
   const {
     state: { currentPage, pages },
-    status: { isMounted },
   } = usePagination();
-  const { getTilesPerPage } = usePageUtils();
+  const { getTilesPerPage, isMounted } = usePageUtils();
 
   if (!isMounted) return null;
 

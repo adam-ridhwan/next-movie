@@ -1,12 +1,13 @@
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const LeftPlaceholder = () => {
   const {
     state: { TILES, currentPage, pages },
-    status: { hasPaginated },
   } = usePagination();
+  const { hasPaginated } = usePageUtils();
 
   const getPrevTile = () => {
     const prevPage = getMapItem({

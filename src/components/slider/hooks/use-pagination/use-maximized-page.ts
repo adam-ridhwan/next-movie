@@ -4,6 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pages';
 
 export const useMaximizedPage = () => {
@@ -63,7 +64,10 @@ export const useMaximizedPage = () => {
   const pages = useSliderStore(state => state.pages);
   const maxPages = useSliderStore(state => state.maxPages);
   const currentPage = useSliderStore(state => state.currentPage);
+  const currentTilesPerPage = useSliderStore(state => state.tilesPerPage);
+  const lastPageLength = useSliderStore(state => state.lastPageLength);
   const { setMapTiles } = useMapPages();
+  const { getTilesPerPage } = usePageUtils();
 
   const goToMaximizedPage = () => {
     usePaginationLogger.maximized();
@@ -81,10 +85,35 @@ export const useMaximizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    const index =
-      currentPage === maxPages - 2 ? firstTileCurrentPageIndex - 1 : firstTileCurrentPageIndex;
+    const tilesToDecrement = getTilesPerPage() - currentTilesPerPage;
+    const isLastPage = currentPage === maxPages - 2;
+    const isSecondToLastPage = currentPage === maxPages - 3;
 
-    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex: index });
+    if (isLastPage) {
+      const indexForLastPage = firstTileCurrentPageIndex - tilesToDecrement;
+      return setMapTiles({
+        firstTileCurrentPage,
+        firstTileCurrentPageIndex: indexForLastPage,
+      });
+    }
+
+    if (isSecondToLastPage) {
+      const indexForSecondToLastPage =
+        lastPageLength >= tilesToDecrement
+          ? firstTileCurrentPageIndex
+          : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
+
+      return setMapTiles({
+        firstTileCurrentPage,
+        firstTileCurrentPageIndex: indexForSecondToLastPage,
+      });
+    }
+
+    setMapTiles({
+      firstTileCurrentPage,
+      firstTileCurrentPageIndex,
+    });
   };
+
   return { goToMaximizedPage };
 };

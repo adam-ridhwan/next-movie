@@ -1,7 +1,7 @@
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useSlide } from '@/components/slider/hooks/use-slide';
 import CurrentPage from '@/components/slider/tiles/current-page';
 import LeftPlaceholder from '@/components/slider/tiles/left-placeholder';
@@ -10,9 +10,7 @@ import PrevPage from '@/components/slider/tiles/prev-page';
 import RightPlaceholder from '@/components/slider/tiles/right-placeholder';
 
 const Tiles = () => {
-  const {
-    status: { hasPaginated },
-  } = usePagination();
+  const { hasPaginated } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
 

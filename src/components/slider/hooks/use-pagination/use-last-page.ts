@@ -12,7 +12,6 @@ export const useLastPage = () => {
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const { getTilesPerPage } = usePageUtils();
-
   const { setMapTiles } = useMapPages();
 
   const goToLastPage = () => {
