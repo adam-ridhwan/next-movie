@@ -3,7 +3,7 @@ import { useDomContext } from '@/providers/dom-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Tile } from '@/lib/types';
-import { cn, getMapItem } from '@/lib/utils';
+import { cn, findIndexFromKey, getMapItem } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
@@ -12,19 +12,63 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const {
-    state: { pages, currentPage },
+    state: { TILES, pages, currentPage },
   } = usePagination();
-  const { hasPaginated } = usePageUtils();
+  const { hasPaginated, getTilesPerPage } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { isMounted } = usePageUtils();
   const { tileRef } = useDomContext();
 
   // TODO: Get the left and right placeholder tiles
-  //  [ ] LeftPlaceholder
-  //  [ ] RightPlaceholder
+  //  [x] LeftPlaceholder
+  //  [x] RightPlaceholder
   //  [ ] Refactor the code and possibly extract the logic to a separate hook
   //  [ ] Delete old code
+
+  const getPrevTile = () => {
+    if (!isMounted || !hasPaginated) return;
+
+    const prevPage = getMapItem({
+      label: 'LeftPlaceholder: prevPage',
+      map: pages,
+      key: currentPage - 1,
+    });
+
+    const indexOfFirstItem = findIndexFromKey({
+      label: 'LeftPlaceholder: indexOfFirstItem',
+      array: TILES,
+      key: 'id',
+      value: prevPage[0].id,
+    });
+
+    const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : TILES.length - 1;
+    return TILES[indexOfPreviousItem];
+  };
+
+  const getNextTile = (): Tile | void => {
+    if (!isMounted) return;
+
+    const lastIndex = getTilesPerPage() - 1;
+
+    const nextPage = getMapItem({
+      label: 'RightPlaceholder: nextPage',
+      map: pages,
+      key: currentPage + 1,
+    });
+
+    if (nextPage.length !== getTilesPerPage()) return;
+
+    const indexOfLastItem = findIndexFromKey({
+      label: 'RightPlaceholder: indexOfLastItem',
+      array: TILES,
+      key: 'id',
+      value: nextPage[lastIndex]?.id,
+    });
+
+    const indexOfNextItem = indexOfLastItem === TILES.length - 1 ? 0 : indexOfLastItem + 1;
+    return TILES[indexOfNextItem];
+  };
 
   const prevPageTiles =
     !isMounted || !hasPaginated
@@ -49,7 +93,16 @@ const TileList = () => {
         key: currentPage + 1,
       });
 
-  const tilesToRender: Tile[] = [...prevPageTiles, ...currentPageTiles, ...nextPageTiles];
+  const prevTile = getPrevTile();
+  const nextTile = getNextTile();
+
+  const tilesToRender: Tile[] = [
+    ...(prevTile ? [prevTile] : []),
+    ...prevPageTiles,
+    ...currentPageTiles,
+    ...nextPageTiles,
+    ...(nextTile ? [nextTile] : []),
+  ];
 
   return (
     <>
