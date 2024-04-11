@@ -65,6 +65,7 @@ export const useMaximizedPage = () => {
   const maxPages = useSliderStore(state => state.maxPages);
   const currentPage = useSliderStore(state => state.currentPage);
   const currentTilesPerPage = useSliderStore(state => state.tilesPerPage);
+  const lastPageLength = useSliderStore(state => state.lastPageLength);
   const { setMapTiles } = useMapPages();
   const { getTilesPerPage } = usePageUtils();
 
@@ -85,13 +86,34 @@ export const useMaximizedPage = () => {
     });
 
     const tilesToDecrement = getTilesPerPage() - currentTilesPerPage;
+    const isLastPage = currentPage === maxPages - 2;
+    const isSecondToLastPage = currentPage === maxPages - 3;
 
-    const index =
-      currentPage === maxPages - 2
-        ? firstTileCurrentPageIndex - tilesToDecrement
-        : firstTileCurrentPageIndex;
+    if (isLastPage) {
+      const indexForLastPage = firstTileCurrentPageIndex - tilesToDecrement;
+      return setMapTiles({
+        firstTileCurrentPage,
+        firstTileCurrentPageIndex: indexForLastPage,
+      });
+    }
 
-    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex: index });
+    if (isSecondToLastPage) {
+      const indexForSecondToLastPage =
+        lastPageLength >= tilesToDecrement
+          ? firstTileCurrentPageIndex
+          : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
+
+      return setMapTiles({
+        firstTileCurrentPage,
+        firstTileCurrentPageIndex: indexForSecondToLastPage,
+      });
+    }
+
+    setMapTiles({
+      firstTileCurrentPage,
+      firstTileCurrentPageIndex,
+    });
   };
+
   return { goToMaximizedPage };
 };

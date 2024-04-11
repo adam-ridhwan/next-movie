@@ -5,7 +5,6 @@ import chalk from 'chalk';
 
 import { RESIZE_DIRECTION } from '@/lib/constants';
 import { logger } from '@/lib/logger';
-import { getMapItem } from '@/lib/utils';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
@@ -14,7 +13,7 @@ const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 
 export const useResizeWindow = () => {
   const {
-    state: { currentPage, pages },
+    state: { currentPage },
     actions: { goToFirstPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
   const { getTilesPerPage } = usePageUtils();
@@ -32,23 +31,14 @@ export const useResizeWindow = () => {
 
     log(' USE WINDOW RESIZE ');
 
-    const prevPage = getMapItem({
-      label: 'handleResize() - prevPage',
-      map: pages,
-      key: currentPage,
-    });
-
     if (currentPage === 1) {
       goToFirstPage();
     } else {
-      resizeDirection === RESIZE_DIRECTION.MINIMIZING
-        ? goToMinimizedPage(prevPage)
-        : goToMaximizedPage(prevPage);
+      resizeDirection === RESIZE_DIRECTION.MINIMIZING ? goToMinimizedPage() : goToMaximizedPage();
     }
 
     prevWindowWidth.current = currentWidth;
   }, [
-    pages,
     currentPage,
     resizeDirection,
     getTilesPerPage,

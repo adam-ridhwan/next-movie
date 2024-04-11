@@ -20,14 +20,18 @@ type UsePaginationReturn = {
   status: {
     hasPaginated: boolean;
     isMounted: boolean;
+    markAsPaginated: () => void;
+    isFirstPage: boolean;
+    isLastPage: boolean;
+    isSecondToLastPage: boolean;
   };
   actions: {
     goToNextPage: () => void;
     goToPrevPage: () => void;
     goToFirstPage: () => void;
     goToLastPage: () => void;
-    goToMaximizedPage: (prevTiles: Tile[]) => void;
-    goToMinimizedPage: (prevTiles: Tile[]) => void;
+    goToMaximizedPage: () => void;
+    goToMinimizedPage: () => void;
   };
 };
 
@@ -37,6 +41,7 @@ export const usePagination = (): UsePaginationReturn => {
   const currentPage = useSliderStore(state => state.currentPage);
   const maxPages = useSliderStore(state => state.maxPages);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
+  const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
   const { goToFirstPage } = useFirstPage();
@@ -45,6 +50,10 @@ export const usePagination = (): UsePaginationReturn => {
   const { goToPrevPage } = usePrevPage();
   const { goToMaximizedPage } = useMaximizedPage();
   const { goToMinimizedPage } = useMinimizedPage();
+
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === maxPages - 2;
+  const isSecondToLastPage = currentPage === maxPages - 3;
 
   return {
     state: {
@@ -56,6 +65,10 @@ export const usePagination = (): UsePaginationReturn => {
     status: {
       hasPaginated,
       isMounted,
+      markAsPaginated,
+      isFirstPage,
+      isLastPage,
+      isSecondToLastPage,
     },
     actions: {
       goToFirstPage,

@@ -6,7 +6,7 @@ import { Tile } from '@/lib/types';
 import { HeadingMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
-const MOCK_TRENDING_TILES: Tile[] = Array.from({ length: 9 }, (_, index) => ({
+const MOCK_TRENDING_TILES: Tile[] = Array.from({ length: 11 }, (_, index) => ({
   id: `${index + 1}`,
   imageUrl: `https://picsum.photos/id/54/200/300`,
   year: '2019',

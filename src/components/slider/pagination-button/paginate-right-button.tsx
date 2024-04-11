@@ -7,12 +7,15 @@ import PaginationButton from '@/components/slider/pagination-button/pagination-b
 const PaginateRightButton = () => {
   const {
     state: { currentPage, maxPages },
+    status: { hasPaginated, markAsPaginated },
     actions: { goToFirstPage, goToLastPage, goToNextPage },
   } = usePagination();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 
   const handlePaginateRight = () => {
+    if (!hasPaginated) markAsPaginated();
+
     const isSecondToLastPage = currentPage === maxPages - 3;
     const isLastPage = currentPage === maxPages - 2;
 
