@@ -19,10 +19,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
 ) => {
   if (!tile) return null;
   return (
-    <div
-      ref={ref}
-      className={cn('slider-tile p-1', `tile-${isVisibleOnScreen ? displayNumber : ''}`)}
-    >
+    <div ref={ref} className={cn('slider-tile p-1', `tile-${isVisibleOnScreen ? displayNumber : ''}`)}>
       {DEVELOPMENT_MODE ? (
         <>
           <div

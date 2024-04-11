@@ -9,7 +9,7 @@ import NextPage from '@/components/slider/tiles/next-page';
 import PrevPage from '@/components/slider/tiles/prev-page';
 import RightPlaceholder from '@/components/slider/tiles/right-placeholder';
 
-const Tiles = () => {
+const TileList = () => {
   const { hasPaginated } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
@@ -37,4 +37,4 @@ const Tiles = () => {
   );
 };
 
-export default Tiles;
+export default TileList;
