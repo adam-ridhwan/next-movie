@@ -9,6 +9,7 @@ import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize/use-resize-window';
+import PageIndicator from '@/components/slider/page-indicator/page-indicator';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import TileList from '@/components/slider/tiles/tile-list';
@@ -64,6 +65,7 @@ const Slider = () => {
       <PaginateLeftButton />
       <TileList />
       <PaginateRightButton />
+      <PageIndicator />
     </div>
   );
 };

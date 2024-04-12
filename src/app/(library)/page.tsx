@@ -5,10 +5,8 @@ import { v4 as uuid } from 'uuid';
 import { prisma } from '@/lib/client';
 import { DEVELOPMENT_MODE, libraryStrings } from '@/lib/constants';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
-import { BodyMedium } from '@/components/fonts';
-import PageIndicator from '@/components/slider/page-indicator/page-indicator';
+import { HeadingExtraSmall } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
-import SliderEyebrow from '@/components/slider/slider-eyebrow';
 
 const MOCK_TRENDING_TILES: Movie[] = Array.from({ length: 15 }, (_, index) => ({
   id: uuid(),
@@ -28,7 +26,7 @@ export default async function Home() {
         <div key={tiles.length} className='flex flex-col gap-1 pt-5'>
           <SliderProvider tiles={tiles}>
             <DomContextProvider>
-              <SliderEyebrow />
+              <HeadingExtraSmall className='px-12'>{libraryStrings.trending}</HeadingExtraSmall>
               <Slider />
             </DomContextProvider>
           </SliderProvider>
