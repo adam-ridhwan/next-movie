@@ -3,6 +3,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
+import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
 
@@ -13,8 +14,6 @@ export type SignUpData = {
   password: string;
   repeatedPassword: string;
 };
-
-const prisma = new PrismaClient();
 
 export async function signUp({ email, password, repeatedPassword }: SignUpData): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
@@ -74,8 +73,6 @@ export async function signUp({ email, password, repeatedPassword }: SignUpData):
   };
 
   await prisma.user.create({ data: newUser });
-
-  prisma.$disconnect();
 
   return {
     success: true,

@@ -3,10 +3,9 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
+import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
-
-const prisma = new PrismaClient();
 
 export async function signIn({
   email,
@@ -65,8 +64,6 @@ export async function signIn({
       message: errorStrings.invalidPassword,
     };
   }
-
-  prisma.$disconnect();
 
   return {
     success: true,

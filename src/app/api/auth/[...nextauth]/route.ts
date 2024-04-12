@@ -18,7 +18,6 @@ const handler = NextAuth({
         const { email, password } = credentials ?? {};
 
         const authenticated = await signIn({ email, password });
-        console.log('authenticated', authenticated);
         if (!authenticated.success) throw new Error(authenticated.message);
 
         return authenticated.user;
