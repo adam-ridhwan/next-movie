@@ -29,7 +29,7 @@ const TileList = () => {
     >
       {tilesToRender.map((tile, i) => (
         // TODO: Fix the displayName. Only show the number if the tile is visible on screen.
-        <TileItem key={i} ref={i === 0 ? tileRef : undefined} tile={tile} />
+        <TileItem key={tile.id} ref={i === 0 ? tileRef : undefined} tile={tile} />
       ))}
     </div>
   );
