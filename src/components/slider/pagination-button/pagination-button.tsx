@@ -26,7 +26,9 @@ const PaginationButton = ({ direction, onClick, className }: PaginationButtonPro
         disabled={isAnimating}
         onClick={onClick}
         className={cn(
-          `group/button absolute top-0 z-10 flex h-full w-12 items-center justify-center rounded-none bg-darkerBlue/50 px-0 py-0 hover:bg-darkestBlue/50 disabled:pointer-events-auto disabled:opacity-100`,
+          `group/button absolute top-0 z-10 flex h-full w-12 items-center justify-center 
+          rounded-none bg-darkerBlue/50 px-0 py-0 
+          hover:bg-darkestBlue/50 disabled:pointer-events-auto disabled:opacity-100`,
           { 'right-0': direction === SLIDE_DIRECTION.RIGHT },
           { 'left-0': direction === SLIDE_DIRECTION.LEFT },
           className
