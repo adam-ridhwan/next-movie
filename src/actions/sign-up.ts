@@ -1,8 +1,8 @@
 'use server';
 
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-import { connectToDb } from '@/lib/connect-to-db';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
 
@@ -14,11 +14,9 @@ export type SignUpData = {
   repeatedPassword: string;
 };
 
-export async function signUp({
-  email,
-  password,
-  repeatedPassword,
-}: SignUpData): Promise<FormResponse> {
+const prisma = new PrismaClient();
+
+export async function signUp({ email, password, repeatedPassword }: SignUpData): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,
@@ -57,8 +55,7 @@ export async function signUp({
     };
   }
 
-  const { usersCollection } = await connectToDb();
-  const existingUser = await usersCollection.findOne({ email: parsedEmail });
+  const existingUser = await prisma.user.findUnique({ where: { email: parsedEmail } });
   if (existingUser) {
     return {
       success: false,
@@ -71,12 +68,14 @@ export async function signUp({
   const newUser = {
     email: parsedEmail,
     password: hashedPassword,
-    name: null,
-    emailVerified: null,
+    name: '',
+    emailVerified: false,
     image: null,
   };
 
-  await usersCollection.insertOne(newUser);
+  await prisma.user.create({ data: newUser });
+
+  prisma.$disconnect();
 
   return {
     success: true,

@@ -1,10 +1,12 @@
 'use server';
 
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-import { connectToDb } from '@/lib/connect-to-db';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, userSchema } from '@/lib/types';
+
+const prisma = new PrismaClient();
 
 export async function signIn({
   email,
@@ -13,8 +15,6 @@ export async function signIn({
   email: string | undefined;
   password: string | undefined;
 }): Promise<FormResponse> {
-  const { usersCollection } = await connectToDb();
-
   if (!email || !password) {
     return {
       success: false,
@@ -44,7 +44,13 @@ export async function signIn({
 
   const { email: parsedEmail, password: parsedPassword } = parsedResult.data;
 
-  const existingUser = await usersCollection.findOne({ email: parsedEmail });
+  const existingUser = await prisma.user.findUnique({
+    where: { email: parsedEmail },
+    select: {
+      password: true,
+    },
+  });
+
   if (!existingUser) {
     return {
       success: false,
@@ -59,6 +65,8 @@ export async function signIn({
       message: errorStrings.invalidPassword,
     };
   }
+
+  prisma.$disconnect();
 
   return {
     success: true,
