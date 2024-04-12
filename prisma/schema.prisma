@@ -24,7 +24,8 @@ model User {
 }
 
 model Movie {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
+  uuid         String? @unique
   title        String
   description  String
   thumbnailUrl String

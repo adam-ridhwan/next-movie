@@ -2,12 +2,14 @@ import type { Prisma } from '@prisma/client';
 
 import { z } from 'zod';
 import { SortOrderSchema } from './SortOrderSchema';
+import { SortOrderInputSchema } from './SortOrderInputSchema';
 import { MovieCountOrderByAggregateInputSchema } from './MovieCountOrderByAggregateInputSchema';
 import { MovieMaxOrderByAggregateInputSchema } from './MovieMaxOrderByAggregateInputSchema';
 import { MovieMinOrderByAggregateInputSchema } from './MovieMinOrderByAggregateInputSchema';
 
 export const MovieOrderByWithAggregationInputSchema: z.ZodType<Prisma.MovieOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
+  uuid: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   title: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnailUrl: z.lazy(() => SortOrderSchema).optional(),

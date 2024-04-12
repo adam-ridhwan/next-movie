@@ -9,6 +9,7 @@ import { MovieScalarFieldEnumSchema } from '../inputTypeSchemas/MovieScalarField
 
 export const MovieSelectSchema: z.ZodType<Prisma.MovieSelect> = z.object({
   id: z.boolean().optional(),
+  uuid: z.boolean().optional(),
   title: z.boolean().optional(),
   description: z.boolean().optional(),
   thumbnailUrl: z.boolean().optional(),

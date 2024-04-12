@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 export const MovieUncheckedCreateInputSchema: z.ZodType<Prisma.MovieUncheckedCreateInput> = z.object({
   id: z.string().uuid().optional(),
+  uuid: z.string().optional().nullable(),
   title: z.string(),
   description: z.string(),
   thumbnailUrl: z.string()

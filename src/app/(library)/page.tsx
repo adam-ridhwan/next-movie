@@ -10,6 +10,7 @@ import Slider from '@/components/slider/slider';
 
 const MOCK_TRENDING_TILES: Movie[] = Array.from({ length: 15 }, (_, index) => ({
   id: uuid(),
+  uuid: '',
   title: `${index + 1}`,
   description: `Description ${index + 1}`,
   thumbnailUrl: `https://picsum.photos/id/${Math.floor(Math.random() * 10) + 1}/200/300`,
