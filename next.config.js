@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [{ hostname: 'picsum.photos' }],
+    remotePatterns: [
+      { hostname: 'glhwlvhs6fyvq6hd.public.blob.vercel-storage.com' },
+      { hostname: 'picsum.photos' },
+    ],
   },
 };
 

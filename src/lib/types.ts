@@ -4,9 +4,12 @@ import { z } from 'zod';
 
 import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/lib/constants';
 
+import { Movie, MovieSchema } from '../../prisma/generated/zod';
+
 export type TODO = any;
 
-export const mongoIdSchema = z.string();
+export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
+export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
 
 export const formResponseSchema = z.object({
   success: z.boolean(),
@@ -15,28 +18,12 @@ export const formResponseSchema = z.object({
 });
 export type FormResponse = z.infer<typeof formResponseSchema>;
 
-export const userSchema = z.object({
-  _id: mongoIdSchema.optional(),
-  name: z.string().nullable().optional(),
-  email: z.string().email(),
-  password: z.string().min(8),
-  emailVerified: z.date().nullable().optional(),
-  image: z.string().nullable().optional(),
-});
-export type User = z.infer<typeof userSchema>;
+export const nonEmptyTilesSchema = z.array(MovieSchema).nonempty();
+export type Pages = Map<number, Movie[]>;
 
-export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
-
-export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
-
-export const tileSchema = z.object({
-  id: z.string(),
-  imageUrl: z.string(),
-  year: z.string(),
-  category: z.string(),
-  rating: z.string(),
-  title: z.string(),
-});
-export const nonEmptyTilesSchema = z.array(tileSchema).nonempty();
-export type Tile = z.infer<typeof tileSchema>;
-export type Pages = Map<number, Tile[]>;
+export const SignInValidationSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(7),
+  })
+  .strict();

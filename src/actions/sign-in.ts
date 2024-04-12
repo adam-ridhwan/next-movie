@@ -2,19 +2,16 @@
 
 import bcrypt from 'bcrypt';
 
-import { connectToDb } from '@/lib/connect-to-db';
+import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
-import { FormResponse, userSchema } from '@/lib/types';
+import { FormResponse, SignInValidationSchema } from '@/lib/types';
 
-export async function signIn({
-  email,
-  password,
-}: {
+export type SignInPayload = {
   email: string | undefined;
   password: string | undefined;
-}): Promise<FormResponse> {
-  const { usersCollection } = await connectToDb();
+};
 
+export async function signIn({ email, password }: SignInPayload): Promise<FormResponse> {
   if (!email || !password) {
     return {
       success: false,
@@ -22,7 +19,7 @@ export async function signIn({
     };
   }
 
-  const parsedResult = userSchema.safeParse({
+  const parsedResult = SignInValidationSchema.safeParse({
     email,
     password,
   });
@@ -44,7 +41,13 @@ export async function signIn({
 
   const { email: parsedEmail, password: parsedPassword } = parsedResult.data;
 
-  const existingUser = await usersCollection.findOne({ email: parsedEmail });
+  const existingUser = await prisma.user.findUnique({
+    where: { email: parsedEmail },
+    select: {
+      password: true,
+    },
+  });
+
   if (!existingUser) {
     return {
       success: false,

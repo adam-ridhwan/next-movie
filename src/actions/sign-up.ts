@@ -2,23 +2,21 @@
 
 import bcrypt from 'bcrypt';
 
-import { connectToDb } from '@/lib/connect-to-db';
+import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
-import { FormResponse, userSchema } from '@/lib/types';
+import { FormResponse } from '@/lib/types';
+
+import { UserSchema } from '../../prisma/generated/zod';
 
 const SALT_ROUNDS = 10;
 
-export type SignUpData = {
+export type SignUpPayload = {
   email: string;
   password: string;
   repeatedPassword: string;
 };
 
-export async function signUp({
-  email,
-  password,
-  repeatedPassword,
-}: SignUpData): Promise<FormResponse> {
+export async function signUp({ email, password, repeatedPassword }: SignUpPayload): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,
@@ -26,7 +24,7 @@ export async function signUp({
     };
   }
 
-  const parsedResult = userSchema.safeParse({
+  const parsedResult = UserSchema.safeParse({
     email,
     password,
   });
@@ -57,8 +55,7 @@ export async function signUp({
     };
   }
 
-  const { usersCollection } = await connectToDb();
-  const existingUser = await usersCollection.findOne({ email: parsedEmail });
+  const existingUser = await prisma.user.findUnique({ where: { email: parsedEmail } });
   if (existingUser) {
     return {
       success: false,
@@ -71,12 +68,12 @@ export async function signUp({
   const newUser = {
     email: parsedEmail,
     password: hashedPassword,
-    name: null,
-    emailVerified: null,
+    name: '',
+    emailVerified: false,
     image: null,
   };
 
-  await usersCollection.insertOne(newUser);
+  await prisma.user.create({ data: newUser });
 
   return {
     success: true,

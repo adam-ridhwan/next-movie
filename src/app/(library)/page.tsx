@@ -1,60 +1,39 @@
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
+import { v4 as uuid } from 'uuid';
 
-import { libraryStrings } from '@/lib/constants';
-import { Tile } from '@/lib/types';
-import { HeadingMedium } from '@/components/fonts';
+import { prisma } from '@/lib/client';
+import { DEVELOPMENT_MODE, libraryStrings } from '@/lib/constants';
+import { BodyMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
-const MOCK_TRENDING_TILES: Tile[] = Array.from({ length: 9 }, (_, index) => ({
-  id: `${index + 1}`,
-  imageUrl: `https://picsum.photos/id/54/200/300`,
-  year: '2019',
-  category: 'Movie',
-  rating: 'PG',
-  title: `Trending ${index + 1}`,
-}));
+import { Movie } from '../../../prisma/generated/zod';
 
-const MOCK_RECOMMENDED_TILES: Tile[] = Array.from({ length: 13 }, (_, index) => ({
-  id: `${index + 1}`,
-  imageUrl: `https://picsum.photos/id/54/200/300`,
-  year: '2019',
-  category: 'Movie',
-  rating: 'PG',
-  title: `Recommended ${index + 1}`,
-}));
-
-const MOCK_NEW_RELEASES_TILES: Tile[] = Array.from({ length: 21 }, (_, index) => ({
-  id: `${index + 1}`,
-  imageUrl: `https://picsum.photos/id/54/200/300`,
-  year: '2019',
-  category: 'Movie',
-  rating: 'PG',
-  title: `New Releases Movie ${index + 1}`,
+const MOCK_TRENDING_TILES: Movie[] = Array.from({ length: 15 }, (_, index) => ({
+  id: uuid(),
+  title: `${index + 1}`,
+  description: `Description ${index + 1}`,
+  thumbnailUrl: `https://picsum.photos/id/${Math.floor(Math.random() * 10) + 1}/200/300`,
 }));
 
 export default async function Home() {
-  const homepage = [
-    MOCK_TRENDING_TILES, //
-    // MOCK_RECOMMENDED_TILES, //
-    // MOCK_NEW_RELEASES_TILES, //
-  ];
+  const fetchedTiles = await prisma.movie.findMany({});
+
+  const tiles = DEVELOPMENT_MODE ? [MOCK_TRENDING_TILES] : [fetchedTiles];
 
   return (
-    <>
-      <div className=''>
-        {homepage.map(tiles => (
-          <div key={tiles.length} className='pt-5'>
-            <HeadingMedium className='pl-12'>{libraryStrings.trending}</HeadingMedium>
+    <div>
+      {tiles.map(tiles => (
+        <div key={tiles.length} className='flex flex-col gap-1 pt-5'>
+          <BodyMedium className='pl-12'>{libraryStrings.trending}</BodyMedium>
 
-            <SliderProvider tiles={tiles}>
-              <DomContextProvider>
-                <Slider />
-              </DomContextProvider>
-            </SliderProvider>
-          </div>
-        ))}
-      </div>
-    </>
+          <SliderProvider tiles={tiles}>
+            <DomContextProvider>
+              <Slider />
+            </DomContextProvider>
+          </SliderProvider>
+        </div>
+      ))}
+    </div>
   );
 }

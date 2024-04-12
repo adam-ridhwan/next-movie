@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "zod-prisma-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id            String  @id @default(uuid())
+  email         String  @unique
+  password      String
+  name          String
+  emailVerified Boolean @default(false)
+  image         String?
+}
+
+model Movie {
+  id           String @id @default(uuid())
+  title        String
+  description  String
+  thumbnailUrl String
+}

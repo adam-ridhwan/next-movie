@@ -1,7 +1,8 @@
-import { Tile } from '@/lib/types';
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+
+import { Movie } from '../../../../prisma/generated/zod';
 
 export const useTiles = () => {
   const {
@@ -11,7 +12,7 @@ export const useTiles = () => {
   const { isMounted } = usePageUtils();
 
   // ──────────────────────────────────────────────────────────────
-  const getPrevTile = (): [Tile] | [] => {
+  const getPrevTile = (): [Movie] | [] => {
     if (!isMounted || !hasPaginated) return [];
 
     const prevPage = getMapItem({
@@ -58,7 +59,7 @@ export const useTiles = () => {
       });
 
   // ──────────────────────────────────────────────────────────────
-  const getNextTile = (): [Tile] | [] => {
+  const getNextTile = (): [Movie] | [] => {
     if (!isMounted) return [];
 
     const lastIndex = getTilesPerPage() - 1;
@@ -82,7 +83,7 @@ export const useTiles = () => {
     return [TILES[indexOfNextItem]];
   };
 
-  const tilesToRender: Tile[] = [
+  const tilesToRender: Movie[] = [
     ...getPrevTile(),
     ...prevPageTiles,
     ...currentPageTiles,

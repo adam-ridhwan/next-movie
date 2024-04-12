@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { Pages, Tile } from '@/lib/types';
+import { Pages } from '@/lib/types';
+
+import { Movie } from '../../prisma/generated/zod';
 
 type SetPagesParams = {
   pages: Pages;
@@ -14,7 +16,7 @@ type SetPagesParams = {
 };
 
 type SliderState = {
-  TILES: Tile[];
+  TILES: Movie[];
   pages: Pages;
   maxPages: number;
   currentPage: number;
@@ -39,11 +41,11 @@ type SliderActions = {
 
 export type SliderStore = SliderState & SliderActions;
 
-export const createSliderStore = (TILES: Tile[]) =>
+export const createSliderStore = (TILES: Movie[]) =>
   create(
     devtools<SliderStore>(set => ({
       TILES: TILES,
-      pages: new Map<number, Tile[]>().set(1, TILES.slice(0, 7)),
+      pages: new Map<number, Movie[]>().set(1, TILES.slice(0, 7)),
       maxPages: 0,
       tilesPerPage: 0,
       currentPage: 1,
