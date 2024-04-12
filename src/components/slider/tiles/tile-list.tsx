@@ -15,6 +15,20 @@ const TileList = () => {
   const { isAnimating } = useAnimation();
   const { tileRef } = useDomContext();
 
+  // const tilesPerPage = getTilesPerPage();
+
+  // const generateKey = (i: number) => {
+  //   if (i === 0) return `left-page-placeholder`;
+  //   if (i === tilesToRender.length - 1) return `right-page-placeholder`;
+  // if (i < tilesPerPage / 2 - 1) return `left-page-${i}`;
+  // if (i > tilesToRender.length - tilesPerPage / 2) return `right-page-${i}`;
+
+  // if (i > tilesPerPage - 1 && i < tilesPerPage * 2 + 2) {
+  //   console.log('generateKey: ', i);
+  // }
+  //   return '';
+  // };
+
   return (
     <div
       className={cn(
@@ -27,10 +41,13 @@ const TileList = () => {
         transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined,
       }}
     >
-      {tilesToRender.map((tile, i) => (
-        // TODO: Fix the displayName. Only show the number if the tile is visible on screen.
-        <TileItem key={tile.id} ref={i === 0 ? tileRef : undefined} tile={tile} />
-      ))}
+      {tilesToRender.map((tile, i) => {
+        // const key = `${tile.id}${generateKey(i)}`;
+        return (
+          // TODO: Fix the displayName. Only show the number if the tile is visible on screen.
+          <TileItem key={tile.uuid} ref={i === 0 ? tileRef : undefined} tile={tile} />
+        );
+      })}
     </div>
   );
 };

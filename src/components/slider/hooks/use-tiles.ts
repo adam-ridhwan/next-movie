@@ -30,9 +30,7 @@ export const useTiles = () => {
     });
 
     const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : TILES.length - 1;
-    const previousTile = { ...TILES[indexOfPreviousItem] };
-    previousTile.id = nanoId();
-    return [previousTile];
+    return [TILES[indexOfPreviousItem]];
   };
 
   // ──────────────────────────────────────────────────────────────
@@ -83,9 +81,7 @@ export const useTiles = () => {
     });
 
     const indexOfNextItem = indexOfLastItem === TILES.length - 1 ? 0 : indexOfLastItem + 1;
-    const nextTile = { ...TILES[indexOfNextItem] };
-    nextTile.id = nanoId();
-    return [nextTile];
+    return [TILES[indexOfNextItem]];
   };
 
   const tilesToRender: Movie[] = [
