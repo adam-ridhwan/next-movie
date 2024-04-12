@@ -10,13 +10,13 @@ import { UserSchema } from '../../prisma/generated/zod';
 
 const SALT_ROUNDS = 10;
 
-export type SignUpData = {
+export type SignUpPayload = {
   email: string;
   password: string;
   repeatedPassword: string;
 };
 
-export async function signUp({ email, password, repeatedPassword }: SignUpData): Promise<FormResponse> {
+export async function signUp({ email, password, repeatedPassword }: SignUpPayload): Promise<FormResponse> {
   if (!email || !password || !repeatedPassword) {
     return {
       success: false,

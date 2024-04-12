@@ -3,7 +3,7 @@
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from '@/actions/sign-in';
-import { signUp, SignUpData } from '@/actions/sign-up';
+import { signUp, SignUpPayload } from '@/actions/sign-up';
 
 import { authStrings } from '@/lib/constants';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,7 @@ import SignUpButton from './sign-up-button';
 
 export const SignUpForm = () => {
   const router = useRouter();
-  const [signUpData, setSignUpData] = useState<SignUpData>({
+  const [SignUpPayload, setSignUpPayload] = useState<SignUpPayload>({
     email: '',
     password: '',
     repeatedPassword: '',
@@ -22,7 +22,7 @@ export const SignUpForm = () => {
 
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, repeatedPassword } = signUpData;
+    const { email, password, repeatedPassword } = SignUpPayload;
     const registered = await signUp({ email, password, repeatedPassword });
     if (!registered.success) return setError(registered.message);
 
@@ -38,8 +38,8 @@ export const SignUpForm = () => {
         id='email'
         type='email'
         name='email'
-        value={signUpData.email}
-        onChange={e => setSignUpData({ ...signUpData, email: e.target.value })}
+        value={SignUpPayload.email}
+        onChange={e => setSignUpPayload({ ...SignUpPayload, email: e.target.value })}
         placeholder={authStrings.emailAddress}
         autoComplete='email'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
@@ -48,8 +48,8 @@ export const SignUpForm = () => {
       <Input
         type='password'
         name='password'
-        value={signUpData.password}
-        onChange={e => setSignUpData({ ...signUpData, password: e.target.value })}
+        value={SignUpPayload.password}
+        onChange={e => setSignUpPayload({ ...SignUpPayload, password: e.target.value })}
         placeholder={authStrings.password}
         autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
@@ -58,8 +58,8 @@ export const SignUpForm = () => {
       <Input
         type='password'
         name='repeated-password'
-        value={signUpData.repeatedPassword}
-        onChange={e => setSignUpData({ ...signUpData, repeatedPassword: e.target.value })}
+        value={SignUpPayload.repeatedPassword}
+        onChange={e => setSignUpPayload({ ...SignUpPayload, repeatedPassword: e.target.value })}
         placeholder={authStrings.repeatPassword}
         autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'

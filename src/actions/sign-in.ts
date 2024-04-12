@@ -6,13 +6,12 @@ import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse, SignInValidationSchema } from '@/lib/types';
 
-export async function signIn({
-  email,
-  password,
-}: {
+export type SignInPayload = {
   email: string | undefined;
   password: string | undefined;
-}): Promise<FormResponse> {
+};
+
+export async function signIn({ email, password }: SignInPayload): Promise<FormResponse> {
   if (!email || !password) {
     return {
       success: false,
