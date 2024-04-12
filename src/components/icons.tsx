@@ -3,21 +3,17 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type SVGProps = {
+  isActive?: boolean;
   className?: string;
 };
 
-const LogoIcon = ({ className }: SVGProps) => (
-  <svg
-    width='33'
-    height='27'
-    className={cn('fill-red', className)}
-    xmlns='http://www.w3.org/2000/svg'
-  >
+export const LogoIcon = ({ className }: SVGProps) => (
+  <svg width='33' height='27' className={cn('fill-red', className)} xmlns='http://www.w3.org/2000/svg'>
     <path d='m26.463.408 3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-1.6a3.186 3.186 0 0 0-3.184 3.2l-.016 19.2a3.2 3.2 0 0 0 3.2 3.2h25.6a3.2 3.2 0 0 0 3.2-3.2V.408h-6.4Z' />
   </svg>
 );
 
-const BookMarkEmptyIcon = ({ className }: SVGProps) => (
+export const BookMarkEmptyIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
@@ -31,7 +27,7 @@ const BookMarkEmptyIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const BookMarkFullIcon = ({ className }: SVGProps) => (
+export const BookMarkFullIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M10.61 0c.14 0 .273.028.4.083a1.03 1.03 0 0 1 .657.953v11.928a1.03 1.03 0 0 1-.656.953c-.116.05-.25.074-.402.074-.291 0-.543-.099-.756-.296L5.833 9.77l-4.02 3.924c-.218.203-.47.305-.756.305a.995.995 0 0 1-.4-.083A1.03 1.03 0 0 1 0 12.964V1.036A1.03 1.03 0 0 1 .656.083.995.995 0 0 1 1.057 0h9.552Z'
@@ -40,7 +36,7 @@ const BookMarkFullIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const CategoryMovieIcon = ({ className }: SVGProps) => (
+export const CategoryMovieIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-3.5 w-3.5 fill-secondary', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -54,7 +50,7 @@ const CategoryMovieIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const CategoryTvIcon = ({ className }: SVGProps) => (
+export const CategoryTvIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M12 2.689H5.448L7.068.722 6.132 0 4.2 2.345 2.268.017l-.936.705 1.62 1.967H0V12h12V2.689Zm-4.8 8.147h-6V3.853h6v6.983Zm3-2.328H9V7.344h1.2v1.164Zm0-2.328H9V5.016h1.2V6.18Z'
@@ -64,7 +60,7 @@ const CategoryTvIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const NavHomeIcon = ({ className }: SVGProps) => (
+export const NavHomeIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -74,7 +70,7 @@ const NavHomeIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const NavMoviesIcon = ({ className }: SVGProps) => (
+export const NavMoviesIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -84,7 +80,7 @@ const NavMoviesIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const NavTvSeriesIcon = ({ className }: SVGProps) => (
+export const NavTvSeriesIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -94,7 +90,7 @@ const NavTvSeriesIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const NavBookmarkIcon = ({ className }: SVGProps) => (
+export const NavBookmarkIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-6 w-6 fill-darkBlue', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -104,7 +100,7 @@ const NavBookmarkIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const PlayIcon = ({ className }: SVGProps) => (
+export const PlayIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M15 0C6.713 0 0 6.713 0 15c0 8.288 6.713 15 15 15 8.288 0 15-6.712 15-15 0-8.287-6.712-15-15-15Zm-3 21V8l9 6.5-9 6.5Z'
@@ -113,7 +109,7 @@ const PlayIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const SearchIcon = ({ className }: SVGProps) => (
+export const SearchIcon = ({ className }: SVGProps) => (
   <svg className={cn('h-6 w-6 fill-secondary', className)} xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M27.613 25.72 23.08 21.2a10.56 10.56 0 0 0 2.253-6.533C25.333 8.776 20.558 4 14.667 4S4 8.776 4 14.667c0 5.89 4.776 10.666 10.667 10.666A10.56 10.56 0 0 0 21.2 23.08l4.52 4.533a1.333 1.333 0 0 0 1.893 0 1.333 1.333 0 0 0 0-1.893ZM6.667 14.667a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z'
@@ -122,7 +118,7 @@ const SearchIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const AvatarIcon = ({ className }: SVGProps) => (
+export const AvatarIcon = ({ className }: SVGProps) => (
   <svg
     className={cn('h-8 w-8 fill-white', className)}
     xmlns='http://www.w3.org/2000/svg'
@@ -132,7 +128,7 @@ const AvatarIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const DotIcon = ({ className }: SVGProps) => (
+export const DotIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -147,11 +143,11 @@ const DotIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const LoadingIcon = ({ className }: SVGProps) => (
+export const LoadingIcon = ({ className }: SVGProps) => (
   <Loader2 className={cn('h-5 w-5 animate-spin', className)} />
 );
 
-const ChevronLeftIcon = ({ className }: SVGProps) => (
+export const ChevronLeftIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
@@ -166,7 +162,7 @@ const ChevronLeftIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-const ChevronRightIcon = ({ className }: SVGProps) => (
+export const ChevronRightIcon = ({ className }: SVGProps) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
@@ -181,21 +177,21 @@ const ChevronRightIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-export {
-  LogoIcon,
-  BookMarkEmptyIcon,
-  BookMarkFullIcon,
-  CategoryMovieIcon,
-  CategoryTvIcon,
-  NavBookmarkIcon,
-  NavHomeIcon,
-  NavMoviesIcon,
-  NavTvSeriesIcon,
-  PlayIcon,
-  SearchIcon,
-  AvatarIcon,
-  DotIcon,
-  LoadingIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-};
+export const PageIndicatorIcon = ({ isActive, className }: SVGProps) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='3'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+    className={cn(
+      'h-4 w-4 scale-125  border-amber-400 stroke-muted-foreground/60',
+      { 'stroke-primary': isActive },
+      className
+    )}
+  >
+    <path d='M5 12h14' />
+  </svg>
+);
