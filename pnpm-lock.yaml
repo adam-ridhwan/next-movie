@@ -74,6 +74,9 @@ dependencies:
   zod:
     specifier: ^3.22.4
     version: 3.22.4
+  zod-prisma-types:
+    specifier: ^3.1.6
+    version: 3.1.6
   zustand:
     specifier: ^4.5.2
     version: 4.5.2(@types/react@18.2.67)(react@18.2.0)
@@ -709,6 +712,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@prisma/generator-helper@5.12.1:
+    resolution: {integrity: sha512-TlaI4J6jDKO06P68ve5czz1SionzI5ciUIw2tWFO4FM4qPID5+7nrxTVlecFTUD7Nc+IaO1hYT1YBOPKLiUncQ==}
+    dependencies:
+      '@prisma/debug': 5.12.1
+    dev: false
 
   /@prisma/get-platform@4.16.2:
     resolution: {integrity: sha512-fnDey1/iSefHJRMB+w243BhWENf+paRouPMdCqIVqu8dYkR1NqhldblsSUC4Zr2sKS7Ta2sK4OLdt9IH+PZTfw==}
@@ -2025,6 +2034,10 @@ packages:
   /clsx@2.1.0:
     resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==}
     engines: {node: '>=6'}
+    dev: false
+
+  /code-block-writer@12.0.0:
+    resolution: {integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==}
     dev: false
 
   /color-convert@1.9.3:
@@ -3573,6 +3586,10 @@ packages:
   /lodash.union@4.6.0:
     resolution: {integrity: sha512-c4pB2CdGrGdjMKYLA+XiRDO7Y0PRQbm/Gzg8qMj+QH+pFVAoTp5sBpO0odL3FjoPCGjK96p6qsP+yQoiLoOBcw==}
     dev: true
+
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
 
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -5325,6 +5342,16 @@ packages:
       compress-commons: 4.1.2
       readable-stream: 3.6.2
     dev: true
+
+  /zod-prisma-types@3.1.6:
+    resolution: {integrity: sha512-ySaG91RraTm4J19zfvuX6S3OxhDMlK4dTfYWM4rS+4AlEGqDqGu5BbIn2trjTDt8OiCMBHoIjZmRXPKQCyNApA==}
+    hasBin: true
+    dependencies:
+      '@prisma/generator-helper': 5.12.1
+      code-block-writer: 12.0.0
+      lodash: 4.17.21
+      zod: 3.22.4
+    dev: false
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
