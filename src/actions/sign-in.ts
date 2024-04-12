@@ -1,11 +1,10 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
-import { FormResponse, userSchema } from '@/lib/types';
+import { FormResponse, SignInValidationSchema } from '@/lib/types';
 
 export async function signIn({
   email,
@@ -21,7 +20,7 @@ export async function signIn({
     };
   }
 
-  const parsedResult = userSchema.safeParse({
+  const parsedResult = SignInValidationSchema.safeParse({
     email,
     password,
   });

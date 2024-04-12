@@ -1,13 +1,9 @@
-// generator zod {
-//   provider = "prisma-zod-generator"
-// }
+generator client {
+  provider = "prisma-client-js"
+}
 
 generator zod {
   provider = "zod-prisma-types"
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -23,4 +19,11 @@ model User {
   name          String
   emailVerified Boolean @default(false)
   image         String?
+}
+
+model Movie {
+  id           String @id @default(uuid())
+  title        String
+  description  String
+  thumbnailUrl String
 }

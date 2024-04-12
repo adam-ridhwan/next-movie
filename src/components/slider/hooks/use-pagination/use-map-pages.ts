@@ -2,12 +2,14 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { Pages, Tile } from '@/lib/types';
+import { Pages } from '@/lib/types';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
+import { Movie } from '../../../../../prisma/generated/zod';
+
 type SetMapTilesParams = {
-  firstTileCurrentPage: Tile;
+  firstTileCurrentPage: Movie;
   firstTileCurrentPageIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
@@ -25,7 +27,7 @@ export const useMapPages = () => {
     isFirstPage,
     isLastPage,
   }: SetMapTilesParams) => {
-    const newPages: Pages = new Map<number, Tile[]>();
+    const newPages: Pages = new Map<number, Movie[]>();
     const newTilesPerPage = getTilesPerPage();
     let newFirstPageLength = newTilesPerPage;
     let newLastPageLength = newTilesPerPage;
@@ -38,7 +40,7 @@ export const useMapPages = () => {
     let newCurrentPage = -1;
 
     let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTilesTotal);
-    let tempTiles: Tile[] = [];
+    let tempTiles: Movie[] = [];
     for (let i = 0; i < newTilesTotal; i++) {
       if (startIndex >= TILES.length) startIndex = 0;
 
@@ -60,25 +62,25 @@ export const useMapPages = () => {
       tempTiles = [];
     }
 
-    console.table({
-      startIndex: startIndex,
-      newCurrentPage: newCurrentPage,
-      leftTilesTotal: leftTilesTotal,
-      rightTilesTotal: rightTilesTotal,
-      totalTiles: leftTilesTotal + rightTilesTotal,
-      newMaxPages: newMaxPages,
-      newFirstPageLength: newFirstPageLength,
-      newLastPageLength: newLastPageLength,
-    });
-
-    [...newPages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.id : undefined))
-        );
-      });
+    // console.table({
+    //   startIndex: startIndex,
+    //   newCurrentPage: newCurrentPage,
+    //   leftTilesTotal: leftTilesTotal,
+    //   rightTilesTotal: rightTilesTotal,
+    //   totalTiles: leftTilesTotal + rightTilesTotal,
+    //   newMaxPages: newMaxPages,
+    //   newFirstPageLength: newFirstPageLength,
+    //   newLastPageLength: newLastPageLength,
+    // });
+    //
+    // [...newPages.entries()]
+    //   .sort((a, b) => a[0] - b[0])
+    //   .forEach(([pageIndex, tiles]) => {
+    //     console.log(
+    //       `Page ${pageIndex}:`,
+    //       tiles.map(card => (card ? card.id : undefined))
+    //     );
+    //   });
 
     validatePages({
       label: 'useMinimizedPage()',

@@ -4,6 +4,8 @@ import { z } from 'zod';
 
 import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/lib/constants';
 
+import { Movie, MovieSchema } from '../../prisma/generated/zod';
+
 export type TODO = any;
 
 export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
@@ -16,14 +18,12 @@ export const formResponseSchema = z.object({
 });
 export type FormResponse = z.infer<typeof formResponseSchema>;
 
-export const tileSchema = z.object({
-  id: z.string(),
-  imageUrl: z.string(),
-  year: z.string(),
-  category: z.string(),
-  rating: z.string(),
-  title: z.string(),
-});
-export const nonEmptyTilesSchema = z.array(tileSchema).nonempty();
-export type Tile = z.infer<typeof tileSchema>;
-export type Pages = Map<number, Tile[]>;
+export const nonEmptyTilesSchema = z.array(MovieSchema).nonempty();
+export type Pages = Map<number, Movie[]>;
+
+export const SignInValidationSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(7),
+  })
+  .strict();
