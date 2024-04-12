@@ -82,7 +82,7 @@ export const useMapPages = () => {
     //   });
 
     validatePages({
-      label: 'useMinimizedPage()',
+      label: 'useMapPages()',
       pages: newPages,
       expectedMaxPages: newMaxPages,
       expectedTilesPerPage: newTilesPerPage,
