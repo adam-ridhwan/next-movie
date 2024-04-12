@@ -3,8 +3,7 @@ import Image from 'next/image';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-
-import { Movie } from '../../../../prisma/generated/zod';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 
 type TileItemProps = {
   tile: Movie | void;

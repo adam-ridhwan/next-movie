@@ -3,10 +3,9 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { Pages } from '@/lib/types';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
-
-import { Movie } from '../../../../../prisma/generated/zod';
 
 type SetMapTilesParams = {
   firstTileCurrentPage: Movie;

@@ -4,10 +4,9 @@ import { v4 as uuid } from 'uuid';
 
 import { prisma } from '@/lib/client';
 import { DEVELOPMENT_MODE, libraryStrings } from '@/lib/constants';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { BodyMedium } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
-
-import { Movie } from '../../../prisma/generated/zod';
 
 const MOCK_TRENDING_TILES: Movie[] = Array.from({ length: 15 }, (_, index) => ({
   id: uuid(),

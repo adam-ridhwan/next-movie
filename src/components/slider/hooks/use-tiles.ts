@@ -1,8 +1,7 @@
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
-
-import { Movie } from '../../../../prisma/generated/zod';
 
 export const useTiles = () => {
   const {
