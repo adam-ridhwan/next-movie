@@ -1,11 +1,12 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
-import { FormResponse, userSchema } from '@/lib/types';
+import { FormResponse } from '@/lib/types';
+
+import { UserSchema } from '../../prisma/generated/zod';
 
 const SALT_ROUNDS = 10;
 
@@ -23,7 +24,7 @@ export async function signUp({ email, password, repeatedPassword }: SignUpData):
     };
   }
 
-  const parsedResult = userSchema.safeParse({
+  const parsedResult = UserSchema.safeParse({
     email,
     password,
   });
