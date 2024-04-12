@@ -50,7 +50,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8",
     "prettier-plugin-tailwindcss": "^0.5.6",
-    "prisma-zod-generator": "^0.8.13",
     "tailwindcss": "^3",
     "typescript": "^5"
   }
