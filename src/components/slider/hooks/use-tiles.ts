@@ -1,3 +1,5 @@
+import { v4 as nanoId } from 'uuid';
+
 import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
@@ -28,7 +30,9 @@ export const useTiles = () => {
     });
 
     const indexOfPreviousItem = indexOfFirstItem ? indexOfFirstItem - 1 : TILES.length - 1;
-    return [TILES[indexOfPreviousItem]];
+    const previousTile = { ...TILES[indexOfPreviousItem] };
+    previousTile.id = nanoId();
+    return [previousTile];
   };
 
   // ──────────────────────────────────────────────────────────────
@@ -79,7 +83,9 @@ export const useTiles = () => {
     });
 
     const indexOfNextItem = indexOfLastItem === TILES.length - 1 ? 0 : indexOfLastItem + 1;
-    return [TILES[indexOfNextItem]];
+    const nextTile = { ...TILES[indexOfNextItem] };
+    nextTile.id = nanoId();
+    return [nextTile];
   };
 
   const tilesToRender: Movie[] = [
