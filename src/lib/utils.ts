@@ -3,11 +3,9 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { TODO } from '@/lib/types';
-
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+// export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 type GetMapValueParams<K, V> = {
   label: string;
@@ -40,19 +38,19 @@ export const findIndexFromKey = <T, K extends keyof T>({
   return index;
 };
 
-const debounce = <T extends (...args: TODO[]) => void>(
-  func: T,
-  wait: number
-): ((...args: Parameters<T>) => void) => {
-  let timeout: ReturnType<typeof setTimeout> | undefined;
-
-  return function executedFunction(...args: Parameters<T>) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
+// const debounce = <T extends (...args: TODO[]) => void>(
+//   func: T,
+//   wait: number
+// ): ((...args: Parameters<T>) => void) => {
+//   let timeout: ReturnType<typeof setTimeout> | undefined;
+//
+//   return function executedFunction(...args: Parameters<T>) {
+//     const later = () => {
+//       clearTimeout(timeout);
+//       func(...args);
+//     };
+//
+//     clearTimeout(timeout);
+//     timeout = setTimeout(later, wait);
+//   };
+// };
