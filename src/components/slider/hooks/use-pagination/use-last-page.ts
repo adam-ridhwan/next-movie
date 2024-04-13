@@ -26,7 +26,11 @@ export const useLastPage = () => {
     const newTilesPerPage = getTilesPerPage();
     const firstTileCurrentPageIndex = TILES.length - newTilesPerPage;
 
-    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex, isLastPage: true });
+    setMapTiles({
+      firstTileCurrentPage,
+      firstTileCurrentPageIndex,
+      isLastPage: true,
+    });
   };
 
   return { goToLastPage };

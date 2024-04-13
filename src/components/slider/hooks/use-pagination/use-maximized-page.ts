@@ -102,7 +102,6 @@ export const useMaximizedPage = () => {
         lastPageLength >= tilesToDecrement
           ? firstTileCurrentPageIndex
           : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
-
       return setMapTiles({
         firstTileCurrentPage,
         firstTileCurrentPageIndex: indexForSecondToLastPage,

@@ -70,7 +70,10 @@ export const useMinimizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex });
+    setMapTiles({
+      firstTileCurrentPage,
+      firstTileCurrentPageIndex,
+    });
   };
 
   return { goToMinimizedPage };

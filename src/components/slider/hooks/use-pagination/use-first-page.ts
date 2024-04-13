@@ -19,7 +19,11 @@ export const useFirstPage = () => {
 
     const firstTileCurrentPageIndex = 0;
 
-    setMapTiles({ firstTileCurrentPage, firstTileCurrentPageIndex, isFirstPage: true });
+    setMapTiles({
+      firstTileCurrentPage,
+      firstTileCurrentPageIndex,
+      isFirstPage: true,
+    });
   };
 
   return { goToFirstPage };
