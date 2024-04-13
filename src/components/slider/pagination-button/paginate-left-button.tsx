@@ -34,7 +34,7 @@ const PaginateLeftButton = () => {
 
   return (
     <PaginationButton
-      onClick={() => handlePaginateLeft()}
+      onClick={handlePaginateLeft}
       direction={SLIDE_DIRECTION.LEFT}
       className={cn({ hidden: !hasPaginated })}
     />

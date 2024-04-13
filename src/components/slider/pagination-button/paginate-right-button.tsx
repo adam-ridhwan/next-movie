@@ -33,9 +33,7 @@ const PaginateRightButton = () => {
     goToNextPage();
   };
 
-  return (
-    <PaginationButton onClick={() => handlePaginateRight()} direction={SLIDE_DIRECTION.RIGHT} className='' />
-  );
+  return <PaginationButton onClick={handlePaginateRight} direction={SLIDE_DIRECTION.RIGHT} />;
 };
 
 export default PaginateRightButton;
