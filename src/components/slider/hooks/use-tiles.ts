@@ -16,8 +16,7 @@ export const useTiles = () => {
   const isLastPage = currentPage === pages.size - 2;
   const tilesPerPage = getTilesPerPage();
 
-  // ──────────────────────────────────────────────────────────────
-  const getPrevTile = (): [Movie] | [] => {
+  const getLeftTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted || !hasPaginated) return [];
     if (isFirstPage) return [{ ...TILES[TILES.length - 1 - tilesPerPage], uuid: uuid() }];
     const prevPageMOre = pages.get(currentPage - 2);
@@ -25,34 +24,33 @@ export const useTiles = () => {
     return [prevPageMOre[tilesPerPage - 1]];
   };
 
-  // ──────────────────────────────────────────────────────────────
-  const prevPageTiles =
-    !isMounted || !hasPaginated
-      ? []
-      : getMapItem({
-          label: 'LeftPlaceholder: prevPage',
-          map: pages,
-          key: currentPage - 1,
-        });
+  const getPrevPageTiles = () => {
+    if (!isMounted || !hasPaginated) return [];
+    return getMapItem({
+      label: 'LeftPlaceholder: prevPage',
+      map: pages,
+      key: currentPage - 1,
+    });
+  };
 
-  // ──────────────────────────────────────────────────────────────
-  const currentPageTiles = getMapItem({
-    label: 'CurrentPage: currentPageTiles',
-    map: pages,
-    key: currentPage,
-  });
+  const getCurrentPageTiles = () => {
+    return getMapItem({
+      label: 'CurrentPage: currentPageTiles',
+      map: pages,
+      key: currentPage,
+    });
+  };
 
-  // ──────────────────────────────────────────────────────────────
-  const nextPageTiles = !isMounted
-    ? []
-    : getMapItem({
-        label: 'NextPage: nextPageTiles',
-        map: pages,
-        key: currentPage + 1,
-      });
+  const getNextPageTiles = () => {
+    if (!isMounted) return [];
+    return getMapItem({
+      label: 'NextPage: nextPageTiles',
+      map: pages,
+      key: currentPage + 1,
+    });
+  };
 
-  // ──────────────────────────────────────────────────────────────
-  const getNextTile = (): [Movie] | [] => {
+  const getRightTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted) return [];
     if (isLastPage) return [{ ...TILES[tilesPerPage], uuid: uuid() }];
     const nextPageMOre = pages.get(currentPage + 2);
@@ -61,11 +59,11 @@ export const useTiles = () => {
   };
 
   const tilesToRender: Movie[] = [
-    ...getPrevTile(),
-    ...prevPageTiles,
-    ...currentPageTiles,
-    ...nextPageTiles,
-    ...getNextTile(),
+    ...getLeftTilePlaceholder(),
+    ...getPrevPageTiles(),
+    ...getCurrentPageTiles(),
+    ...getNextPageTiles(),
+    ...getRightTilePlaceholder(),
   ];
 
   return { tilesToRender };
