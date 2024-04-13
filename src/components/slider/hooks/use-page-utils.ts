@@ -1,8 +1,10 @@
 /* eslint no-restricted-imports: 0 */
 
 import { useSliderStore } from '@/providers/slider-provider';
+import { v4 as uuid } from 'uuid';
 
 import { MEDIA_QUERY } from '@/lib/constants';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 
 export const usePageUtils = () => {
   const TILES = useSliderStore(state => state.TILES);
@@ -29,10 +31,43 @@ export const usePageUtils = () => {
     return (((currentIndex - leftTilesTotal + TILES.length) % TILES.length) + TILES.length) % TILES.length;
   };
 
+  type UpdateUuidsParams = {
+    currentPageTiles: Movie[];
+    firstTileIndex: number;
+    isFirstPage?: boolean;
+    isLastPage?: boolean;
+  };
+
+  const updateUuids = ({
+    currentPageTiles,
+    firstTileIndex,
+    isFirstPage = false,
+    isLastPage = false,
+  }: UpdateUuidsParams) => {
+    if (isFirstPage) {
+      const updatedFirstElements = currentPageTiles.slice(0, firstTileIndex).map(tile => ({
+        ...tile,
+        uuid: uuid(),
+      }));
+      return [...updatedFirstElements, ...currentPageTiles.slice(firstTileIndex)];
+    }
+
+    if (isLastPage) {
+      const updatedLastElements = currentPageTiles.slice(firstTileIndex).map(tile => ({
+        ...tile,
+        uuid: uuid(),
+      }));
+      return [...currentPageTiles.slice(0, firstTileIndex), ...updatedLastElements];
+    }
+
+    return currentPageTiles.map(tile => ({ ...tile, uuid: uuid() }));
+  };
+
   return {
     getTilesPerPage,
     getTotalTiles,
     getStartIndex,
+    updateUuids,
     firstPageLength,
     lastPageLength,
     hasPaginated,
