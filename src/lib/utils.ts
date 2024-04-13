@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-// export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+export const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 type GetMapValueParams<K, V> = {
   label: string;
