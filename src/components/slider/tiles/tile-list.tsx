@@ -43,6 +43,7 @@ const TileList = () => {
     >
       {tilesToRender.map((tile, i) => {
         // const key = `${tile.id}${generateKey(i)}`;
+        console.log(Number(tile.title), tile.uuid);
         return (
           // TODO: Fix the displayName. Only show the number if the tile is visible on screen.
           <TileItem key={tile.uuid} ref={i === 0 ? tileRef : undefined} tile={tile} />
