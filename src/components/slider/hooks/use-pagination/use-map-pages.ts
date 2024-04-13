@@ -1,18 +1,11 @@
-;
 /* eslint no-restricted-imports: 0 */
 
 import { useSliderStore } from '@/providers/slider-provider';
-
-
 
 import { Pages } from '@/lib/types';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
-
-
-
-
 
 type SetMapTilesParams = {
   firstTileCurrentPage: Movie;
