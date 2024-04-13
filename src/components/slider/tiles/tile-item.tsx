@@ -34,16 +34,16 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
             sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
             className='object-cover'
           />
-          {/*<div*/}
-          {/*  style={{*/}
-          {/*    position: 'absolute',*/}
-          {/*    top: 0,*/}
-          {/*    left: 0,*/}
-          {/*    right: 0,*/}
-          {/*    bottom: 0,*/}
-          {/*    backgroundColor: 'rgba(0, 0, 0, 0.5)',*/}
-          {/*  }}*/}
-          {/*/>*/}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          />
           <div className='absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 gap-1 text-8xl'>
             {tile.title}
           </div>
