@@ -10,10 +10,18 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const { hasPaginated } = usePageUtils();
+  const { hasPaginated, getTilesPerPage } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { tileRef } = useDomContext();
+
+  const tilesPerPage = getTilesPerPage();
+
+  const getVisibility = (i: number) => {
+    const lowerBound = tilesPerPage - 1;
+    const upperBound = tilesPerPage * 2 + 2;
+    return lowerBound < i && i < upperBound;
+  };
 
   return (
     <div
@@ -27,27 +35,17 @@ const TileList = () => {
         transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined,
       }}
     >
-      {tilesToRender.map((tile, i) => {
-        console.log(Number(tile.title), tile.uuid);
-        // TODO: Fix the displayName. Only show the number if the tile is visible on screen.
-        return <TileItem key={tile.uuid} ref={i === 0 ? tileRef : undefined} tile={tile} />;
-      })}
+      {tilesToRender.map((tile, i) => (
+        <TileItem
+          key={tile.uuid}
+          ref={i === 0 ? tileRef : undefined}
+          tile={tile}
+          displayNumber={hasPaginated ? i - tilesPerPage : i}
+          isVisibleOnScreen={hasPaginated ? getVisibility(i) : i < tilesPerPage}
+        />
+      ))}
     </div>
   );
 };
 
 export default TileList;
-
-// const tilesPerPage = getTilesPerPage();
-
-// const generateKey = (i: number) => {
-//   if (i === 0) return `left-page-placeholder`;
-//   if (i === tilesToRender.length - 1) return `right-page-placeholder`;
-// if (i < tilesPerPage / 2 - 1) return `left-page-${i}`;
-// if (i > tilesToRender.length - tilesPerPage / 2) return `right-page-${i}`;
-
-// if (i > tilesPerPage - 1 && i < tilesPerPage * 2 + 2) {
-//   console.log('generateKey: ', i);
-// }
-//   return '';
-// };

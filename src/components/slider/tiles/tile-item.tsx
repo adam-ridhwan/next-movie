@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type TileItemProps = {
   tile: Movie | void;
@@ -15,9 +16,14 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   { tile, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
+  const { isMounted } = usePageUtils();
   if (!tile) return null;
+
   return (
-    <div ref={ref} className={cn('slider-tile p-1', `tile-${isVisibleOnScreen ? displayNumber : ''}`)}>
+    <div
+      ref={ref}
+      className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
+    >
       {DEVELOPMENT_MODE && (
         <>
           <div className='relative flex aspect-video flex-col justify-end gap-1 p-4'>
