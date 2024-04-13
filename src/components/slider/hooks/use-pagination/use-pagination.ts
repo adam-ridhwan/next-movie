@@ -3,14 +3,13 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { Pages } from '@/lib/types';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { useFirstPage } from '@/components/slider/hooks/use-pagination/use-first-page';
 import { useLastPage } from '@/components/slider/hooks/use-pagination/use-last-page';
 import { useMaximizedPage } from '@/components/slider/hooks/use-pagination/use-maximized-page';
 import { useMinimizedPage } from '@/components/slider/hooks/use-pagination/use-minimized-page';
 import { useNextPage } from '@/components/slider/hooks/use-pagination/use-next-page';
 import { usePrevPage } from '@/components/slider/hooks/use-pagination/use-prev-page';
-
-import { Movie } from '../../../../../prisma/generated/zod';
 
 type UsePaginationReturn = {
   state: {

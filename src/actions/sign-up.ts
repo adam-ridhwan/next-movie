@@ -5,8 +5,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/client';
 import { authStrings, errorStrings } from '@/lib/constants';
 import { FormResponse } from '@/lib/types';
-
-import { UserSchema } from '../../prisma/generated/zod';
+import UserSchema from '@/lib/zod-types.ts/modelSchema/UserSchema';
 
 const SALT_ROUNDS = 10;
 

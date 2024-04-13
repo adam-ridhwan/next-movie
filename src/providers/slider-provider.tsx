@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext, useRef } from 'react';
 import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { Movie } from '../../prisma/generated/zod';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 
 export type SliderProviderProps = {
   children: ReactNode;

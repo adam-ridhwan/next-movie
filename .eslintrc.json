@@ -23,6 +23,7 @@
         }]
       }
     ],
+    "no-extra-semi": "off",
     "no-console": ["warn", { "allow": ["error"] }],
     "react/no-unescaped-entities": "off",
     "react/react-in-jsx-scope": "off",

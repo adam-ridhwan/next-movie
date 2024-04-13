@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useDomContext } from '@/providers/dom-provider';
 import chalk from 'chalk';
 
@@ -7,8 +8,10 @@ import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { logger } from '@/lib/logger';
 import { cn } from '@/lib/utils';
+import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize/use-resize-window';
+import PageIndicator from '@/components/slider/page-indicator/page-indicator';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import TileList from '@/components/slider/tiles/tile-list';
@@ -24,30 +27,31 @@ function log(...args: string[]) {
 
 const Slider = () => {
   const {
-    state: { currentPage },
+    state: { pages, currentPage },
     actions: { goToFirstPage },
   } = usePagination();
 
+  const { isMounted } = usePageUtils();
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
 
-  // useEffect(() => {
-  //   if (!isMounted) return;
-  //   log(' SLIDER PAGES ', '──────────────────────────────────');
-  //
-  //   [...pages.entries()]
-  //     .sort((a, b) => a[0] - b[0])
-  //     .forEach(([pageIndex, tiles]) => {
-  //       console.log(
-  //         `Page ${pageIndex}:`,
-  //         tiles.map(card => (card ? card.id : undefined))
-  //       );
-  //     });
-  //
-  //   log('─────────────────────────────────────────────────');
-  // }, [pages, isMounted]);
+  useEffect(() => {
+    if (!isMounted) return;
+    log(' SLIDER PAGES ', '──────────────────────────────────');
+
+    [...pages.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([pageIndex, tiles]) => {
+        console.log(
+          `Page ${pageIndex}:`,
+          tiles.map(card => (card ? card.title : undefined))
+        );
+      });
+
+    log('─────────────────────────────────────────────────');
+  }, [pages, isMounted]);
 
   return (
     <div
@@ -64,6 +68,7 @@ const Slider = () => {
       <PaginateLeftButton />
       <TileList />
       <PaginateRightButton />
+      <PageIndicator />
     </div>
   );
 };

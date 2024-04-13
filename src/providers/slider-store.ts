@@ -2,8 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { Pages } from '@/lib/types';
-
-import { Movie } from '../../prisma/generated/zod';
+import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 
 type SetPagesParams = {
   pages: Pages;
