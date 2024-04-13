@@ -17,7 +17,7 @@ const TileList = () => {
 
   const tilesPerPage = getTilesPerPage();
 
-  const getVisibility = (i: number) => {
+  const isTileVisible = (i: number) => {
     const lowerBound = tilesPerPage - 1;
     const upperBound = tilesPerPage * 2 + 2;
     return lowerBound < i && i < upperBound;
@@ -41,7 +41,7 @@ const TileList = () => {
           ref={i === 0 ? tileRef : undefined}
           tile={tile}
           displayNumber={hasPaginated ? i - tilesPerPage : i}
-          isVisibleOnScreen={hasPaginated ? getVisibility(i) : i < tilesPerPage}
+          isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
         />
       ))}
     </div>

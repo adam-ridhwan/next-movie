@@ -17,6 +17,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   ref
 ) => {
   const { isMounted } = usePageUtils();
+
   if (!tile) return null;
 
   return (
