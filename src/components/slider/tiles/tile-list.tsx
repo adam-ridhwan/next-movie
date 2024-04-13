@@ -31,9 +31,7 @@ const TileList = () => {
         { 'transition-transform duration-700': isAnimating },
         { 'bg-green-600': DEVELOPMENT_MODE }
       )}
-      style={{
-        transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined,
-      }}
+      style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
     >
       {tilesToRender.map((tile, i) => (
         <TileItem
