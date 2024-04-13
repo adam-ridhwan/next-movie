@@ -35,18 +35,15 @@ const TileList = () => {
         transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined,
       }}
     >
-      {tilesToRender.map((tile, i) => {
-        console.log('tile', i, tile?.uuid);
-        return (
-          <TileItem
-            key={tile?.uuid || i}
-            ref={i === 0 ? tileRef : undefined}
-            tile={tile}
-            displayNumber={hasPaginated ? i - tilesPerPage : i}
-            isVisibleOnScreen={hasPaginated ? getVisibility(i) : i < tilesPerPage}
-          />
-        );
-      })}
+      {tilesToRender.map((tile, i) => (
+        <TileItem
+          key={tile?.uuid || i}
+          ref={i === 0 ? tileRef : undefined}
+          tile={tile}
+          displayNumber={hasPaginated ? i - tilesPerPage : i}
+          isVisibleOnScreen={hasPaginated ? getVisibility(i) : i < tilesPerPage}
+        />
+      ))}
     </div>
   );
 };
