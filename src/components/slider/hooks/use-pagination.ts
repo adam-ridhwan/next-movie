@@ -4,7 +4,6 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages } from '@/lib/types';
-import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { useMapPages } from '@/components/slider/hooks/use-map-pages';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
@@ -44,7 +43,9 @@ export const usePagination = (): UsePaginationReturn => {
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
   const { setMapPages } = useMapPages();
-  const { getTileCountPerPage } = usePageUtils();
+  const {
+    actions: { getTileCountPerPage, findIndexByKey, getMapValue },
+  } = usePageUtils();
 
   const isFirstPage = currentPage === 1;
   const isSecondPage = currentPage === 2;
@@ -82,13 +83,13 @@ export const usePagination = (): UsePaginationReturn => {
   const goToMinimizedPage = () => {
     usePaginationLogger.minimized();
 
-    const [firstTileCurrentPage] = getMapItem({
+    const [firstTileCurrentPage] = getMapValue({
       label: 'goToMinimizedPage(): firstTileCurrentPage',
       map: pages,
       key: currentPage,
     });
 
-    const firstTileCurrentPageIndex = findIndexFromKey({
+    const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
       array: TILES,
       key: 'id',
@@ -102,13 +103,13 @@ export const usePagination = (): UsePaginationReturn => {
   const goToMaximizedPage = () => {
     usePaginationLogger.maximized();
 
-    const [firstTileCurrentPage] = getMapItem({
+    const [firstTileCurrentPage] = getMapValue({
       label: 'goToMaximizedPage(): firstTileCurrentPage',
       map: pages,
       key: currentPage,
     });
 
-    const firstTileCurrentPageIndex = findIndexFromKey({
+    const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
       array: TILES,
       key: 'id',

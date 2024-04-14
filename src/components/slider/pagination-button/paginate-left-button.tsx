@@ -1,4 +1,4 @@
-import { cn, wait } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
@@ -11,7 +11,10 @@ const PaginateLeftButton = () => {
     status: { isFirstPage, isSecondPage },
     actions: { goToFirstPage, goToLastPage, goToPrevPage },
   } = usePagination();
-  const { hasPaginated } = usePageUtils();
+  const {
+    state: { hasPaginated },
+    actions: { wait },
+  } = usePageUtils();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 

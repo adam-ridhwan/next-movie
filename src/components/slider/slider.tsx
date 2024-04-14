@@ -30,8 +30,9 @@ const Slider = () => {
     state: { pages, currentPage },
     actions: { goToFirstPage },
   } = usePagination();
-
-  const { isMounted } = usePageUtils();
+  const {
+    state: { isMounted },
+  } = usePageUtils();
   const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());

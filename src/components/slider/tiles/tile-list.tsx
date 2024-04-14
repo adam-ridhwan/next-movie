@@ -9,7 +9,10 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const { hasPaginated, getTileCountPerPage } = usePageUtils();
+  const {
+    state: { hasPaginated },
+    actions: { getTileCountPerPage },
+  } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { tileRef } = useDomContext();
@@ -25,7 +28,7 @@ const TileList = () => {
   return (
     <div
       className={cn(
-        'slider px-leftRightCustom relative flex w-full flex-row',
+        'slider relative flex w-full flex-row px-leftRightCustom',
         { 'justify-center': hasPaginated },
         { 'transition-transform duration-700': isAnimating }
       )}

@@ -16,7 +16,9 @@ export const useResizeWindow = () => {
     state: { currentPage },
     actions: { goToFirstPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
-  const { getTileCountPerPage } = usePageUtils();
+  const {
+    actions: { getTileCountPerPage },
+  } = usePageUtils();
   const { resizeDirection } = useResizeDirection();
 
   const prevTilesPerPage = useRef(getTileCountPerPage());

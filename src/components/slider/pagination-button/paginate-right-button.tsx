@@ -1,6 +1,5 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { wait } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
@@ -13,7 +12,10 @@ const PaginateRightButton = () => {
     status: { isLastPage, isSecondToLastPage },
     actions: { goToFirstPage, goToLastPage, goToNextPage },
   } = usePagination();
-  const { hasPaginated, markAsPaginated } = usePageUtils();
+  const {
+    state: { hasPaginated },
+    actions: { markAsPaginated, wait },
+  } = usePageUtils();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
   const { paginationButtonRef } = useDomContext();

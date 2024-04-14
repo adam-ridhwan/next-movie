@@ -1,6 +1,5 @@
 import { v4 as uuid } from 'uuid';
 
-import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
@@ -10,7 +9,10 @@ export const useTiles = () => {
   const {
     state: { TILES, pages, currentPage },
   } = usePagination();
-  const { isMounted, hasPaginated, getTileCountPerPage } = usePageUtils();
+  const {
+    state: { isMounted, hasPaginated },
+    actions: { getTileCountPerPage, getMapValue },
+  } = usePageUtils();
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pages.size - 2;
@@ -28,7 +30,7 @@ export const useTiles = () => {
 
   const getPrevPageTiles = () => {
     if (!isMounted || !hasPaginated) return [];
-    return getMapItem({
+    return getMapValue({
       label: 'LeftPlaceholder: prevPage',
       map: pages,
       key: currentPage - 1,
@@ -36,7 +38,7 @@ export const useTiles = () => {
   };
 
   const getCurrentPageTiles = () => {
-    return getMapItem({
+    return getMapValue({
       label: 'CurrentPage: currentPageTiles',
       map: pages,
       key: currentPage,
@@ -45,7 +47,7 @@ export const useTiles = () => {
 
   const getNextPageTiles = () => {
     if (!isMounted) return [];
-    return getMapItem({
+    return getMapValue({
       label: 'NextPage: nextPageTiles',
       map: pages,
       key: currentPage + 1,
