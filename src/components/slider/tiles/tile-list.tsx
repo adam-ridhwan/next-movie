@@ -1,6 +1,5 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
@@ -28,8 +27,7 @@ const TileList = () => {
       className={cn(
         'slider relative flex w-full flex-row px-12',
         { 'justify-center': hasPaginated },
-        { 'transition-transform duration-700': isAnimating },
-        { 'bg-green-600': DEVELOPMENT_MODE }
+        { 'transition-transform duration-700': isAnimating }
       )}
       style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
     >
