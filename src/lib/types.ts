@@ -2,8 +2,8 @@
 
 import { z } from 'zod';
 
-import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/lib/constants';
 import { Movie, MovieSchema } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type TODO = any;
 

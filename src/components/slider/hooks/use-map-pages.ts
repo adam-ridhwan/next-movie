@@ -4,7 +4,6 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { Pages } from '@/lib/types';
-import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
@@ -22,7 +21,9 @@ export const useMapPages = () => {
   const currentPage = useSliderStore(state => state.currentPage);
 
   const { validatePages } = useValidators();
-  const { getTileCountPerPage, getTileCount, getStartIndex, updateUuids } = usePageUtils();
+  const {
+    actions: { getTileCountPerPage, getTileCount, getStartIndex, updateUuids, getMapValue },
+  } = usePageUtils();
 
   const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
     const newPages: Pages = new Map<number, Movie[]>();
@@ -30,7 +31,7 @@ export const useMapPages = () => {
     let newFirstPageLength = newTileCountPerPage;
     let newLastPageLength = newTileCountPerPage;
 
-    const [firstTileCurrentPage] = getMapItem({
+    const [firstTileCurrentPage] = getMapValue({
       label: 'setMapPages(): firstTileCurrentPage',
       map: pages,
       key: currentPage,

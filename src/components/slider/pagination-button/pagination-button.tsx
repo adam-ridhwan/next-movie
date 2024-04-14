@@ -1,12 +1,12 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 
-import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -40,7 +40,7 @@ const PaginationButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationBu
         // FIXME: The background color is overflowing outside the tile
         //  Check tailwind config and global.ss for the overflow issue.
         //  Might be because horizontal padding from .slider-tile is causing the overflow.
-        `group/button w-leftRightCustom absolute top-0 z-10 flex h-full items-center justify-center 
+        `group/button absolute top-0 z-10 flex h-full w-leftRightCustom items-center justify-center 
           rounded-none bg-darkerBlue/50 px-0 py-0 
           hover:bg-darkestBlue/50 disabled:pointer-events-auto disabled:opacity-100`,
         { 'right-0': direction === SLIDE_DIRECTION.RIGHT },
