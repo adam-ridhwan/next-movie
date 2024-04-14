@@ -32,35 +32,35 @@ export const usePageUtils = () => {
   };
 
   type UpdateUuidsParams = {
-    currentPageTiles: Movie[];
+    newTileList: Movie[];
     firstTileIndex: number;
     isFirstPage?: boolean;
     isLastPage?: boolean;
   };
 
   const updateUuids = ({
-    currentPageTiles,
+    newTileList,
     firstTileIndex,
     isFirstPage = false,
     isLastPage = false,
   }: UpdateUuidsParams) => {
     if (isFirstPage) {
-      const updatedFirstElements = currentPageTiles.slice(0, firstTileIndex).map(tile => ({
+      const updatedFirstElements = newTileList.slice(0, firstTileIndex).map(tile => ({
         ...tile,
         uuid: uuid(),
       }));
-      return [...updatedFirstElements, ...currentPageTiles.slice(firstTileIndex)];
+      return [...updatedFirstElements, ...newTileList.slice(firstTileIndex)];
     }
 
     if (isLastPage) {
-      const updatedLastElements = currentPageTiles.slice(firstTileIndex).map(tile => ({
+      const updatedLastElements = newTileList.slice(firstTileIndex).map(tile => ({
         ...tile,
         uuid: uuid(),
       }));
-      return [...currentPageTiles.slice(0, firstTileIndex), ...updatedLastElements];
+      return [...newTileList.slice(0, firstTileIndex), ...updatedLastElements];
     }
 
-    return currentPageTiles.map(tile => ({ ...tile, uuid: uuid() }));
+    return newTileList.map(tile => ({ ...tile, uuid: uuid() }));
   };
 
   return {

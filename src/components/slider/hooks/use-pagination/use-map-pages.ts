@@ -4,12 +4,12 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { Pages } from '@/lib/types';
+import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
 type SetMapTilesParams = {
-  firstTileCurrentPage: Movie;
   firstTileCurrentPageIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
@@ -17,20 +17,24 @@ type SetMapTilesParams = {
 
 export const useMapPages = () => {
   const TILES = useSliderStore(state => state.TILES);
+  const pages = useSliderStore(state => state.pages);
   const setPages = useSliderStore(state => state.setPages);
+  const currentPage = useSliderStore(state => state.currentPage);
+
   const { validatePages } = useValidators();
   const { getTileCountPerPage, getTileCount, getStartIndex, updateUuids } = usePageUtils();
 
-  const setMapPages = ({
-    firstTileCurrentPage,
-    firstTileCurrentPageIndex,
-    isFirstPage,
-    isLastPage,
-  }: SetMapTilesParams) => {
+  const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
     const newPages: Pages = new Map<number, Movie[]>();
     const newTileCountPerPage = getTileCountPerPage();
     let newFirstPageLength = newTileCountPerPage;
     let newLastPageLength = newTileCountPerPage;
+
+    const [firstTileCurrentPage] = getMapItem({
+      label: 'setMapPages(): firstTileCurrentPage',
+      map: pages,
+      key: currentPage,
+    });
 
     const leftTileCount = getTileCount(firstTileCurrentPageIndex / newTileCountPerPage);
     const rightTileCount = getTileCount((TILES.length - firstTileCurrentPageIndex) / newTileCountPerPage);
@@ -40,42 +44,43 @@ export const useMapPages = () => {
     let newCurrentPage = -1;
 
     let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTileCount);
-    let currentPageTiles: Movie[] = [];
+    let newTileList: Movie[] = [];
 
     for (let i = 0; i < newTileCount; i++) {
       if (startIndex >= TILES.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTileCountPerPage);
-      const isFirstPage = pageNumber === 0;
-      const isLastPage = pageNumber === newMaxPages - 1;
-      const isLeftPlaceholder = pageNumber === 1;
-      const isRightPlaceholder = pageNumber === newMaxPages - 2;
+      const isNewFirstPage = pageNumber === 1;
+      const isNewLastPage = pageNumber === newMaxPages - 2;
+      const isLeftPlaceholder = pageNumber === 0;
+      const isRightPlaceholder = pageNumber === newMaxPages - 1;
 
-      const idMatches = currentPageTiles.some(tile => tile.id === firstTileCurrentPage.id);
+      const idMatches = newTileList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
-      const tile = TILES[startIndex++];
-      const tileToPush = isFirstPage || isLastPage ? { ...tile, uuid: uuid() } : tile;
-      currentPageTiles.push(tileToPush);
+      const newTileItem = TILES[startIndex++];
+      const newTileListToPush =
+        isLeftPlaceholder || isRightPlaceholder
+          ? { ...newTileItem, uuid: uuid() }
+          : newTileItem; // prettier-ignore
+      newTileList.push(newTileListToPush);
 
-      if (currentPageTiles.length !== newTileCountPerPage) continue;
+      if (newTileList.length !== newTileCountPerPage) continue;
 
-      const firstTileIndex = currentPageTiles.findIndex(tile => tile.id === TILES.at(0)?.id);
+      const firstTileIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
       if (firstTileIndex > 0) {
-        const tileLengthUpToFirstIndex = currentPageTiles.slice(0, firstTileIndex).length;
-
-        if (isLeftPlaceholder) {
-          newFirstPageLength = newTileCountPerPage - tileLengthUpToFirstIndex;
-          currentPageTiles = updateUuids({ currentPageTiles, firstTileIndex, isFirstPage: true });
+        if (isNewFirstPage) {
+          newFirstPageLength = newTileCountPerPage - firstTileIndex;
+          newTileList = updateUuids({ newTileList, firstTileIndex, isFirstPage: true });
         }
-        if (isRightPlaceholder) {
-          newLastPageLength = tileLengthUpToFirstIndex;
-          currentPageTiles = updateUuids({ currentPageTiles, firstTileIndex, isLastPage: true });
+        if (isNewLastPage) {
+          newLastPageLength = firstTileIndex;
+          newTileList = updateUuids({ newTileList, firstTileIndex, isLastPage: true });
         }
       }
 
-      newPages.set(pageNumber, currentPageTiles);
-      currentPageTiles = [];
+      newPages.set(pageNumber, newTileList);
+      newTileList = [];
     }
 
     // console.table({

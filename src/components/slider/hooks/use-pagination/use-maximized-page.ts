@@ -72,11 +72,11 @@ export const useMaximizedPage = () => {
   const goToMaximizedPage = () => {
     usePaginationLogger.maximized();
 
-    const firstTileCurrentPage = getMapItem({
+    const [firstTileCurrentPage] = getMapItem({
       label: 'goToMaximizedPage(): firstTileCurrentPage',
       map: pages,
       key: currentPage,
-    })[0];
+    });
 
     const firstTileCurrentPageIndex = findIndexFromKey({
       label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
@@ -91,10 +91,7 @@ export const useMaximizedPage = () => {
 
     if (isLastPage) {
       const indexForLastPage = firstTileCurrentPageIndex - tilesToDecrement;
-      return setMapPages({
-        firstTileCurrentPage,
-        firstTileCurrentPageIndex: indexForLastPage,
-      });
+      return setMapPages({ firstTileCurrentPageIndex: indexForLastPage });
     }
 
     if (isSecondToLastPage) {
@@ -102,16 +99,10 @@ export const useMaximizedPage = () => {
         lastPageLength >= tilesToDecrement
           ? firstTileCurrentPageIndex
           : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
-      return setMapPages({
-        firstTileCurrentPage,
-        firstTileCurrentPageIndex: indexForSecondToLastPage,
-      });
+      return setMapPages({ firstTileCurrentPageIndex: indexForSecondToLastPage });
     }
 
-    setMapPages({
-      firstTileCurrentPage,
-      firstTileCurrentPageIndex,
-    });
+    setMapPages({ firstTileCurrentPageIndex });
   };
 
   return { goToMaximizedPage };

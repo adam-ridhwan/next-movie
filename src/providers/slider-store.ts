@@ -38,6 +38,33 @@ type SliderActions = {
 
 export type SliderStore = SliderState & SliderActions;
 
+/* ───────────────────────────────────────────────────────────────────────
+ * Overview of Pages Map State Layout
+ * ───────────────────────────────────────────────────────────────────────
+ * This documentation explains the organization of page states within a list,
+ * particularly how tiles are distributed across pages, including the use of placeholders.
+ *
+ * Configuration Example:
+ * - Total tiles: 6
+ * - Tiles per page: 3
+ *
+ * Pages Layout:
+ * - Page 0 (placeholder): [4, 5, 6]
+ * - Page 1:               [1, 2, 3]
+ * - Page 2:               [4, 5, 6]
+ * - Page 3 (placeholder): [1, 2, 3]
+ *
+ * Purpose of placeholders:
+ * - Placeholders (Page 0 and Page 3) prevent empty spaces,
+ *   when transitioning out of the central pages (Page 1 and Page 2).
+ * - They aid in maintaining alignment due to the use of 'justify-center' in CSS.
+ *
+ * Key Management:
+ * - Unique keys are necessary for each page to ensure proper rendering by list components.
+ * - To prevent key duplication between placeholder pages (Page 0 and Page 3),
+ *   UUIDs are updated before adding tiles to the pages map.
+ */
+
 export const createSliderStore = (TILES: Movie[]) =>
   create(
     devtools<SliderStore>(set => ({

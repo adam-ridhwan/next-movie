@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
+import { MINIMUM_TILE_COUNT } from '@/lib/constants';
 import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
@@ -9,12 +10,13 @@ export const useTiles = () => {
   const {
     state: { TILES, pages, currentPage },
   } = usePagination();
-  const { hasPaginated, getTileCountPerPage } = usePageUtils();
-  const { isMounted } = usePageUtils();
+  const { isMounted, hasPaginated, getTileCountPerPage } = usePageUtils();
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pages.size - 2;
   const tileCountPerPage = getTileCountPerPage();
+
+  if (TILES.length <= MINIMUM_TILE_COUNT) return { tilesToRender: TILES };
 
   const getLeftTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted || !hasPaginated) return [];
