@@ -1,10 +1,10 @@
 import { v4 as uuid } from 'uuid';
 
-import { MINIMUM_TILE_COUNT } from '@/lib/constants';
 import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { MINIMUM_TILE_COUNT } from '@/components/slider/slider-constants';
 
 export const useTiles = () => {
   const {
@@ -21,9 +21,9 @@ export const useTiles = () => {
   const getLeftTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted || !hasPaginated) return [];
     if (isFirstPage) return [{ ...TILES[TILES.length - 1 - tileCountPerPage], uuid: uuid() }];
-    const prevPageMOre = pages.get(currentPage - 2);
-    if (!prevPageMOre) return [{ ...TILES[TILES.length - 1], uuid: uuid() }];
-    return [prevPageMOre[tileCountPerPage - 1]];
+    const pageTwoStepsBack = pages.get(currentPage - 2);
+    if (!pageTwoStepsBack) return [{ ...TILES[TILES.length - 1], uuid: uuid() }];
+    return [pageTwoStepsBack[tileCountPerPage - 1]];
   };
 
   const getPrevPageTiles = () => {
@@ -55,9 +55,9 @@ export const useTiles = () => {
   const getRightTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted) return [];
     if (isLastPage) return [{ ...TILES[tileCountPerPage], uuid: uuid() }];
-    const nextPageMOre = pages.get(currentPage + 2);
-    if (!nextPageMOre) return [{ ...TILES[0], uuid: uuid() }];
-    return [nextPageMOre[0]];
+    const pageTwoStepsForward = pages.get(currentPage + 2);
+    if (!pageTwoStepsForward) return [{ ...TILES[0], uuid: uuid() }];
+    return [pageTwoStepsForward[0]];
   };
 
   const tilesToRender: Movie[] = [
