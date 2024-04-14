@@ -50,29 +50,32 @@ export const useMapPages = () => {
       if (startIndex >= TILES.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTileCountPerPage);
-      const isNewFirstPage = pageNumber === 0;
-      const isNewLastPage = pageNumber === newMaxPages - 1;
-      const isLeftPlaceholder = pageNumber === 1;
-      const isRightPlaceholder = pageNumber === newMaxPages - 2;
+      const isNewFirstPage = pageNumber === 1;
+      const isNewLastPage = pageNumber === newMaxPages - 2;
+      const isLeftPagePlaceholder = pageNumber === 0;
+      const isRightPagePlaceholder = pageNumber === newMaxPages - 1;
 
       const idMatches = newTileList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
       const newTileItem = TILES[startIndex++];
-      const tileToPush = isNewFirstPage || isNewLastPage ? { ...newTileItem, uuid: uuid() } : newTileItem;
-      newTileList.push(tileToPush);
+      const newTileListToPush =
+        isLeftPagePlaceholder || isRightPagePlaceholder
+          ? { ...newTileItem, uuid: uuid() }
+          : newTileItem; // prettier-ignore
+      newTileList.push(newTileListToPush);
 
       if (newTileList.length !== newTileCountPerPage) continue;
 
-      const tileLengthUpToFirstIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
-      if (tileLengthUpToFirstIndex > 0) {
-        if (isLeftPlaceholder) {
-          newFirstPageLength = newTileCountPerPage - tileLengthUpToFirstIndex;
-          newTileList = updateUuids({ newTileList, tileLengthUpToFirstIndex, isFirstPage: true });
+      const firstTileIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
+      if (firstTileIndex > 0) {
+        if (isNewFirstPage) {
+          newFirstPageLength = newTileCountPerPage - firstTileIndex;
+          newTileList = updateUuids({ newTileList, firstTileIndex, isFirstPage: true });
         }
-        if (isRightPlaceholder) {
-          newLastPageLength = tileLengthUpToFirstIndex;
-          newTileList = updateUuids({ newTileList, tileLengthUpToFirstIndex, isLastPage: true });
+        if (isNewLastPage) {
+          newLastPageLength = firstTileIndex;
+          newTileList = updateUuids({ newTileList, firstTileIndex, isLastPage: true });
         }
       }
 
