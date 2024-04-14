@@ -18,7 +18,7 @@ export default async function Home() {
         <div key={tiles.length} className='flex flex-col gap-1 pt-5'>
           <SliderProvider tiles={tiles}>
             <DomContextProvider>
-              <HeadingExtraSmall className='px-12'>{libraryStrings.trending}</HeadingExtraSmall>
+              <HeadingExtraSmall className='px-leftRightCustom'>{libraryStrings.trending}</HeadingExtraSmall>
               <Slider />
             </DomContextProvider>
           </SliderProvider>

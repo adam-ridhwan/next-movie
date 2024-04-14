@@ -26,7 +26,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
     >
       {DEVELOPMENT_MODE && (
-        <div className='relative flex aspect-video flex-col justify-end gap-1 overflow-hidden rounded-md p-4'>
+        <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-md'>
           <Image
             src={tile.thumbnailUrl}
             alt='thumbnail'

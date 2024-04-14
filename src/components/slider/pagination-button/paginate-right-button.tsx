@@ -1,3 +1,5 @@
+import { useDomContext } from '@/providers/dom-provider';
+
 import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/lib/constants';
 import { wait } from '@/lib/utils';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
@@ -14,6 +16,7 @@ const PaginateRightButton = () => {
   const { hasPaginated, markAsPaginated } = usePageUtils();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
+  const { paginationButtonRef } = useDomContext();
 
   const handlePaginateRight = async () => {
     enableAnimation();
@@ -33,7 +36,13 @@ const PaginateRightButton = () => {
     goToNextPage();
   };
 
-  return <PaginationButton onClick={handlePaginateRight} direction={SLIDE_DIRECTION.RIGHT} />;
+  return (
+    <PaginationButton
+      ref={paginationButtonRef}
+      onClick={handlePaginateRight}
+      direction={SLIDE_DIRECTION.RIGHT}
+    />
+  );
 };
 
 export default PaginateRightButton;

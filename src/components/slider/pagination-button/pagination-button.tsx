@@ -1,3 +1,5 @@
+import { forwardRef, ForwardRefRenderFunction } from 'react';
+
 import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -12,26 +14,33 @@ type PaginationButtonProps = {
   className?: string;
 };
 
-const PaginationButton = ({ direction, onClick, className }: PaginationButtonProps) => {
+const PaginationButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButtonProps> = (
+  { direction, onClick, className },
+  ref
+) => {
   const {
     state: { TILES },
   } = usePagination();
   const { isAnimating } = useAnimation();
 
-  if (TILES.length <= MINIMUM_TILE_COUNT) return;
+  if (TILES.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
-    `opacity-0 transition-transform group-hover/button:scale-125 group-hover/slider:opacity-100`,
+    'opacity-0 transition-transform group-hover/button:scale-125 group-hover/slider:opacity-100',
     { 'opacity-100 group-hover/button:scale-125 ': isAnimating }
   );
 
   return (
     <Button
+      ref={ref}
       variant='ghost'
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        `group/button absolute top-0 z-10 flex h-full w-12 items-center justify-center 
+        // FIXME: The background color is overflowing outside the tile
+        //  Check tailwind config and global.ss for the overflow issue.
+        //  Might be because horizontal padding from .slider-tile is causing the overflow.
+        `group/button w-leftRightCustom absolute top-0 z-10 flex h-full items-center justify-center 
           rounded-none bg-darkerBlue/50 px-0 py-0 
           hover:bg-darkestBlue/50 disabled:pointer-events-auto disabled:opacity-100`,
         { 'right-0': direction === SLIDE_DIRECTION.RIGHT },
@@ -45,4 +54,4 @@ const PaginationButton = ({ direction, onClick, className }: PaginationButtonPro
   );
 };
 
-export default PaginationButton;
+export default forwardRef(PaginationButton);

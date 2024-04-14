@@ -16,6 +16,12 @@ module.exports = {
       },
     },
     extend: {
+      padding: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
+      width: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
