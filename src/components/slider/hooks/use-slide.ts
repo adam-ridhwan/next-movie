@@ -3,8 +3,8 @@
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
+import { SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type GetSlideAmountParams = {
   direction?: SlideDirection;

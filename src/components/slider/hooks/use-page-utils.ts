@@ -3,8 +3,8 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { MEDIA_QUERY } from '@/lib/constants';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { MEDIA_QUERY } from '@/components/slider/slider-constants';
 
 export const usePageUtils = () => {
   const TILES = useSliderStore(state => state.TILES);
