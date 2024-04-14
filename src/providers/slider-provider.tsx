@@ -16,7 +16,6 @@ const SliderStoreContext = createContext<StoreApi<SliderStore> | null>(null);
 export const SliderProvider = ({ children, tiles }: SliderProviderProps) => {
   const storeRef = useRef<StoreApi<SliderStore>>();
   if (!storeRef.current) storeRef.current = createSliderStore(tiles);
-
   return <SliderStoreContext.Provider value={storeRef.current}>{children}</SliderStoreContext.Provider>;
 };
 

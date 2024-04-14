@@ -64,10 +64,10 @@ export const useMaximizedPage = () => {
   const pages = useSliderStore(state => state.pages);
   const maxPages = useSliderStore(state => state.maxPages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const currentTilesPerPage = useSliderStore(state => state.tilesPerPage);
+  const currentTilesPerPage = useSliderStore(state => state.tileCountPerPage);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
-  const { setMapTiles } = useMapPages();
-  const { getTilesPerPage } = usePageUtils();
+  const { setMapPages } = useMapPages();
+  const { getTileCountPerPage } = usePageUtils();
 
   const goToMaximizedPage = () => {
     usePaginationLogger.maximized();
@@ -85,13 +85,13 @@ export const useMaximizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    const tilesToDecrement = getTilesPerPage() - currentTilesPerPage;
+    const tilesToDecrement = getTileCountPerPage() - currentTilesPerPage;
     const isLastPage = currentPage === maxPages - 2;
     const isSecondToLastPage = currentPage === maxPages - 3;
 
     if (isLastPage) {
       const indexForLastPage = firstTileCurrentPageIndex - tilesToDecrement;
-      return setMapTiles({
+      return setMapPages({
         firstTileCurrentPage,
         firstTileCurrentPageIndex: indexForLastPage,
       });
@@ -102,13 +102,13 @@ export const useMaximizedPage = () => {
         lastPageLength >= tilesToDecrement
           ? firstTileCurrentPageIndex
           : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
-      return setMapTiles({
+      return setMapPages({
         firstTileCurrentPage,
         firstTileCurrentPageIndex: indexForSecondToLastPage,
       });
     }
 
-    setMapTiles({
+    setMapPages({
       firstTileCurrentPage,
       firstTileCurrentPageIndex,
     });

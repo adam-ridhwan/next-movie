@@ -12,7 +12,6 @@ export const DomContext = createContext<DomContextType>(null);
 export const DomContextProvider = ({ children }: { children: ReactNode }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const tileRef = useRef<HTMLDivElement>(null);
-
   return <DomContext.Provider value={{ sliderRef, tileRef }}>{children}</DomContext.Provider>;
 };
 

@@ -14,7 +14,7 @@ export const usePageUtils = () => {
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
   const isMounted = useSliderStore(state => state.isMounted);
 
-  const getTilesPerPage = () => {
+  const getTileCountPerPage = () => {
     const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
     if (windowWidth < MEDIA_QUERY.SM) return 2;
     if (windowWidth < MEDIA_QUERY.MD) return 3;
@@ -24,7 +24,7 @@ export const usePageUtils = () => {
   };
 
   // +1 for left/right placeholders
-  const getTotalTiles = (num: number) => (Math.ceil(num) + 1) * getTilesPerPage();
+  const getTileCount = (num: number) => (Math.ceil(num) + 1) * getTileCountPerPage();
 
   const getStartIndex = (currentIndex: number, leftTilesTotal: number) => {
     // Prevents negative modulo
@@ -64,8 +64,8 @@ export const usePageUtils = () => {
   };
 
   return {
-    getTilesPerPage,
-    getTotalTiles,
+    getTileCountPerPage,
+    getTileCount,
     getStartIndex,
     updateUuids,
     firstPageLength,

@@ -10,12 +10,12 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const { hasPaginated, getTilesPerPage } = usePageUtils();
+  const { hasPaginated, getTileCountPerPage } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { tileRef } = useDomContext();
 
-  const tilesPerPage = getTilesPerPage();
+  const tilesPerPage = getTileCountPerPage();
 
   const isTileVisible = (i: number) => {
     const lowerBound = tilesPerPage - 1;

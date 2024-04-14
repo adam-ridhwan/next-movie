@@ -9,19 +9,19 @@ export const useTiles = () => {
   const {
     state: { TILES, pages, currentPage },
   } = usePagination();
-  const { hasPaginated, getTilesPerPage } = usePageUtils();
+  const { hasPaginated, getTileCountPerPage } = usePageUtils();
   const { isMounted } = usePageUtils();
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pages.size - 2;
-  const tilesPerPage = getTilesPerPage();
+  const tileCountPerPage = getTileCountPerPage();
 
   const getLeftTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted || !hasPaginated) return [];
-    if (isFirstPage) return [{ ...TILES[TILES.length - 1 - tilesPerPage], uuid: uuid() }];
+    if (isFirstPage) return [{ ...TILES[TILES.length - 1 - tileCountPerPage], uuid: uuid() }];
     const prevPageMOre = pages.get(currentPage - 2);
     if (!prevPageMOre) return [{ ...TILES[TILES.length - 1], uuid: uuid() }];
-    return [prevPageMOre[tilesPerPage - 1]];
+    return [prevPageMOre[tileCountPerPage - 1]];
   };
 
   const getPrevPageTiles = () => {
@@ -52,7 +52,7 @@ export const useTiles = () => {
 
   const getRightTilePlaceholder = (): [Movie] | [] => {
     if (!isMounted) return [];
-    if (isLastPage) return [{ ...TILES[tilesPerPage], uuid: uuid() }];
+    if (isLastPage) return [{ ...TILES[tileCountPerPage], uuid: uuid() }];
     const nextPageMOre = pages.get(currentPage + 2);
     if (!nextPageMOre) return [{ ...TILES[0], uuid: uuid() }];
     return [nextPageMOre[0]];
