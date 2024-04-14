@@ -52,7 +52,7 @@ export const useMinimizedPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { setMapTiles } = useMapPages();
+  const { setMapPages } = useMapPages();
 
   const goToMinimizedPage = () => {
     usePaginationLogger.minimized();
@@ -70,7 +70,7 @@ export const useMinimizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    setMapTiles({
+    setMapPages({
       firstTileCurrentPage,
       firstTileCurrentPageIndex,
     });

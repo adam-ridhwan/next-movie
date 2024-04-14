@@ -11,8 +11,8 @@ export const useLastPage = () => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
-  const { getTilesPerPage } = usePageUtils();
-  const { setMapTiles } = useMapPages();
+  const { getTileCountPerPage } = usePageUtils();
+  const { setMapPages } = useMapPages();
 
   const goToLastPage = () => {
     usePaginationLogger.last();
@@ -23,10 +23,10 @@ export const useLastPage = () => {
       key: currentPage,
     })[0];
 
-    const newTilesPerPage = getTilesPerPage();
-    const firstTileCurrentPageIndex = TILES.length - newTilesPerPage;
+    const newTileCountPerPage = getTileCountPerPage();
+    const firstTileCurrentPageIndex = TILES.length - newTileCountPerPage;
 
-    setMapTiles({
+    setMapPages({
       firstTileCurrentPage,
       firstTileCurrentPageIndex,
       isLastPage: true,

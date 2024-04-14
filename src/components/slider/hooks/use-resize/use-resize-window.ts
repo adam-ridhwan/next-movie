@@ -16,24 +16,31 @@ export const useResizeWindow = () => {
     state: { currentPage },
     actions: { goToFirstPage, goToMinimizedPage, goToMaximizedPage },
   } = usePagination();
-  const { getTilesPerPage } = usePageUtils();
+  const { getTileCountPerPage } = usePageUtils();
   const { resizeDirection } = useResizeDirection();
 
-  const prevTilesPerPage = useRef(getTilesPerPage());
+  const prevTilesPerPage = useRef(getTileCountPerPage());
   const prevWindowWidth = useRef(typeof window === 'undefined' ? 0 : window.innerWidth);
 
   const handleResize = useCallback(() => {
     const currentWidth = window.innerWidth;
-    const newTilesPerPage = getTilesPerPage();
+    const newTileCountPerPage = getTileCountPerPage();
 
-    if (newTilesPerPage === prevTilesPerPage.current) return;
+    if (newTileCountPerPage === prevTilesPerPage.current) return;
     log(' USE WINDOW RESIZE ');
-    prevTilesPerPage.current = newTilesPerPage;
+    prevTilesPerPage.current = newTileCountPerPage;
     prevWindowWidth.current = currentWidth;
 
     if (currentPage === 1) return goToFirstPage();
     return resizeDirection === RESIZE_DIRECTION.MINIMIZING ? goToMinimizedPage() : goToMaximizedPage();
-  }, [currentPage, resizeDirection, getTilesPerPage, goToFirstPage, goToMaximizedPage, goToMinimizedPage]);
+  }, [
+    currentPage,
+    resizeDirection,
+    getTileCountPerPage,
+    goToFirstPage,
+    goToMaximizedPage,
+    goToMinimizedPage,
+  ]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => handleResize());

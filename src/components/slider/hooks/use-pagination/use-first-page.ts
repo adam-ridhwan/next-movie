@@ -7,7 +7,7 @@ import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pa
 
 export const useFirstPage = () => {
   const TILES = useSliderStore(state => state.TILES);
-  const { setMapTiles } = useMapPages();
+  const { setMapPages } = useMapPages();
 
   const goToFirstPage = () => {
     usePaginationLogger.first();
@@ -19,7 +19,7 @@ export const useFirstPage = () => {
 
     const firstTileCurrentPageIndex = 0;
 
-    setMapTiles({
+    setMapPages({
       firstTileCurrentPage,
       firstTileCurrentPageIndex,
       isFirstPage: true,

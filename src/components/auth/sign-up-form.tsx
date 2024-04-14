@@ -13,7 +13,7 @@ import SignUpButton from './sign-up-button';
 
 export const SignUpForm = () => {
   const router = useRouter();
-  const [SignUpPayload, setSignUpPayload] = useState<SignUpPayload>({
+  const [signUpPayload, setSignUpPayload] = useState<SignUpPayload>({
     email: '',
     password: '',
     repeatedPassword: '',
@@ -22,7 +22,7 @@ export const SignUpForm = () => {
 
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password, repeatedPassword } = SignUpPayload;
+    const { email, password, repeatedPassword } = signUpPayload;
     const registered = await signUp({ email, password, repeatedPassword });
     if (!registered.success) return setError(registered.message);
 
@@ -38,8 +38,8 @@ export const SignUpForm = () => {
         id='email'
         type='email'
         name='email'
-        value={SignUpPayload.email}
-        onChange={e => setSignUpPayload({ ...SignUpPayload, email: e.target.value })}
+        value={signUpPayload.email}
+        onChange={e => setSignUpPayload({ ...signUpPayload, email: e.target.value })}
         placeholder={authStrings.emailAddress}
         autoComplete='email'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
@@ -48,8 +48,8 @@ export const SignUpForm = () => {
       <Input
         type='password'
         name='password'
-        value={SignUpPayload.password}
-        onChange={e => setSignUpPayload({ ...SignUpPayload, password: e.target.value })}
+        value={signUpPayload.password}
+        onChange={e => setSignUpPayload({ ...signUpPayload, password: e.target.value })}
         placeholder={authStrings.password}
         autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'
@@ -58,8 +58,8 @@ export const SignUpForm = () => {
       <Input
         type='password'
         name='repeated-password'
-        value={SignUpPayload.repeatedPassword}
-        onChange={e => setSignUpPayload({ ...SignUpPayload, repeatedPassword: e.target.value })}
+        value={signUpPayload.repeatedPassword}
+        onChange={e => setSignUpPayload({ ...signUpPayload, repeatedPassword: e.target.value })}
         placeholder={authStrings.repeatPassword}
         autoComplete='new-password'
         className='mb-3 rounded-none border-x-0 border-b-2 border-t-0 border-b-darkBlue py-6 text-[13px] font-light focus-visible:ring-red'

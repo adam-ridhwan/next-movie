@@ -9,10 +9,8 @@ export const SignInButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <>
-      <Button type='submit' disabled={pending} variant='accent' className='mb-5 w-full py-6'>
-        {pending ? <LoadingIcon /> : <BodyMedium>{authStrings.loginToYourAccount}</BodyMedium>}
-      </Button>
-    </>
+    <Button type='submit' disabled={pending} variant='accent' className='mb-5 w-full py-6'>
+      {pending ? <LoadingIcon /> : <BodyMedium>{authStrings.loginToYourAccount}</BodyMedium>}
+    </Button>
   );
 };
