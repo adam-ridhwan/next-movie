@@ -4,7 +4,7 @@ import { MINIMUM_TILE_COUNT } from '@/lib/constants';
 import { getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 export const useTiles = () => {
   const {

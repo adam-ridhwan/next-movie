@@ -1,5 +1,5 @@
 import { PageIndicatorIcon } from '@/components/icons';
-import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 const PageIndicator = () => {
   const {

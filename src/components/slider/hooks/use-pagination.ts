@@ -4,11 +4,10 @@ import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { Pages } from '@/lib/types';
+import { findIndexFromKey, getMapItem } from '@/lib/utils';
 import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { useMapPages } from '@/components/slider/hooks/use-map-pages';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { useMapPages } from '@/components/slider/hooks/use-pagination/use-map-pages';
-import { useMaximizedPage } from '@/components/slider/hooks/use-pagination/use-maximized-page';
-import { useMinimizedPage } from '@/components/slider/hooks/use-pagination/use-minimized-page';
 
 type UsePaginationReturn = {
   state: {
@@ -33,21 +32,19 @@ type UsePaginationReturn = {
   };
 };
 
-// IMPORTANT: Only import from UI components. Do not import from other hooks.
 export const usePagination = (): UsePaginationReturn => {
   const TILES = useSliderStore(state => state.TILES);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
+  const tileCountPerPage = useSliderStore(state => state.tileCountPerPage);
+  const lastPageLength = useSliderStore(state => state.lastPageLength);
   const maxPages = useSliderStore(state => state.maxPages);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
   const { setMapPages } = useMapPages();
   const { getTileCountPerPage } = usePageUtils();
-
-  const { goToMaximizedPage } = useMaximizedPage();
-  const { goToMinimizedPage } = useMinimizedPage();
 
   const isFirstPage = currentPage === 1;
   const isSecondPage = currentPage === 2;
@@ -79,6 +76,63 @@ export const usePagination = (): UsePaginationReturn => {
   const goToPrevPage = () => {
     usePaginationLogger.prev();
     setCurrentPage(currentPage - 1);
+  };
+
+  // Visuals: https://www.notion.so/useMinimizedPage-bb19b5abfc4a4c6585f397d5c26b627d?pvs=4
+  const goToMinimizedPage = () => {
+    usePaginationLogger.minimized();
+
+    const [firstTileCurrentPage] = getMapItem({
+      label: 'goToMinimizedPage(): firstTileCurrentPage',
+      map: pages,
+      key: currentPage,
+    });
+
+    const firstTileCurrentPageIndex = findIndexFromKey({
+      label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
+      array: TILES,
+      key: 'id',
+      value: firstTileCurrentPage.id,
+    });
+
+    setMapPages({ firstTileCurrentPageIndex });
+  };
+
+  // Visuals: https://www.notion.so/useMaximizedPage-2b1d82d0e1df40bdaa22d5b49b65e4a5?pvs=4
+  const goToMaximizedPage = () => {
+    usePaginationLogger.maximized();
+
+    const [firstTileCurrentPage] = getMapItem({
+      label: 'goToMaximizedPage(): firstTileCurrentPage',
+      map: pages,
+      key: currentPage,
+    });
+
+    const firstTileCurrentPageIndex = findIndexFromKey({
+      label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
+      array: TILES,
+      key: 'id',
+      value: firstTileCurrentPage.id,
+    });
+
+    const tilesToDecrement = getTileCountPerPage() - tileCountPerPage;
+    const isLastPage = currentPage === maxPages - 2;
+    const isSecondToLastPage = currentPage === maxPages - 3;
+
+    if (isLastPage) {
+      const indexForLastPage = firstTileCurrentPageIndex - tilesToDecrement;
+      return setMapPages({ firstTileCurrentPageIndex: indexForLastPage });
+    }
+
+    if (isSecondToLastPage) {
+      const indexForSecondToLastPage =
+        lastPageLength >= tilesToDecrement
+          ? firstTileCurrentPageIndex
+          : firstTileCurrentPageIndex - tilesToDecrement + lastPageLength;
+      return setMapPages({ firstTileCurrentPageIndex: indexForSecondToLastPage });
+    }
+
+    setMapPages({ firstTileCurrentPageIndex });
   };
 
   return {
