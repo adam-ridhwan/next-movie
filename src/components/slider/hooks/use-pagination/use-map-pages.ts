@@ -52,15 +52,15 @@ export const useMapPages = () => {
       const pageNumber = Math.floor(i / newTileCountPerPage);
       const isNewFirstPage = pageNumber === 1;
       const isNewLastPage = pageNumber === newMaxPages - 2;
-      const isLeftPagePlaceholder = pageNumber === 0;
-      const isRightPagePlaceholder = pageNumber === newMaxPages - 1;
+      const isLeftPlaceholder = pageNumber === 0;
+      const isRightPlaceholder = pageNumber === newMaxPages - 1;
 
       const idMatches = newTileList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
       const newTileItem = TILES[startIndex++];
       const newTileListToPush =
-        isLeftPagePlaceholder || isRightPagePlaceholder
+        isLeftPlaceholder || isRightPlaceholder
           ? { ...newTileItem, uuid: uuid() }
           : newTileItem; // prettier-ignore
       newTileList.push(newTileListToPush);
