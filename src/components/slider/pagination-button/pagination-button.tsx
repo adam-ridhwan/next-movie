@@ -1,9 +1,10 @@
-import { SLIDE_DIRECTION } from '@/lib/constants';
+import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/lib/constants';
 import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
+import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -12,7 +13,12 @@ type PaginationButtonProps = {
 };
 
 const PaginationButton = ({ direction, onClick, className }: PaginationButtonProps) => {
+  const {
+    state: { TILES },
+  } = usePagination();
   const { isAnimating } = useAnimation();
+
+  if (TILES.length <= MINIMUM_TILE_COUNT) return;
 
   const iconClass = cn(
     `opacity-0 transition-transform group-hover/button:scale-125 group-hover/slider:opacity-100`,
