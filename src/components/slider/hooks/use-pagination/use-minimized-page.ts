@@ -57,11 +57,11 @@ export const useMinimizedPage = () => {
   const goToMinimizedPage = () => {
     usePaginationLogger.minimized();
 
-    const firstTileCurrentPage = getMapItem({
+    const [firstTileCurrentPage] = getMapItem({
       label: 'goToMinimizedPage(): firstTileCurrentPage',
       map: pages,
       key: currentPage,
-    })[0];
+    });
 
     const firstTileCurrentPageIndex = findIndexFromKey({
       label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
@@ -70,10 +70,7 @@ export const useMinimizedPage = () => {
       value: firstTileCurrentPage.id,
     });
 
-    setMapPages({
-      firstTileCurrentPage,
-      firstTileCurrentPageIndex,
-    });
+    setMapPages({ firstTileCurrentPageIndex });
   };
 
   return { goToMinimizedPage };
