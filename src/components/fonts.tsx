@@ -18,7 +18,7 @@ const HeadingSmall = ({ children, className }: FontProps) => (
 );
 
 const HeadingExtraSmall = ({ children, className }: FontProps) => (
-  <span className={cn('text-[18px] font-medium', className)}>{children}</span>
+  <span className={cn('text-[18px] font-medium text-primary/85', className)}>{children}</span>
 );
 
 const BodyMedium = ({ children, className }: FontProps) => (
