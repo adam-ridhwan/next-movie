@@ -68,15 +68,15 @@ export const useMapPages = () => {
       if (newTileList.length !== newTileCountPerPage) continue;
 
       const firstTileIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
-      if (firstTileIndex > 0) {
-        if (isNewFirstPage) {
-          newFirstPageLength = newTileCountPerPage - firstTileIndex;
-          newTileList = updateUuids({ newTileList, firstTileIndex, isFirstPage: true });
-        }
-        if (isNewLastPage) {
-          newLastPageLength = firstTileIndex;
-          newTileList = updateUuids({ newTileList, firstTileIndex, isLastPage: true });
-        }
+
+      if (isNewFirstPage && firstTileIndex > 0) {
+        newFirstPageLength = newTileCountPerPage - firstTileIndex;
+        newTileList = updateUuids({ newTileList, firstTileIndex, isFirstPage: true });
+      }
+
+      if (isNewLastPage && firstTileIndex > 0) {
+        newLastPageLength = firstTileIndex;
+        newTileList = updateUuids({ newTileList, firstTileIndex, isLastPage: true });
       }
 
       newPages.set(pageNumber, newTileList);
