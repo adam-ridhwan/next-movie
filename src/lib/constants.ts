@@ -1,10 +1,10 @@
 export const DEVELOPMENT_MODE = process.env.NEXT_PUBLIC_NODE_ENV === 'development';
 
 export const MEDIA_QUERY = {
-  SM: 768,
-  MD: 1024,
-  LG: 1280,
-  XL: 1536,
+  SM: 500,
+  MD: 800,
+  LG: 1100,
+  XL: 1400,
 };
 
 export const TIMEOUT_DURATION = 700;
