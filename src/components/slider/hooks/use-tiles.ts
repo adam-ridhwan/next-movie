@@ -9,8 +9,7 @@ export const useTiles = () => {
   const {
     state: { TILES, pages, currentPage },
   } = usePagination();
-  const { hasPaginated, getTileCountPerPage } = usePageUtils();
-  const { isMounted } = usePageUtils();
+  const { isMounted, hasPaginated, getTileCountPerPage } = usePageUtils();
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === pages.size - 2;
