@@ -20,35 +20,29 @@ const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className='flex h-16 flex-row items-center bg-darkerBlue/50'>
-      <Spacer />
-      <div className='flex flex-1 flex-row justify-between'>
-        <div className='flex flex-row items-center gap-8'>
-          <LogoIcon />
-          <nav>
-            <ul className={cn('flex flex-row gap-4')}>
-              {Object.entries(ROUTES).map(([key, { path, label }]) => (
-                <Link key={key} href={path} className={cn({ 'pointer-events-none': pathname === path })}>
-                  <BodySmall
-                    className={cn('transition-colors hover:text-primary/50', {
-                      'text-primary': pathname === path,
-                      'text-primary/70': pathname !== path,
-                    })}
-                  >
-                    {label}
-                  </BodySmall>
-                </Link>
-              ))}
-            </ul>
-          </nav>
-        </div>
-        <AvatarDropdown />
+    <div className='px-leftRightCustom flex h-16 flex-row items-center justify-between bg-darkerBlue/50'>
+      <div className='flex flex-row items-center  gap-8'>
+        <LogoIcon />
+        <nav>
+          <ul className={cn('flex flex-row gap-4')}>
+            {Object.entries(ROUTES).map(([key, { path, label }]) => (
+              <Link key={key} href={path} className={cn({ 'pointer-events-none': pathname === path })}>
+                <BodySmall
+                  className={cn('transition-colors hover:text-primary/50', {
+                    'text-primary': pathname === path,
+                    'text-primary/70': pathname !== path,
+                  })}
+                >
+                  {label}
+                </BodySmall>
+              </Link>
+            ))}
+          </ul>
+        </nav>
       </div>
-      <Spacer />
+      <AvatarDropdown />
     </div>
   );
 };
 
 export default NavBar;
-
-const Spacer = () => <div className='h-full w-[4%] max-w-[60px]' />;

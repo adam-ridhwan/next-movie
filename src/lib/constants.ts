@@ -7,7 +7,6 @@ export const MEDIA_QUERY = {
   XL: 1536,
 };
 
-export const PADDING = 98;
 export const TIMEOUT_DURATION = 700;
 export const MINIMUM_TILE_COUNT = 6;
 

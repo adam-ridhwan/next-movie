@@ -25,7 +25,7 @@ const TileList = () => {
   return (
     <div
       className={cn(
-        'slider relative flex w-full flex-row px-12',
+        'slider px-leftRightCustom relative flex w-full flex-row',
         { 'justify-center': hasPaginated },
         { 'transition-transform duration-700': isAnimating }
       )}
