@@ -6,8 +6,8 @@ import chalk from 'chalk';
 import { RESIZE_DIRECTION } from '@/lib/constants';
 import { logger } from '@/lib/logger';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
-import { useResizeDirection } from '@/components/slider/hooks/use-resize/use-resize-direction';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
+import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 

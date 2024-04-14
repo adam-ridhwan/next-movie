@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePagination } from '@/components/slider/hooks/use-pagination/use-pagination';
+import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
