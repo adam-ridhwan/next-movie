@@ -38,7 +38,7 @@ const Slider = () => {
   useResizeWindow();
 
   useEffect(() => {
-    if (!isMounted || DEVELOPMENT_MODE) return;
+    if (!isMounted || !DEVELOPMENT_MODE) return;
     log(' SLIDER PAGES ', '──────────────────────────────────');
 
     [...pages.entries()]
