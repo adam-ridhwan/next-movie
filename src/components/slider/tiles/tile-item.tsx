@@ -51,7 +51,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
         <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-sm'>
           {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
           <Image
-            src={`https://image.tmdb.org/t/p/original${tile.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/original${tile.backdrop_path ?? tile.poster_path}`}
             alt={tile.title}
             priority
             fill

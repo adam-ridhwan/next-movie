@@ -7,8 +7,15 @@ const { TMDB_READ_ACCESS_TOKEN } = env;
 
 // Movie discover docs: https://developer.themoviedb.org/reference/discover-movie
 // Image docs: https://developer.themoviedb.org/docs/image-basics
-export const fetchMovies = async ({ genre, page }: TMDBParams) => {
-  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genre}`;
+export const fetchMovies = async ({ page, genre = '', language = 'en' }: TMDBParams) => {
+  const url = new URL('https://api.themoviedb.org/3/discover/movie');
+  url.searchParams.append('include_adult', 'true');
+  url.searchParams.append('include_video', 'true');
+  url.searchParams.append('language', 'en-US');
+  url.searchParams.append('sort_by', 'popularity.desc');
+  url.searchParams.append('page', page.toString());
+  url.searchParams.append('with_genres', genre.toString());
+  url.searchParams.append('with_original_language', language);
 
   const options = {
     method: 'GET',

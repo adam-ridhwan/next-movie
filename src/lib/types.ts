@@ -70,6 +70,7 @@ export const GENRES = {
 export type GenreId = (typeof GENRES)[keyof typeof GENRES];
 
 export type TMDBParams = {
-  genre: GenreId;
+  genre: GenreId | '';
   page: number;
+  language?: string;
 };
