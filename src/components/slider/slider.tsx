@@ -42,15 +42,17 @@ const Slider = () => {
     if (!isMounted || !DEVELOPMENT_MODE) return;
     log(' SLIDER PAGES ', '──────────────────────────────────');
 
-    [...pages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        // eslint-disable-next-line no-console
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.title : undefined))
-        );
-      });
+    // [...pages.entries()]
+    //   .sort((a, b) => a[0] - b[0])
+    //   .forEach(([pageIndex, tiles]) => {
+    //     // eslint-disable-next-line no-console
+    //     console.log(
+    //       `Page ${pageIndex}:`,
+    //       tiles.map(card => (card ? card.id : undefined))
+    //     );
+    //   });
+
+    console.log('pages:', pages);
 
     log('─────────────────────────────────────────────────');
   }, [pages, isMounted]);

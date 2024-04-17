@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { Pages } from '@/lib/types';
-import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { Movie, Pages } from '@/lib/types';
 
 type SetPagesParams = {
   pages: Pages;
@@ -65,8 +64,8 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (TILES: Movie[]) =>
-  create(
+export const createSliderStore = (TILES: Movie[]) => {
+  return create(
     devtools<SliderStore>(set => ({
       TILES: TILES,
       pages: new Map<number, Movie[]>().set(1, TILES.slice(0, 7)),
@@ -87,3 +86,4 @@ export const createSliderStore = (TILES: Movie[]) =>
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
     }))
   );
+};

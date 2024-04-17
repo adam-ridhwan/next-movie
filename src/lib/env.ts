@@ -14,4 +14,6 @@ export const env = cleanEnv(process.env, {
   POSTGRES_PASSWORD: str(),
   POSTGRES_DATABASE: str(),
   BLOB_READ_WRITE_TOKEN: str(),
+  TMDB_API_KEY: str(),
+  TMDB_READ_ACCESS_TOKEN: str(),
 });

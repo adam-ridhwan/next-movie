@@ -3,8 +3,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { Pages } from '@/lib/types';
-import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { Movie, Pages } from '@/lib/types';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { useValidators } from '@/components/slider/hooks/use-validators';
 
@@ -94,9 +93,9 @@ export const useMapPages = () => {
     //   newFirstPageLength: newFirstPageLength,
     //   newLastPageLength: newLastPageLength,
     // });
-    //
+
     // [...newPages.entries()]
-    //   .sort((a, b) => a[0] - b[0])
+    //   // .sort((a, b) => a[0] - b[0])
     //   .forEach(([pageIndex, tiles]) => {
     //     console.log(
     //       `Page ${pageIndex}:`,
@@ -104,12 +103,12 @@ export const useMapPages = () => {
     //     );
     //   });
 
-    validatePages({
-      label: 'useMapPages()',
-      pages: newPages,
-      expectedMaxPages: newMaxPages,
-      expectedTilesPerPage: newTileCountPerPage,
-    });
+    // validatePages({
+    //   label: 'useMapPages()',
+    //   pages: newPages,
+    //   expectedMaxPages: newMaxPages,
+    //   expectedTilesPerPage: newTileCountPerPage,
+    // });
 
     const getNewCurrentPage = () => {
       if (isFirstPage) return 1;

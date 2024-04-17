@@ -2,8 +2,8 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
+import { Movie } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type TileItemProps = {
@@ -27,16 +27,8 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       ref={ref}
       className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
     >
-      {DEVELOPMENT_MODE && (
+      {!DEVELOPMENT_MODE && (
         <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-md'>
-          <Image
-            src={tile.thumbnailUrl}
-            alt='thumbnail'
-            priority
-            fill
-            sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
-            className='object-cover'
-          />
           <div
             style={{
               position: 'absolute',
@@ -55,10 +47,11 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
         </div>
       )}
 
-      {!DEVELOPMENT_MODE && (
-        <div className='relative flex aspect-video flex-col justify-end gap-1 overflow-hidden rounded-md p-4'>
+      {DEVELOPMENT_MODE && (
+        <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-md'>
+          {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
           <Image
-            src={tile.thumbnailUrl}
+            src={`https://image.tmdb.org/t/p/original${tile.backdrop_path}`}
             alt='thumbnail'
             priority
             fill

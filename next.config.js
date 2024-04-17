@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'glhwlvhs6fyvq6hd.public.blob.vercel-storage.com' },
       { hostname: 'picsum.photos' },
+      { hostname: 'image.tmdb.org' },
     ],
   },
 };
