@@ -27,7 +27,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       ref={ref}
       className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
     >
-      {!DEVELOPMENT_MODE && (
+      {DEVELOPMENT_MODE && (
         <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-sm'>
           <div
             style={{
@@ -47,7 +47,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
         </div>
       )}
 
-      {DEVELOPMENT_MODE && (
+      {!DEVELOPMENT_MODE && (
         <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-sm'>
           {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
           <Image

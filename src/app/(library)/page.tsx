@@ -3,12 +3,16 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
-import { GenreId, GENRES } from '@/lib/types';
+import { GenreId, GENRES, Movie, TMDBParams } from '@/lib/types';
 import { HeadingExtraSmall } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
+type MoviesByGenre = {
+  [key: string]: Movie[];
+};
+
 export default async function Home() {
-  const getRandomPage = () => Math.floor(Math.random() * 100) + 1;
+  const getRandomPage = () => Math.floor(Math.random() * 10) + 1;
 
   const fetchMoviesBasedOnGenre = async (genre: GenreId, language?: string) => {
     try {
@@ -27,49 +31,47 @@ export default async function Home() {
     }
   };
 
-  const koreanMovies = await fetchMoviesBasedOnGenre(GENRES.ACTION, 'ko');
-  const actionMovies = await fetchMoviesBasedOnGenre(GENRES.ACTION);
-  const comedyMovies = await fetchMoviesBasedOnGenre(GENRES.COMEDY);
-  const dramaMovies = await fetchMoviesBasedOnGenre(GENRES.DRAMA);
-  const boomADVENTURE = await fetchMoviesBasedOnGenre(GENRES.ADVENTURE);
-  const boomANIMATION = await fetchMoviesBasedOnGenre(GENRES.ANIMATION);
-  const boomCRIME = await fetchMoviesBasedOnGenre(GENRES.CRIME);
-  const boomDOCUMENTARY = await fetchMoviesBasedOnGenre(GENRES.DOCUMENTARY);
-  const boomFAMILY = await fetchMoviesBasedOnGenre(GENRES.FAMILY);
-  const boomFANTASY = await fetchMoviesBasedOnGenre(GENRES.FANTASY);
-  const boomHISTORY = await fetchMoviesBasedOnGenre(GENRES.HISTORY);
-  const boomHORROR = await fetchMoviesBasedOnGenre(GENRES.HORROR);
-  const boomMUSIC = await fetchMoviesBasedOnGenre(GENRES.MUSIC);
-  const boomMYSTERY = await fetchMoviesBasedOnGenre(GENRES.MYSTERY);
-  const boomROMANCE = await fetchMoviesBasedOnGenre(GENRES.ROMANCE);
-  const boomSCIENCE_FICTION = await fetchMoviesBasedOnGenre(GENRES.SCIENCE_FICTION);
-  const boomTV_MOVIE = await fetchMoviesBasedOnGenre(GENRES.TV_MOVIE);
-  const boomTHRILLER = await fetchMoviesBasedOnGenre(GENRES.THRILLER);
-  const boomWAR = await fetchMoviesBasedOnGenre(GENRES.WAR);
-  const boomWESTERN = await fetchMoviesBasedOnGenre(GENRES.WESTERN);
+  const genreIds = [
+    { genre: GENRES.ACTION, language: 'ko', label: 'Korean Movies' },
+    { genre: GENRES.ACTION, label: 'Action Movies' },
+    { genre: GENRES.COMEDY, label: 'Comedy Movies' },
+    { genre: GENRES.DRAMA, label: 'Drama Movies' },
+    { genre: GENRES.ADVENTURE, label: 'Adventure Movies' },
+    { genre: GENRES.ANIMATION, label: 'Animation Movies' },
+    { genre: GENRES.CRIME, label: 'Crime Movies' },
+    { genre: GENRES.DOCUMENTARY, label: 'Documentary Movies' },
+    { genre: GENRES.FAMILY, label: 'Family Movies' },
+    { genre: GENRES.FANTASY, label: 'Fantasy Movies' },
+    { genre: GENRES.HISTORY, label: 'History Movies' },
+    { genre: GENRES.HORROR, label: 'Horror Movies' },
+    { genre: GENRES.MUSIC, label: 'Music Movies' },
+    { genre: GENRES.MYSTERY, label: 'Mystery Movies' },
+    { genre: GENRES.ROMANCE, label: 'Romance Movies' },
+    { genre: GENRES.SCIENCE_FICTION, label: 'Science Fiction Movies' },
+    { genre: GENRES.TV_MOVIE, label: 'TV Movie Movies' },
+    { genre: GENRES.THRILLER, label: 'Thriller Movies' },
+    { genre: GENRES.WAR, label: 'War Movies' },
+    { genre: GENRES.WESTERN, label: 'Western Movies' },
+  ];
 
-  const tiles = {
-    'Korean Movies': koreanMovies,
-    'Action Movies': actionMovies,
-    'Comedy Movies': comedyMovies,
-    'Drama Movies': dramaMovies,
-    'Adventure Movies': boomADVENTURE,
-    'Animation Movies': boomANIMATION,
-    'Crime Movies': boomCRIME,
-    'Documentary Movies': boomDOCUMENTARY,
-    'Family Movies': boomFAMILY,
-    'Fantasy Movies': boomFANTASY,
-    'History Movies': boomHISTORY,
-    'Horror Movies': boomHORROR,
-    'Music Movies': boomMUSIC,
-    'Mystery Movies': boomMYSTERY,
-    'Romance Movies': boomROMANCE,
-    'Science Fiction Movies': boomSCIENCE_FICTION,
-    'TV Movie Movies': boomTV_MOVIE,
-    'Thriller Movies': boomTHRILLER,
-    'War Movies': boomWAR,
-    'Western Movies': boomWESTERN,
+  const movieFetchPromises = genreIds.map(({ genre, language, label }) =>
+    fetchMoviesBasedOnGenre(genre, language).then(movies => ({ label, movies }))
+  );
+
+  const fetchAllGenreMovies = async () => {
+    try {
+      const moviesResults = await Promise.all(movieFetchPromises);
+      return moviesResults.reduce((acc, { label, movies }) => {
+        acc[label] = movies;
+        return acc;
+      }, {} as MoviesByGenre);
+    } catch (error) {
+      console.error('Error fetching movies for all genres:', error);
+      throw error;
+    }
   };
+
+  const tiles = await fetchAllGenreMovies();
 
   return (
     <main>
