@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
+import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
 import PageIndicator from '@/components/slider/page-indicator/page-indicator';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
@@ -37,20 +38,21 @@ const Slider = () => {
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
+  useScrollbarWidth();
 
   useEffect(() => {
-    if (!isMounted || !DEVELOPMENT_MODE) return;
+    if (!isMounted || DEVELOPMENT_MODE) return;
     log(' SLIDER PAGES ', '──────────────────────────────────');
 
-    [...pages.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .forEach(([pageIndex, tiles]) => {
-        // eslint-disable-next-line no-console
-        console.log(
-          `Page ${pageIndex}:`,
-          tiles.map(card => (card ? card.title : undefined))
-        );
-      });
+    // [...pages.entries()]
+    //   .sort((a, b) => a[0] - b[0])
+    //   .forEach(([pageIndex, tiles]) => {
+    //     // eslint-disable-next-line no-console
+    //     console.log(
+    //       `Page ${pageIndex}:`,
+    //       tiles.map(card => (card ? card.id : undefined))
+    //     );
+    //   });
 
     log('─────────────────────────────────────────────────');
   }, [pages, isMounted]);

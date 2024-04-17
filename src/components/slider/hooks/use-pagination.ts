@@ -3,8 +3,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { Pages } from '@/lib/types';
-import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { Movie, Pages } from '@/lib/types';
 import { useMapPages } from '@/components/slider/hooks/use-map-pages';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 

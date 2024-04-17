@@ -18,15 +18,15 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
-      <html lang='en'>
+      <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
         <body
           className={cn(
-            `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-darkestBlue`
-            // 'border-4 border-green-500'
+            `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col overflow-x-hidden bg-darkestBlue`
           )}
         >
           <NavBar />
           {children}
+          <footer className='p-10'></footer>
         </body>
       </html>
     </AuthProvider>

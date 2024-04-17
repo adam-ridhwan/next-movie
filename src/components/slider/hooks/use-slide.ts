@@ -4,6 +4,7 @@ import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { SlideDirection } from '@/lib/types';
+import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
 import { SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type GetSlideAmountParams = {
@@ -23,6 +24,7 @@ export const useSlide = (): UseSlideReturn => {
   const setSlideAmount = useSliderStore(state => state.setSlideAmount);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
+  const scrollbarWidth = useScrollbarWidth();
 
   const { sliderRef, tileRef, paginationButtonRef } = useDomContext();
 
@@ -37,7 +39,7 @@ export const useSlide = (): UseSlideReturn => {
     if (!tileRef.current) throw new Error('tileRef is missing');
     if (!paginationButtonRef.current) throw new Error('paginationButtonRef is missing');
 
-    const windowWidth = window.innerWidth;
+    const windowWidth = window.innerWidth - scrollbarWidth;
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = tileRef.current;
     const { offsetWidth: paginationButtonWidth } = paginationButtonRef.current;

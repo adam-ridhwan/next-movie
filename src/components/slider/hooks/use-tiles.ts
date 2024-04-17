@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import { Movie } from '@/lib/zod-types.ts/modelSchema/MovieSchema';
+import { Movie } from '@/lib/types';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { MINIMUM_TILE_COUNT } from '@/components/slider/slider-constants';

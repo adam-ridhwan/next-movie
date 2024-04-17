@@ -25,6 +25,7 @@ export const errorStrings = {
 } as const;
 
 export const libraryStrings = {
+  action: 'Action Movies',
   trending: 'Trending',
   recommendedForYou: 'Recommended for you',
 } as const;
