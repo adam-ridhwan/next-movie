@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
+import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
 import PageIndicator from '@/components/slider/page-indicator/page-indicator';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
@@ -37,9 +38,10 @@ const Slider = () => {
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
+  useScrollbarWidth();
 
   useEffect(() => {
-    if (!isMounted || !DEVELOPMENT_MODE) return;
+    if (!isMounted || DEVELOPMENT_MODE) return;
     log(' SLIDER PAGES ', '──────────────────────────────────');
 
     // [...pages.entries()]
@@ -51,8 +53,6 @@ const Slider = () => {
     //       tiles.map(card => (card ? card.id : undefined))
     //     );
     //   });
-
-    console.log('pages:', pages);
 
     log('─────────────────────────────────────────────────');
   }, [pages, isMounted]);
