@@ -2,18 +2,12 @@ import { fetchMovies } from '@/actions/movies';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { prisma } from '@/lib/client';
-import { DEVELOPMENT_MODE, libraryStrings } from '@/lib/constants';
-import { MOCK_TRENDING_TILES } from '@/lib/mock';
+import { libraryStrings } from '@/lib/constants';
 import { GenreId, GENRES } from '@/lib/types';
 import { HeadingExtraSmall } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 export default async function Home() {
-  const fetchedTiles = await prisma.movie.findMany({});
-
-  const tiles = DEVELOPMENT_MODE ? [MOCK_TRENDING_TILES] : [fetchedTiles];
-
   const fetchMoviesBasedOnGenre = async (genre: GenreId) => {
     try {
       const results = await Promise.all([
@@ -29,42 +23,29 @@ export default async function Home() {
   };
 
   const actionMovies = await fetchMoviesBasedOnGenre(GENRES.ACTION);
+  const comedyMovies = await fetchMoviesBasedOnGenre(GENRES.COMEDY);
+  const dramaMovies = await fetchMoviesBasedOnGenre(GENRES.DRAMA);
+
+  // const tiles = [actionMovies, comedyMovies, dramaMovies];
+
+  const tiles = {
+    'Action Movies': actionMovies,
+    'Comedy Movies': comedyMovies,
+    'Drama Movies': dramaMovies,
+  };
 
   return (
-    <>
-      <div key={tiles.length} className='flex flex-col gap-1 pt-5'>
-        <SliderProvider tiles={actionMovies}>
-          <DomContextProvider>
-            <HeadingExtraSmall className='px-leftRightCustom'>{libraryStrings.action}</HeadingExtraSmall>
-            <Slider />
-          </DomContextProvider>
-        </SliderProvider>
-      </div>
-    </>
+    <div>
+      {Object.entries(tiles).map(([header, movies]) => (
+        <div key={header} className='flex flex-col gap-1 pt-5'>
+          <SliderProvider tiles={movies}>
+            <DomContextProvider>
+              <HeadingExtraSmall className='px-leftRightCustom'>{header}</HeadingExtraSmall>
+              <Slider />
+            </DomContextProvider>
+          </SliderProvider>
+        </div>
+      ))}
+    </div>
   );
-
-  // return (
-  //   // <div>
-  //   //   {tiles.map(tiles => (
-  //   //     <div key={tiles.length} className='flex flex-col gap-1 pt-5'>
-  //   //       <SliderProvider tiles={actionMovies.results}>
-  //   //         <DomContextProvider>
-  //   //           <HeadingExtraSmall className='px-leftRightCustom'>{libraryStrings.trending}</HeadingExtraSmall>
-  //   //           <Slider />
-  //   //         </DomContextProvider>
-  //   //       </SliderProvider>
-  //   //     </div>
-  //   //   ))}
-  //     {/*{*/}
-  //     {/*  <div key={tiles.length} className='flex flex-col gap-1 pt-5'>*/}
-  //     {/*    <SliderProvider tiles={actionMovies.results}>*/}
-  //     {/*      <DomContextProvider>*/}
-  //     {/*        <HeadingExtraSmall className='px-leftRightCustom'>{libraryStrings.action}</HeadingExtraSmall>*/}
-  //     {/*        <Slider />*/}
-  //     {/*      </DomContextProvider>*/}
-  //     {/*    </SliderProvider>*/}
-  //     {/*  </div>*/}
-  //     {/*}*/}
-  //   // </div>
-  // );
 }

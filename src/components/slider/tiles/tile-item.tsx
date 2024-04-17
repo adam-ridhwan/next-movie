@@ -52,7 +52,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
           {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
           <Image
             src={`https://image.tmdb.org/t/p/original${tile.backdrop_path}`}
-            alt='thumbnail'
+            alt={tile.title}
             priority
             fill
             sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
