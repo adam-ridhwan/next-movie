@@ -1,9 +1,10 @@
+import { wait } from 'next/dist/lib/wait';
 import { fetchMovies } from '@/actions/movies';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
-import { GenreId, GENRES, Movie, TMDBParams } from '@/lib/types';
+import { GenreId, GENRES, Movie } from '@/lib/types';
 import { HeadingExtraSmall } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
@@ -16,8 +17,8 @@ export default async function Home() {
 
   const fetchMoviesBasedOnGenre = async (genre: GenreId, language?: string) => {
     try {
-      const page1 = DEVELOPMENT_MODE ? 1 : getRandomPage();
-      const page2 = DEVELOPMENT_MODE ? 2 : getRandomPage();
+      const page1 = !DEVELOPMENT_MODE ? 1 : getRandomPage();
+      const page2 = !DEVELOPMENT_MODE ? 2 : getRandomPage();
 
       const results = await Promise.all([
         fetchMovies({ page: page1, genre, language }),
