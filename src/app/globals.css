@@ -80,12 +80,9 @@
 }
 
 .slider-tile {
+  min-width: calc((1 / 2) * 100%); /* 2 tiles */
   padding-left: 0.25%;
   padding-right: 0.25%;
-}
-
-.slider-tile {
-  min-width: calc((1 / 2) * 100%); /* 2 tiles */
 }
 
 @media (min-width: 500px) {

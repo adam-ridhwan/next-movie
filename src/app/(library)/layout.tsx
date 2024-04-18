@@ -19,14 +19,14 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <AuthProvider>
       <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-        <body
-          className={cn(
-            `${inter.className} dark flex max-h-[100dvh] min-h-[100dvh] flex-col overflow-x-hidden bg-darkestBlue`
-          )}
-        >
-          <NavBar />
-          {children}
-          <footer className='p-10'></footer>
+        <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-darkestBlue`)}>
+          <main className='flex flex-col'>
+            <div className='min-h-[100dvh] flex-1'>
+              <NavBar />
+              {children}
+            </div>
+            <footer className='p-10'></footer>
+          </main>
         </body>
       </html>
     </AuthProvider>
