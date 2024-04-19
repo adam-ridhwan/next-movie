@@ -15,8 +15,7 @@ const TileList = () => {
   } = usePageUtils();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
-  const { tileRef } = useDomContext();
-  const { sliderRef } = useDomContext();
+  const { tileListRef, tileItemRef } = useDomContext();
 
   const tilesPerPage = getTileCountPerPage();
 
@@ -28,7 +27,7 @@ const TileList = () => {
 
   return (
     <div
-      ref={sliderRef}
+      ref={tileListRef}
       className={cn(
         'mx-[0.25%] flex w-full flex-row pb-5',
         { 'justify-center': hasPaginated },
@@ -39,7 +38,7 @@ const TileList = () => {
       {tilesToRender.map((tile, i) => (
         <TileItem
           key={tile?.uuid || i}
-          ref={i === 0 ? tileRef : undefined}
+          ref={i === 0 ? tileItemRef : undefined}
           tile={tile}
           index={i + 1}
           displayNumber={hasPaginated ? i - tilesPerPage : i}
