@@ -4,6 +4,7 @@ import { SliderProvider } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { GenreId, GENRES, Movie } from '@/lib/types';
+import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
 type MoviesByGenre = {
@@ -15,8 +16,8 @@ export default async function Home() {
 
   const fetchMoviesBasedOnGenre = async (genre: GenreId, language?: string) => {
     try {
-      const page1 = !DEVELOPMENT_MODE ? 1 : getRandomPage();
-      const page2 = !DEVELOPMENT_MODE ? 2 : getRandomPage();
+      const page1 = DEVELOPMENT_MODE ? 1 : getRandomPage();
+      const page2 = DEVELOPMENT_MODE ? 2 : getRandomPage();
 
       const results = await Promise.all([
         fetchMovies({ page: page1, genre, language }),
@@ -72,13 +73,18 @@ export default async function Home() {
 
   const tiles = await fetchAllGenreMovies();
 
-  return Object.entries(tiles).map(([header, movies]) => (
-    <div key={header} className='flex flex-col gap-1 overflow-hidden'>
-      <SliderProvider tiles={movies}>
-        <DomContextProvider>
-          <Slider header={header} />
-        </DomContextProvider>
-      </SliderProvider>
-    </div>
-  ));
+  return (
+    <>
+      <EpicStage />
+      {Object.entries(tiles).map(([header, movies]) => (
+        <div key={header} className='flex flex-col gap-1 overflow-hidden'>
+          <SliderProvider tiles={movies}>
+            <DomContextProvider>
+              <Slider header={header} />
+            </DomContextProvider>
+          </SliderProvider>
+        </div>
+      ))}
+    </>
+  );
 }
