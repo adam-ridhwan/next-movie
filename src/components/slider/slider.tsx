@@ -1,13 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useDomContext } from '@/providers/dom-provider';
 import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { logger } from '@/lib/logger';
-import { cn } from '@/lib/utils';
+import { HeadingExtraSmall } from '@/components/fonts';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
@@ -26,15 +25,18 @@ function log(...args: string[]) {
   }
 }
 
-const Slider = () => {
+type SliderProps = {
+  header: string;
+};
+
+const Slider = ({ header }: SliderProps) => {
   const {
-    state: { pages, currentPage },
+    state: { pages },
     actions: { goToFirstPage },
   } = usePagination();
   const {
     state: { isMounted },
   } = usePageUtils();
-  const { sliderRef } = useDomContext();
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
@@ -46,11 +48,11 @@ const Slider = () => {
 
     // [...pages.entries()]
     //   .sort((a, b) => a[0] - b[0])
-    //   .forEach(([pageIndex, tiles]) => {
+    //   .forEach(([pageIndex, tiles], index) => {
     //     // eslint-disable-next-line no-console
     //     console.log(
     //       `Page ${pageIndex}:`,
-    //       tiles.map(card => (card ? card.id : undefined))
+    //       tiles.map(card => index)
     //     );
     //   });
 
@@ -58,16 +60,17 @@ const Slider = () => {
   }, [pages, isMounted]);
 
   return (
-    <div ref={sliderRef} className={cn('group/slider relative flex w-full')}>
-      {DEVELOPMENT_MODE && (
-        <div className='absolute -top-16 left-1/2 z-50 -translate-x-1/2 text-[50px] font-bold'>
-          {currentPage}
-        </div>
-      )}
-      <PaginateLeftButton />
-      <TileList />
-      <PaginateRightButton />
-      <PageIndicator />
+    <div className='group/slider'>
+      <div className='mx-[0.50%] flex h-20 flex-row items-center justify-between px-leftRightCustom pt-10'>
+        <HeadingExtraSmall>{header}</HeadingExtraSmall>
+        <PageIndicator />
+      </div>
+
+      <div className='relative flex flex-row'>
+        <PaginateLeftButton />
+        <TileList />
+        <PaginateRightButton />
+      </div>
     </div>
   );
 };

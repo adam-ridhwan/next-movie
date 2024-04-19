@@ -10,17 +10,28 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
       screens: {
-        '2xl': '1400px',
+        '2xl': '1700px',
       },
     },
     extend: {
       padding: {
         leftRightCustom: 'min(4%, 60px)',
       },
+      margin: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
       width: {
         leftRightCustom: 'min(4%, 60px)',
+      },
+      right: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
+      left: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
+      boxShadow: {
+        tileShadow: '0 4px 7px rgba(0, 0, 0, 0.25)',
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -58,6 +69,7 @@ module.exports = {
         },
         white: 'hsl(0, 0%, 100%)',
         red: 'hsl(0, 97%, 63%)',
+        appBackground: '#2d2d2d',
         darkBlue: 'hsl(223, 23%, 46%)',
         darkerBlue: 'hsl(223, 36%, 14%)',
         darkestBlue: 'hsl(223, 30%, 9%)',

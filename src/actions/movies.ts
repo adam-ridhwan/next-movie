@@ -6,7 +6,6 @@ import { TMDBParams } from '@/lib/types';
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
 // Movie discover docs: https://developer.themoviedb.org/reference/discover-movie
-// Image docs: https://developer.themoviedb.org/docs/image-basics
 export const fetchMovies = async ({ page, genre = '', language = 'en' }: TMDBParams) => {
   const url = new URL('https://api.themoviedb.org/3/discover/movie');
   url.searchParams.append('include_adult', 'true');

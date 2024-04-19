@@ -1,11 +1,10 @@
-import { wait } from 'next/dist/lib/wait';
 import { fetchMovies } from '@/actions/movies';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { GenreId, GENRES, Movie } from '@/lib/types';
-import { HeadingExtraSmall } from '@/components/fonts';
+import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
 type MoviesByGenre = {
@@ -17,15 +16,15 @@ export default async function Home() {
 
   const fetchMoviesBasedOnGenre = async (genre: GenreId, language?: string) => {
     try {
-      const page1 = !DEVELOPMENT_MODE ? 1 : getRandomPage();
-      const page2 = !DEVELOPMENT_MODE ? 2 : getRandomPage();
+      const page1 = DEVELOPMENT_MODE ? 1 : getRandomPage();
+      const page2 = DEVELOPMENT_MODE ? 2 : getRandomPage();
 
       const results = await Promise.all([
         fetchMovies({ page: page1, genre, language }),
         fetchMovies({ page: page2, genre, language }),
       ]);
 
-      return [...results[0].results, ...results[1].results];
+      return [...results[0].results];
     } catch (error) {
       console.error('Error fetching action movies:', error);
       throw error;
@@ -34,8 +33,8 @@ export default async function Home() {
 
   const genreIds = [
     { genre: GENRES.ACTION, language: 'ko', label: 'Korean Movies' },
-    { genre: GENRES.ACTION, label: 'Action Movies' },
-    { genre: GENRES.COMEDY, label: 'Comedy Movies' },
+    // { genre: GENRES.ACTION, label: 'Action Movies' },
+    // { genre: GENRES.COMEDY, label: 'Comedy Movies' },
     // { genre: GENRES.DRAMA, label: 'Drama Movies' },
     // { genre: GENRES.ADVENTURE, label: 'Adventure Movies' },
     // { genre: GENRES.ANIMATION, label: 'Animation Movies' },
@@ -75,17 +74,17 @@ export default async function Home() {
   const tiles = await fetchAllGenreMovies();
 
   return (
-    <main>
+    <>
+      <EpicStage />
       {Object.entries(tiles).map(([header, movies]) => (
-        <div key={header} className='flex flex-col gap-1 pt-10'>
+        <div key={header} className='flex flex-col gap-1 overflow-hidden'>
           <SliderProvider tiles={movies}>
             <DomContextProvider>
-              <HeadingExtraSmall className='px-leftRightCustom'>{header}</HeadingExtraSmall>
-              <Slider />
+              <Slider header={header} />
             </DomContextProvider>
           </SliderProvider>
         </div>
       ))}
-    </main>
+    </>
   );
 }

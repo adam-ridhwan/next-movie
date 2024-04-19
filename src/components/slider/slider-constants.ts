@@ -2,11 +2,10 @@ export const TIMEOUT_DURATION = 700;
 export const MINIMUM_TILE_COUNT = 6;
 
 export const MEDIA_QUERY = {
-  SM: 500,
-  MD: 800,
-  LG: 1100,
-  XL: 1400,
-};
+  SM: 800,
+  MD: 1000,
+  LG: 1300,
+} as const;
 
 export const SLIDE_DIRECTION = {
   LEFT: 'LEFT',
