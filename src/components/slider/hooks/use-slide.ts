@@ -4,7 +4,6 @@ import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { SlideDirection } from '@/lib/types';
-import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
 import { SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type GetSlideAmountParams = {
@@ -24,7 +23,6 @@ export const useSlide = (): UseSlideReturn => {
   const setSlideAmount = useSliderStore(state => state.setSlideAmount);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
-  const scrollbarWidth = useScrollbarWidth();
 
   const { sliderRef, tileRef, paginationButtonRef } = useDomContext();
 
@@ -39,18 +37,15 @@ export const useSlide = (): UseSlideReturn => {
     if (!tileRef.current) throw new Error('tileRef is missing');
     if (!paginationButtonRef.current) throw new Error('paginationButtonRef is missing');
 
-    const windowWidth = window.innerWidth - scrollbarWidth;
     const { offsetWidth: sliderWidth } = sliderRef.current;
     const { offsetWidth: sliderItemWidth } = tileRef.current;
-    const { offsetWidth: paginationButtonWidth } = paginationButtonRef.current;
 
     const pageLength = isSecondPage ? firstPageLength : lastPageLength;
-    const trailingPercentage = ((pageLength * sliderItemWidth) / windowWidth) * 100;
+    const trailingPercentage = ((pageLength * sliderItemWidth) / sliderWidth) * 100;
     if (isSecondPage && trailingPercentage) return trailingPercentage;
     if (isSecondToLastPage && trailingPercentage) return -trailingPercentage;
 
-    const sliderWidthPercentage = ((sliderWidth - paginationButtonWidth * 2) / windowWidth) * 100;
-    return direction === SLIDE_DIRECTION.RIGHT ? -sliderWidthPercentage : sliderWidthPercentage;
+    return direction === SLIDE_DIRECTION.RIGHT ? -100 : 100;
   };
 
   return {

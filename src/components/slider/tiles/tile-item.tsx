@@ -8,12 +8,13 @@ import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type TileItemProps = {
   tile: Movie | void;
+  index: number;
   displayNumber?: number | '';
   isVisibleOnScreen?: boolean;
 };
 
 const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
-  { tile, displayNumber, isVisibleOnScreen = false },
+  { tile, index, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
   const {
@@ -27,8 +28,8 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       ref={ref}
       className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
     >
-      {DEVELOPMENT_MODE && (
-        <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-sm'>
+      {!DEVELOPMENT_MODE && (
+        <div className='shadow-tileShadow relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl'>
           <div
             style={{
               position: 'absolute',
@@ -40,26 +41,24 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
             }}
           />
           <div className='absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 gap-1 text-8xl'>
-            {tile.title}
+            {index}
           </div>
-          <div className='absolute right-1 top-0 text-4xl'>{tile.title}</div>
-          <div className='absolute left-1 top-0 text-4xl'>{tile.title}</div>
+          <div className='absolute right-1 top-0 text-4xl'>{index}</div>
+          <div className='absolute left-1 top-0 text-4xl'>{index}</div>
         </div>
       )}
 
-      {!DEVELOPMENT_MODE && (
-        <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-sm'>
-          {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
-          <Image
-            src={`https://image.tmdb.org/t/p/original${tile.backdrop_path ?? tile.poster_path}`}
-            alt={tile.title}
-            priority
-            fill
-            sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
-            className='object-cover'
-          />
-        </div>
-      )}
+      <div className='shadow-tileShadow relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl'>
+        {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
+        <Image
+          src={`https://image.tmdb.org/t/p/original${tile.backdrop_path ?? tile.poster_path}`}
+          alt={tile.title}
+          priority
+          fill
+          sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
+          className='object-cover'
+        />
+      </div>
     </div>
   );
 };

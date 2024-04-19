@@ -63,8 +63,7 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     if (windowWidth < MEDIA_QUERY.SM) return 2;
     if (windowWidth < MEDIA_QUERY.MD) return 3;
     if (windowWidth < MEDIA_QUERY.LG) return 4;
-    if (windowWidth < MEDIA_QUERY.XL) return 5;
-    return 6;
+    return 5;
   };
 
   // +1 for left/right placeholders

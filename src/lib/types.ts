@@ -42,7 +42,7 @@ export const MovieSchema = z.object({
 });
 export type Movie = z.infer<typeof MovieSchema>;
 
-export const nonEmptyTilesSchema = z.array(MovieSchema).nonempty();
+export const nonEmptyTilesSchema = z.array(MovieSchema);
 export type Pages = Map<number, Movie[]>;
 
 export const GENRES = {

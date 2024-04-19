@@ -156,7 +156,7 @@ export const ChevronLeftIcon = ({ className }: SVGProps) => (
     strokeWidth='1.5'
     strokeLinecap='round'
     strokeLinejoin='round'
-    className={cn('h-12 w-12', className)}
+    className={cn('', className)}
   >
     <path d='m15 18-6-6 6-6' />
   </svg>
@@ -171,7 +171,7 @@ export const ChevronRightIcon = ({ className }: SVGProps) => (
     strokeWidth='1.5'
     strokeLinecap='round'
     strokeLinejoin='round'
-    className={cn('h-12 w-12', className)}
+    className={cn('', className)}
   >
     <path d='m9 18 6-6-6-6' />
   </svg>
@@ -187,7 +187,7 @@ export const PageIndicatorIcon = ({ isActive, className }: SVGProps) => (
     strokeLinecap='round'
     strokeLinejoin='round'
     className={cn(
-      'h-4 w-4 scale-125  border-amber-400 stroke-muted-foreground/60',
+      'h-4 w-4 scale-125 border-amber-400 stroke-muted-foreground/60',
       { 'stroke-primary': isActive },
       className
     )}

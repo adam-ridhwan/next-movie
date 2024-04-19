@@ -1,4 +1,3 @@
-import { wait } from 'next/dist/lib/wait';
 import { fetchMovies } from '@/actions/movies';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
@@ -25,7 +24,7 @@ export default async function Home() {
         fetchMovies({ page: page2, genre, language }),
       ]);
 
-      return [...results[0].results, ...results[1].results];
+      return [...results[0].results];
     } catch (error) {
       console.error('Error fetching action movies:', error);
       throw error;
@@ -34,8 +33,8 @@ export default async function Home() {
 
   const genreIds = [
     { genre: GENRES.ACTION, language: 'ko', label: 'Korean Movies' },
-    { genre: GENRES.ACTION, label: 'Action Movies' },
-    { genre: GENRES.COMEDY, label: 'Comedy Movies' },
+    // { genre: GENRES.ACTION, label: 'Action Movies' },
+    // { genre: GENRES.COMEDY, label: 'Comedy Movies' },
     // { genre: GENRES.DRAMA, label: 'Drama Movies' },
     // { genre: GENRES.ADVENTURE, label: 'Adventure Movies' },
     // { genre: GENRES.ANIMATION, label: 'Animation Movies' },
@@ -74,18 +73,13 @@ export default async function Home() {
 
   const tiles = await fetchAllGenreMovies();
 
-  return (
-    <main>
-      {Object.entries(tiles).map(([header, movies]) => (
-        <div key={header} className='flex flex-col gap-1 pt-10'>
-          <SliderProvider tiles={movies}>
-            <DomContextProvider>
-              <HeadingExtraSmall className='px-leftRightCustom'>{header}</HeadingExtraSmall>
-              <Slider />
-            </DomContextProvider>
-          </SliderProvider>
-        </div>
-      ))}
-    </main>
-  );
+  return Object.entries(tiles).map(([header, movies]) => (
+    <div key={header} className='flex flex-col gap-1 overflow-hidden'>
+      <SliderProvider tiles={movies}>
+        <DomContextProvider>
+          <Slider header={header} />
+        </DomContextProvider>
+      </SliderProvider>
+    </div>
+  ));
 }

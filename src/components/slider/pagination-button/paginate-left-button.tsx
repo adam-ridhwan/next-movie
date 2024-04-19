@@ -3,7 +3,7 @@ import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
-import PaginationButton from '@/components/slider/pagination-button/pagination-button';
+import PaginateButton from '@/components/slider/pagination-button/paginate-button';
 import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/components/slider/slider-constants';
 
 const PaginateLeftButton = () => {
@@ -36,10 +36,13 @@ const PaginateLeftButton = () => {
   };
 
   return (
-    <PaginationButton
+    <PaginateButton
       onClick={handlePaginateLeft}
       direction={SLIDE_DIRECTION.LEFT}
-      className={cn({ hidden: !hasPaginated })}
+      className={cn(
+        { 'pointer-events-auto opacity-100': hasPaginated },
+        { 'pointer-events-none opacity-0': !hasPaginated }
+      )}
     />
   );
 };
