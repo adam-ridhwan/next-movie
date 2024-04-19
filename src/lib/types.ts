@@ -2,6 +2,7 @@
 
 import { z } from 'zod';
 
+import { ValueOf } from '@/lib/utils';
 import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type TODO = any;
@@ -30,6 +31,8 @@ export const MovieSchema = z.object({
   id: z.number(),
   original_language: z.string(),
   original_title: z.string(),
+  original_name: z.string(),
+  name: z.string(),
   overview: z.string(),
   popularity: z.number(),
   poster_path: z.string(),
@@ -41,7 +44,6 @@ export const MovieSchema = z.object({
   uuid: z.string(),
 });
 export type Movie = z.infer<typeof MovieSchema>;
-
 export const nonEmptyTilesSchema = z.array(MovieSchema);
 export type Pages = Map<number, Movie[]>;
 
@@ -66,11 +68,17 @@ export const GENRES = {
   WAR: 10752,
   WESTERN: 37,
 } as const;
+export type GenreId = ValueOf<typeof GENRES>;
 
-export type GenreId = (typeof GENRES)[keyof typeof GENRES];
-
-export type TMDBParams = {
+export type FetchDiscoverParams = {
+  page?: number;
   genre: GenreId | '';
-  page: number;
   language?: string;
+  contentType?: ContentType;
 };
+
+export const CONTENT_TYPES = {
+  MOVIE: 'movie',
+  TV: 'tv',
+} as const;
+export type ContentType = ValueOf<typeof CONTENT_TYPES>;

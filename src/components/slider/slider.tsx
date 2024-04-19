@@ -1,13 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import chalk from 'chalk';
-
-import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
-import { logger } from '@/lib/logger';
 import { HeadingExtraSmall } from '@/components/fonts';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
 import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
@@ -16,61 +10,36 @@ import PaginateLeftButton from '@/components/slider/pagination-button/paginate-l
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
 import TileList from '@/components/slider/tiles/tile-list';
 
-function log(...args: string[]) {
-  if (args.length > 1 && typeof args[0] === 'string') {
-    const [label, ...rest] = args;
-    logger([chalk.bgGreen.black(label), ...rest].join(' '));
-  } else {
-    logger(args.join(' '));
-  }
-}
-
 type SliderProps = {
   header: string;
 };
 
 const Slider = ({ header }: SliderProps) => {
   const {
-    state: { pages },
     actions: { goToFirstPage },
   } = usePagination();
-  const {
-    state: { isMounted },
-  } = usePageUtils();
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
   useScrollbarWidth();
 
-  useEffect(() => {
-    if (!isMounted || DEVELOPMENT_MODE) return;
-    log(' SLIDER PAGES ', '──────────────────────────────────');
-
-    // [...pages.entries()]
-    //   .sort((a, b) => a[0] - b[0])
-    //   .forEach(([pageIndex, tiles], index) => {
-    //     // eslint-disable-next-line no-console
-    //     console.log(
-    //       `Page ${pageIndex}:`,
-    //       tiles.map(card => index)
-    //     );
-    //   });
-
-    log('─────────────────────────────────────────────────');
-  }, [pages, isMounted]);
-
   return (
     <div className='group/slider'>
-      <div className='mx-[0.50%] flex h-20 flex-row items-center justify-between px-leftRightCustom pt-10'>
-        <HeadingExtraSmall>{header}</HeadingExtraSmall>
-        <PageIndicator />
-      </div>
-
       <div className='relative flex flex-row'>
         <PaginateLeftButton />
-        <TileList />
+
+        <div className='flex w-full flex-col pt-3'>
+          <div className='flex flex-row items-center justify-between px-[0.5%]'>
+            <HeadingExtraSmall>{header}</HeadingExtraSmall>
+            <PageIndicator />
+          </div>
+          <TileList />
+        </div>
+
         <PaginateRightButton />
       </div>
+
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
     </div>
   );
 };

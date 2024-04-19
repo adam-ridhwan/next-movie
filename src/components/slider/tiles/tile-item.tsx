@@ -29,7 +29,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
       className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
     >
       {!DEVELOPMENT_MODE && (
-        <div className='shadow-tileShadow relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl'>
+        <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl shadow-tileShadow'>
           <div
             style={{
               position: 'absolute',
@@ -48,11 +48,11 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
         </div>
       )}
 
-      <div className='shadow-tileShadow relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl'>
+      <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl shadow-tileShadow'>
         {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
         <Image
           src={`https://image.tmdb.org/t/p/original${tile.backdrop_path ?? tile.poster_path}`}
-          alt={tile.title}
+          alt={tile.title || tile.name}
           priority
           fill
           sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'

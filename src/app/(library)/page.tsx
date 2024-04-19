@@ -1,40 +1,18 @@
-import { fetchMovies } from '@/actions/movies';
+import { fetchDiscover } from '@/actions/fetch-discover';
+import { fetchTrending } from '@/actions/fetch-trending';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
-import { GenreId, GENRES, Movie } from '@/lib/types';
+import { CONTENT_TYPES, GENRES } from '@/lib/types';
 import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
-
-type MoviesByGenre = {
-  [key: string]: Movie[];
-};
 
 export default async function Home() {
   const getRandomPage = () => Math.floor(Math.random() * 10) + 1;
 
-  const fetchMoviesBasedOnGenre = async (genre: GenreId, language?: string) => {
-    try {
-      const page1 = DEVELOPMENT_MODE ? 1 : getRandomPage();
-      const page2 = DEVELOPMENT_MODE ? 2 : getRandomPage();
-
-      const results = await Promise.all([
-        fetchMovies({ page: page1, genre, language }),
-        fetchMovies({ page: page2, genre, language }),
-      ]);
-
-      return [...results[0].results];
-    } catch (error) {
-      console.error('Error fetching action movies:', error);
-      throw error;
-    }
-  };
-
   const genreIds = [
     { genre: GENRES.ACTION, language: 'ko', label: 'Korean Movies' },
-    // { genre: GENRES.ACTION, label: 'Action Movies' },
-    // { genre: GENRES.COMEDY, label: 'Comedy Movies' },
+    { genre: GENRES.ACTION, label: 'Action Movies' },
     // { genre: GENRES.DRAMA, label: 'Drama Movies' },
     // { genre: GENRES.ADVENTURE, label: 'Adventure Movies' },
     // { genre: GENRES.ANIMATION, label: 'Animation Movies' },
@@ -54,37 +32,61 @@ export default async function Home() {
     // { genre: GENRES.WESTERN, label: 'Western Movies' },
   ];
 
-  const movieFetchPromises = genreIds.map(({ genre, language, label }) =>
-    fetchMoviesBasedOnGenre(genre, language).then(movies => ({ label, movies }))
-  );
+  // const tiles = await fetchAllGenreMovies();
+  const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
+  const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
+  const koreanTvShowsPromise = fetchDiscover({
+    genre: GENRES.DRAMA,
+    language: 'ko',
+    contentType: CONTENT_TYPES.TV,
+  });
+  const actionMoviesPromise = fetchDiscover({
+    genre: GENRES.ACTION,
+    contentType: CONTENT_TYPES.MOVIE,
+  });
 
-  const fetchAllGenreMovies = async () => {
-    try {
-      const moviesResults = await Promise.all(movieFetchPromises);
-      return moviesResults.reduce((acc, { label, movies }) => {
-        acc[label] = movies;
-        return acc;
-      }, {} as MoviesByGenre);
-    } catch (error) {
-      console.error('Error fetching movies for all genres:', error);
-      throw error;
-    }
-  };
-
-  const tiles = await fetchAllGenreMovies();
+  const [trendingMovies, trendingTvShows, koreanTvShows, actionMovies] = await Promise.all([
+    trendingMoviesPromise,
+    trendingTvShowsPromise,
+    koreanTvShowsPromise,
+    actionMoviesPromise,
+  ]);
 
   return (
     <>
       <EpicStage />
-      {Object.entries(tiles).map(([header, movies]) => (
-        <div key={header} className='flex flex-col gap-1 overflow-hidden'>
-          <SliderProvider tiles={movies}>
-            <DomContextProvider>
-              <Slider header={header} />
-            </DomContextProvider>
-          </SliderProvider>
-        </div>
-      ))}
+
+      <div key={'Trending: Movies'} className='flex flex-col gap-1 overflow-hidden'>
+        <SliderProvider tiles={trendingMovies.results}>
+          <DomContextProvider>
+            <Slider header={'Trending: Movies'} />
+          </DomContextProvider>
+        </SliderProvider>
+      </div>
+
+      <div key={'Trending: TV Shows'} className='flex flex-col gap-1 overflow-hidden'>
+        <SliderProvider tiles={trendingTvShows.results}>
+          <DomContextProvider>
+            <Slider header={'Trending: TV Shows'} />
+          </DomContextProvider>
+        </SliderProvider>
+      </div>
+
+      <div key={'Korean'} className='flex flex-col gap-1 overflow-hidden'>
+        <SliderProvider tiles={koreanTvShows.results}>
+          <DomContextProvider>
+            <Slider header={'Korean Movies'} />
+          </DomContextProvider>
+        </SliderProvider>
+      </div>
+
+      <div key={'Action'} className='flex flex-col gap-1 overflow-hidden'>
+        <SliderProvider tiles={actionMovies.results}>
+          <DomContextProvider>
+            <Slider header={'Action Movies'} />
+          </DomContextProvider>
+        </SliderProvider>
+      </div>
     </>
   );
 }
