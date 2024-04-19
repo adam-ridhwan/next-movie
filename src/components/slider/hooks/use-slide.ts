@@ -42,6 +42,7 @@ export const useSlide = (): UseSlideReturn => {
 
     const pageLength = isSecondPage ? firstPageLength : lastPageLength;
     const trailingPercentage = ((pageLength * sliderItemWidth) / sliderWidth) * 100;
+
     if (isSecondPage && trailingPercentage) return trailingPercentage;
     if (isSecondToLastPage && trailingPercentage) return -trailingPercentage;
 

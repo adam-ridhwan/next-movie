@@ -4,7 +4,6 @@ import { SliderProvider } from '@/providers/slider-provider';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { GenreId, GENRES, Movie } from '@/lib/types';
-import { HeadingExtraSmall } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 type MoviesByGenre = {

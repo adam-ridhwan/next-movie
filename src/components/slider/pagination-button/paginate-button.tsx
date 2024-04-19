@@ -25,7 +25,7 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   if (TILES.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
-    'opacity-100 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
+    'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
     { 'opacity-100 group-hover/button:scale-125 ': isAnimating }
   );
 
@@ -35,7 +35,8 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        'group/button bg-appBackground relative z-50 flex w-leftRightCustom items-center disabled:pointer-events-auto disabled:opacity-100',
+        `group/button bg-appBackground relative z-50 flex w-leftRightCustom items-center 
+          disabled:pointer-events-auto disabled:opacity-100`,
         className,
         { 'justify-start': direction === SLIDE_DIRECTION.RIGHT },
         { 'justify-end': direction === SLIDE_DIRECTION.LEFT }

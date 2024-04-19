@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useDomContext } from '@/providers/dom-provider';
 import chalk from 'chalk';
 
 import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { logger } from '@/lib/logger';
-import { cn } from '@/lib/utils';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
