@@ -1,20 +1,18 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 
-import { DEVELOPMENT_MODE } from '@/lib/constants';
 import { Movie } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type TileItemProps = {
   tile: Movie | void;
-  index: number;
   displayNumber?: number | '';
   isVisibleOnScreen?: boolean;
 };
 
 const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
-  { tile, index, displayNumber, isVisibleOnScreen = false },
+  { tile, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
   const {
