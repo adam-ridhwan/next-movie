@@ -36,7 +36,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
           alt={tile.title || tile.name}
           priority
           fill
-          sizes='(min-width: 1536px) 16.66vw, (min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 50vw'
+          sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
           className='object-cover'
         />
       </div>
