@@ -32,7 +32,8 @@ export default async function Home() {
 
   return (
     <>
-      <EpicStage content={popularMovies.results} />
+      {/*<EpicStage content={popularMovies.results[Math.floor(Math.random() * 19)]} />*/}
+      <EpicStage content={popularMovies.results[0]} />
 
       <div key={'Trending: Movies'} className='flex flex-col gap-1 overflow-hidden'>
         <SliderProvider tiles={trendingMovies.results}>

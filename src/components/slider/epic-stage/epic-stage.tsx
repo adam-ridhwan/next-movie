@@ -3,10 +3,10 @@
 import Image from 'next/image';
 
 import { GenreLabel, GENRES, Movie } from '@/lib/types';
-import { BodyMedium, BodySmall, HeadingLarge } from '@/components/fonts';
+import { HeadingLarge } from '@/components/fonts';
 
 type EpicStageProps = {
-  content: Movie[];
+  content: Movie;
 };
 
 type GetObjectKeyParams<K extends string, V> = {
@@ -37,23 +37,25 @@ const getFirstSentence = (text: string) => {
 };
 
 const EpicStage = ({ content }: EpicStageProps) => {
-  const [firstContent] = content;
-  console.log('content', firstContent);
-
-  const genres = getObjectKey({ label: 'genre_ids', object: GENRES, value: firstContent.genre_ids });
+  const genres = getObjectKey({
+    label: 'genre_ids',
+    object: GENRES,
+    value: content.genre_ids,
+  });
 
   return (
     <div className='relative aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
       <Image
-        src={`https://image.tmdb.org/t/p/original${firstContent.backdrop_path}`}
-        alt={firstContent.original_title}
+        src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
+        alt={content.original_title}
         priority
         fill
         className='object-cover'
       />
+      <div className='via-primary-black to-primary-black absolute bottom-0 left-0 right-0 z-10 h-1/2 bg-gradient-to-t from-black'></div>
 
-      <div className='absolute bottom-0 left-0 z-50 flex w-1/3 flex-col gap-2 p-10'>
-        <HeadingLarge>{firstContent.original_title}</HeadingLarge>
+      <div className='absolute bottom-0 left-0 z-50 flex w-1/2 flex-col gap-2 p-10'>
+        <HeadingLarge>{content.title}</HeadingLarge>
         <ul className='flex flex-row gap-2'>
           {genres.map(genre => (
             <li key={genre}>
@@ -61,7 +63,7 @@ const EpicStage = ({ content }: EpicStageProps) => {
             </li>
           ))}
         </ul>
-        <p className='text-overview'>{getFirstSentence(firstContent.overview)}</p>
+        <p className='text-overview'>{getFirstSentence(content.overview)}</p>
       </div>
     </div>
   );
