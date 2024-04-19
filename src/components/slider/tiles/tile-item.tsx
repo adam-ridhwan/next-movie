@@ -50,6 +50,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
 
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl shadow-tileShadow'>
         {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
+        {/* Example: https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg */}
         <Image
           src={`https://image.tmdb.org/t/p/original${tile.backdrop_path ?? tile.poster_path}`}
           alt={tile.title || tile.name}
