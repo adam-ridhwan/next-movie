@@ -57,11 +57,11 @@ const EpicStage = ({ content }: EpicStageProps) => {
         <ul className='flex flex-row gap-2'>
           {genres.map(genre => (
             <li key={genre}>
-              <BodySmall className='text-muted-foreground'>{toPascalCase(genre)}</BodySmall>
+              <p className='text-genre'>{toPascalCase(genre)}</p>
             </li>
           ))}
         </ul>
-        <BodyMedium className='line-clamp-'>{getFirstSentence(firstContent.overview)}</BodyMedium>
+        <p className='text-overview'>{getFirstSentence(firstContent.overview)}</p>
       </div>
     </div>
   );
