@@ -1,9 +1,16 @@
 'use server';
 
 import { env } from '@/lib/env';
-import { FetchDiscoverParams } from '@/lib/types';
+import { ContentType, GenreId } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
+
+export type FetchDiscoverParams = {
+  page?: number;
+  genre: GenreId | '';
+  language?: string;
+  contentType?: ContentType;
+};
 
 // Movie discover docs: https://developer.themoviedb.org/reference/discover-movie
 

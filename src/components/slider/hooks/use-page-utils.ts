@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { Movie } from '@/lib/types';
+import { Movie, TODO } from '@/lib/types';
 import { MEDIA_QUERY } from '@/components/slider/slider-constants';
 
 type UsePageUtilsReturn = {

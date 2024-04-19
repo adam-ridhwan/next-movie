@@ -6,7 +6,7 @@ type FontProps = {
 };
 
 const HeadingLarge = ({ children, className }: FontProps) => (
-  <span className={cn('text-[32px] font-light', className)}>{children}</span>
+  <span className={cn('text-[32px] font-light leading-none', className)}>{children}</span>
 );
 
 const HeadingMedium = ({ children, className }: FontProps) => (
@@ -22,11 +22,11 @@ const HeadingExtraSmall = ({ children, className }: FontProps) => (
 );
 
 const BodyMedium = ({ children, className }: FontProps) => (
-  <span className={cn('font-light, className text-[15px]', className)}>{children}</span>
+  <span className={cn('text-[15px] font-light text-primary/80', className)}>{children}</span>
 );
 
 const BodySmall = ({ children, className }: FontProps) => (
-  <span className={cn('font-light, className text-[13px]', className)}>{children}</span>
+  <span className={cn('text-[13px] font-medium', className)}>{children}</span>
 );
 
 export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall };

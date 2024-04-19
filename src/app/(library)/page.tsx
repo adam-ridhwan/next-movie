@@ -1,4 +1,5 @@
 import { fetchDiscover } from '@/actions/fetch-discover';
+import { fetchPopular } from '@/actions/fetch-popular';
 import { fetchTrending } from '@/actions/fetch-trending';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
@@ -8,31 +9,7 @@ import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
 export default async function Home() {
-  const getRandomPage = () => Math.floor(Math.random() * 10) + 1;
-
-  const genreIds = [
-    { genre: GENRES.ACTION, language: 'ko', label: 'Korean Movies' },
-    { genre: GENRES.ACTION, label: 'Action Movies' },
-    // { genre: GENRES.DRAMA, label: 'Drama Movies' },
-    // { genre: GENRES.ADVENTURE, label: 'Adventure Movies' },
-    // { genre: GENRES.ANIMATION, label: 'Animation Movies' },
-    // { genre: GENRES.CRIME, label: 'Crime Movies' },
-    // { genre: GENRES.DOCUMENTARY, label: 'Documentary Movies' },
-    // { genre: GENRES.FAMILY, label: 'Family Movies' },
-    // { genre: GENRES.FANTASY, label: 'Fantasy Movies' },
-    // { genre: GENRES.HISTORY, label: 'History Movies' },
-    // { genre: GENRES.HORROR, label: 'Horror Movies' },
-    // { genre: GENRES.MUSIC, label: 'Music Movies' },
-    // { genre: GENRES.MYSTERY, label: 'Mystery Movies' },
-    // { genre: GENRES.ROMANCE, label: 'Romance Movies' },
-    // { genre: GENRES.SCIENCE_FICTION, label: 'Science Fiction Movies' },
-    // { genre: GENRES.TV_MOVIE, label: 'TV Movie Movies' },
-    // { genre: GENRES.THRILLER, label: 'Thriller Movies' },
-    // { genre: GENRES.WAR, label: 'War Movies' },
-    // { genre: GENRES.WESTERN, label: 'Western Movies' },
-  ];
-
-  // const tiles = await fetchAllGenreMovies();
+  const popularMoviesPromise = fetchPopular(CONTENT_TYPES.MOVIE);
   const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
   const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
   const koreanTvShowsPromise = fetchDiscover({
@@ -45,7 +22,8 @@ export default async function Home() {
     contentType: CONTENT_TYPES.MOVIE,
   });
 
-  const [trendingMovies, trendingTvShows, koreanTvShows, actionMovies] = await Promise.all([
+  const [popularMovies, trendingMovies, trendingTvShows, koreanTvShows, actionMovies] = await Promise.all([
+    popularMoviesPromise,
     trendingMoviesPromise,
     trendingTvShowsPromise,
     koreanTvShowsPromise,
@@ -54,7 +32,7 @@ export default async function Home() {
 
   return (
     <>
-      <EpicStage />
+      <EpicStage content={popularMovies.results} />
 
       <div key={'Trending: Movies'} className='flex flex-col gap-1 overflow-hidden'>
         <SliderProvider tiles={trendingMovies.results}>

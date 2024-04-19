@@ -3,4 +3,5 @@ import { twMerge } from 'tailwind-merge';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export type ValueOf<T> = T[keyof T];
+export type KeysOf<T> = keyof T;
+export type ValuesOf<T> = T[keyof T];

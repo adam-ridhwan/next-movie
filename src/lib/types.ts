@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { ValueOf } from '@/lib/utils';
+import { KeysOf, ValuesOf } from '@/lib/utils';
 import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type TODO = any;
@@ -68,17 +68,11 @@ export const GENRES = {
   WAR: 10752,
   WESTERN: 37,
 } as const;
-export type GenreId = ValueOf<typeof GENRES>;
-
-export type FetchDiscoverParams = {
-  page?: number;
-  genre: GenreId | '';
-  language?: string;
-  contentType?: ContentType;
-};
+export type GenreLabel = KeysOf<typeof GENRES>;
+export type GenreId = ValuesOf<typeof GENRES>;
 
 export const CONTENT_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
 } as const;
-export type ContentType = ValueOf<typeof CONTENT_TYPES>;
+export type ContentType = ValuesOf<typeof CONTENT_TYPES>;
