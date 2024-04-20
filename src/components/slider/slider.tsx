@@ -4,7 +4,6 @@ import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
-import { useScrollbarWidth } from '@/components/slider/hooks/use-scrollbar-width';
 import PageIndicator from '@/components/slider/page-indicator/page-indicator';
 import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
@@ -21,7 +20,6 @@ const Slider = ({ header }: SliderProps) => {
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
-  useScrollbarWidth();
 
   return (
     <div className='group/slider overflow-hidden'>
