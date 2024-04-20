@@ -29,7 +29,7 @@ const Slider = ({ header }: SliderProps) => {
         <PaginateLeftButton />
 
         <div className='flex w-full flex-col pt-3'>
-          <div className='flex flex-row items-center justify-between max-sm:px-leftRightCustom'>
+          <div className='flex flex-row items-center justify-between px-[0.5%] max-sm:px-leftRightCustom'>
             <HeadingExtraSmall>{header}</HeadingExtraSmall>
             <PageIndicator />
           </div>

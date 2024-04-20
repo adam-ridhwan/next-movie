@@ -40,7 +40,7 @@ export default async function Home() {
       {/*<EpicStage content={popularMovies.results[Math.floor(Math.random() * 19)]} />*/}
       <EpicStage content={popularMovies.results[0]} />
 
-      <div key={'Trending: Movies'} className='overflow- flex flex-col gap-1'>
+      <div key={'Trending: Movies'} className='flex flex-col'>
         <SliderProvider tiles={trendingMovies.results}>
           <DomContextProvider>
             <Slider header={'Trending: Movies'} />
@@ -48,7 +48,7 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Trending: TV Shows'} className='overflow- flex flex-col gap-1'>
+      <div key={'Trending: TV Shows'} className='flex flex-col'>
         <SliderProvider tiles={trendingTvShows.results}>
           <DomContextProvider>
             <Slider header={'Trending: TV Shows'} />
@@ -56,7 +56,7 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Drama'} className='overflow- flex flex-col gap-1'>
+      <div key={'Drama'} className='flex flex-col'>
         <SliderProvider tiles={dramaMovies.results}>
           <DomContextProvider>
             <Slider header={'Drama Movies'} />
@@ -64,7 +64,7 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Action'} className='overflow- flex flex-col gap-1'>
+      <div key={'Action'} className='flex flex-col'>
         <SliderProvider tiles={actionMovies.results}>
           <DomContextProvider>
             <Slider header={'Action Movies'} />
