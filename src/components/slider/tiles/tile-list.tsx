@@ -29,7 +29,7 @@ const TileList = () => {
     <div
       ref={tileListRef}
       className={cn(
-        'mx-[0.25%] flex w-full flex-row pb-5',
+        'flex w-full flex-row pb-10 pt-3',
         { 'justify-center': hasPaginated },
         { 'transition-transform duration-700': isAnimating }
       )}
@@ -40,7 +40,6 @@ const TileList = () => {
           key={tile?.uuid || i}
           ref={i === 0 ? tileItemRef : undefined}
           tile={tile}
-          index={i + 1}
           displayNumber={hasPaginated ? i - tilesPerPage : i}
           isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
         />
