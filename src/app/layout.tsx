@@ -3,6 +3,7 @@ import './globals.css';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { cn } from '@/lib/utils';
 import NavBar from '@/components/nav-bar';
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
+      <SpeedInsights />
       <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
         <main className='flex flex-col overflow-x-hidden'>
           <NavBar />
