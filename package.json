@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,7 +18,7 @@
     "envalid": "^8.0.0",
     "eslint-plugin-import": "^2.29.1",
     "lucide-react": "^0.360.0",
-    "next": "^14.1.4",
+    "next": "^14.2.2",
     "pnpm": "^8.15.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
