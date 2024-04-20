@@ -12,13 +12,12 @@ export default async function Home() {
   const popularMoviesPromise = fetchPopular(CONTENT_TYPES.MOVIE);
   const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
   const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
-  const koreanTvShowsPromise = fetchDiscover({
-    genre: GENRES.DRAMA,
-    language: 'ko',
-    contentType: CONTENT_TYPES.TV,
-  });
   const actionMoviesPromise = fetchDiscover({
     genre: GENRES.ACTION,
+    contentType: CONTENT_TYPES.MOVIE,
+  });
+  const dramaMoviesPromise = fetchDiscover({
+    genre: GENRES.DRAMA,
     contentType: CONTENT_TYPES.MOVIE,
   });
 
@@ -26,14 +25,14 @@ export default async function Home() {
     popularMovies,
     trendingMovies,
     trendingTvShows,
-    koreanTvShows,
-    actionMovies
+    actionMovies,
+    dramaMovies,
   ] = await Promise.all([
     popularMoviesPromise,
     trendingMoviesPromise,
     trendingTvShowsPromise,
-    koreanTvShowsPromise,
     actionMoviesPromise,
+    dramaMoviesPromise,
   ]); // prettier-ignore
 
   return (
@@ -57,10 +56,10 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Korean'} className='overflow- flex flex-col gap-1'>
-        <SliderProvider tiles={koreanTvShows.results}>
+      <div key={'Drama'} className='overflow- flex flex-col gap-1'>
+        <SliderProvider tiles={dramaMovies.results}>
           <DomContextProvider>
-            <Slider header={'Korean Movies'} />
+            <Slider header={'Drama Movies'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
