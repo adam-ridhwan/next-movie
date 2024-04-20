@@ -62,10 +62,18 @@
   display: none;
 }
 
+/* Desktop 2 tiles */
 .slider-tile {
-  min-width: calc((1 / 2) * 100%); /* 2 tiles */
+  min-width: calc((1 / 2) * 100%);
   padding-left: 0.50%;
   padding-right: 0.50%;
+}
+
+/* Phone 2 tiles */
+.slider-tile-phone {
+  min-width: calc((1 / 2) * 98%);
+  padding-left: 1.5%;
+  padding-right: 1.5%;
 }
 
 @media (min-width: 800px) {

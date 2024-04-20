@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <AuthProvider>
       <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-        <body className={cn(`${inter.className} bg-appBackground dark flex flex-col overflow-x-hidden`)}>
+        <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
           <main className='flex flex-col overflow-x-hidden'>
             <NavBar />
             <div className='container min-h-[100dvh] flex-1'>{children}</div>

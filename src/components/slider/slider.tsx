@@ -24,12 +24,12 @@ const Slider = ({ header }: SliderProps) => {
   useScrollbarWidth();
 
   return (
-    <div className='group/slider w-full max-w-full overflow-hidden'>
+    <div className='group/slider overflow-hidden'>
       <div className='relative flex flex-row'>
         <PaginateLeftButton />
 
         <div className='flex w-full flex-col pt-3'>
-          <div className='flex flex-row items-center justify-between px-[0.5%]'>
+          <div className='flex flex-row items-center justify-between max-sm:px-leftRightCustom'>
             <HeadingExtraSmall>{header}</HeadingExtraSmall>
             <PageIndicator />
           </div>
