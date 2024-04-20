@@ -30,8 +30,14 @@ module.exports = {
       left: {
         leftRightCustom: 'min(4%, 60px)',
       },
+      minWidth: {
+        leftRightCustom: 'min(4%, 60px)',
+      },
       boxShadow: {
         tileShadow: '0 4px 7px rgba(0, 0, 0, 0.25)',
+      },
+      aspectRatio: {
+        poster: '2 / 3',
       },
       colors: {
         border: 'hsl(var(--border))',

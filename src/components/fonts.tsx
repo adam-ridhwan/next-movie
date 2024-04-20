@@ -10,7 +10,7 @@ const HeadingLarge = ({ children, className }: FontProps) => (
 );
 
 const HeadingMedium = ({ children, className }: FontProps) => (
-  <span className={cn('text-[24px] font-light', className)}>{children}</span>
+  <span className={cn('text-[24px] font-medium', className)}>{children}</span>
 );
 
 const HeadingSmall = ({ children, className }: FontProps) => (
@@ -18,15 +18,19 @@ const HeadingSmall = ({ children, className }: FontProps) => (
 );
 
 const HeadingExtraSmall = ({ children, className }: FontProps) => (
-  <span className={cn('text-[16px] font-medium text-primary/80', className)}>{children}</span>
+  <span className={cn('text-[17px] font-medium', className)}>{children}</span>
 );
 
 const BodyMedium = ({ children, className }: FontProps) => (
-  <span className={cn('text-[15px] font-light text-primary/80', className)}>{children}</span>
+  <span className={cn('text-[15px] font-light text-primary', className)}>{children}</span>
 );
 
 const BodySmall = ({ children, className }: FontProps) => (
-  <span className={cn('text-[13px] font-medium', className)}>{children}</span>
+  <span className={cn('text-[12px] font-light text-primary/70', className)}>{children}</span>
 );
 
-export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall };
+const NumberLabel = ({ children, className }: FontProps) => (
+  <span className={cn('text-[40px] font-medium text-primary/80', className)}>{children}</span>
+);
+
+export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall, NumberLabel };

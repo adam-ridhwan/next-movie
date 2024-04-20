@@ -33,6 +33,7 @@ export const MovieSchema = z.object({
   original_title: z.string(),
   original_name: z.string(),
   name: z.string(),
+  first_air_date: z.string(),
   overview: z.string(),
   popularity: z.number(),
   poster_path: z.string(),

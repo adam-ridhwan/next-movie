@@ -22,13 +22,19 @@ export default async function Home() {
     contentType: CONTENT_TYPES.MOVIE,
   });
 
-  const [popularMovies, trendingMovies, trendingTvShows, koreanTvShows, actionMovies] = await Promise.all([
+  const [
+    popularMovies,
+    trendingMovies,
+    trendingTvShows,
+    koreanTvShows,
+    actionMovies
+  ] = await Promise.all([
     popularMoviesPromise,
     trendingMoviesPromise,
     trendingTvShowsPromise,
     koreanTvShowsPromise,
     actionMoviesPromise,
-  ]);
+  ]); // prettier-ignore
 
   return (
     <>

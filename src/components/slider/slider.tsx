@@ -24,7 +24,7 @@ const Slider = ({ header }: SliderProps) => {
   useScrollbarWidth();
 
   return (
-    <div className='group/slider'>
+    <div className='group/slider w-full max-w-full overflow-hidden'>
       <div className='relative flex flex-row'>
         <PaginateLeftButton />
 
