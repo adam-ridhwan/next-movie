@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Movie" ALTER COLUMN "uuid" DROP NOT NULL;

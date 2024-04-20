@@ -5,22 +5,19 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
-import { LogoIcon, NavBookmarkIcon, NavHomeIcon, NavMoviesIcon, NavTvSeriesIcon } from '@/components/icons';
-
-import AvatarDropdown from './avatar-dropdown';
+import { LogoIcon, NavHomeIcon, NavMoviesIcon, NavTvSeriesIcon } from '@/components/icons';
 
 const ROUTES = {
   home: { path: '/', Icon: NavHomeIcon, label: 'Home' },
   movies: { path: '/movies', Icon: NavMoviesIcon, label: 'TV Shows' },
   tvSeries: { path: '/tv-series', Icon: NavTvSeriesIcon, label: 'Movies' },
-  bookmarks: { path: '/my-list', Icon: NavBookmarkIcon, label: 'My List' },
 } as const;
 
 const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <div className='px-leftRightCustom flex h-16 flex-row items-center justify-between bg-darkerBlue/50'>
+    <div className='flex h-16 flex-row items-center justify-between bg-black px-leftRightCustom'>
       <div className='flex flex-row items-center  gap-8'>
         <LogoIcon />
         <nav>
@@ -40,7 +37,6 @@ const NavBar = () => {
           </ul>
         </nav>
       </div>
-      <AvatarDropdown />
     </div>
   );
 };
