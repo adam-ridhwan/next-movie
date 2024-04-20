@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
-import { LogoIcon, NavHomeIcon, NavMoviesIcon, NavTvSeriesIcon } from '@/components/icons';
+import { LogoIcon } from '@/components/icons';
 
 const ROUTES = {
-  home: { path: '/', Icon: NavHomeIcon, label: 'Home' },
-  movies: { path: '/movies', Icon: NavMoviesIcon, label: 'TV Shows' },
-  tvSeries: { path: '/tv-series', Icon: NavTvSeriesIcon, label: 'Movies' },
+  home: { path: '/browse', label: 'Home' },
+  movies: { path: '/movies', label: 'Movies' },
+  tvShows: { path: '/tv-shows', label: 'TV Shows' },
 } as const;
 
 const NavBar = () => {
@@ -18,7 +18,7 @@ const NavBar = () => {
 
   return (
     <div className='flex h-16 flex-row items-center justify-between bg-black px-leftRightCustom'>
-      <div className='flex flex-row items-center  gap-8'>
+      <div className='flex flex-row items-center gap-8'>
         <LogoIcon />
         <nav>
           <ul className={cn('flex flex-row gap-4')}>
