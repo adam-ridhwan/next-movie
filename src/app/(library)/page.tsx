@@ -12,30 +12,35 @@ export default async function Home() {
   const popularMoviesPromise = fetchPopular(CONTENT_TYPES.MOVIE);
   const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
   const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
-  const koreanTvShowsPromise = fetchDiscover({
-    genre: GENRES.DRAMA,
-    language: 'ko',
-    contentType: CONTENT_TYPES.TV,
-  });
   const actionMoviesPromise = fetchDiscover({
     genre: GENRES.ACTION,
     contentType: CONTENT_TYPES.MOVIE,
   });
+  const dramaMoviesPromise = fetchDiscover({
+    genre: GENRES.DRAMA,
+    contentType: CONTENT_TYPES.MOVIE,
+  });
 
-  const [popularMovies, trendingMovies, trendingTvShows, koreanTvShows, actionMovies] = await Promise.all([
+  const [
+    popularMovies,
+    trendingMovies,
+    trendingTvShows,
+    actionMovies,
+    dramaMovies,
+  ] = await Promise.all([
     popularMoviesPromise,
     trendingMoviesPromise,
     trendingTvShowsPromise,
-    koreanTvShowsPromise,
     actionMoviesPromise,
-  ]);
+    dramaMoviesPromise,
+  ]); // prettier-ignore
 
   return (
     <>
       {/*<EpicStage content={popularMovies.results[Math.floor(Math.random() * 19)]} />*/}
       <EpicStage content={popularMovies.results[0]} />
 
-      <div key={'Trending: Movies'} className='flex flex-col gap-1 overflow-hidden'>
+      <div key={'Trending: Movies'} className='flex flex-col'>
         <SliderProvider tiles={trendingMovies.results}>
           <DomContextProvider>
             <Slider header={'Trending: Movies'} />
@@ -43,7 +48,7 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Trending: TV Shows'} className='flex flex-col gap-1 overflow-hidden'>
+      <div key={'Trending: TV Shows'} className='flex flex-col'>
         <SliderProvider tiles={trendingTvShows.results}>
           <DomContextProvider>
             <Slider header={'Trending: TV Shows'} />
@@ -51,15 +56,15 @@ export default async function Home() {
         </SliderProvider>
       </div>
 
-      <div key={'Korean'} className='flex flex-col gap-1 overflow-hidden'>
-        <SliderProvider tiles={koreanTvShows.results}>
+      <div key={'Drama'} className='flex flex-col'>
+        <SliderProvider tiles={dramaMovies.results}>
           <DomContextProvider>
-            <Slider header={'Korean Movies'} />
+            <Slider header={'Drama Movies'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
-      <div key={'Action'} className='flex flex-col gap-1 overflow-hidden'>
+      <div key={'Action'} className='flex flex-col'>
         <SliderProvider tiles={actionMovies.results}>
           <DomContextProvider>
             <Slider header={'Action Movies'} />
