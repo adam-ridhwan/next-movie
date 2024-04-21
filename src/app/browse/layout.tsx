@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export default function PhotosLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
+export default function BrowseLayout({ children, modal }: { children: ReactNode; modal: ReactNode }) {
   return (
     <>
       {children}

@@ -14,7 +14,7 @@ type SetMapTilesParams = {
 };
 
 export const useMapPages = () => {
-  const TILES = useSliderStore(state => state.TILES);
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const pages = useSliderStore(state => state.pages);
   const setPages = useSliderStore(state => state.setPages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -37,7 +37,7 @@ export const useMapPages = () => {
     });
 
     const leftTileCount = getTileCount(firstTileCurrentPageIndex / newTileCountPerPage);
-    const rightTileCount = getTileCount((TILES.length - firstTileCurrentPageIndex) / newTileCountPerPage);
+    const rightTileCount = getTileCount((CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage);
 
     const newTileCount = leftTileCount + rightTileCount;
     const newMaxPages = newTileCount / newTileCountPerPage;
@@ -47,7 +47,7 @@ export const useMapPages = () => {
     let newTileList: Movie[] = [];
 
     for (let i = 0; i < newTileCount; i++) {
-      if (startIndex >= TILES.length) startIndex = 0;
+      if (startIndex >= CONTENT.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTileCountPerPage);
       const isNewFirstPage = pageNumber === 1;
@@ -58,7 +58,7 @@ export const useMapPages = () => {
       const idMatches = newTileList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
-      const newTileItem = TILES[startIndex++];
+      const newTileItem = CONTENT[startIndex++];
       const newTileListToPush =
         isLeftPlaceholder || isRightPlaceholder
           ? { ...newTileItem, uuid: uuid() }
@@ -67,7 +67,7 @@ export const useMapPages = () => {
 
       if (newTileList.length !== newTileCountPerPage) continue;
 
-      const firstTileIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
+      const firstTileIndex = newTileList.findIndex(tile => tile.id === CONTENT[0].id);
 
       if (isNewFirstPage && firstTileIndex > 0) {
         newFirstPageLength = newTileCountPerPage - firstTileIndex;

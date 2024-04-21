@@ -4,18 +4,19 @@ import { createContext, ReactNode, useContext, useRef } from 'react';
 import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { Movie } from '@/lib/types';
+import { ContentType, Movie } from '@/lib/types';
 
 export type SliderProviderProps = {
   children: ReactNode;
-  tiles: Movie[];
+  content: Movie[];
+  contentType: ContentType;
 };
 
 const SliderStoreContext = createContext<StoreApi<SliderStore> | null>(null);
 
-export const SliderProvider = ({ children, tiles }: SliderProviderProps) => {
+export const SliderProvider = ({ children, content, contentType }: SliderProviderProps) => {
   const storeRef = useRef<StoreApi<SliderStore>>();
-  if (!storeRef.current) storeRef.current = createSliderStore(tiles);
+  if (!storeRef.current) storeRef.current = createSliderStore(content, contentType);
   return <SliderStoreContext.Provider value={storeRef.current}>{children}</SliderStoreContext.Provider>;
 };
 

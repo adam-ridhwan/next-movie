@@ -12,7 +12,7 @@ export type FetchDiscoverParams = {
   contentType?: ContentType;
 };
 
-// Movie discover docs: https://developer.themoviedb.org/reference/discover-movie
+// Docs: https://developer.themoviedb.org/reference/discover-movie
 
 export const fetchDiscover = async ({
   page = 1,

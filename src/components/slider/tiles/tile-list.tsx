@@ -11,7 +11,7 @@ import TileItem from '@/components/slider/tiles/tile-item';
 const TileList = () => {
   const { tilesToRender } = useTiles();
   const {
-    state: { TILES },
+    state: { CONTENT },
   } = usePagination();
   const {
     state: { hasPaginated },
@@ -56,7 +56,7 @@ const TileList = () => {
 
       {/* Mobile */}
       <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pb-5 pt-3 sm:hidden'>
-        {TILES.map((tile, i) => {
+        {CONTENT.map((tile, i) => {
           return (
             <TileItem
               key={tile?.uuid || i}

@@ -51,7 +51,7 @@ type FindItemByIndexParams<T, K extends keyof T> = {
 };
 
 export const usePageUtils = (): UsePageUtilsReturn => {
-  const TILES = useSliderStore(state => state.TILES);
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
@@ -71,7 +71,9 @@ export const usePageUtils = (): UsePageUtilsReturn => {
 
   const getStartIndex = (currentIndex: number, leftTilesTotal: number) => {
     // Prevents negative modulo
-    return (((currentIndex - leftTilesTotal + TILES.length) % TILES.length) + TILES.length) % TILES.length;
+    return (
+      (((currentIndex - leftTilesTotal + CONTENT.length) % CONTENT.length) + CONTENT.length) % CONTENT.length
+    );
   };
 
   const updateUuids = ({

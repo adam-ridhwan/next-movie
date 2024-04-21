@@ -3,11 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { GenreLabel, GENRES, Movie } from '@/lib/types';
+import { ContentType, GenreLabel, GENRES, Movie } from '@/lib/types';
 import { HeadingLarge } from '@/components/fonts';
 
 type EpicStageProps = {
   content: Movie;
+  contentType: ContentType;
 };
 
 type GetObjectKeyParams<K extends string, V> = {
@@ -37,7 +38,7 @@ const getFirstSentence = (text: string) => {
   return match ? match[1] : text;
 };
 
-const EpicStage = ({ content }: EpicStageProps) => {
+const EpicStage = ({ content, contentType }: EpicStageProps) => {
   const genres = getObjectKey({
     label: 'genre_ids',
     object: GENRES,
@@ -46,7 +47,7 @@ const EpicStage = ({ content }: EpicStageProps) => {
 
   return (
     <>
-      <Link href={`/browse/${content.id}`} passHref>
+      <Link href={`/browse/${contentType}/${content.id}`} scroll={false}>
         <div className='relative aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
           <Image
             src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}

@@ -18,11 +18,11 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   ref
 ) => {
   const {
-    state: { TILES },
+    state: { CONTENT },
   } = usePagination();
   const { isAnimating } = useAnimation();
 
-  if (TILES.length <= MINIMUM_TILE_COUNT) return null;
+  if (CONTENT.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
@@ -35,7 +35,7 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        `group/button min-w-leftRightCustom relative z-50 flex w-leftRightCustom items-center bg-appBackground disabled:pointer-events-auto 
+        `group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-appBackground disabled:pointer-events-auto 
           disabled:opacity-100 max-sm:hidden`,
         className,
         { 'justify-start': direction === SLIDE_DIRECTION.RIGHT },
