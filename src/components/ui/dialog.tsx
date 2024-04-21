@@ -45,7 +45,7 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         // prettier-ignore
-        `fixed left-[50%] top-[50%] z-50 w-[80%] max-w-[1300px] translate-x-[-50%] translate-y-[-50%]
+        `fixed left-[50%] top-[50%] z-50 w-[95%] max-w-[1300px] translate-x-[-50%] translate-y-[-50%]
         gap-4 h-full bg-muted shadow-lg duration-200 rounded-t-2xl overflow-hidden mt-20
         data-[state=open]:animate-in data-[state=closed]:animate-out
         data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0

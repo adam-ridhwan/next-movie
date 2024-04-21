@@ -25,6 +25,8 @@ export async function Keywords({ id, contentType }: ContentRouteParams) {
 }
 
 export function Metadata({ label, metadata }: { label: string; metadata: string[] }) {
+  if (!metadata.length) return null;
+
   return (
     <div className='flex flex-wrap items-start gap-x-2'>
       <span className='font-light text-primary/40'>{label}:</span>

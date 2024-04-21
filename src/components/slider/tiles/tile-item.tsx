@@ -42,7 +42,6 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   return (
     <>
       {/* Desktop */}
-
       <div
         ref={ref}
         className={cn(
@@ -55,7 +54,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
             {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
             {/* Example: https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg */}
             <Image
-              src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original${tile.backdrop_path || tile.poster_path}`}
               alt={tile.title || tile.name}
               priority
               fill
@@ -75,7 +74,6 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
 
       {/* Mobile */}
       <div
-        ref={ref}
         className={cn(
           'slider-tile-phone sm:hidden',
           `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`
@@ -86,7 +84,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
             {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
             {/* Example: https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg */}
             <Image
-              src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/original${tile.poster_path || tile.backdrop_path}`}
               alt={tile.title || tile.name}
               priority
               fill

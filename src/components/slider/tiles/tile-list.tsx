@@ -45,7 +45,7 @@ const TileList = () => {
           return (
             <TileItem
               key={tile?.uuid || i}
-              ref={i === 0 ? tileItemRef : undefined}
+              ref={i === 5 ? tileItemRef : undefined}
               tile={tile}
               displayNumber={hasPaginated ? i - tilesPerPage : i}
               isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
@@ -60,7 +60,6 @@ const TileList = () => {
           return (
             <TileItem
               key={tile?.uuid || i}
-              ref={i === 0 ? tileItemRef : undefined}
               tile={tile}
               displayNumber={hasPaginated ? i - tilesPerPage : i}
               isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}

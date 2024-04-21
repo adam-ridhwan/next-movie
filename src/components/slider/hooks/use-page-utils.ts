@@ -31,7 +31,7 @@ type UsePageUtilsReturn = {
 };
 
 type UpdateUuidsParams = {
-  newTileList: Movie[];
+  newContentList: Movie[];
   firstTileIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
@@ -77,28 +77,28 @@ export const usePageUtils = (): UsePageUtilsReturn => {
   };
 
   const updateUuids = ({
-    newTileList,
+    newContentList,
     firstTileIndex,
     isFirstPage = false,
     isLastPage = false,
   }: UpdateUuidsParams) => {
     if (isFirstPage) {
-      const updatedFirstElements = newTileList.slice(0, firstTileIndex).map(tile => ({
+      const updatedFirstElements = newContentList.slice(0, firstTileIndex).map(tile => ({
         ...tile,
         uuid: uuid(),
       }));
-      return [...updatedFirstElements, ...newTileList.slice(firstTileIndex)];
+      return [...updatedFirstElements, ...newContentList.slice(firstTileIndex)];
     }
 
     if (isLastPage) {
-      const updatedLastElements = newTileList.slice(firstTileIndex).map(tile => ({
+      const updatedLastElements = newContentList.slice(firstTileIndex).map(tile => ({
         ...tile,
         uuid: uuid(),
       }));
-      return [...newTileList.slice(0, firstTileIndex), ...updatedLastElements];
+      return [...newContentList.slice(0, firstTileIndex), ...updatedLastElements];
     }
 
-    return newTileList.map(tile => ({ ...tile, uuid: uuid() }));
+    return newContentList.map(tile => ({ ...tile, uuid: uuid() }));
   };
 
   const getMapValue = <K, V>({ label, map, key }: GetMapValueParams<K, V>): V => {
