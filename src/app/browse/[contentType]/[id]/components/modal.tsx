@@ -15,7 +15,7 @@ const Modal = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog open onOpenChange={() => router.push(ROUTES.HOME.PATH)}>
+    <Dialog open onOpenChange={() => router.push(ROUTES.HOME.PATH, { scroll: false })}>
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );
