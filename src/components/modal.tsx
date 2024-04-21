@@ -1,12 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { TODO } from '@/lib/types';
-import { capitalize } from '@/lib/utils';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { HeadingLarge } from '@/components/fonts';
 
 type ModalProps = {
@@ -29,8 +27,6 @@ const Modal = ({ content }: ModalProps) => {
   const genres = details.genres.map(({ name }: TODO) => name).slice(0, 3);
 
   const firstThreeKeywords = keywords.map(({ name }: TODO) => name).slice(0, 3);
-
-  console.log('details', details);
 
   return (
     <Dialog open onOpenChange={() => router.back()}>
