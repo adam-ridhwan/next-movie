@@ -3,9 +3,7 @@ import Modal from '@/modalComponents/client/modal';
 import Backdrop from '@/modalComponents/server/backdrop';
 import { Label } from '@/modalComponents/server/label';
 import { Actors, Genres, Keywords } from '@/modalComponents/server/metadata';
-import BackdropSkeleton from '@/modalComponents/skeletons/backdrop-skeleton';
-import MetadataSkeleton from '@/modalComponents/skeletons/metadata-skeleton';
-import OverviewSkeleton from '@/modalComponents/skeletons/overview-skeleton';
+import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/modalComponents/skeleton';
 
 import { ContentRouteParams } from '@/lib/types';
 
