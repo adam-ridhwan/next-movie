@@ -4,6 +4,8 @@ import Backdrop from '@/modalComponents/server/backdrop';
 import { Label } from '@/modalComponents/server/label';
 import { Actors, Genres, Keywords } from '@/modalComponents/server/metadata';
 import BackdropSkeleton from '@/modalComponents/skeletons/backdrop-skeleton';
+import MetadataSkeleton from '@/modalComponents/skeletons/metadata-skeleton';
+import OverviewSkeleton from '@/modalComponents/skeletons/overview-skeleton';
 
 import { ContentRouteParams } from '@/lib/types';
 
@@ -16,13 +18,13 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
 
       <div className='flex flex-col gap-12 px-14 lg:flex-row'>
         <div className='flex w-full flex-col gap-4 lg:w-3/5'>
-          <Suspense fallback='loading label'>
+          <Suspense fallback={<OverviewSkeleton />}>
             <Label {...{ contentType, id }} />
           </Suspense>
         </div>
 
         <div className='flex w-full flex-col gap-4 lg:w-2/5'>
-          <Suspense fallback='loading actors'>
+          <Suspense fallback={<MetadataSkeleton />}>
             <Actors {...{ contentType, id }} />
             <Genres {...{ contentType, id }} />
             <Keywords {...{ contentType, id }} />
