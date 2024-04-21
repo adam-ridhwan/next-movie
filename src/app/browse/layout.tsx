@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import * as React from 'react';
+import { ReactNode } from 'react';
 import { fetchDiscover } from '@/actions/fetch-discover';
 import { fetchPopular } from '@/actions/fetch-popular';
 import { fetchTrending } from '@/actions/fetch-trending';

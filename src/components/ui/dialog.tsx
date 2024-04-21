@@ -25,9 +25,10 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       // prettier-ignore
-      `fixed inset-0 z-50 bg-black/80 
+      `fixed inset-0 z-50 overflow-y-auto grid place-items-center
       data-[state=open]:animate-in data-[state=closed]:animate-out 
-      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0`,
+      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
+      `,
       className
     )}
     {...props}
@@ -40,35 +41,32 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
-    {/*<DialogOverlay />*/}
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        // prettier-ignore
-        `fixed left-[50%] top-[50%] z-50 w-[95%] max-w-[1300px] translate-x-[-50%] translate-y-[-50%]
-        gap-4 h-full bg-muted shadow-lg duration-200 rounded-t-2xl overflow-hidden mt-20
-        data-[state=open]:animate-in data-[state=closed]:animate-out
-        data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
-        data-[state=closed]:zoom-out-75 data-[state=open]:zoom-in-75
-        data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]
-        data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]
-        `,
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close
+    <DialogOverlay>
+      <DialogPrimitive.Content
+        ref={ref}
         className={cn(
-          `absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background
-          transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
-          disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground`
+          // prettier-ignore
+          `relative h-full w-[95%] mt-20 max-w-[1300px] bg-muted shadow-lg rounded-t-2xl overflow-hidden  
+          data-[state=open]:animate-in data-[state=closed]:animate-out
+          data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
+          data-[state=closed]:zoom-out-75 data-[state=open]:zoom-in-75`,
+          className
         )}
+        {...props}
       >
-        <Cross2Icon className='h-8 w-8' />
-        <span className='sr-only'>Close</span>
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
+        {children}
+        <DialogPrimitive.Close
+          className={cn(
+            `absolute right-4 top-4 rounded-full bg-appBackground p-1 opacity-70 ring-offset-background/50
+            transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2
+            disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground`
+          )}
+        >
+          <Cross2Icon className='h-8 w-8' />
+          <span className='sr-only'>Close</span>
+        </DialogPrimitive.Close>
+      </DialogPrimitive.Content>
+    </DialogOverlay>
   </DialogPortal>
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
