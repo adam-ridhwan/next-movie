@@ -1,6 +1,7 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Movie } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -32,6 +33,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   const {
     state: { isMounted },
   } = usePageUtils();
+  const router = useRouter();
 
   if (!tile) return null;
 
@@ -48,7 +50,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
           `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`
         )}
       >
-        <Link href={url} scroll={false}>
+        <Link href={url} scroll={false} onMouseEnter={() => router.prefetch(url)}>
           <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl shadow-tileShadow'>
             {/* Image docs: https://developer.themoviedb.org/docs/image-basics */}
             {/* Example: https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg */}

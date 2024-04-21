@@ -10,20 +10,6 @@ export type TODO = any;
 export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
 export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
 
-export const formResponseSchema = z.object({
-  success: z.boolean(),
-  message: z.string(),
-  user: z.any().nullable().optional(),
-});
-export type FormResponse = z.infer<typeof formResponseSchema>;
-
-export const SignInValidationSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(7),
-  })
-  .strict();
-
 export const MovieSchema = z.object({
   adult: z.boolean(),
   backdrop_path: z.string(),

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { ContentType, GenreLabel, GENRES, Movie } from '@/lib/types';
 import { HeadingLarge } from '@/components/fonts';
@@ -45,9 +46,15 @@ const EpicStage = ({ content, contentType }: EpicStageProps) => {
     value: content.genre_ids,
   });
 
+  const router = useRouter();
+
   return (
     <>
-      <Link href={`/browse/${contentType}/${content.id}`} scroll={false}>
+      <Link
+        href={`/browse/${contentType}/${content.id}`}
+        scroll={false}
+        onMouseEnter={() => router.prefetch(`/browse/${contentType}/${content.id}`)}
+      >
         <div className='relative aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
           <Image
             src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}

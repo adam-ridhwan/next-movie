@@ -18,7 +18,7 @@ export const fetchDiscover = async ({
   page = 1,
   genre = '',
   language = 'en',
-  contentType = 'movie',
+  contentType = '[contentType]',
 }: FetchDiscoverParams) => {
   const url = new URL(`https://api.themoviedb.org/3/discover/${contentType}`);
   url.searchParams.append('include_adult', 'true');
