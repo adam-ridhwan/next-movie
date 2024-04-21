@@ -25,7 +25,7 @@ const TileList = () => {
 
   const isTileVisible = (i: number) => {
     const lowerBound = tilesPerPage - 1;
-    const upperBound = tilesPerPage * 2 + 2;
+    const upperBound = tilesPerPage * 2;
     return lowerBound < i && i < upperBound;
   };
 

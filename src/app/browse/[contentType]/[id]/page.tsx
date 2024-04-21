@@ -1,15 +1,11 @@
 import { Suspense } from 'react';
+import Backdrop from '@/browse/components/backdrop';
+import { Label } from '@/browse/components/label';
+import { Actors, Genres, Keywords } from '@/browse/components/metadata';
+import Modal from '@/browse/components/modal';
+import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/components/skeleton';
 
 import { ContentRouteParams } from '@/lib/types';
-import Backdrop from '@/app/browse/[contentType]/[id]/components/backdrop';
-import { Label } from '@/app/browse/[contentType]/[id]/components/label';
-import { Actors, Genres, Keywords } from '@/app/browse/[contentType]/[id]/components/metadata';
-import Modal from '@/app/browse/[contentType]/[id]/components/modal';
-import {
-  BackdropSkeleton,
-  MetadataSkeleton,
-  OverviewSkeleton,
-} from '@/app/browse/[contentType]/[id]/components/skeleton';
 
 export default function ContentModal({ params: { contentType, id } }: { params: ContentRouteParams }) {
   return (

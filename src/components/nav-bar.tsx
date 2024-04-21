@@ -7,10 +7,15 @@ import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
 
-const ROUTES = {
-  home: { path: '/browse', label: 'Home' },
-  movies: { path: '/movies', label: 'Movies' },
-  tvShows: { path: '/tv-shows', label: 'TV Shows' },
+type Route = {
+  PATH: string;
+  LABEL: string;
+};
+
+export const ROUTES: Record<string, Route> = {
+  HOME: { PATH: '/browse', LABEL: 'Home' },
+  MOVIES: { PATH: '/movies', LABEL: 'Movies' },
+  TV: { PATH: '/tv', LABEL: 'TV Shows' },
 } as const;
 
 const NavBar = () => {
@@ -22,15 +27,15 @@ const NavBar = () => {
         <LogoIcon />
         <nav>
           <ul className={cn('flex flex-row gap-4')}>
-            {Object.entries(ROUTES).map(([key, { path, label }]) => (
-              <Link key={key} href={path} className={cn({ 'pointer-events-none': pathname === path })}>
+            {Object.entries(ROUTES).map(([key, { PATH, LABEL }]) => (
+              <Link key={key} href={PATH} className={cn({ 'pointer-events-none': pathname === PATH })}>
                 <BodySmall
                   className={cn('transition-colors hover:text-primary/50', {
-                    'text-primary': pathname === path,
-                    'text-primary/70': pathname !== path,
+                    'text-primary': pathname === PATH,
+                    'text-primary/70': pathname !== PATH,
                   })}
                 >
-                  {label}
+                  {LABEL}
                 </BodySmall>
               </Link>
             ))}

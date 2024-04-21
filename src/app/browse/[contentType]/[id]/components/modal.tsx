@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ROUTES } from '@/components/nav-bar';
 
 const Modal = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const Modal = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog open onOpenChange={() => router.push('/browse')}>
+    <Dialog open onOpenChange={() => router.push(ROUTES.HOME.PATH)}>
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );

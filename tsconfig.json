@@ -22,7 +22,7 @@
     "baseUrl": "src/",
     "paths": {
       "@/*": ["*"],
-      "@/modalComponents/*": ["app/browse/@modal/(..)browse/[contentType]/[id]/components/*"]
+      "@/browse/components/*": ["app/browse/[contentType]/[id]/components/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
