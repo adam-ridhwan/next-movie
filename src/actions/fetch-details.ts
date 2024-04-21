@@ -1,5 +1,7 @@
 'use server';
 
+import { wait } from 'next/dist/lib/wait';
+
 import { env } from '@/lib/env';
 import { ContentType } from '@/lib/types';
 
@@ -17,6 +19,8 @@ export const fetchDetails = async (id: string, contentType: ContentType) => {
       Authorization: `Bearer ${TMDB_READ_ACCESS_TOKEN}`,
     },
   };
+
+  await wait(2000);
 
   const response = await fetch(url, options);
   return await response.json();

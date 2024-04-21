@@ -1,11 +1,10 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 
-import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
+import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION, SlideDirection } from '@/components/slider/slider-constants';
 
 type PaginationButtonProps = {
   direction: SlideDirection;

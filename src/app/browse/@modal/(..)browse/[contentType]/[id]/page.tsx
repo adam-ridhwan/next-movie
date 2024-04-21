@@ -1,34 +1,34 @@
-import { fetchCredits } from '@/actions/fetch-credits';
-import { fetchDetails } from '@/actions/fetch-details';
-import { fetchKeywords } from '@/actions/fetch-keywords';
-import { fetchRecommendations } from '@/actions/fetch-recommendations';
+import { Suspense } from 'react';
+import Modal from '@/modalComponents/client/modal';
+import Backdrop from '@/modalComponents/server/backdrop';
+import { Label } from '@/modalComponents/server/label';
+import { Actors, Genres, Keywords } from '@/modalComponents/server/metadata';
+import BackdropSkeleton from '@/modalComponents/skeletons/backdrop-skeleton';
 
-import { ContentType } from '@/lib/types';
-import Modal from '@/components/modal';
+import { ContentRouteParams } from '@/lib/types';
 
-export default async function MovieModal({
-  params: { contentType, id },
-}: {
-  params: { contentType: ContentType; id: string };
-}) {
-  const detailsPromise = fetchDetails(id, contentType);
-  const creditsPromise = fetchCredits(id, contentType);
-  const keywordsPromise = fetchKeywords(id, contentType);
-  const recommendationsPromise = fetchRecommendations(id, contentType);
+export default function ContentModal({ params: { contentType, id } }: { params: ContentRouteParams }) {
+  return (
+    <Modal>
+      <Suspense fallback={<BackdropSkeleton />}>
+        <Backdrop {...{ contentType, id }} />
+      </Suspense>
 
-  const [
-    details,
-    credits,
-    keywords,
-    recommendations
-  ] = await Promise.all([
-    detailsPromise,
-    creditsPromise,
-    keywordsPromise,
-    recommendationsPromise,
-  ]); // prettier-ignore
+      <div className='flex flex-col gap-12 px-14 lg:flex-row'>
+        <div className='flex w-full flex-col gap-4 lg:w-3/5'>
+          <Suspense fallback='loading label'>
+            <Label {...{ contentType, id }} />
+          </Suspense>
+        </div>
 
-  const parsedKeyword = keywords.keywords || keywords.results;
-
-  return <Modal content={{ details, credits, keywords: parsedKeyword, recommendations }} />;
+        <div className='flex w-full flex-col gap-4 lg:w-2/5'>
+          <Suspense fallback='loading actors'>
+            <Actors {...{ contentType, id }} />
+            <Genres {...{ contentType, id }} />
+            <Keywords {...{ contentType, id }} />
+          </Suspense>
+        </div>
+      </div>
+    </Modal>
+  );
 }

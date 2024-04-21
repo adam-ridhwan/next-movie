@@ -3,12 +3,13 @@
 import { z } from 'zod';
 
 import { KeysOf, ValuesOf } from '@/lib/utils';
-import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type TODO = any;
 
-export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
-export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
+export type ContentRouteParams = {
+  contentType: ContentType;
+  id: string;
+};
 
 export const MovieSchema = z.object({
   adult: z.boolean(),

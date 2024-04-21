@@ -16,3 +16,6 @@ export const RESIZE_DIRECTION = {
   MAXIMIZING: 'MAXIMIZING',
   MINIMIZING: 'MINIMIZING',
 } as const;
+
+export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
+export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
