@@ -5,10 +5,10 @@ import { ContentType } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
-// Docs: https://developer.themoviedb.org/reference/trending-movies
+// Docs: https://developer.themoviedb.org/reference/movie-credits
 
-export const fetchTrending = async (contentType: ContentType) => {
-  const url = `https://api.themoviedb.org/3/trending/${contentType}/day?language=en-US`;
+export const fetchCredits = async (id: string, contentType: ContentType) => {
+  const url = `https://api.themoviedb.org/3/${contentType}/${id}/credits?language=en-US`;
 
   const options = {
     method: 'GET',

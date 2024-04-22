@@ -14,7 +14,7 @@ type SetMapTilesParams = {
 };
 
 export const useMapPages = () => {
-  const TILES = useSliderStore(state => state.TILES);
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const pages = useSliderStore(state => state.pages);
   const setPages = useSliderStore(state => state.setPages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -37,17 +37,17 @@ export const useMapPages = () => {
     });
 
     const leftTileCount = getTileCount(firstTileCurrentPageIndex / newTileCountPerPage);
-    const rightTileCount = getTileCount((TILES.length - firstTileCurrentPageIndex) / newTileCountPerPage);
+    const rightTileCount = getTileCount((CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage);
 
     const newTileCount = leftTileCount + rightTileCount;
     const newMaxPages = newTileCount / newTileCountPerPage;
     let newCurrentPage = -1;
 
     let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTileCount);
-    let newTileList: Movie[] = [];
+    let newContentList: Movie[] = [];
 
     for (let i = 0; i < newTileCount; i++) {
-      if (startIndex >= TILES.length) startIndex = 0;
+      if (startIndex >= CONTENT.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTileCountPerPage);
       const isNewFirstPage = pageNumber === 1;
@@ -55,44 +55,34 @@ export const useMapPages = () => {
       const isLeftPlaceholder = pageNumber === 0;
       const isRightPlaceholder = pageNumber === newMaxPages - 1;
 
-      const idMatches = newTileList.some(tile => tile.id === firstTileCurrentPage.id);
+      const idMatches = newContentList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
-      const newTileItem = TILES[startIndex++];
-      const newTileListToPush =
+      const newContentItem = CONTENT[startIndex++];
+
+      newContentList.push(
         isLeftPlaceholder || isRightPlaceholder
-          ? { ...newTileItem, uuid: uuid() }
-          : newTileItem; // prettier-ignore
-      newTileList.push(newTileListToPush);
+          ? { ...newContentItem, uuid: uuid() }
+          : newContentItem // prettier-ignore
+      );
 
-      if (newTileList.length !== newTileCountPerPage) continue;
+      if (newContentList.length !== newTileCountPerPage) continue;
 
-      const firstTileIndex = newTileList.findIndex(tile => tile.id === TILES[0].id);
+      const firstTileIndex = newContentList.findIndex(tile => tile.id === CONTENT[0].id);
 
       if (isNewFirstPage && firstTileIndex > 0) {
         newFirstPageLength = newTileCountPerPage - firstTileIndex;
-        newTileList = updateUuids({ newTileList, firstTileIndex, isFirstPage: true });
+        newContentList = updateUuids({ newContentList, firstTileIndex, isFirstPage: true });
       }
 
       if (isNewLastPage && firstTileIndex > 0) {
         newLastPageLength = firstTileIndex;
-        newTileList = updateUuids({ newTileList, firstTileIndex, isLastPage: true });
+        newContentList = updateUuids({ newContentList, firstTileIndex, isLastPage: true });
       }
 
-      newPages.set(pageNumber, newTileList);
-      newTileList = [];
+      newPages.set(pageNumber, newContentList);
+      newContentList = [];
     }
-
-    // console.table({
-    //   startIndex: startIndex,
-    //   newCurrentPage: newCurrentPage,
-    //   leftTileCount: leftTileCount,
-    //   rightTileCount: rightTileCount,
-    //   totalTiles: leftTileCount + rightTileCount,
-    //   newMaxPages: newMaxPages,
-    //   newFirstPageLength: newFirstPageLength,
-    //   newLastPageLength: newLastPageLength,
-    // });
 
     // [...newPages.entries()]
     //   // .sort((a, b) => a[0] - b[0])
@@ -115,6 +105,17 @@ export const useMapPages = () => {
       if (isLastPage) return newMaxPages - 2;
       return newCurrentPage;
     };
+
+    // console.table({
+    //   startIndex: startIndex,
+    //   newCurrentPage: getNewCurrentPage(),
+    //   leftTileCount: leftTileCount,
+    //   rightTileCount: rightTileCount,
+    //   totalTiles: leftTileCount + rightTileCount,
+    //   newMaxPages: newMaxPages,
+    //   newFirstPageLength: newFirstPageLength,
+    //   newLastPageLength: newLastPageLength,
+    // });
 
     setPages({
       pages: newPages,

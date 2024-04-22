@@ -5,7 +5,7 @@ import { ContentType } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
-// Popular docs: https://developer.themoviedb.org/reference/movie-popular-list
+// Docs: https://developer.themoviedb.org/reference/movie-popular-list
 
 export const fetchPopular = async (contentType: ContentType) => {
   // TODO: figure out how to opt out of caching

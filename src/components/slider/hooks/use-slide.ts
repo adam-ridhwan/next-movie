@@ -3,8 +3,7 @@
 import { useDomContext } from '@/providers/dom-provider';
 import { useSliderStore } from '@/providers/slider-provider';
 
-import { SlideDirection } from '@/lib/types';
-import { SLIDE_DIRECTION } from '@/components/slider/slider-constants';
+import { SLIDE_DIRECTION, SlideDirection } from '@/components/slider/slider-constants';
 
 export type GetSlideAmountParams = {
   direction?: SlideDirection;
@@ -37,11 +36,11 @@ export const useSlide = (): UseSlideReturn => {
     if (!tileItemRef.current) throw new Error('tileItemRef is missing');
     if (!paginationButtonRef.current) throw new Error('paginationButtonRef is missing');
 
-    const { offsetWidth: sliderWidth } = tileListRef.current;
-    const { offsetWidth: sliderItemWidth } = tileItemRef.current;
+    const { offsetWidth: tileListWidth } = tileListRef.current;
+    const { offsetWidth: tileItemWidth } = tileItemRef.current;
 
     const pageLength = isSecondPage ? firstPageLength : lastPageLength;
-    const trailingPercentage = ((pageLength * sliderItemWidth) / sliderWidth) * 100;
+    const trailingPercentage = ((pageLength * tileItemWidth) / tileListWidth) * 100;
 
     if (isSecondPage && trailingPercentage) return trailingPercentage;
     if (isSecondToLastPage && trailingPercentage) return -trailingPercentage;

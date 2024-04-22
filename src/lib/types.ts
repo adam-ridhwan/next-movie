@@ -3,26 +3,17 @@
 import { z } from 'zod';
 
 import { KeysOf, ValuesOf } from '@/lib/utils';
-import { RESIZE_DIRECTION, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
 
 export type TODO = any;
 
-export type SlideDirection = (typeof SLIDE_DIRECTION)[keyof typeof SLIDE_DIRECTION];
-export type ResizeDirection = (typeof RESIZE_DIRECTION)[keyof typeof RESIZE_DIRECTION];
+export type ContentRouteParams = {
+  contentType: ContentType;
+  id: string;
+};
 
-export const formResponseSchema = z.object({
-  success: z.boolean(),
-  message: z.string(),
-  user: z.any().nullable().optional(),
-});
-export type FormResponse = z.infer<typeof formResponseSchema>;
-
-export const SignInValidationSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(7),
-  })
-  .strict();
+export type ContentRouteProps = {
+  params: ContentRouteParams;
+};
 
 export const MovieSchema = z.object({
   adult: z.boolean(),
@@ -45,6 +36,16 @@ export const MovieSchema = z.object({
   uuid: z.string(),
 });
 export type Movie = z.infer<typeof MovieSchema>;
+
+export const ContentSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  release_date: z.string(),
+  overview: z.string(),
+  poster_path: z.string(),
+  key: z.string(),
+});
+
 export const nonEmptyTilesSchema = z.array(MovieSchema);
 export type Pages = Map<number, Movie[]>;
 

@@ -5,14 +5,14 @@ import { MINIMUM_TILE_COUNT } from '@/components/slider/slider-constants';
 
 export const useTiles = () => {
   const {
-    state: { TILES, pages, currentPage },
+    state: { CONTENT, pages, currentPage },
   } = usePagination();
   const {
     state: { isMounted, hasPaginated },
     actions: { getMapValue },
   } = usePageUtils();
 
-  if (TILES.length <= MINIMUM_TILE_COUNT) return { tilesToRender: TILES };
+  if (CONTENT.length <= MINIMUM_TILE_COUNT) return { tilesToRender: CONTENT };
 
   const getPrevPageTiles = () => {
     if (!isMounted || !hasPaginated) return [];

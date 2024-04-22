@@ -1,11 +1,10 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 
-import { SlideDirection } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION } from '@/components/slider/slider-constants';
+import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION, SlideDirection } from '@/components/slider/slider-constants';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -18,11 +17,11 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   ref
 ) => {
   const {
-    state: { TILES },
+    state: { CONTENT },
   } = usePagination();
   const { isAnimating } = useAnimation();
 
-  if (TILES.length <= MINIMUM_TILE_COUNT) return null;
+  if (CONTENT.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
@@ -35,7 +34,7 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        `group/button min-w-leftRightCustom relative z-50 flex w-leftRightCustom items-center bg-appBackground disabled:pointer-events-auto 
+        `group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent disabled:pointer-events-auto 
           disabled:opacity-100 max-sm:hidden`,
         className,
         { 'justify-start': direction === SLIDE_DIRECTION.RIGHT },

@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { ReactNode } from 'react';
 import { fetchDiscover } from '@/actions/fetch-discover';
 import { fetchPopular } from '@/actions/fetch-popular';
 import { fetchTrending } from '@/actions/fetch-trending';
@@ -8,7 +10,7 @@ import { CONTENT_TYPES, GENRES } from '@/lib/types';
 import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
-export default async function Home() {
+export default async function BrowseLayout({ children }: { children: ReactNode }) {
   const popularMoviesPromise = fetchPopular(CONTENT_TYPES.MOVIE);
   const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
   const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
@@ -37,40 +39,46 @@ export default async function Home() {
 
   return (
     <>
-      {/*<EpicStage content={popularMovies.results[Math.floor(Math.random() * 19)]} />*/}
-      <EpicStage content={popularMovies.results[0]} />
-
+      <EpicStage content={popularMovies.results[0]} contentType={'movie'} />
       <div key={'Trending: Movies'} className='flex flex-col'>
-        <SliderProvider tiles={trendingMovies.results}>
+        <SliderProvider content={trendingMovies.results} contentType={'movie'}>
           <DomContextProvider>
             <Slider header={'Trending: Movies'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Trending: TV Shows'} className='flex flex-col'>
-        <SliderProvider tiles={trendingTvShows.results}>
+        <SliderProvider content={trendingTvShows.results} contentType={'tv'}>
           <DomContextProvider>
             <Slider header={'Trending: TV Shows'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Drama'} className='flex flex-col'>
-        <SliderProvider tiles={dramaMovies.results}>
+        <SliderProvider content={dramaMovies.results} contentType={'movie'}>
           <DomContextProvider>
             <Slider header={'Drama Movies'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Action'} className='flex flex-col'>
-        <SliderProvider tiles={actionMovies.results}>
+        <SliderProvider content={actionMovies.results} contentType={'movie'}>
           <DomContextProvider>
             <Slider header={'Action Movies'} />
           </DomContextProvider>
         </SliderProvider>
       </div>
+
+      {children}
     </>
   );
 }

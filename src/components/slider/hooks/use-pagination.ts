@@ -3,14 +3,15 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { Movie, Pages } from '@/lib/types';
+import { ContentType, Movie, Pages } from '@/lib/types';
 import { useMapPages } from '@/components/slider/hooks/use-map-pages';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type UsePaginationReturn = {
   state: {
-    TILES: Movie[];
+    CONTENT: Movie[];
     pages: Pages;
+    contentType: ContentType;
     currentPage: number;
     maxPages: number;
   };
@@ -31,7 +32,8 @@ type UsePaginationReturn = {
 };
 
 export const usePagination = (): UsePaginationReturn => {
-  const TILES = useSliderStore(state => state.TILES);
+  const CONTENT = useSliderStore(state => state.CONTENT);
+  const contentType = useSliderStore(state => state.contentType);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
@@ -62,7 +64,7 @@ export const usePagination = (): UsePaginationReturn => {
   const goToLastPage = () => {
     usePaginationLogger.last();
     setMapPages({
-      firstTileCurrentPageIndex: TILES.length - getTileCountPerPage(),
+      firstTileCurrentPageIndex: CONTENT.length - getTileCountPerPage(),
       isLastPage: true,
     });
   };
@@ -90,7 +92,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
-      array: TILES,
+      array: CONTENT,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -110,7 +112,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
-      array: TILES,
+      array: CONTENT,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -137,9 +139,10 @@ export const usePagination = (): UsePaginationReturn => {
 
   return {
     state: {
-      TILES,
-      currentPage,
+      CONTENT,
+      contentType,
       pages,
+      currentPage,
       maxPages,
     },
     status: {
