@@ -1,14 +1,9 @@
 import Image from 'next/image';
 import { fetchDetails } from '@/actions/fetch-details';
 
-import { ContentType } from '@/lib/types';
+import { ContentRouteParams } from '@/lib/types';
 
-type ContentImageProps = {
-  id: string;
-  contentType: ContentType;
-};
-
-export default async function Backdrop({ id, contentType }: ContentImageProps) {
+export default async function Backdrop({ id, contentType }: ContentRouteParams) {
   const details = await fetchDetails(id, contentType);
 
   return (

@@ -11,6 +11,10 @@ export type ContentRouteParams = {
   id: string;
 };
 
+export type ContentRouteProps = {
+  params: ContentRouteParams;
+};
+
 export const MovieSchema = z.object({
   adult: z.boolean(),
   backdrop_path: z.string(),

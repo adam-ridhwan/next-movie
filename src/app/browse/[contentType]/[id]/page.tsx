@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Suspense } from 'react';
 import Backdrop from '@/browse/components/backdrop';
+import Headshots from '@/browse/components/headshots';
 import { Label } from '@/browse/components/label';
 import { Actors, Genres, Keywords } from '@/browse/components/metadata';
 import Modal from '@/browse/components/modal';
@@ -10,7 +11,7 @@ import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/c
 import { ContentRouteParams } from '@/lib/types';
 import TileLoadingSkeleton from '@/components/tile-loading-skeleton';
 
-export default function ContentModal({ params: { contentType, id } }: { params: ContentRouteParams }) {
+export default function ContentModalPage({ params: { contentType, id } }: { params: ContentRouteParams }) {
   return (
     <>
       {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
@@ -25,7 +26,7 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
           <Backdrop {...{ contentType, id }} />
         </Suspense>
 
-        <div className='flex flex-col gap-12 px-leftRightCustom pt-4 lg:flex-row'>
+        <div className='flex flex-col gap-12 px-leftRightCustom py-4 lg:flex-row'>
           <div className='flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label {...{ contentType, id }} />
@@ -41,13 +42,17 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
           </div>
         </div>
 
-        <div className='mx-leftRightCustom border border-b-muted-foreground/20 pt-4' />
+        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
 
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
           <MoreLikeThis {...{ contentType, id }} />
         </Suspense>
 
-        <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
+
+        <Headshots {...{ contentType, id }} />
+
+        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
       </Modal>
     </>
   );
