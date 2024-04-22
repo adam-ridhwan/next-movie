@@ -4,6 +4,7 @@ import Backdrop from '@/browse/components/backdrop';
 import { Label } from '@/browse/components/label';
 import { Actors, Genres, Keywords } from '@/browse/components/metadata';
 import Modal from '@/browse/components/modal';
+import MoreLikeThis from '@/browse/components/more-like-this';
 import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/components/skeleton';
 
 import { ContentRouteParams } from '@/lib/types';
@@ -22,7 +23,8 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
         <Suspense fallback={<BackdropSkeleton />}>
           <Backdrop {...{ contentType, id }} />
         </Suspense>
-        <div className='flex flex-col gap-12 px-14 lg:flex-row'>
+
+        <div className='flex flex-col gap-12 px-14 pt-4 lg:flex-row'>
           <div className='flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label {...{ contentType, id }} />
@@ -37,6 +39,10 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
             </Suspense>
           </div>
         </div>
+
+        <div className='mx-leftRightCustom border border-b-muted-foreground/20 pt-4' />
+
+        <MoreLikeThis {...{ contentType, id }} />
       </Modal>
     </>
   );

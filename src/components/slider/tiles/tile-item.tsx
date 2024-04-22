@@ -1,15 +1,12 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useWindowSize } from 'usehooks-ts';
 
 import { Movie } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall } from '@/components/fonts';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
 
 type TileItemProps = {
   tile: Movie | void;
