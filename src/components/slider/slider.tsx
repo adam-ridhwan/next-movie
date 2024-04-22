@@ -37,7 +37,7 @@ const Slider = ({ header }: SliderProps) => {
         <PaginateRightButton />
       </div>
 
-      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+      {/*<div className='mx-leftRightCustom border border-b-muted-foreground/20' />*/}
     </div>
   );
 };

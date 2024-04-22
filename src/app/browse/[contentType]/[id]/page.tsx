@@ -8,6 +8,7 @@ import MoreLikeThis from '@/browse/components/more-like-this';
 import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/components/skeleton';
 
 import { ContentRouteParams } from '@/lib/types';
+import TileLoadingSkeleton from '@/components/tile-loading-skeleton';
 
 export default function ContentModal({ params: { contentType, id } }: { params: ContentRouteParams }) {
   return (
@@ -24,14 +25,14 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
           <Backdrop {...{ contentType, id }} />
         </Suspense>
 
-        <div className='flex flex-col gap-12 px-14 pt-4 lg:flex-row'>
+        <div className='flex flex-col gap-12 px-leftRightCustom pt-4 lg:flex-row'>
           <div className='flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label {...{ contentType, id }} />
             </Suspense>
           </div>
 
-          <div className='flex w-full flex-col gap-4 lg:w-2/5'>
+          <div className='flex w-full flex-col justify-center gap-4 lg:w-2/5'>
             <Suspense fallback={<MetadataSkeleton />}>
               <Actors {...{ contentType, id }} />
               <Genres {...{ contentType, id }} />
@@ -42,7 +43,11 @@ export default function ContentModal({ params: { contentType, id } }: { params: 
 
         <div className='mx-leftRightCustom border border-b-muted-foreground/20 pt-4' />
 
-        <MoreLikeThis {...{ contentType, id }} />
+        <Suspense fallback={<TileLoadingSkeleton count={1} />}>
+          <MoreLikeThis {...{ contentType, id }} />
+        </Suspense>
+
+        <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
       </Modal>
     </>
   );

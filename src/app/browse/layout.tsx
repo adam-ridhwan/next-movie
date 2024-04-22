@@ -47,6 +47,9 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
+
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Trending: TV Shows'} className='flex flex-col'>
         <SliderProvider content={trendingTvShows.results} contentType={'tv'}>
           <DomContextProvider>
@@ -54,6 +57,9 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
+
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Drama'} className='flex flex-col'>
         <SliderProvider content={dramaMovies.results} contentType={'movie'}>
           <DomContextProvider>
@@ -61,6 +67,9 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
+
+      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
+
       <div key={'Action'} className='flex flex-col'>
         <SliderProvider content={actionMovies.results} contentType={'movie'}>
           <DomContextProvider>

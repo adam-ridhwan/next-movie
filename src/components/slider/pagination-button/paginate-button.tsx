@@ -34,7 +34,7 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        `group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-appBackground disabled:pointer-events-auto 
+        `group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent disabled:pointer-events-auto 
           disabled:opacity-100 max-sm:hidden`,
         className,
         { 'justify-start': direction === SLIDE_DIRECTION.RIGHT },
