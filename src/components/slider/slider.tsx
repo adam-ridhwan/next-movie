@@ -14,9 +14,7 @@ type SliderProps = {
 };
 
 const Slider = ({ header }: SliderProps) => {
-  const {
-    actions: { goToFirstPage },
-  } = usePagination();
+  const { actions: { goToFirstPage } } = usePagination(); // prettier-ignore
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
@@ -36,8 +34,6 @@ const Slider = ({ header }: SliderProps) => {
 
         <PaginateRightButton />
       </div>
-
-      {/*<div className='mx-leftRightCustom border border-b-muted-foreground/20' />*/}
     </div>
   );
 };

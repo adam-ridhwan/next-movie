@@ -10,13 +10,8 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const {
-    state: { CONTENT },
-  } = usePagination();
-  const {
-    state: { hasPaginated },
-    actions: { getTileCountPerPage },
-  } = usePageUtils();
+  const { state: { CONTENT } } = usePagination(); // prettier-ignore
+  const { state: { hasPaginated }, actions: { getTileCountPerPage }, } = usePageUtils(); // prettier-ignore
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { tileListRef, tileItemRef } = useDomContext();
@@ -31,6 +26,7 @@ const TileList = () => {
 
   return (
     <>
+      {/* TODO: Combine desktop using media queries */}
       {/* Desktop */}
       <div className='overflow-hidden'>
         <div
