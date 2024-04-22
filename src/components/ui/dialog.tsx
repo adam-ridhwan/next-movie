@@ -25,10 +25,9 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       // prettier-ignore
-      `fixed inset-0 z-50 overflow-y-auto grid place-items-center h-dvh pt-20 overflow-x-hidden
+      `fixed inset-0 z-50 overflow-y-auto h-dvh pt-20 overflow-x-hidden grid justify-items-center
       data-[state=open]:animate-in data-[state=closed]:animate-out 
-      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
-      `,
+      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0`,
       className
     )}
     {...props}
@@ -46,7 +45,7 @@ const DialogContent = React.forwardRef<
         ref={ref}
         className={cn(
           // prettier-ignore
-          `relative w-[95%] max-w-[1300px] bg-appBackground shadow-lg rounded-t-2xl h-full pb-20 overflow-x-hidden
+          `relative h-fit w-[85%] max-w-[1300px] bg-appBackground shadow-lg rounded-t-2xl pb-20 overflow-x-hidden
           data-[state=open]:animate-in data-[state=closed]:animate-out
           data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
           data-[state=closed]:zoom-out-75 data-[state=open]:zoom-in-75`,
