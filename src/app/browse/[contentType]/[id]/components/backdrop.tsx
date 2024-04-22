@@ -12,7 +12,7 @@ export default async function Backdrop({ id, contentType }: ContentImageProps) {
   const details = await fetchDetails(id, contentType);
 
   return (
-    <div className='relative aspect-video'>
+    <div className='relative aspect-video overflow-hidden rounded-2xl'>
       <Image
         src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
         alt={details.original_title || details.original_name}

@@ -19,7 +19,7 @@ function extractYear(dateString: string | undefined): string {
 
   const regex = /^\d{4}/;
   const match = dateString.match(regex);
-  return match ? match[0] : '';
+  return match ? match[0] : '-';
 }
 
 const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
