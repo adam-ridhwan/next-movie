@@ -68,16 +68,18 @@ const ContentImage = ({ tile }: { tile: Movie }) => {
             src={`https://image.tmdb.org/t/p/original${tile.backdrop_path || tile.poster_path}`}
             alt={tile.title || tile.name}
             priority
+            unoptimized
             fill
-            sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
+            // sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
             className='object-cover max-sm:hidden'
           />
           <Image
             src={`https://image.tmdb.org/t/p/original${tile.poster_path || tile.backdrop_path}`}
             alt={tile.title || tile.name}
             priority
+            unoptimized
             fill
-            sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
+            // sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
             className='object-cover sm:hidden'
           />
         </>

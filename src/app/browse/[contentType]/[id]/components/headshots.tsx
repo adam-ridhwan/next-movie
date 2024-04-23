@@ -27,8 +27,9 @@ export default async function Headshots({ id, contentType }: ContentRouteParams)
                 <Image
                   src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
                   alt={actor.name || actor.original_name}
+                  unoptimized
                   fill
-                  sizes='500px'
+                  // sizes='500px'
                   className='object-cover object-top'
                 />
               ) : (
