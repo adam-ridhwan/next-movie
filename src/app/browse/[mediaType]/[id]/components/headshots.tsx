@@ -1,14 +1,13 @@
 import Image from 'next/image';
-import { fetchCredits } from '@/actions/fetch-credits';
+import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams, TODO } from '@/lib/types';
+import { CATEGORIES, ContentRouteParams, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
-export default async function Headshots({ id, contentType }: ContentRouteParams) {
-  const credits = await fetchCredits(id, contentType);
+export default async function Headshots({ id, mediaType }: ContentRouteParams) {
+  const credits: TODO = await fetchTMDB({ category: CATEGORIES.CREDITS, mediaType, id });
   if (!credits.cast) return null;
-
   const actors = credits.cast.filter(({ known_for_department }: TODO) => known_for_department === 'Acting');
   const firstTenActors = actors.slice(0, 10);
 

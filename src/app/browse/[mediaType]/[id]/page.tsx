@@ -6,17 +6,13 @@ import { Label } from '@/browse/components/label';
 import { Actors, Genres, Keywords } from '@/browse/components/metadata';
 import Modal from '@/browse/components/modal';
 import MoreLikeThis from '@/browse/components/more-like-this';
-import {
-  BackdropSkeleton,
-  HeadshotsSkeleton,
-  MetadataSkeleton,
-  OverviewSkeleton,
-} from '@/browse/components/skeletons';
+import { BackdropSkeleton, HeadshotsSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/components/skeletons'; // prettier-ignore
 
 import { ContentRouteParams } from '@/lib/types';
+
 import TileLoadingSkeleton from '@/components/tile-loading-skeleton';
 
-export default function ContentModalPage({ params: { contentType, id } }: { params: ContentRouteParams }) {
+export default function ContentModalPage({ params: { mediaType, id } }: { params: ContentRouteParams }) {
   return (
     <>
       {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
@@ -28,21 +24,21 @@ export default function ContentModalPage({ params: { contentType, id } }: { para
 
       <Modal>
         <Suspense fallback={<BackdropSkeleton />}>
-          <Backdrop {...{ contentType, id }} />
+          <Backdrop {...{ mediaType, id }} />
         </Suspense>
 
         <div className='flex flex-col gap-12 px-leftRightCustom py-4 lg:flex-row'>
           <div className='flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
-              <Label {...{ contentType, id }} />
+              <Label {...{ mediaType, id }} />
             </Suspense>
           </div>
 
           <div className='flex w-full flex-col justify-center gap-4 lg:w-2/5'>
             <Suspense fallback={<MetadataSkeleton />}>
-              <Actors {...{ contentType, id }} />
-              <Genres {...{ contentType, id }} />
-              <Keywords {...{ contentType, id }} />
+              <Actors {...{ mediaType, id }} />
+              <Genres {...{ mediaType, id }} />
+              <Keywords {...{ mediaType, id }} />
             </Suspense>
           </div>
         </div>
@@ -50,13 +46,13 @@ export default function ContentModalPage({ params: { contentType, id } }: { para
         <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
 
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
-          <MoreLikeThis {...{ contentType, id }} />
+          <MoreLikeThis {...{ mediaType, id }} />
         </Suspense>
 
         <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
 
         <Suspense fallback={<HeadshotsSkeleton />}>
-          <Headshots {...{ contentType, id }} />
+          <Headshots {...{ mediaType, id }} />
         </Suspense>
 
         <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
