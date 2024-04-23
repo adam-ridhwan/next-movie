@@ -7,7 +7,7 @@ import { KeysOf, ValuesOf } from '@/lib/utils';
 export type TODO = any;
 
 export type ContentRouteParams = {
-  contentType: ContentType;
+  mediaType: MediaType;
   id: string;
 };
 
@@ -73,4 +73,45 @@ export const MEDIA_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
 } as const;
-export type ContentType = ValuesOf<typeof MEDIA_TYPES>;
+export type MediaType = ValuesOf<typeof MEDIA_TYPES>;
+
+export const CATEGORIES = {
+  CREDITS: 'credits',
+  DETAILS: 'details',
+  DISCOVER: 'discover',
+  KEYWORDS: 'keywords',
+  POPULAR: 'popular',
+  RECOMMENDATIONS: 'recommendations',
+  SIMILAR: 'similar',
+  TRENDING: 'trending',
+} as const;
+export type Category = ValuesOf<typeof CATEGORIES>;
+
+export type CategoryWithId = {
+  category:
+    | typeof CATEGORIES.CREDITS
+    | typeof CATEGORIES.DETAILS
+    | typeof CATEGORIES.KEYWORDS
+    | typeof CATEGORIES.RECOMMENDATIONS
+    | typeof CATEGORIES.SIMILAR;
+  id: string;
+};
+
+export type CategoryWithoutId = {
+  category: typeof CATEGORIES.POPULAR | typeof CATEGORIES.TRENDING;
+};
+
+export type Discover = {
+  category: typeof CATEGORIES.DISCOVER;
+  genre: GenreId;
+  page?: number;
+  language?: string;
+};
+
+export type CategoryProps = CategoryWithId | CategoryWithoutId | Discover;
+
+export type FetchTMDBParams = {
+  mediaType: MediaType;
+} & CategoryProps;
+
+export type CreateUrlFn = (params: FetchTMDBParams) => string;

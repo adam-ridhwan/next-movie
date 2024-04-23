@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { ContentType, Movie, Pages } from '@/lib/types';
+import { MediaType, Movie, Pages } from '@/lib/types';
 import { useMapPages } from '@/components/slider/hooks/use-map-pages';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
@@ -11,7 +11,7 @@ type UsePaginationReturn = {
   state: {
     CONTENT: Movie[];
     pages: Pages;
-    contentType: ContentType;
+    mediaType: MediaType;
     currentPage: number;
     maxPages: number;
   };
@@ -33,7 +33,7 @@ type UsePaginationReturn = {
 
 export const usePagination = (): UsePaginationReturn => {
   const CONTENT = useSliderStore(state => state.CONTENT);
-  const contentType = useSliderStore(state => state.contentType);
+  const mediaType = useSliderStore(state => state.mediaType);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
@@ -140,7 +140,7 @@ export const usePagination = (): UsePaginationReturn => {
   return {
     state: {
       CONTENT,
-      contentType,
+      mediaType,
       pages,
       currentPage,
       maxPages,

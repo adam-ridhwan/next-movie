@@ -26,7 +26,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
   { tile, displayNumber, isVisibleOnScreen = false },
   ref
 ) => {
-  const { state: { contentType } } = usePagination(); // prettier-ignore
+  const { state: { mediaType } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
 
   if (!tile) return null;
@@ -38,7 +38,7 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
         className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
       >
         <Link
-          href={`/browse/${contentType}/${tile.id}`}
+          href={`/browse/${mediaType}/${tile.id}`}
           scroll={false}
           tabIndex={isVisibleOnScreen && isMounted ? 0 : -1}
         >

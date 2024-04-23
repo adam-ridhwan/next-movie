@@ -4,12 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { ContentType, GenreLabel, GENRES, Movie } from '@/lib/types';
+import { GenreLabel, GENRES, MediaType, Movie } from '@/lib/types';
 import { HeadingLarge } from '@/components/fonts';
 
 type EpicStageProps = {
   content: Movie;
-  contentType: ContentType;
+  mediaType: MediaType;
 };
 
 type GetObjectKeyParams<K extends string, V> = {
@@ -39,7 +39,7 @@ const getFirstSentence = (text: string) => {
   return match ? match[1] : text;
 };
 
-const EpicStage = ({ content, contentType }: EpicStageProps) => {
+const EpicStage = ({ content, mediaType }: EpicStageProps) => {
   const genres = getObjectKey({
     label: 'genre_ids',
     object: GENRES,
@@ -51,9 +51,9 @@ const EpicStage = ({ content, contentType }: EpicStageProps) => {
   return (
     <>
       <Link
-        href={`/browse/${contentType}/${content.id}`}
+        href={`/browse/${mediaType}/${content.id}`}
         scroll={false}
-        onMouseEnter={() => router.prefetch(`/browse/${contentType}/${content.id}`)}
+        onMouseEnter={() => router.prefetch(`/browse/${mediaType}/${content.id}`)}
       >
         <div className='relative aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
           <Image
