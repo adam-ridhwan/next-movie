@@ -12,6 +12,7 @@ export default async function Backdrop({ id, contentType }: ContentRouteParams) 
         src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
         alt={details.original_title || details.original_name}
         priority
+        unoptimized
         fill
         className='object-cover'
       />
