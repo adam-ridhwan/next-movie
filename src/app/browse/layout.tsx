@@ -6,21 +6,21 @@ import { fetchTrending } from '@/actions/fetch-trending';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { CONTENT_TYPES, GENRES } from '@/lib/types';
+import { GENRES, MEDIA_TYPES } from '@/lib/types';
 import EpicStage from '@/components/slider/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
 export default async function BrowseLayout({ children }: { children: ReactNode }) {
-  const popularMoviesPromise = fetchPopular(CONTENT_TYPES.MOVIE);
-  const trendingMoviesPromise = fetchTrending(CONTENT_TYPES.MOVIE);
-  const trendingTvShowsPromise = fetchTrending(CONTENT_TYPES.TV);
+  const popularMoviesPromise = fetchPopular(MEDIA_TYPES.MOVIE);
+  const trendingMoviesPromise = fetchTrending(MEDIA_TYPES.MOVIE);
+  const trendingTvShowsPromise = fetchTrending(MEDIA_TYPES.TV);
   const actionMoviesPromise = fetchDiscover({
     genre: GENRES.ACTION,
-    contentType: CONTENT_TYPES.MOVIE,
+    contentType: MEDIA_TYPES.MOVIE,
   });
   const dramaMoviesPromise = fetchDiscover({
     genre: GENRES.DRAMA,
-    contentType: CONTENT_TYPES.MOVIE,
+    contentType: MEDIA_TYPES.MOVIE,
   });
 
   const [

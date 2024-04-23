@@ -11,10 +11,6 @@ export type ContentRouteParams = {
   id: string;
 };
 
-export type ContentRouteProps = {
-  params: ContentRouteParams;
-};
-
 export const MovieSchema = z.object({
   adult: z.boolean(),
   backdrop_path: z.string(),
@@ -73,8 +69,8 @@ export const GENRES = {
 export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
-export const CONTENT_TYPES = {
+export const MEDIA_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
 } as const;
-export type ContentType = ValuesOf<typeof CONTENT_TYPES>;
+export type ContentType = ValuesOf<typeof MEDIA_TYPES>;
