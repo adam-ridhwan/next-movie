@@ -31,26 +31,26 @@ const TileItem: ForwardRefRenderFunction<HTMLDivElement, TileItemProps> = (
 
   if (!tile) return null;
 
-  const url = `/browse/${contentType}/${tile.id}`;
-
   return (
     <>
       <div
         ref={ref}
         className={cn('slider-tile', `tile-${isVisibleOnScreen && isMounted ? displayNumber : ''}`)}
       >
-        <Link href={url} scroll={false} tabIndex={isVisibleOnScreen && isMounted ? 0 : -1}>
+        <Link
+          href={`/browse/${contentType}/${tile.id}`}
+          scroll={false}
+          tabIndex={isVisibleOnScreen && isMounted ? 0 : -1}
+        >
           <ContentImage tile={tile} />
-
-          <div className='pt-3'>
-            <div className='flex flex-col'>
-              <BodyMedium className='line-clamp-1'>
-                {tile.name || tile.title || tile.original_title}
-              </BodyMedium>
-              <BodySmall>{extractYear(tile.release_date || tile.first_air_date)}</BodySmall>
-            </div>
-          </div>
         </Link>
+
+        <div className='pt-3'>
+          <div className='flex flex-col'>
+            <BodyMedium className='line-clamp-1'>{tile.name || tile.title || tile.original_title}</BodyMedium>
+            <BodySmall>{extractYear(tile.release_date || tile.first_air_date)}</BodySmall>
+          </div>
+        </div>
       </div>
     </>
   );
