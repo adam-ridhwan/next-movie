@@ -6,7 +6,12 @@ import { Label } from '@/browse/components/label';
 import { Actors, Genres, Keywords } from '@/browse/components/metadata';
 import Modal from '@/browse/components/modal';
 import MoreLikeThis from '@/browse/components/more-like-this';
-import { BackdropSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/browse/components/skeleton';
+import {
+  BackdropSkeleton,
+  HeadshotsSkeleton,
+  MetadataSkeleton,
+  OverviewSkeleton,
+} from '@/browse/components/skeletons';
 
 import { ContentRouteParams } from '@/lib/types';
 import TileLoadingSkeleton from '@/components/tile-loading-skeleton';
@@ -50,7 +55,9 @@ export default function ContentModalPage({ params: { contentType, id } }: { para
 
         <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
 
-        <Headshots {...{ contentType, id }} />
+        <Suspense fallback={<HeadshotsSkeleton />}>
+          <Headshots {...{ contentType, id }} />
+        </Suspense>
 
         <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
       </Modal>

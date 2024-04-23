@@ -31,3 +31,16 @@ export const OverviewSkeleton = () => {
     </>
   );
 };
+
+export const HeadshotsSkeleton = () => {
+  return (
+    <div className='flex h-[274px] flex-row gap-4 px-leftRightCustom pt-5'>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+      <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
+    </div>
+  );
+};
