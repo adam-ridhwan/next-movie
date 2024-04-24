@@ -1,6 +1,9 @@
 'use client';
 
+import * as React from 'react';
+
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
+import { Divider } from '@/components/divider';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
@@ -34,6 +37,7 @@ const Slider = ({ header }: SliderProps) => {
 
         <PaginateRightButton />
       </div>
+      <Divider />
     </div>
   );
 };

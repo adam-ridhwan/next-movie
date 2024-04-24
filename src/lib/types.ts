@@ -84,17 +84,19 @@ export const CATEGORIES = {
   RECOMMENDATIONS: 'recommendations',
   SIMILAR: 'similar',
   TRENDING: 'trending',
+  VIDEOS: 'videos',
 } as const;
 export type Category = ValuesOf<typeof CATEGORIES>;
 
 export type CategoryWithId = {
+  id: string;
   category:
     | typeof CATEGORIES.CREDITS
     | typeof CATEGORIES.DETAILS
     | typeof CATEGORIES.KEYWORDS
     | typeof CATEGORIES.RECOMMENDATIONS
-    | typeof CATEGORIES.SIMILAR;
-  id: string;
+    | typeof CATEGORIES.SIMILAR
+    | typeof CATEGORIES.VIDEOS;
 };
 
 export type CategoryWithoutId = {
