@@ -7,18 +7,11 @@ import { Divider } from '@/components/divider';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
 export default async function Trailers({ id, mediaType }: ContentRouteParams) {
-  const [
-    videos,
-    images,
-  ] = await Promise.all([
-    fetchTMDB({ category: 'videos', mediaType, id }),
-    fetchTMDB({ category: 'images', mediaType, id }),
-  ]); // prettier-ignore
+  const videos = await fetchTMDB({ category: 'videos', mediaType, id });
 
   const trailers = videos.results.filter(
     (video: TODO) => video.type === 'Featurette' && video.site === 'YouTube'
   );
-  const backdrops = images.backdrops;
 
   if (!trailers.length) return null;
 
@@ -33,9 +26,9 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
           <div key={trailer.id} className='slider-tile'>
             <div className='relative aspect-video overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
               <a href={`https://www.youtube.com/watch?v=${trailer.key}`} target='_blank' rel='noreferrer'>
-                {backdrops[backdrops.length - 1 - i].file_path ? (
+                {trailer.key ? (
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500${backdrops[backdrops.length - 1 - i].file_path}`}
+                    src={`https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg`}
                     alt={trailer.name || trailer.key}
                     priority
                     unoptimized
@@ -50,7 +43,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
               </a>
             </div>
             <div className='w-11/12 pt-3'>
-              <BodyMedium className='line-clamp-1'>{trailer.name || 'Trailer'}</BodyMedium>
+              <BodyMedium className='line-clamp-2'>{trailer.name || 'Trailer'}</BodyMedium>
             </div>
           </div>
         ))}
