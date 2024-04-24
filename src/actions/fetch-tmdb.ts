@@ -24,32 +24,32 @@ const apiUrlConfig: Record<Category, CreateUrlFn> = {
   details: params =>
     !idExists(params)
       ? throwError('ID is required for details.')
-      : `${params.mediaType}/${params.id}?`, // prettier-ignore
+      : `${params.mediaType}/${params.id}?language=en-US`,
 
   credits: params =>
     !idExists(params)
       ? throwError('ID is required for credits.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
   recommendations: params =>
     !idExists(params)
       ? throwError('ID is required for recommendations.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
   keywords: params =>
     !idExists(params)
       ? throwError('ID is required for keywords.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
   similar: params =>
     !idExists(params)
       ? throwError('ID is required for similar.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
   videos: params =>
     !idExists(params)
       ? throwError('ID is required for similar.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
   images: params =>
     !idExists(params)

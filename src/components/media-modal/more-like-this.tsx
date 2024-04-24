@@ -16,6 +16,8 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
 
   const moreLikesThis = recommendations.results.length > 0 ? recommendations.results : similar.results;
 
+  if (!moreLikesThis.length) return null;
+
   return (
     <SliderProvider content={moreLikesThis} mediaType={mediaType}>
       <DomContextProvider>
