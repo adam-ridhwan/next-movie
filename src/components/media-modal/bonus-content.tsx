@@ -16,7 +16,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
   ]); // prettier-ignore
 
   const trailers = videos.results.filter(
-    (video: TODO) => video.type === 'Trailer' && video.site === 'YouTube'
+    (video: TODO) => video.type === 'Featurette' && video.site === 'YouTube'
   );
   const backdrops = images.backdrops;
 
@@ -24,7 +24,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
 
   return (
     <section>
-      <HeadingExtraSmall className='px-leftRightCustom'>Trailers</HeadingExtraSmall>
+      <HeadingExtraSmall className='px-leftRightCustom'>Bonus Content</HeadingExtraSmall>
       {/*
        * TODO: Implement a slider for trailers
        */}
@@ -33,9 +33,9 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
           <div key={trailer.id} className='slider-tile'>
             <div className='relative aspect-video overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
               <a href={`https://www.youtube.com/watch?v=${trailer.key}`} target='_blank' rel='noreferrer'>
-                {backdrops[i].file_path ? (
+                {backdrops[backdrops.length - 1 - i].file_path ? (
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500${backdrops[i].file_path}`}
+                    src={`https://image.tmdb.org/t/p/w500${backdrops[backdrops.length - 1 - i].file_path}`}
                     alt={trailer.name || trailer.key}
                     priority
                     unoptimized

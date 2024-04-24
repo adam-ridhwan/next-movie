@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { ContentRouteParams } from '@/lib/types';
 import Backdrop from '@/components/media-modal/backdrop';
+import BonusContent from '@/components/media-modal/bonus-content';
 import Headshots from '@/components/media-modal/headshots';
 import { Label } from '@/components/media-modal/label';
 import MediaModal from '@/components/media-modal/media-modal';
@@ -55,8 +56,12 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           <Headshots mediaType={mediaType} id={id} />
         </Suspense>
 
-        <Suspense fallback={'Loading trailers'}>
+        <Suspense>
           <Trailers mediaType={mediaType} id={id} />
+        </Suspense>
+
+        <Suspense>
+          <BonusContent mediaType={mediaType} id={id} />
         </Suspense>
       </MediaModal>
     </>
