@@ -10,7 +10,7 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const { state: { CONTENT } } = usePagination(); // prettier-ignore
+  const { state: { MEDIA } } = usePagination(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage }, } = usePageUtils(); // prettier-ignore
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
@@ -54,7 +54,7 @@ const TileList = () => {
 
       {/* Mobile */}
       <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pb-5 pt-3 sm:hidden'>
-        {CONTENT.map((tile, i) => {
+        {MEDIA.map((tile, i) => {
           return (
             <TileItem
               key={tile?.uuid || i}

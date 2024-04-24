@@ -10,8 +10,11 @@ export const useResizeDirection = () => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
 
+      // prettier-ignore
       const direction =
-        currentWidth > prevWindowWidth.current ? RESIZE_DIRECTION.MAXIMIZING : RESIZE_DIRECTION.MINIMIZING;
+        currentWidth > prevWindowWidth.current
+          ? RESIZE_DIRECTION.MAXIMIZING
+          : RESIZE_DIRECTION.MINIMIZING;
       setResizeDirection(direction);
 
       prevWindowWidth.current = currentWidth;

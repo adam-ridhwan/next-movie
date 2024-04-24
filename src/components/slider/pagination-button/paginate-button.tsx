@@ -17,11 +17,11 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   ref
 ) => {
   const {
-    state: { CONTENT },
+    state: { MEDIA },
   } = usePagination();
   const { isAnimating } = useAnimation();
 
-  if (CONTENT.length <= MINIMUM_TILE_COUNT) return null;
+  if (MEDIA.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',

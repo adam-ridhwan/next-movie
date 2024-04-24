@@ -9,7 +9,7 @@ import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type UsePaginationReturn = {
   state: {
-    CONTENT: Movie[];
+    MEDIA: Movie[];
     pages: Pages;
     mediaType: MediaType;
     currentPage: number;
@@ -32,7 +32,7 @@ type UsePaginationReturn = {
 };
 
 export const usePagination = (): UsePaginationReturn => {
-  const CONTENT = useSliderStore(state => state.CONTENT);
+  const MEDIA = useSliderStore(state => state.MEDIA);
   const mediaType = useSliderStore(state => state.mediaType);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -44,9 +44,7 @@ export const usePagination = (): UsePaginationReturn => {
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
   const { setMapPages } = useMapPages();
-  const {
-    actions: { getTileCountPerPage, findIndexByKey, getMapValue },
-  } = usePageUtils();
+  const { actions: { getTileCountPerPage, findIndexByKey, getMapValue } } = usePageUtils(); // prettier-ignore
 
   const isFirstPage = currentPage === 1;
   const isSecondPage = currentPage === 2;
@@ -64,7 +62,7 @@ export const usePagination = (): UsePaginationReturn => {
   const goToLastPage = () => {
     usePaginationLogger.last();
     setMapPages({
-      firstTileCurrentPageIndex: CONTENT.length - getTileCountPerPage(),
+      firstTileCurrentPageIndex: MEDIA.length - getTileCountPerPage(),
       isLastPage: true,
     });
   };
@@ -92,7 +90,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
-      array: CONTENT,
+      array: MEDIA,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -112,7 +110,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
-      array: CONTENT,
+      array: MEDIA,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -139,7 +137,7 @@ export const usePagination = (): UsePaginationReturn => {
 
   return {
     state: {
-      CONTENT,
+      MEDIA,
       mediaType,
       pages,
       currentPage,

@@ -14,7 +14,7 @@ type SetPagesParams = {
 };
 
 type SliderState = {
-  CONTENT: Movie[];
+  MEDIA: Movie[];
   mediaType: MediaType;
   pages: Pages;
   maxPages: number;
@@ -65,12 +65,12 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (CONTENT: Movie[], mediaType: MediaType) => {
+export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) => {
   return create(
     devtools<SliderStore>(set => ({
-      CONTENT: CONTENT,
+      MEDIA,
       mediaType,
-      pages: new Map<number, Movie[]>().set(1, CONTENT.slice(0, 7)),
+      pages: new Map<number, Movie[]>().set(1, MEDIA.slice(0, 7)),
       maxPages: 0,
       currentPage: 1,
       tileCountPerPage: 0,
