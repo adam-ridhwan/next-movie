@@ -4,10 +4,10 @@ import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
-import PageIndicator from '@/components/slider/page-indicator/page-indicator';
-import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
-import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
-import TileList from '@/components/slider/tiles/tile-list';
+import PageIndicator from '@/components/slider/page-indicator';
+import PaginateLeftButton from '@/components/slider/paginate-left-button';
+import PaginateRightButton from '@/components/slider/paginate-right-button';
+import TileList from '@/components/slider/tile-list';
 
 type SliderProps = {
   header: string;

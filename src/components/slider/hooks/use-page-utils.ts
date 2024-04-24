@@ -4,7 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { Movie, TODO } from '@/lib/types';
-import { MEDIA_QUERY } from '@/components/slider/slider-constants';
+import { MEDIA_QUERY } from '@/components/slider/hooks/slider-constants';
 
 type UsePageUtilsReturn = {
   state: {

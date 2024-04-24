@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
 import { logger } from '@/lib/logger';
+import { RESIZE_DIRECTION } from '@/components/slider/hooks/slider-constants';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
-import { RESIZE_DIRECTION } from '@/components/slider/slider-constants';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 

@@ -60,7 +60,7 @@ export type SliderStore = SliderState & SliderActions;
  * - They aid in maintaining alignment due to the use of 'justify-center' in CSS.
  *
  * Key Management:
- * - Unique keys are necessary for each page to ensure proper rendering by list components.
+ * - Unique keys are necessary for each page to ensure proper rendering by list media-modal.
  * - To prevent key duplication between placeholder pages (Page 0 and Page 3),
  *   UUIDs are updated before adding tiles to the pages map.
  */

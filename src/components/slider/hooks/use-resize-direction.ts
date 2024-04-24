@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { RESIZE_DIRECTION, ResizeDirection } from '@/components/slider/slider-constants';
+import { RESIZE_DIRECTION, ResizeDirection } from '@/components/slider/hooks/slider-constants';
 
 export const useResizeDirection = () => {
   const [resizeDirection, setResizeDirection] = useState<ResizeDirection | null>(null);

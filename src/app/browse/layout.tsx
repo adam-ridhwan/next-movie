@@ -5,7 +5,7 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { CATEGORIES, GENRES, MEDIA_TYPES } from '@/lib/types';
-import EpicStage from '@/components/slider/epic-stage/epic-stage';
+import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
 export default async function BrowseLayout({ children }: { children: ReactNode }) {
