@@ -1,55 +1,65 @@
 import { env } from '@/lib/env';
-import { CATEGORIES, Category, CategoryProps, CategoryWithId, CreateUrlFn, Discover, FetchTMDBParams, GENRES } from '@/lib/types'; // prettier-ignore
+import { Category, CategoryProps, CategoryWithId, CreateUrlFn, Discover, FetchTMDBParams } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
-const { ACTION } = GENRES;
-const { CREDITS, DETAILS, KEYWORDS, RECOMMENDATIONS, SIMILAR, POPULAR, TRENDING, DISCOVER } = CATEGORIES;
 
 type Status = 'success' | 'data';
 
-const BASE_URL = 'https://api.themoviedb.org/3';
-
 const idExists = (params: CategoryProps): params is CategoryWithId => 'id' in params;
-const isDiscover = (params: CategoryProps): params is Discover => params.category === DISCOVER;
+const isDiscover = (params: CategoryProps): params is Discover => params.category === 'discover';
+const throwError = (msg: string) => {
+  throw new Error(msg);
+};
 
-export const apiUrlConfig: Record<Category, CreateUrlFn> = {
-  [DETAILS]: params => {
-    if (!idExists(params)) throw new Error('ID is required for DETAILS.');
-    return `${params.mediaType}/${params.id}?`;
-  },
+const apiUrlConfig: Record<Category, CreateUrlFn> = {
+  popular: params => `${params.mediaType}/${params.category}?`,
 
-  [CREDITS]: params => {
-    if (!idExists(params)) throw new Error('ID is required for CREDITS.');
-    return `${params.mediaType}/${params.id}/${params.category}?`;
-  },
+  trending: params => `trending/${params.mediaType}/day?`,
 
-  [RECOMMENDATIONS]: params => {
-    if (!idExists(params)) throw new Error('ID is required for RECOMMENDATIONS.');
-    return `${params.mediaType}/${params.id}/${params.category}?`;
-  },
+  discover: params =>
+    !isDiscover(params)
+      ? throwError('Invalid category for discover.')
+      : `discover/${params.mediaType}?with_genres=${params.genre || 'action'}&page=${params.page || 1}&with_original_language=${params.language || 'en'}`,
 
-  [KEYWORDS]: params => {
-    if (!idExists(params)) throw new Error('ID is required for KEYWORDS.');
-    return `${params.mediaType}/${params.id}/${params.category}?`;
-  },
+  details: params =>
+    !idExists(params)
+      ? throwError('ID is required for details.')
+      : `${params.mediaType}/${params.id}?language=en-US`,
 
-  [SIMILAR]: params => {
-    if (!idExists(params)) throw new Error('ID is required for SIMILAR.');
-    return `${params.mediaType}/${params.id}/${params.category}?`;
-  },
+  credits: params =>
+    !idExists(params)
+      ? throwError('ID is required for credits.')
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
-  [POPULAR]: params => `${params.mediaType}/${params.category}?`,
+  recommendations: params =>
+    !idExists(params)
+      ? throwError('ID is required for recommendations.')
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
-  [TRENDING]: params => `${TRENDING}/${params.mediaType}/day?`,
+  keywords: params =>
+    !idExists(params)
+      ? throwError('ID is required for keywords.')
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
 
-  [DISCOVER]: params => {
-    if (!isDiscover(params)) throw new Error('Invalid category for DISCOVER.');
-    return `${params.category}/${params.mediaType}?with_genres=${params.genre || ACTION}&page=${params.page || 1}&with_original_language=${params.language || 'en'}`;
-  },
+  similar: params =>
+    !idExists(params)
+      ? throwError('ID is required for similar.')
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
+
+  videos: params =>
+    !idExists(params)
+      ? throwError('ID is required for similar.')
+      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
+
+  images: params =>
+    !idExists(params)
+      ? throwError('ID is required for images.')
+      : `${params.mediaType}/${params.id}/${params.category}?`,
 };
 
 export const fetchTMDB = async (params: FetchTMDBParams) => {
-  const url = `${BASE_URL}/${apiUrlConfig[params.category](params)}&language=en-US`;
+  const urlConfig = apiUrlConfig[params.category](params);
+  const url = `https://api.themoviedb.org/3/${urlConfig}`;
 
   try {
     const options = {
@@ -60,7 +70,7 @@ export const fetchTMDB = async (params: FetchTMDBParams) => {
       },
     };
 
-    const response = await fetch(url.toString(), options);
+    const response = await fetch(url, options);
     return await response.json();
   } catch (error) {
     console.error('fetchTMDB', error);

@@ -55,7 +55,7 @@ const EpicStage = ({ content, mediaType }: EpicStageProps) => {
         scroll={false}
         onMouseEnter={() => router.prefetch(`/browse/${mediaType}/${content.id}`)}
       >
-        <div className='relative aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
+        <div className='relative mb-4 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
           <Image
             src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
             alt={content.original_title}

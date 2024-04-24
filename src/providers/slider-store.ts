@@ -14,7 +14,7 @@ type SetPagesParams = {
 };
 
 type SliderState = {
-  CONTENT: Movie[];
+  MEDIA: Movie[];
   mediaType: MediaType;
   pages: Pages;
   maxPages: number;
@@ -60,17 +60,17 @@ export type SliderStore = SliderState & SliderActions;
  * - They aid in maintaining alignment due to the use of 'justify-center' in CSS.
  *
  * Key Management:
- * - Unique keys are necessary for each page to ensure proper rendering by list components.
+ * - Unique keys are necessary for each page to ensure proper rendering by list media-modal.
  * - To prevent key duplication between placeholder pages (Page 0 and Page 3),
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (CONTENT: Movie[], mediaType: MediaType) => {
+export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) => {
   return create(
     devtools<SliderStore>(set => ({
-      CONTENT: CONTENT,
+      MEDIA,
       mediaType,
-      pages: new Map<number, Movie[]>().set(1, CONTENT.slice(0, 7)),
+      pages: new Map<number, Movie[]>().set(1, MEDIA.slice(0, 7)),
       maxPages: 0,
       currentPage: 1,
       tileCountPerPage: 0,

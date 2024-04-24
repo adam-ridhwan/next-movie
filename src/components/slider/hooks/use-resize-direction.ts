@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { RESIZE_DIRECTION, ResizeDirection } from '@/components/slider/slider-constants';
+import { RESIZE_DIRECTION, ResizeDirection } from '@/components/slider/hooks/slider-constants';
 
 export const useResizeDirection = () => {
   const [resizeDirection, setResizeDirection] = useState<ResizeDirection | null>(null);
@@ -10,8 +10,11 @@ export const useResizeDirection = () => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
 
+      // prettier-ignore
       const direction =
-        currentWidth > prevWindowWidth.current ? RESIZE_DIRECTION.MAXIMIZING : RESIZE_DIRECTION.MINIMIZING;
+        currentWidth > prevWindowWidth.current
+          ? RESIZE_DIRECTION.MAXIMIZING
+          : RESIZE_DIRECTION.MINIMIZING;
       setResizeDirection(direction);
 
       prevWindowWidth.current = currentWidth;

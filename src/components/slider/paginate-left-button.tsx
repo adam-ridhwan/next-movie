@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
+import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/components/slider/hooks/slider-constants';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
-import PaginateButton from '@/components/slider/pagination-button/paginate-button';
-import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/components/slider/slider-constants';
+import PaginateButton from '@/components/slider/paginate-button';
 
 const PaginateLeftButton = () => {
   const {

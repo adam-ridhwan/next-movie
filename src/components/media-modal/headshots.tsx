@@ -1,8 +1,10 @@
+import * as React from 'react';
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { CATEGORIES, ContentRouteParams, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { Divider } from '@/components/divider';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
 export default async function Headshots({ id, mediaType }: ContentRouteParams) {
@@ -28,7 +30,6 @@ export default async function Headshots({ id, mediaType }: ContentRouteParams) {
                   alt={actor.name || actor.original_name}
                   unoptimized
                   fill
-                  // sizes='500px'
                   className='object-cover object-top'
                 />
               ) : (
@@ -48,6 +49,7 @@ export default async function Headshots({ id, mediaType }: ContentRouteParams) {
         ))}
         <div className='min-w-leftRightCustom' />
       </ol>
+      <Divider />
     </section>
   );
 }

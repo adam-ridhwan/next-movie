@@ -6,11 +6,11 @@ import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
 import { useTiles } from '@/components/slider/hooks/use-tiles';
-import TileItem from '@/components/slider/tiles/tile-item';
+import TileItem from '@/components/slider/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();
-  const { state: { CONTENT } } = usePagination(); // prettier-ignore
+  const { state: { MEDIA } } = usePagination(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage }, } = usePageUtils(); // prettier-ignore
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
@@ -32,7 +32,7 @@ const TileList = () => {
         <div
           ref={tileListRef}
           className={cn(
-            'flex flex-row pb-5 pt-3 max-sm:hidden',
+            'flex flex-row max-sm:hidden',
             { 'justify-center': hasPaginated },
             { 'transition-transform duration-700': isAnimating }
           )}
@@ -53,8 +53,8 @@ const TileList = () => {
       </div>
 
       {/* Mobile */}
-      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pb-5 pt-3 sm:hidden'>
-        {CONTENT.map((tile, i) => {
+      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom sm:hidden'>
+        {MEDIA.map((tile, i) => {
           return (
             <TileItem
               key={tile?.uuid || i}

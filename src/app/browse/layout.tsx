@@ -5,7 +5,7 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { CATEGORIES, GENRES, MEDIA_TYPES } from '@/lib/types';
-import EpicStage from '@/components/slider/epic-stage/epic-stage';
+import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
 export default async function BrowseLayout({ children }: { children: ReactNode }) {
@@ -39,8 +39,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
         </SliderProvider>
       </div>
 
-      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
-
       <div key={'Trending: TV Shows'} className='flex flex-col'>
         <SliderProvider content={trendingTvShows.results} mediaType={'tv'}>
           <DomContextProvider>
@@ -49,8 +47,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
         </SliderProvider>
       </div>
 
-      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
-
       <div key={'Action'} className='flex flex-col'>
         <SliderProvider content={actionMovies.results} mediaType={'movie'}>
           <DomContextProvider>
@@ -58,8 +54,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
-
-      <div className='mx-leftRightCustom border border-b-muted-foreground/20' />
 
       <div key={'Drama'} className='flex flex-col'>
         <SliderProvider content={dramaMovies.results} mediaType={'movie'}>

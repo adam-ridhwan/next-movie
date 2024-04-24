@@ -1,13 +1,16 @@
 'use client';
 
+import * as React from 'react';
+
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
+import { Divider } from '@/components/divider';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
-import PageIndicator from '@/components/slider/page-indicator/page-indicator';
-import PaginateLeftButton from '@/components/slider/pagination-button/paginate-left-button';
-import PaginateRightButton from '@/components/slider/pagination-button/paginate-right-button';
-import TileList from '@/components/slider/tiles/tile-list';
+import PageIndicator from '@/components/slider/page-indicator';
+import PaginateLeftButton from '@/components/slider/paginate-left-button';
+import PaginateRightButton from '@/components/slider/paginate-right-button';
+import TileList from '@/components/slider/tile-list';
 
 type SliderProps = {
   header: string;
@@ -24,7 +27,7 @@ const Slider = ({ header }: SliderProps) => {
       <div className='relative flex flex-row'>
         <PaginateLeftButton />
 
-        <div className='flex w-full flex-col pt-3'>
+        <div className='flex w-full flex-col gap-2'>
           <div className='flex flex-row items-center justify-between px-[0.5%] max-sm:px-leftRightCustom'>
             <HeadingExtraSmall>{header}</HeadingExtraSmall>
             <PageIndicator />
@@ -34,6 +37,7 @@ const Slider = ({ header }: SliderProps) => {
 
         <PaginateRightButton />
       </div>
+      <Divider />
     </div>
   );
 };

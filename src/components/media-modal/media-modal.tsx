@@ -8,7 +8,7 @@ import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ROUTES } from '@/components/nav-bar';
 
-const Modal = ({ children }: { children: ReactNode }) => {
+const MediaModal = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -21,4 +21,4 @@ const Modal = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default Modal;
+export default MediaModal;

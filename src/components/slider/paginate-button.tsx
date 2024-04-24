@@ -2,9 +2,13 @@ import { forwardRef, ForwardRefRenderFunction } from 'react';
 
 import { cn } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
+import {
+  MINIMUM_TILE_COUNT,
+  SLIDE_DIRECTION,
+  SlideDirection,
+} from '@/components/slider/hooks/slider-constants';
 import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { MINIMUM_TILE_COUNT, SLIDE_DIRECTION, SlideDirection } from '@/components/slider/slider-constants';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -17,11 +21,11 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   ref
 ) => {
   const {
-    state: { CONTENT },
+    state: { MEDIA },
   } = usePagination();
   const { isAnimating } = useAnimation();
 
-  if (CONTENT.length <= MINIMUM_TILE_COUNT) return null;
+  if (MEDIA.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',

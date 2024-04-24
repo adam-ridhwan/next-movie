@@ -84,8 +84,10 @@ const ContentImage = ({ tile }: { tile: Movie }) => {
           />
         </>
       ) : (
-        <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent py-8'>
-          <HeadingExtraSmall>{tile.name || tile.original_title || tile.original_name}</HeadingExtraSmall>
+        <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
+          <HeadingExtraSmall className='line-clamp-2'>
+            {tile.name || tile.original_title || tile.original_name}
+          </HeadingExtraSmall>
         </div>
       )}
     </div>
