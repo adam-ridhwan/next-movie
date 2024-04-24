@@ -32,7 +32,7 @@ const TileList = () => {
         <div
           ref={tileListRef}
           className={cn(
-            'flex flex-row pb-5 pt-3 max-sm:hidden',
+            'flex flex-row max-sm:hidden',
             { 'justify-center': hasPaginated },
             { 'transition-transform duration-700': isAnimating }
           )}

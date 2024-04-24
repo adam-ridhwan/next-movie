@@ -11,6 +11,8 @@ import TileLoadingSkeleton, { BackdropSkeleton, HeadshotsSkeleton, MetadataSkele
 
 import { ContentRouteParams } from '@/lib/types';
 
+import { Divider } from '@/components/divider';
+
 export default function ContentModalPage({ params: { mediaType, id } }: { params: ContentRouteParams }) {
   return (
     <>
@@ -42,19 +44,19 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           </div>
         </div>
 
-        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
+        <Divider />
 
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
           <MoreLikeThis mediaType={mediaType} id={id} />
         </Suspense>
 
-        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
+        <Divider />
 
         <Suspense fallback={<HeadshotsSkeleton />}>
           <Headshots mediaType={mediaType} id={id} />
         </Suspense>
 
-        <div className='mx-leftRightCustom my-8 border border-b-muted-foreground/20' />
+        <Divider />
       </MediaModal>
     </>
   );

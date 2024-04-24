@@ -13,6 +13,15 @@ const idExists = (params: CategoryProps): params is CategoryWithId => 'id' in pa
 const isDiscover = (params: CategoryProps): params is Discover => params.category === DISCOVER;
 
 export const apiUrlConfig: Record<Category, CreateUrlFn> = {
+  [POPULAR]: params => `${params.mediaType}/${params.category}?`,
+
+  [TRENDING]: params => `${TRENDING}/${params.mediaType}/day?`,
+
+  [DISCOVER]: params => {
+    if (!isDiscover(params)) throw new Error('Invalid category for DISCOVER.');
+    return `${params.category}/${params.mediaType}?with_genres=${params.genre || ACTION}&page=${params.page || 1}&with_original_language=${params.language || 'en'}`;
+  },
+
   [DETAILS]: params => {
     if (!idExists(params)) throw new Error('ID is required for DETAILS.');
     return `${params.mediaType}/${params.id}?`;
@@ -36,15 +45,6 @@ export const apiUrlConfig: Record<Category, CreateUrlFn> = {
   [SIMILAR]: params => {
     if (!idExists(params)) throw new Error('ID is required for SIMILAR.');
     return `${params.mediaType}/${params.id}/${params.category}?`;
-  },
-
-  [POPULAR]: params => `${params.mediaType}/${params.category}?`,
-
-  [TRENDING]: params => `${TRENDING}/${params.mediaType}/day?`,
-
-  [DISCOVER]: params => {
-    if (!isDiscover(params)) throw new Error('Invalid category for DISCOVER.');
-    return `${params.category}/${params.mediaType}?with_genres=${params.genre || ACTION}&page=${params.page || 1}&with_original_language=${params.language || 'en'}`;
   },
 };
 

@@ -28,7 +28,6 @@ export default async function Headshots({ id, mediaType }: ContentRouteParams) {
                   alt={actor.name || actor.original_name}
                   unoptimized
                   fill
-                  // sizes='500px'
                   className='object-cover object-top'
                 />
               ) : (
