@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-const TileLoadingSkeleton = ({ count }: { count: number }) => {
+export const TileLoadingSkeleton = ({ count }: { count: number }) => {
   return (
     <div>
       {Array.from({ length: count }).map((_, i) => (
@@ -26,8 +26,6 @@ const TileLoadingSkeleton = ({ count }: { count: number }) => {
     </div>
   );
 };
-
-export default TileLoadingSkeleton;
 
 export const BackdropSkeleton = () => {
   return (

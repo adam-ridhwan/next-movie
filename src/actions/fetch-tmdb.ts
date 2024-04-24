@@ -1,5 +1,5 @@
 import { env } from '@/lib/env';
-import { Category, CategoryProps, CategoryWithId, CreateUrlFn, Discover, FetchTMDBParams } from '@/lib/types'; // prettier-ignore
+import { Category, CategoryProps, CategoryWithId, CreateUrlFn, Discover, FetchTMDBParams } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
@@ -50,11 +50,16 @@ const apiUrlConfig: Record<Category, CreateUrlFn> = {
     !idExists(params)
       ? throwError('ID is required for similar.')
       : `${params.mediaType}/${params.id}/${params.category}?`,
+
+  images: params =>
+    !idExists(params)
+      ? throwError('ID is required for images.')
+      : `${params.mediaType}/${params.id}/${params.category}?`,
 };
 
 export const fetchTMDB = async (params: FetchTMDBParams) => {
   const urlConfig = apiUrlConfig[params.category](params);
-  const url = `https://api.themoviedb.org/3/${urlConfig}&language=en-US`;
+  const url = `https://api.themoviedb.org/3/${urlConfig}`;
 
   try {
     const options = {
@@ -65,7 +70,7 @@ export const fetchTMDB = async (params: FetchTMDBParams) => {
       },
     };
 
-    const response = await fetch(url.toString(), options);
+    const response = await fetch(url, options);
     return await response.json();
   } catch (error) {
     console.error('fetchTMDB', error);

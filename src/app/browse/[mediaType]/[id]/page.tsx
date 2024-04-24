@@ -1,17 +1,20 @@
-import * as React from 'react';
 import { Suspense } from 'react';
 
+import { ContentRouteParams } from '@/lib/types';
 import Backdrop from '@/components/media-modal/backdrop';
 import Headshots from '@/components/media-modal/headshots';
 import { Label } from '@/components/media-modal/label';
 import MediaModal from '@/components/media-modal/media-modal';
 import { Actors, Genres, Keywords } from '@/components/media-modal/metadata';
 import MoreLikeThis from '@/components/media-modal/more-like-this';
-import TileLoadingSkeleton, { BackdropSkeleton, HeadshotsSkeleton, MetadataSkeleton, OverviewSkeleton } from '@/components/skeletons'; // prettier-ignore
-
-import { ContentRouteParams } from '@/lib/types';
-
-import { Divider } from '@/components/divider';
+import Trailers from '@/components/media-modal/trailers';
+import {
+  BackdropSkeleton,
+  HeadshotsSkeleton,
+  MetadataSkeleton,
+  OverviewSkeleton,
+  TileLoadingSkeleton,
+} from '@/components/skeletons';
 
 export default function ContentModalPage({ params: { mediaType, id } }: { params: ContentRouteParams }) {
   return (
@@ -44,19 +47,17 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           </div>
         </div>
 
-        <Divider />
-
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
           <MoreLikeThis mediaType={mediaType} id={id} />
         </Suspense>
-
-        <Divider />
 
         <Suspense fallback={<HeadshotsSkeleton />}>
           <Headshots mediaType={mediaType} id={id} />
         </Suspense>
 
-        <Divider />
+        <Suspense fallback={'Loading trailers'}>
+          <Trailers mediaType={mediaType} id={id} />
+        </Suspense>
       </MediaModal>
     </>
   );

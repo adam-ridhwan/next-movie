@@ -85,6 +85,7 @@ export const CATEGORIES = {
   SIMILAR: 'similar',
   TRENDING: 'trending',
   VIDEOS: 'videos',
+  IMAGES: 'images',
 } as const;
 export type Category = ValuesOf<typeof CATEGORIES>;
 
@@ -96,7 +97,8 @@ export type CategoryWithId = {
     | typeof CATEGORIES.KEYWORDS
     | typeof CATEGORIES.RECOMMENDATIONS
     | typeof CATEGORIES.SIMILAR
-    | typeof CATEGORIES.VIDEOS;
+    | typeof CATEGORIES.VIDEOS
+    | typeof CATEGORIES.IMAGES;
 };
 
 export type CategoryWithoutId = {

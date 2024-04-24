@@ -53,7 +53,7 @@ const TileList = () => {
       </div>
 
       {/* Mobile */}
-      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pb-5 pt-3 sm:hidden'>
+      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom sm:hidden'>
         {MEDIA.map((tile, i) => {
           return (
             <TileItem
