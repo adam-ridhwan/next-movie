@@ -25,22 +25,22 @@ const NavBar = () => {
     <div className='flex h-16 flex-row items-center justify-between bg-black px-leftRightCustom'>
       <div className='flex flex-row items-center gap-8'>
         <LogoIcon />
-        <nav>
-          <ul className={cn('flex flex-row gap-4')}>
-            {Object.entries(ROUTES).map(([key, { PATH, LABEL }]) => (
-              <Link key={key} href={PATH} className={cn({ 'pointer-events-none': pathname === PATH })}>
-                <BodySmall
-                  className={cn('transition-colors hover:text-primary/50', {
-                    'text-primary': pathname === PATH,
-                    'text-primary/70': pathname !== PATH,
-                  })}
-                >
-                  {LABEL}
-                </BodySmall>
-              </Link>
-            ))}
-          </ul>
-        </nav>
+        {/*<nav>*/}
+        {/*  <ul className={cn('flex flex-row gap-4')}>*/}
+        {/*    {Object.entries(ROUTES).map(([key, { PATH, LABEL }]) => (*/}
+        {/*      <Link key={key} href={PATH} className={cn({ 'pointer-events-none': pathname === PATH })}>*/}
+        {/*        <BodySmall*/}
+        {/*          className={cn('transition-colors hover:text-primary/50', {*/}
+        {/*            'text-primary': pathname === PATH,*/}
+        {/*            'text-primary/70': pathname !== PATH,*/}
+        {/*          })}*/}
+        {/*        >*/}
+        {/*          {LABEL}*/}
+        {/*        </BodySmall>*/}
+        {/*      </Link>*/}
+        {/*    ))}*/}
+        {/*  </ul>*/}
+        {/*</nav>*/}
       </div>
     </div>
   );
