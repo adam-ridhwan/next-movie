@@ -26,7 +26,7 @@ const BodyMedium = ({ children, className }: FontProps) => (
 );
 
 const BodySmall = ({ children, className }: FontProps) => (
-  <span className={cn('text-[12px] font-light text-primary/70', className)}>{children}</span>
+  <span className={cn('text-[13px] font-light text-primary/70', className)}>{children}</span>
 );
 
 const NumberLabel = ({ children, className }: FontProps) => (
