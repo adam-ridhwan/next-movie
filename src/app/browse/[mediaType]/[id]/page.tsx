@@ -4,7 +4,7 @@ import { ContentRouteParams } from '@/lib/types';
 import { Divider } from '@/components/divider';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
-import Headshots from '@/components/media-modal/headshots';
+import Cast from '@/components/media-modal/cast';
 import { Label } from '@/components/media-modal/label';
 import MediaModal from '@/components/media-modal/media-modal';
 import { Actors, Genres, Keywords } from '@/components/media-modal/metadata';
@@ -33,7 +33,7 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           <Backdrop mediaType={mediaType} id={id} />
         </Suspense>
 
-        <div className='flex flex-col gap-12 px-leftRightCustom py-4 lg:flex-row'>
+        <div className='flex flex-col gap-12 px-leftRightCustom py-4 pb-10 lg:flex-row'>
           <div className='mx-[0.5%] flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label mediaType={mediaType} id={id} />
@@ -49,14 +49,12 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           </div>
         </div>
 
-        <Divider />
-
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
           <MoreLikeThis mediaType={mediaType} id={id} />
         </Suspense>
 
         <Suspense fallback={<HeadshotsSkeleton />}>
-          <Headshots mediaType={mediaType} id={id} />
+          <Cast mediaType={mediaType} id={id} />
         </Suspense>
 
         <Suspense>

@@ -20,19 +20,17 @@ const PaginateButton: ForwardRefRenderFunction<HTMLButtonElement, PaginationButt
   { direction, onClick, className },
   ref
 ) => {
-  const {
-    state: { MEDIA },
-  } = usePagination();
+  const { state: { MEDIA } } = usePagination(); // prettier-ignore
   const { isAnimating } = useAnimation();
-
-  if (MEDIA.length <= MINIMUM_TILE_COUNT) return null;
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
     { 'opacity-100 group-hover/button:scale-125 ': isAnimating }
   );
 
-  return (
+  return MEDIA.length <= MINIMUM_TILE_COUNT ? (
+    <div className='w-leftRightCustom min-w-leftRightCustom' />
+  ) : (
     <button
       ref={ref}
       disabled={isAnimating}

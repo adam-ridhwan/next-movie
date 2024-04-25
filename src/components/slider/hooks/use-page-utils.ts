@@ -52,6 +52,7 @@ type FindItemByIndexParams<T, K extends keyof T> = {
 
 export const usePageUtils = (): UsePageUtilsReturn => {
   const MEDIA = useSliderStore(state => state.MEDIA);
+  const mediaType = useSliderStore(state => state.mediaType);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
   const hasPaginated = useSliderStore(state => state.hasPaginated);

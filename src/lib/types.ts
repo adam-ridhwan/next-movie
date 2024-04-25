@@ -24,12 +24,14 @@ export const MovieSchema = z.object({
   overview: z.string(),
   popularity: z.number(),
   poster_path: z.string(),
+  profile_path: z.string(),
   release_date: z.string(),
   title: z.string(),
   video: z.boolean(),
   vote_average: z.number(),
   vote_count: z.number(),
   uuid: z.string(),
+  key: z.string(),
 });
 export type Movie = z.infer<typeof MovieSchema>;
 
@@ -72,6 +74,9 @@ export type GenreId = ValuesOf<typeof GENRES>;
 export const MEDIA_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
+  TRAILER: 'trailer',
+  CAST: 'cast',
+  BONUS: 'bonus',
 } as const;
 export type MediaType = ValuesOf<typeof MEDIA_TYPES>;
 
