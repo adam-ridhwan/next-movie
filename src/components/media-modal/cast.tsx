@@ -1,11 +1,9 @@
-import * as React from 'react';
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { CATEGORIES, ContentRouteParams, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Divider } from '@/components/divider';
-import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
+import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
 export default async function Cast({ id, mediaType }: ContentRouteParams) {
   const credits: TODO = await fetchTMDB({ category: CATEGORIES.CREDITS, mediaType, id });
@@ -15,8 +13,6 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
 
   return (
     <>
-      <Divider />
-
       <section>
         <HeadingExtraSmall className='px-leftRightCustom'>Cast</HeadingExtraSmall>
         <ol className='hide-scrollbar flex flex-row overflow-x-auto pt-2'>
@@ -26,7 +22,7 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
               key={actor.id}
               className={cn('flex flex-col gap-4', { 'pr-4': i !== firstTenActors.length - 1 })}
             >
-              <div className='relative aspect-[4/5] min-h-48 overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
+              <div className='relative aspect-[4/5] h-36 overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
                 {actor.profile_path ? (
                   <Image
                     src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
@@ -46,7 +42,6 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
 
               <div className='flex flex-col'>
                 <BodyMedium>{actor.name}</BodyMedium>
-                <BodySmall>{actor.character}</BodySmall>
               </div>
             </li>
           ))}

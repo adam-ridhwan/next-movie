@@ -1,7 +1,5 @@
 'use client';
 
-import * as React from 'react';
-
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
 import { Divider } from '@/components/divider';
 import { HeadingExtraSmall } from '@/components/fonts';
@@ -30,7 +28,7 @@ const Slider = ({ header }: SliderProps) => {
         <div className='relative flex flex-row'>
           <PaginateLeftButton />
 
-          <div className='flex w-full flex-col gap-2'>
+          <div className='flex w-full max-w-full flex-col gap-2'>
             <div className='flex flex-row items-center justify-between px-[0.5%] max-sm:px-leftRightCustom'>
               <HeadingExtraSmall>{header}</HeadingExtraSmall>
               <PageIndicator />
