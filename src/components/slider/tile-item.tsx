@@ -70,7 +70,6 @@ const ContentImage = ({ tile }: { tile: Movie }) => {
             priority
             unoptimized
             fill
-            // sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
             className='object-cover max-sm:hidden'
           />
           <Image
@@ -79,7 +78,6 @@ const ContentImage = ({ tile }: { tile: Movie }) => {
             priority
             unoptimized
             fill
-            // sizes='(min-width: 1300px) 20vw, (min-width: 1000px) 25vw, (min-width: 800px) 33.33vw, 50vw'
             className='object-cover sm:hidden'
           />
         </>

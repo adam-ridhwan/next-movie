@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { ContentRouteParams, TODO } from '@/lib/types';
-import { Divider } from '@/components/divider';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
 export default async function Trailers({ id, mediaType }: ContentRouteParams) {
@@ -21,7 +20,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
       {/*
        * TODO: Implement a slider for trailers
        */}
-      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pt-2'>
+      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom pb-10 pt-2'>
         {trailers.map((trailer: TODO, i: number) => (
           <div key={trailer.id} className='slider-tile'>
             <div className='relative aspect-video overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
@@ -48,7 +47,6 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
           </div>
         ))}
       </div>
-      <Divider />
     </section>
   );
 }
