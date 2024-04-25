@@ -37,7 +37,6 @@ const Slider = ({ header }: SliderProps) => {
 
         <PaginateRightButton />
       </div>
-      <Divider />
     </div>
   );
 };

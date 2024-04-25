@@ -4,7 +4,7 @@ import { ContentRouteParams } from '@/lib/types';
 import { Divider } from '@/components/divider';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
-import Headshots from '@/components/media-modal/headshots';
+import Cast from '@/components/media-modal/cast';
 import { Label } from '@/components/media-modal/label';
 import MediaModal from '@/components/media-modal/media-modal';
 import { Actors, Genres, Keywords } from '@/components/media-modal/metadata';
@@ -56,7 +56,7 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
         </Suspense>
 
         <Suspense fallback={<HeadshotsSkeleton />}>
-          <Headshots mediaType={mediaType} id={id} />
+          <Cast mediaType={mediaType} id={id} />
         </Suspense>
 
         <Suspense>
