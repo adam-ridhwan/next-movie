@@ -5,7 +5,6 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { CATEGORIES, GENRES, MEDIA_TYPES } from '@/lib/types';
-import { Divider } from '@/components/divider';
 import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -32,8 +31,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
     <>
       <EpicStage content={popularMovies.results[0]} mediaType={'movie'} />
 
-      <Divider />
-
       <div key={'Trending: Movies'} className='flex flex-col'>
         <SliderProvider content={trendingMovies.results} mediaType={'movie'}>
           <DomContextProvider>
@@ -41,8 +38,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
-
-      <Divider />
 
       <div key={'Trending: TV Shows'} className='flex flex-col'>
         <SliderProvider content={trendingTvShows.results} mediaType={'tv'}>
@@ -52,8 +47,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
         </SliderProvider>
       </div>
 
-      <Divider />
-
       <div key={'Action'} className='flex flex-col'>
         <SliderProvider content={actionMovies.results} mediaType={'movie'}>
           <DomContextProvider>
@@ -61,8 +54,6 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           </DomContextProvider>
         </SliderProvider>
       </div>
-
-      <Divider />
 
       <div key={'Drama'} className='flex flex-col'>
         <SliderProvider content={dramaMovies.results} mediaType={'movie'}>

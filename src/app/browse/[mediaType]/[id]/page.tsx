@@ -33,7 +33,7 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           <Backdrop mediaType={mediaType} id={id} />
         </Suspense>
 
-        <div className='flex flex-col gap-12 px-leftRightCustom py-4 lg:flex-row'>
+        <div className='flex flex-col gap-12 px-leftRightCustom py-4 pb-10 lg:flex-row'>
           <div className='mx-[0.5%] flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label mediaType={mediaType} id={id} />
@@ -48,8 +48,6 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
             </Suspense>
           </div>
         </div>
-
-        <Divider />
 
         <Suspense fallback={<TileLoadingSkeleton count={1} />}>
           <MoreLikeThis mediaType={mediaType} id={id} />

@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { useEffectOnce } from '@/lib/hooks/use-effect-once';
+import { Divider } from '@/components/divider';
 import { HeadingExtraSmall } from '@/components/fonts';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useResizeWindow } from '@/components/slider/hooks/use-resize-window';
@@ -22,21 +23,25 @@ const Slider = ({ header }: SliderProps) => {
   useResizeWindow();
 
   return (
-    <div className='group/slider overflow-hidden'>
-      <div className='relative flex flex-row'>
-        <PaginateLeftButton />
+    <>
+      <Divider />
 
-        <div className='flex w-full flex-col gap-2'>
-          <div className='flex flex-row items-center justify-between px-[0.5%] max-sm:px-leftRightCustom'>
-            <HeadingExtraSmall>{header}</HeadingExtraSmall>
-            <PageIndicator />
+      <div className='group/slider overflow-hidden'>
+        <div className='relative flex flex-row'>
+          <PaginateLeftButton />
+
+          <div className='flex w-full flex-col gap-2'>
+            <div className='flex flex-row items-center justify-between px-[0.5%] max-sm:px-leftRightCustom'>
+              <HeadingExtraSmall>{header}</HeadingExtraSmall>
+              <PageIndicator />
+            </div>
+            <TileList />
           </div>
-          <TileList />
-        </div>
 
-        <PaginateRightButton />
+          <PaginateRightButton />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
