@@ -32,7 +32,7 @@ function extractInitials(name: string): string {
 const TileItem = ({ tile, i }: TileItemProps) => {
   const { state: { mediaType } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
-  const { state: { hasPaginated }, actions: { getTileCountPerPage }, } = usePageUtils(); // prettier-ignore
+  const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
   const { tileItemRef } = useDomContext();
 
   const tilesPerPage = getTileCountPerPage();
