@@ -10,10 +10,7 @@ const PaginateRightButton = () => {
     status: { isLastPage, isSecondToLastPage },
     actions: { goToFirstPage, goToLastPage, goToNextPage },
   } = usePagination();
-  const {
-    state: { hasPaginated },
-    actions: { markAsPaginated, wait },
-  } = usePageUtils();
+  const { state: { hasPaginated }, actions: { markAsPaginated, wait } } = usePageUtils(); // prettier-ignore
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 
