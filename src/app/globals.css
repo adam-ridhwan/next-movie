@@ -62,31 +62,38 @@
   display: none;
 }
 
-/* Desktop 2 tiles */
 .slider-tile,
 .slider-tile-trailer {
   min-width: calc((1 / 2) * 100%);
   max-width: calc((1 / 2) * 100%);
-  padding-left: 0.5%;
-  padding-right: 0.5%;
 }
 
 .slider-tile-cast {
   min-width: calc((1 / 3) * 95%);
   max-width: calc((1 / 3) * 95%);
-  padding-right: 3%;
+}
+
+.slider-tile,
+.slider-tile-trailer,
+.slider-tile-cast {
+  padding-left: 0.5%;
+  padding-right: 0.5%;
 }
 
 @media (max-width: 640px) {
   .slider-tile {
     min-width: calc((1 / 3) * 95%);
     max-width: calc((1 / 3) * 95%);
-    padding-right: 3%;
   }
 
   .slider-tile-trailer {
     min-width: calc((1 / 2) * 95%);
     max-width: calc((1 / 2) * 95%);
+  }
+
+  .slider-tile,
+  .slider-tile-cast,
+  .slider-tile-trailer {
     padding-right: 3%;
   }
 }
