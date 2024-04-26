@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 
 import { ContentRouteParams } from '@/lib/types';
-import { Divider } from '@/components/divider';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';
@@ -53,16 +52,16 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
           <MoreLikeThis mediaType={mediaType} id={id} />
         </Suspense>
 
-        <Suspense fallback={<HeadshotsSkeleton />}>
-          <Cast mediaType={mediaType} id={id} />
-        </Suspense>
-
         <Suspense>
           <Trailers mediaType={mediaType} id={id} />
         </Suspense>
 
         <Suspense>
           <BonusContent mediaType={mediaType} id={id} />
+        </Suspense>
+
+        <Suspense fallback={<HeadshotsSkeleton />}>
+          <Cast mediaType={mediaType} id={id} />
         </Suspense>
       </MediaModal>
     </>

@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { Divider } from '@/components/divider';
 
 type FontProps = {
   children: string;
@@ -33,4 +34,20 @@ const NumberLabel = ({ children, className }: FontProps) => (
   <span className={cn('text-[40px] font-medium text-primary/80', className)}>{children}</span>
 );
 
-export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall, NumberLabel };
+const MediaHeader = ({ children, className }: FontProps) => (
+  <>
+    <Divider />
+    <p className={cn('mx-[0.5%] mb-2 px-leftRightCustom text-[17px] font-medium', className)}>{children}</p>
+  </>
+);
+
+export {
+  HeadingLarge,
+  HeadingMedium,
+  HeadingSmall,
+  HeadingExtraSmall,
+  BodyMedium,
+  BodySmall,
+  NumberLabel,
+  MediaHeader,
+};

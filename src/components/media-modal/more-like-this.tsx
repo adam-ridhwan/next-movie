@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { CATEGORIES, ContentRouteParams } from '@/lib/types';
+import { MediaHeader } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 const { RECOMMENDATIONS, SIMILAR } = CATEGORIES;
@@ -21,7 +21,8 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
   return (
     <SliderProvider content={moreLikesThis} mediaType={mediaType}>
       <DomContextProvider>
-        <Slider header={'More like this'} />
+        <MediaHeader>More like this</MediaHeader>
+        <Slider />
       </DomContextProvider>
     </SliderProvider>
   );

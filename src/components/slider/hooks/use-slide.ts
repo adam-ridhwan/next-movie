@@ -23,7 +23,7 @@ export const useSlide = (): UseSlideReturn => {
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
 
-  const { tileListRef, tileItemRef, paginationButtonRef } = useDomContext();
+  const { tileListRef, tileItemRef } = useDomContext();
 
   const slide = (amount: number) => setSlideAmount(amount);
 
@@ -34,7 +34,6 @@ export const useSlide = (): UseSlideReturn => {
   }: GetSlideAmountParams) => {
     if (!tileListRef.current) throw new Error('tileListRef is missing');
     if (!tileItemRef.current) throw new Error('tileItemRef is missing');
-    if (!paginationButtonRef.current) throw new Error('paginationButtonRef is missing');
 
     const { offsetWidth: tileListWidth } = tileListRef.current;
     const { offsetWidth: tileItemWidth } = tileItemRef.current;

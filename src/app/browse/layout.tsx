@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { DomContextProvider } from '@/providers/dom-provider';
@@ -6,6 +5,7 @@ import { SliderProvider } from '@/providers/slider-provider';
 
 import { CATEGORIES, GENRES, MEDIA_TYPES } from '@/lib/types';
 import EpicStage from '@/components/epic-stage';
+import { MediaHeader } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 export default async function BrowseLayout({ children }: { children: ReactNode }) {
@@ -31,34 +31,38 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
     <>
       <EpicStage content={popularMovies.results[0]} mediaType={'movie'} />
 
-      <div key={'Trending: Movies'} className='flex flex-col'>
+      <div className='flex flex-col'>
         <SliderProvider content={trendingMovies.results} mediaType={'movie'}>
           <DomContextProvider>
-            <Slider header={'Trending: Movies'} />
+            <MediaHeader>Trending: Movies</MediaHeader>
+            <Slider />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
-      <div key={'Trending: TV Shows'} className='flex flex-col'>
+      <div className='flex flex-col'>
         <SliderProvider content={trendingTvShows.results} mediaType={'tv'}>
           <DomContextProvider>
-            <Slider header={'Trending: TV Shows'} />
+            <MediaHeader>Trending: TV Shows</MediaHeader>
+            <Slider />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
-      <div key={'Action'} className='flex flex-col'>
+      <div className='flex flex-col'>
         <SliderProvider content={actionMovies.results} mediaType={'movie'}>
           <DomContextProvider>
-            <Slider header={'Action Movies'} />
+            <MediaHeader>Action Movies</MediaHeader>
+            <Slider />
           </DomContextProvider>
         </SliderProvider>
       </div>
 
-      <div key={'Drama'} className='flex flex-col'>
+      <div className='flex flex-col'>
         <SliderProvider content={dramaMovies.results} mediaType={'movie'}>
           <DomContextProvider>
-            <Slider header={'Drama Movies'} />
+            <MediaHeader>Drama Movies</MediaHeader>
+            <Slider />
           </DomContextProvider>
         </SliderProvider>
       </div>

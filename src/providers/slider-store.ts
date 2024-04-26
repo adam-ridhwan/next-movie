@@ -65,8 +65,8 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) => {
-  return create(
+export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) =>
+  create(
     devtools<SliderStore>(set => ({
       MEDIA,
       mediaType,
@@ -88,4 +88,3 @@ export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) => {
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
     }))
   );
-};
