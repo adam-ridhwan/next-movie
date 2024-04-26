@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { GenreLabel, GENRES, MediaType, Movie } from '@/lib/types';
+import { GENRES, MediaType, Movie } from '@/lib/types';
+import { getFirstSentence, getObjectKey, toPascalCase } from '@/lib/utils';
 import { HeadingLarge } from '@/components/fonts';
 
 type EpicStageProps = {
@@ -12,41 +13,13 @@ type EpicStageProps = {
   mediaType: MediaType;
 };
 
-type GetObjectKeyParams<K extends string, V> = {
-  label: string;
-  object: Record<K, V>;
-  value: V[];
-};
-
-const getObjectKey = <K extends string, V>({ label, object, value }: GetObjectKeyParams<K, V>): K[] => {
-  return value.map(v => {
-    for (const [key, val] of Object.entries(object) as [K, V][]) {
-      if (val === v) return key;
-    }
-    throw new Error(`${label}: Value not found: ${v}`);
-  });
-};
-
-const toPascalCase = (inputString: GenreLabel) => {
-  return inputString
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/(?:^|\s)\S/g, c => c.toUpperCase());
-};
-
-const getFirstSentence = (text: string) => {
-  const match = text.match(/^(.*?[.])\s/);
-  return match ? match[1] : text;
-};
-
 const EpicStage = ({ content, mediaType }: EpicStageProps) => {
+  const router = useRouter();
   const genres = getObjectKey({
     label: 'genre_ids',
     object: GENRES,
     value: content.genre_ids,
   });
-
-  const router = useRouter();
 
   return (
     <>
