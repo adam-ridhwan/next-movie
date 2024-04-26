@@ -15,7 +15,6 @@ type SetMapTilesParams = {
 
 export const useMapPages = () => {
   const MEDIA = useSliderStore(state => state.MEDIA);
-  const mediaType = useSliderStore(state => state.mediaType);
   const pages = useSliderStore(state => state.pages);
   const setPages = useSliderStore(state => state.setPages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -107,19 +106,19 @@ export const useMapPages = () => {
       return newCurrentPage;
     };
 
-    if (mediaType === 'cast') {
-      console.table({
-        startIndex: startIndex,
-        newCurrentPage: getNewCurrentPage(),
-        tilesPerPage: newTileCountPerPage,
-        leftTileCount: leftTileCount,
-        rightTileCount: rightTileCount,
-        totalTiles: leftTileCount + rightTileCount,
-        newMaxPages: newMaxPages,
-        newFirstPageLength: newFirstPageLength,
-        newLastPageLength: newLastPageLength,
-      });
-    }
+    // if (mediaType === 'cast') {
+    //   console.table({
+    //     startIndex: startIndex,
+    //     newCurrentPage: getNewCurrentPage(),
+    //     tilesPerPage: newTileCountPerPage,
+    //     leftTileCount: leftTileCount,
+    //     rightTileCount: rightTileCount,
+    //     totalTiles: leftTileCount + rightTileCount,
+    //     newMaxPages: newMaxPages,
+    //     newFirstPageLength: newFirstPageLength,
+    //     newLastPageLength: newLastPageLength,
+    //   });
+    // }
 
     setPages({
       pages: newPages,

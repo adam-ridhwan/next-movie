@@ -33,6 +33,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
   const { state: { mediaType } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
+  const { state: { pages, currentPage } } = usePagination(); // prettier-ignore
   const { tileItemRef } = useDomContext();
 
   const tilesPerPage = getTileCountPerPage();
@@ -48,13 +49,15 @@ const TileItem = ({ tile, i }: TileItemProps) => {
   // FIXME: This is not showing the first few tiles on the first render
   const displayNumber = hasPaginated ? i - tilesPerPage : i;
   const isVisibleOnScreen = isTileVisible(i) && isMounted;
+  const firstTileCurrentPage = pages.get(currentPage)?.[0];
 
   return (
     <div
-      ref={i === 0 ? tileItemRef : undefined}
-      className={cn('max-sm:pr-2', `tile-${isVisibleOnScreen ? displayNumber : ''}`, {
-        'slider-tile': mediaType !== 'cast',
+      ref={tile.uuid === firstTileCurrentPage?.uuid ? tileItemRef : undefined}
+      className={cn(`tile-${isVisibleOnScreen ? displayNumber : ''}`, {
+        'slider-tile': mediaType !== 'cast' && mediaType !== 'trailer' && mediaType !== 'bonus',
         'slider-tile-cast': mediaType === 'cast',
+        'slider-tile-trailer': mediaType === 'trailer' || mediaType === 'bonus',
       })}
     >
       <Thumbnail tile={tile} isVisibleOnScreen={isVisibleOnScreen} />
@@ -120,7 +123,7 @@ const Thumbnail = ({ tile, isVisibleOnScreen }: { tile: Movie; isVisibleOnScreen
               priority
               unoptimized
               fill
-              className='object-cover'
+              className='object-cover object-top'
             />
           ) : (
             <div className='absolute bottom-0 z-50 flex h-full w-full items-center justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
@@ -153,7 +156,7 @@ const Thumbnail = ({ tile, isVisibleOnScreen }: { tile: Movie; isVisibleOnScreen
         {tile.backdrop_path || tile.poster_path ? (
           <>
             <Image
-              src={`https://image.tmdb.org/t/p/original${tile.backdrop_path || tile.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
               alt={tile.title || tile.name}
               priority
               unoptimized
@@ -161,7 +164,7 @@ const Thumbnail = ({ tile, isVisibleOnScreen }: { tile: Movie; isVisibleOnScreen
               className='object-cover max-sm:hidden'
             />
             <Image
-              src={`https://image.tmdb.org/t/p/original${tile.poster_path || tile.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
               alt={tile.title || tile.name}
               priority
               unoptimized
@@ -178,7 +181,7 @@ const Thumbnail = ({ tile, isVisibleOnScreen }: { tile: Movie; isVisibleOnScreen
         )}
       </div>
 
-      <div className='pt-3'>
+      <div className='pt-3 max-sm:hidden'>
         <div className='flex flex-col'>
           <BodyMedium className='line-clamp-1'>{tile.name || tile.title || tile.original_title}</BodyMedium>
           <BodySmall className='line-clamp-1'>

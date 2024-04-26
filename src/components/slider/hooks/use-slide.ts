@@ -23,7 +23,7 @@ export const useSlide = (): UseSlideReturn => {
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
 
-  const { tileListRef, tileItemRef, paginationButtonRef } = useDomContext();
+  const { tileListRef, tileItemRef } = useDomContext();
 
   const slide = (amount: number) => setSlideAmount(amount);
 
@@ -34,13 +34,17 @@ export const useSlide = (): UseSlideReturn => {
   }: GetSlideAmountParams) => {
     if (!tileListRef.current) throw new Error('tileListRef is missing');
     if (!tileItemRef.current) throw new Error('tileItemRef is missing');
-    if (!paginationButtonRef.current) throw new Error('paginationButtonRef is missing');
 
     const { offsetWidth: tileListWidth } = tileListRef.current;
     const { offsetWidth: tileItemWidth } = tileItemRef.current;
 
     const pageLength = isSecondPage ? firstPageLength : lastPageLength;
     const trailingPercentage = ((pageLength * tileItemWidth) / tileListWidth) * 100;
+
+    console.log('pageLength', pageLength);
+    console.log('trailingPercentage', trailingPercentage);
+    console.log('tileItemWidth', tileItemWidth);
+    console.log('tileListWidth', tileListWidth);
 
     if (isSecondPage && trailingPercentage) return trailingPercentage;
     if (isSecondToLastPage && trailingPercentage) return -trailingPercentage;

@@ -19,6 +19,10 @@ const TileList = () => {
   return (
     <>
       {/* TODO: Combine desktop using media queries */}
+      {/*
+       * FIXME: There is issue with render on mobile.
+       *  The tailwind media queries are causing the issue.
+       */}
       {/* Desktop */}
       <div className='w-full overflow-hidden max-sm:hidden'>
         <div
@@ -37,7 +41,7 @@ const TileList = () => {
       </div>
 
       {/* Mobile */}
-      <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom sm:hidden'>
+      <div className='hide-scrollbar flex w-full flex-row overflow-x-auto  sm:hidden'>
         {MEDIA.map((tile, i) => (
           <TileItem key={tile?.uuid || i} tile={tile} i={i} />
         ))}
