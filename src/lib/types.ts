@@ -123,5 +123,3 @@ export type CategoryProps = CategoryWithId | CategoryWithoutId | Discover;
 export type FetchTMDBParams = {
   mediaType: MediaType;
 } & CategoryProps;
-
-export type CreateUrlFn = (params: FetchTMDBParams) => string;

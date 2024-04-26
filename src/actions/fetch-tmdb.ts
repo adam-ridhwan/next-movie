@@ -1,65 +1,45 @@
 import { env } from '@/lib/env';
-import { Category, CategoryProps, CategoryWithId, CreateUrlFn, Discover, FetchTMDBParams } from '@/lib/types';
+import { FetchTMDBParams } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
-type Status = 'success' | 'data';
+const BASE_URL = 'https://api.themoviedb.org/3/';
 
-const idExists = (params: CategoryProps): params is CategoryWithId => 'id' in params;
-const isDiscover = (params: CategoryProps): params is Discover => params.category === 'discover';
-const throwError = (msg: string) => {
-  throw new Error(msg);
-};
+const createUrl = (params: FetchTMDBParams): string => {
+  switch (params.category) {
+    case 'popular':
+      return `${BASE_URL}${params.mediaType}/${params.category}?`;
 
-const apiUrlConfig: Record<Category, CreateUrlFn> = {
-  popular: params => `${params.mediaType}/${params.category}?`,
+    case 'trending':
+      return `${BASE_URL}trending/${params.mediaType}/day?`;
 
-  trending: params => `trending/${params.mediaType}/day?`,
+    case 'discover': {
+      const url = new URL(`discover/${params.mediaType}`, BASE_URL);
+      url.searchParams.append('with_genres', params.genre.toString() || '28');
+      url.searchParams.append('page', params.page?.toString() || '1');
+      url.searchParams.append('with_original_language', params.language || 'en');
+      return url.href;
+    }
 
-  discover: params =>
-    !isDiscover(params)
-      ? throwError('Invalid category for discover.')
-      : `discover/${params.mediaType}?with_genres=${params.genre || 'action'}&page=${params.page || 1}&with_original_language=${params.language || 'en'}`,
+    case 'details':
+      return `${BASE_URL}${params.mediaType}/${params.id}?language=en-US`;
 
-  details: params =>
-    !idExists(params)
-      ? throwError('ID is required for details.')
-      : `${params.mediaType}/${params.id}?language=en-US`,
+    case 'credits':
+    case 'recommendations':
+    case 'keywords':
+    case 'similar':
+    case 'videos':
+    case 'images':
+      return `${BASE_URL}${params.mediaType}/${params.id}/${params.category}?language=en-US`;
 
-  credits: params =>
-    !idExists(params)
-      ? throwError('ID is required for credits.')
-      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
-
-  recommendations: params =>
-    !idExists(params)
-      ? throwError('ID is required for recommendations.')
-      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
-
-  keywords: params =>
-    !idExists(params)
-      ? throwError('ID is required for keywords.')
-      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
-
-  similar: params =>
-    !idExists(params)
-      ? throwError('ID is required for similar.')
-      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
-
-  videos: params =>
-    !idExists(params)
-      ? throwError('ID is required for similar.')
-      : `${params.mediaType}/${params.id}/${params.category}?language=en-US`,
-
-  images: params =>
-    !idExists(params)
-      ? throwError('ID is required for images.')
-      : `${params.mediaType}/${params.id}/${params.category}?`,
+    default:
+      return '';
+  }
 };
 
 export const fetchTMDB = async (params: FetchTMDBParams) => {
-  const urlConfig = apiUrlConfig[params.category](params);
-  const url = `https://api.themoviedb.org/3/${urlConfig}`;
+  const url = createUrl(params);
+  if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
 
   try {
     const options = {
