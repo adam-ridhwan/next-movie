@@ -1,8 +1,8 @@
-import { SLIDE_DIRECTION, TIMEOUT_DURATION } from '@/components/slider/hooks/slider-constants';
-import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { useSlide } from '@/components/slider/hooks/use-slide';
+import { TIMEOUT_DURATION } from '@/lib/constants';
+import { useAnimation } from '@/lib/hooks/use-animation';
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { usePagination } from '@/lib/hooks/use-pagination';
+import { useSlide } from '@/lib/hooks/use-slide';
 import PaginateButton from '@/components/slider/paginate-button/paginate-button';
 
 const PaginateRightButton = () => {
@@ -17,7 +17,7 @@ const PaginateRightButton = () => {
   const handlePaginateRight = async () => {
     enableAnimation();
     const slideAmount = getSlideAmount({
-      direction: SLIDE_DIRECTION.RIGHT,
+      direction: 'right',
       isSecondToLastPage,
     });
     slide(slideAmount);
@@ -32,7 +32,7 @@ const PaginateRightButton = () => {
     goToNextPage();
   };
 
-  return <PaginateButton onClick={handlePaginateRight} direction={SLIDE_DIRECTION.RIGHT} />;
+  return <PaginateButton onClick={handlePaginateRight} direction='right' />;
 };
 
 export default PaginateRightButton;

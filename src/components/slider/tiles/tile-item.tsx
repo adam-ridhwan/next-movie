@@ -1,9 +1,9 @@
 import { useDomContext } from '@/providers/dom-provider';
 
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { usePagination } from '@/lib/hooks/use-pagination';
 import { MediaType, Movie } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { BonusTrailerThumbnail } from '@/components/slider/tiles/bonus-trailer-thumbnail';
 import { CastThumbnail } from '@/components/slider/tiles/cast-thumbnail';
 import { MovieTvThumbnail } from '@/components/slider/tiles/movie-tv-thumbnail';

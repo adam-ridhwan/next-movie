@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { Movie } from '@/lib/types';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: boolean }) => {
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore

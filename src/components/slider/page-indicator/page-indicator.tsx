@@ -1,5 +1,5 @@
+import { usePagination } from '@/lib/hooks/use-pagination';
 import { PageIndicatorIcon } from '@/components/icons';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 const PageIndicator = () => {
   const { state: { pages, currentPage } } = usePagination(); // prettier-ignore

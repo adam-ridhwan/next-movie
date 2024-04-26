@@ -1,7 +1,7 @@
+import { MINIMUM_TILE_COUNT } from '@/lib/constants';
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { usePagination } from '@/lib/hooks/use-pagination';
 import { Movie } from '@/lib/types';
-import { MINIMUM_TILE_COUNT } from '@/components/slider/hooks/slider-constants';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 export const useTiles = () => {
   const {

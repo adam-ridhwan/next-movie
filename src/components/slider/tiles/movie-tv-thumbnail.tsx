@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { usePagination } from '@/lib/hooks/use-pagination';
 import { Movie } from '@/lib/types';
 import { extractYear } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 export const MovieTvThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: boolean }) => {
   const { state: { mediaType } } = usePagination(); // prettier-ignore

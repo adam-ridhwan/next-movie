@@ -3,11 +3,10 @@
 import { useCallback, useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { usePagination } from '@/lib/hooks/use-pagination';
+import { useResizeDirection } from '@/lib/hooks/use-resize-direction';
 import { logger } from '@/lib/logger';
-import { RESIZE_DIRECTION } from '@/components/slider/hooks/slider-constants';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
-import { useResizeDirection } from '@/components/slider/hooks/use-resize-direction';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 
@@ -34,7 +33,7 @@ export const useResizeWindow = () => {
     prevWindowWidth.current = currentWidth;
 
     if (currentPage === 1) return goToFirstPage();
-    return resizeDirection === RESIZE_DIRECTION.MINIMIZING ? goToMinimizedPage() : goToMaximizedPage();
+    return resizeDirection === 'minimizing' ? goToMinimizedPage() : goToMaximizedPage();
   }, [
     currentPage,
     resizeDirection,
