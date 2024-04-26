@@ -17,7 +17,7 @@ export const useTiles = () => {
   const getPrevPageTiles = () => {
     if (!isMounted || !hasPaginated) return [];
     return getMapValue({
-      label: 'LeftPlaceholder: prevPage',
+      label: 'useTiles: getMapValue',
       map: pages,
       key: currentPage - 1,
     });
@@ -25,7 +25,7 @@ export const useTiles = () => {
 
   const getCurrentPageTiles = () => {
     return getMapValue({
-      label: 'CurrentPage: currentPageTiles',
+      label: 'useTiles: getCurrentPageTiles',
       map: pages,
       key: currentPage,
     });
@@ -34,13 +34,17 @@ export const useTiles = () => {
   const getNextPageTiles = () => {
     if (!isMounted) return [];
     return getMapValue({
-      label: 'NextPage: nextPageTiles',
+      label: 'useTiles: getNextPageTiles',
       map: pages,
       key: currentPage + 1,
     });
   };
 
-  const tilesToRender: Movie[] = [...getPrevPageTiles(), ...getCurrentPageTiles(), ...getNextPageTiles()];
+  const tilesToRender: Movie[] = [
+    ...getPrevPageTiles(),
+    ...getCurrentPageTiles(),
+    ...getNextPageTiles()
+  ]; // prettier-ignore
 
   return { tilesToRender };
 };
