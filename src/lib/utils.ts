@@ -23,3 +23,11 @@ export function extractYear(dateString: string | undefined): string {
   const match = dateString.match(regex);
   return match ? match[0] : '-';
 }
+
+export function extractInitials(name: string): string {
+  return name
+    .split(' ')
+    .map(n => n[0])
+    .slice(0, 2)
+    .join('');
+}

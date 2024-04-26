@@ -6,7 +6,7 @@ import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
 import { useTiles } from '@/components/slider/hooks/use-tiles';
-import TileItem from '@/components/slider/tile-item';
+import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileList = () => {
   const { tilesToRender } = useTiles();

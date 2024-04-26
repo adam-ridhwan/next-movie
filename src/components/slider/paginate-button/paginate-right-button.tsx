@@ -3,7 +3,7 @@ import { useAnimation } from '@/components/slider/hooks/use-animation';
 import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 import { usePagination } from '@/components/slider/hooks/use-pagination';
 import { useSlide } from '@/components/slider/hooks/use-slide';
-import PaginateButton from '@/components/slider/paginate-button';
+import PaginateButton from '@/components/slider/paginate-button/paginate-button';
 
 const PaginateRightButton = () => {
   const {
