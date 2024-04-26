@@ -3,26 +3,26 @@ import { FetchTMDBParams } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
-const BASE_URL = 'https://api.themoviedb.org/3/';
+const BASE_URL = 'https://api.themoviedb.org/3';
 
 const createUrl = (params: FetchTMDBParams): string => {
   switch (params.category) {
     case 'popular':
-      return `${BASE_URL}${params.mediaType}/${params.category}?`;
+      return `${BASE_URL}/${params.mediaType}/${params.category}?`;
 
     case 'trending':
-      return `${BASE_URL}trending/${params.mediaType}/day?`;
+      return `${BASE_URL}/trending/${params.mediaType}/day?`;
 
     case 'discover': {
-      const url = new URL(`discover/${params.mediaType}`, BASE_URL);
-      url.searchParams.append('with_genres', params.genre.toString() || '28');
+      const url = new URL(`${BASE_URL}/discover/${params.mediaType}`);
+      url.searchParams.append('with_genres', params.genreId.toString() || '28');
       url.searchParams.append('page', params.page?.toString() || '1');
       url.searchParams.append('with_original_language', params.language || 'en');
       return url.href;
     }
 
     case 'details':
-      return `${BASE_URL}${params.mediaType}/${params.id}?language=en-US`;
+      return `${BASE_URL}/${params.mediaType}/${params.id}?language=en-US`;
 
     case 'credits':
     case 'recommendations':
@@ -30,7 +30,7 @@ const createUrl = (params: FetchTMDBParams): string => {
     case 'similar':
     case 'videos':
     case 'images':
-      return `${BASE_URL}${params.mediaType}/${params.id}/${params.category}?language=en-US`;
+      return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}?language=en-US`;
 
     default:
       return '';

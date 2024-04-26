@@ -113,7 +113,7 @@ export type CategoryWithoutId = {
 
 export type Discover = {
   category: typeof CATEGORIES.DISCOVER;
-  genre: GenreId;
+  genreId: GenreId;
   page?: number;
   language?: string;
 };

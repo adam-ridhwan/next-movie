@@ -18,8 +18,8 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
     fetchTMDB({ category: 'popular', mediaType: 'movie' }),
     fetchTMDB({ category: 'trending', mediaType: 'movie' }),
     fetchTMDB({ category: 'trending', mediaType: 'tv' }),
-    fetchTMDB({ category: 'discover', mediaType: 'movie', genre: 28 }),
-    fetchTMDB({ category: 'discover', mediaType: 'movie', genre: 18  }),
+    fetchTMDB({ category: 'discover', mediaType: 'movie', genreId: 28 }),
+    fetchTMDB({ category: 'discover', mediaType: 'movie', genreId: 18  }),
   ]); // prettier-ignore
 
   return (
