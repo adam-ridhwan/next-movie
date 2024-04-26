@@ -41,7 +41,7 @@ const TileList = () => {
       </div>
 
       {/* Mobile */}
-      <div className='hide-scrollbar flex w-full flex-row overflow-x-auto  sm:hidden'>
+      <div className='hide-scrollbar flex w-full flex-row overflow-x-auto sm:hidden'>
         {MEDIA.map((tile, i) => (
           <TileItem key={tile?.uuid || i} tile={tile} i={i} />
         ))}
