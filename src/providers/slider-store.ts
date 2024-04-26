@@ -66,6 +66,9 @@ export type SliderStore = SliderState & SliderActions;
  */
 
 export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) => {
+  if (mediaType === 'cast') {
+    console.log('createSliderStore', MEDIA.length);
+  }
   return create(
     devtools<SliderStore>(set => ({
       MEDIA,

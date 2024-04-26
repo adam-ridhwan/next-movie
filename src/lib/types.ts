@@ -32,6 +32,7 @@ export const MovieSchema = z.object({
   vote_count: z.number(),
   uuid: z.string(),
   key: z.string(),
+  character: z.string(),
 });
 export type Movie = z.infer<typeof MovieSchema>;
 

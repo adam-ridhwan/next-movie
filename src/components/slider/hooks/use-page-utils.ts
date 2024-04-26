@@ -61,6 +61,14 @@ export const usePageUtils = (): UsePageUtilsReturn => {
 
   const getTileCountPerPage = () => {
     const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
+
+    if (mediaType === 'cast') {
+      if (windowWidth < MEDIA_QUERY.SM) return 5;
+      if (windowWidth < MEDIA_QUERY.MD) return 6;
+      if (windowWidth < MEDIA_QUERY.LG) return 7;
+      return 8;
+    }
+
     if (windowWidth < MEDIA_QUERY.SM) return 2;
     if (windowWidth < MEDIA_QUERY.MD) return 3;
     if (windowWidth < MEDIA_QUERY.LG) return 4;

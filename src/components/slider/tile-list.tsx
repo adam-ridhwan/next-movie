@@ -11,44 +11,34 @@ import TileItem from '@/components/slider/tile-item';
 const TileList = () => {
   const { tilesToRender } = useTiles();
   const { state: { MEDIA } } = usePagination(); // prettier-ignore
-  const { state: { hasPaginated }, actions: { getTileCountPerPage }, } = usePageUtils(); // prettier-ignore
+  const { state: { hasPaginated }, } = usePageUtils(); // prettier-ignore
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
-  const { tileListRef, tileItemRef } = useDomContext();
-
-  const tilesPerPage = getTileCountPerPage();
-
-  const isTileVisible = (i: number) => {
-    const lowerBound = tilesPerPage - 1;
-    const upperBound = tilesPerPage * 2;
-    return lowerBound < i && i < upperBound;
-  };
+  const { tileListRef } = useDomContext();
 
   return (
     <>
       {/* TODO: Combine desktop using media queries */}
       {/* Desktop */}
-      <div className='overflow-hidden'>
+      <div className='w-full overflow-hidden max-sm:hidden'>
         <div
           ref={tileListRef}
           className={cn(
-            'flex flex-row max-sm:hidden',
+            'flex flex-row',
             { 'justify-center': hasPaginated },
             { 'transition-transform duration-700': isAnimating }
           )}
           style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
         >
-          {tilesToRender.map((tile, i) => {
-            return (
-              <TileItem
-                key={tile?.uuid || i}
-                ref={i === 5 ? tileItemRef : undefined}
-                tile={tile}
-                displayNumber={hasPaginated ? i - tilesPerPage : i}
-                isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
-              />
-            );
-          })}
+          {tilesToRender.map((tile, i) => (
+            <TileItem
+              key={tile?.uuid || i}
+              tile={tile}
+              i={i}
+              // displayNumber={hasPaginated ? i - tilesPerPage : i}
+              // isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
+            />
+          ))}
         </div>
       </div>
 
@@ -59,8 +49,9 @@ const TileList = () => {
             <TileItem
               key={tile?.uuid || i}
               tile={tile}
-              displayNumber={hasPaginated ? i - tilesPerPage : i}
-              isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
+              i={i}
+              // displayNumber={hasPaginated ? i - tilesPerPage : i}
+              // isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
             />
           );
         })}
