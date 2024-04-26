@@ -36,7 +36,7 @@ export const MovieSchema = z.object({
 });
 export type Movie = z.infer<typeof MovieSchema>;
 
-export const ContentSchema = z.object({
+export const MediaSchema = z.object({
   id: z.number(),
   title: z.string(),
   release_date: z.string(),
@@ -72,7 +72,7 @@ export const GENRES = {
 export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
-export const MEDIA_TYPES = {
+const MEDIA_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
   TRAILER: 'trailer',
@@ -81,7 +81,7 @@ export const MEDIA_TYPES = {
 } as const;
 export type MediaType = ValuesOf<typeof MEDIA_TYPES>;
 
-export const CATEGORIES = {
+const CATEGORIES = {
   CREDITS: 'credits',
   DETAILS: 'details',
   DISCOVER: 'discover',
