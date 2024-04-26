@@ -11,7 +11,7 @@ import TileItem from '@/components/slider/tile-item';
 const TileList = () => {
   const { tilesToRender } = useTiles();
   const { state: { MEDIA } } = usePagination(); // prettier-ignore
-  const { state: { hasPaginated }, } = usePageUtils(); // prettier-ignore
+  const { state: { hasPaginated } } = usePageUtils(); // prettier-ignore
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
   const { tileListRef } = useDomContext();
