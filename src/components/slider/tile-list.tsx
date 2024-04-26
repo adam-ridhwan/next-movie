@@ -31,30 +31,16 @@ const TileList = () => {
           style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
         >
           {tilesToRender.map((tile, i) => (
-            <TileItem
-              key={tile?.uuid || i}
-              tile={tile}
-              i={i}
-              // displayNumber={hasPaginated ? i - tilesPerPage : i}
-              // isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
-            />
+            <TileItem key={tile?.uuid || i} tile={tile} i={i} />
           ))}
         </div>
       </div>
 
       {/* Mobile */}
       <div className='hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom sm:hidden'>
-        {MEDIA.map((tile, i) => {
-          return (
-            <TileItem
-              key={tile?.uuid || i}
-              tile={tile}
-              i={i}
-              // displayNumber={hasPaginated ? i - tilesPerPage : i}
-              // isVisibleOnScreen={hasPaginated ? isTileVisible(i) : i < tilesPerPage}
-            />
-          );
-        })}
+        {MEDIA.map((tile, i) => (
+          <TileItem key={tile?.uuid || i} tile={tile} i={i} />
+        ))}
       </div>
     </>
   );
