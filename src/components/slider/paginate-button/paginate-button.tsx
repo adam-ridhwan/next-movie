@@ -1,12 +1,8 @@
+import { MINIMUM_TILE_COUNT, SlideDirection } from '@/lib/constants';
+import { useAnimation } from '@/lib/hooks/use-animation';
+import { usePagination } from '@/lib/hooks/use-pagination';
 import { cn } from '@/lib/utils';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
-import {
-  MINIMUM_TILE_COUNT,
-  SLIDE_DIRECTION,
-  SlideDirection,
-} from '@/components/slider/hooks/slider-constants';
-import { useAnimation } from '@/components/slider/hooks/use-animation';
-import { usePagination } from '@/components/slider/hooks/use-pagination';
 
 type PaginationButtonProps = {
   direction: SlideDirection;
@@ -23,8 +19,8 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
     { 'opacity-100 group-hover/button:scale-125 ': isAnimating }
   );
 
-  const isRight = direction === SLIDE_DIRECTION.RIGHT && MEDIA.length > MINIMUM_TILE_COUNT;
-  const isLeft = direction === SLIDE_DIRECTION.LEFT && MEDIA.length > MINIMUM_TILE_COUNT;
+  const isRight = direction === 'right' && MEDIA.length > MINIMUM_TILE_COUNT;
+  const isLeft = direction === 'left' && MEDIA.length > MINIMUM_TILE_COUNT;
 
   return (
     <>
@@ -34,8 +30,8 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
         className={cn(
           'group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
           className,
-          { 'justify-start': direction === SLIDE_DIRECTION.RIGHT },
-          { 'justify-end': direction === SLIDE_DIRECTION.LEFT },
+          { 'justify-start': direction === 'right' },
+          { 'justify-end': direction === 'left' },
           'max-sm:hidden'
         )}
       >

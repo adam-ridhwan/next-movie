@@ -2,10 +2,10 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { useMapPages } from '@/lib/hooks/use-map-pages';
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePaginationLogger } from '@/lib/logger';
 import { MediaType, Movie, Pages } from '@/lib/types';
-import { useMapPages } from '@/components/slider/hooks/use-map-pages';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
 
 type UsePaginationReturn = {
   state: {

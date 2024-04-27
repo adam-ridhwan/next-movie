@@ -1,10 +1,10 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { CATEGORIES, ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams } from '@/lib/types';
 import { HeadingLarge } from '@/components/fonts';
 
 export async function Label({ mediaType, id }: ContentRouteParams) {
-  const details = await fetchTMDB({ category: CATEGORIES.DETAILS, mediaType, id });
+  const details = await fetchTMDB({ category: 'details', mediaType, id });
 
   return (
     <>

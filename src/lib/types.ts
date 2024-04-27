@@ -36,7 +36,7 @@ export const MovieSchema = z.object({
 });
 export type Movie = z.infer<typeof MovieSchema>;
 
-export const ContentSchema = z.object({
+export const MediaSchema = z.object({
   id: z.number(),
   title: z.string(),
   release_date: z.string(),
@@ -72,7 +72,7 @@ export const GENRES = {
 export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
-export const MEDIA_TYPES = {
+const MEDIA_TYPES = {
   MOVIE: 'movie',
   TV: 'tv',
   TRAILER: 'trailer',
@@ -81,7 +81,7 @@ export const MEDIA_TYPES = {
 } as const;
 export type MediaType = ValuesOf<typeof MEDIA_TYPES>;
 
-export const CATEGORIES = {
+const CATEGORIES = {
   CREDITS: 'credits',
   DETAILS: 'details',
   DISCOVER: 'discover',
@@ -95,7 +95,7 @@ export const CATEGORIES = {
 } as const;
 export type Category = ValuesOf<typeof CATEGORIES>;
 
-export type CategoryWithId = {
+export type CategoryWithIdProps = {
   id: string;
   category:
     | typeof CATEGORIES.CREDITS
@@ -107,21 +107,19 @@ export type CategoryWithId = {
     | typeof CATEGORIES.IMAGES;
 };
 
-export type CategoryWithoutId = {
+export type CategoryWithoutIdProps = {
   category: typeof CATEGORIES.POPULAR | typeof CATEGORIES.TRENDING;
 };
 
-export type Discover = {
+export type DiscoverProps = {
   category: typeof CATEGORIES.DISCOVER;
-  genre: GenreId;
+  genreId: GenreId;
   page?: number;
   language?: string;
 };
 
-export type CategoryProps = CategoryWithId | CategoryWithoutId | Discover;
+export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps;
 
 export type FetchTMDBParams = {
   mediaType: MediaType;
 } & CategoryProps;
-
-export type CreateUrlFn = (params: FetchTMDBParams) => string;

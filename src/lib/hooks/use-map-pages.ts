@@ -3,9 +3,9 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
+import { usePageUtils } from '@/lib/hooks/use-page-utils';
+import { useValidators } from '@/lib/hooks/use-validators';
 import { Movie, Pages } from '@/lib/types';
-import { usePageUtils } from '@/components/slider/hooks/use-page-utils';
-import { useValidators } from '@/components/slider/hooks/use-validators';
 
 type SetMapTilesParams = {
   firstTileCurrentPageIndex: number;

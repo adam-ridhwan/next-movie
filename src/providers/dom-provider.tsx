@@ -3,19 +3,19 @@
 import { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
 
 type DomContextType = {
-  tileListRef: RefObject<HTMLDivElement>;
+  tileContainerRef: RefObject<HTMLDivElement>;
   tileItemRef: RefObject<HTMLDivElement>;
 } | null;
 
 export const DomContext = createContext<DomContextType>(null);
 
 export const DomContextProvider = ({ children }: { children: ReactNode }) => {
-  const tileListRef = useRef<HTMLDivElement>(null);
+  const tileContainerRef = useRef<HTMLDivElement>(null);
   const tileItemRef = useRef<HTMLDivElement>(null);
   return (
     <DomContext.Provider
       value={{
-        tileListRef,
+        tileContainerRef,
         tileItemRef,
       }}
     >
