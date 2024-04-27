@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { useValidators } from '@/lib/hooks/use-validators';
 import { Movie, Pages } from '@/lib/types';
+import { getMapValue } from '@/lib/utils';
 
 type SetMapTilesParams = {
   firstTileCurrentPageIndex: number;
@@ -21,7 +22,7 @@ export const useMapPages = () => {
 
   const { validatePages } = useValidators();
   const {
-    actions: { getTileCountPerPage, getTileCount, getStartIndex, updateUuids, getMapValue },
+    actions: { getTileCountPerPage, getTileCount, getStartIndex, updateUuids },
   } = usePageUtils();
 
   const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {

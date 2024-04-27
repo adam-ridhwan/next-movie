@@ -2,15 +2,13 @@ import { MINIMUM_TILE_COUNT } from '@/lib/constants';
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePagination } from '@/lib/hooks/use-pagination';
 import { Movie } from '@/lib/types';
+import { getMapValue } from '@/lib/utils';
 
 export const useTiles = () => {
   const {
     state: { MEDIA, pages, currentPage },
   } = usePagination();
-  const {
-    state: { isMounted, hasPaginated },
-    actions: { getMapValue },
-  } = usePageUtils();
+  const { state: { isMounted, hasPaginated } } = usePageUtils(); // prettier-ignore
 
   if (MEDIA.length <= MINIMUM_TILE_COUNT) return { tilesToRender: MEDIA };
 
