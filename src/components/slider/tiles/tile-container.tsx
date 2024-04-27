@@ -17,14 +17,15 @@ const TileContainer = () => {
   const { tileContainerRef } = useDomContext();
 
   return (
-    <div className='w-full overflow-hidden'>
+    <div className='relative w-full overflow-hidden'>
       {/* Desktop */}
       <div
         ref={tileContainerRef}
         className={cn(
-          'flex flex-row max-sm:hidden',
+          'flex flex-row',
           { 'justify-center': hasPaginated },
-          { 'transition-transform duration-700': isAnimating }
+          { 'transition-transform duration-700': isAnimating },
+          'max-sm:hidden'
         )}
         style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
       >
@@ -34,7 +35,11 @@ const TileContainer = () => {
       </div>
 
       {/* Mobile */}
-      <div className='hide-scrollbar flex flex-row overflow-x-auto sm:hidden'>
+      {/* prettier-ignore */}
+      <div className={cn(
+        'hide-scrollbar flex flex-row overflow-x-auto',
+        'sm:hidden',
+        )}>
         {MEDIA.map((tile, i) => (
           <TileItem key={tile?.uuid || i} tile={tile} i={i} />
         ))}
