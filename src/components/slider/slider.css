@@ -33,6 +33,7 @@
 @media (max-width: 640px) {
   .slider-tile {
     padding-right: 2%;
+    padding-bottom: 8px;
   }
 
   .slider-tile--movie,
