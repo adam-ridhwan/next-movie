@@ -95,7 +95,7 @@ const CATEGORIES = {
 } as const;
 export type Category = ValuesOf<typeof CATEGORIES>;
 
-export type CategoryWithId = {
+export type CategoryWithIdProps = {
   id: string;
   category:
     | typeof CATEGORIES.CREDITS
@@ -107,18 +107,18 @@ export type CategoryWithId = {
     | typeof CATEGORIES.IMAGES;
 };
 
-export type CategoryWithoutId = {
+export type CategoryWithoutIdProps = {
   category: typeof CATEGORIES.POPULAR | typeof CATEGORIES.TRENDING;
 };
 
-export type Discover = {
+export type DiscoverProps = {
   category: typeof CATEGORIES.DISCOVER;
   genreId: GenreId;
   page?: number;
   language?: string;
 };
 
-export type CategoryProps = CategoryWithId | CategoryWithoutId | Discover;
+export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps;
 
 export type FetchTMDBParams = {
   mediaType: MediaType;
