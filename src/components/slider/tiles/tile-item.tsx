@@ -1,4 +1,5 @@
 import { useDomContext } from '@/providers/dom-provider';
+import { Media } from '@/routes';
 
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePagination } from '@/lib/hooks/use-pagination';
@@ -62,11 +63,14 @@ const ThumbnailSelector = ({ mediaType, tile, isVisible }: ThumbnailSelectorProp
     case 'movie':
     case 'tv':
       return <MovieTvThumbnail tile={tile} isVisible={isVisible} />;
+
     case 'trailer':
     case 'bonus':
       return <BonusTrailerThumbnail tile={tile} isVisible={isVisible} />;
+
     case 'cast':
       return <CastThumbnail tile={tile} isVisible={isVisible} />;
+
     default:
       return <></>;
   }

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { Movie } from '@/lib/types';
@@ -8,7 +9,8 @@ export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: Movie; isVisi
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
 
   return (
-    <a
+    <Link
+      // TODO: Switch to Media.Link when the bonus trailer drawer is implemented
       href={`https://www.youtube.com/watch?v=${tile.key}`}
       target='_blank'
       rel='noreferrer'
@@ -38,6 +40,6 @@ export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: Movie; isVisi
           <BodyMedium className='line-clamp-1'>{tile.name || ''}</BodyMedium>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
