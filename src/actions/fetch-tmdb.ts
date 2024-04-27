@@ -8,10 +8,10 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const createUrl = (params: FetchTMDBParams): string => {
   switch (params.category) {
     case 'popular':
-      return `${BASE_URL}/${params.mediaType}/${params.category}?`;
+      return `${BASE_URL}/${params.mediaType}/${params.category}`;
 
     case 'trending':
-      return `${BASE_URL}/trending/${params.mediaType}/day?`;
+      return `${BASE_URL}/${params.category}/${params.mediaType}/day`;
 
     case 'discover': {
       const url = new URL(`${BASE_URL}/discover/${params.mediaType}`);
