@@ -1,8 +1,14 @@
-import { usePagination } from '@/lib/hooks/use-pagination';
+/* eslint no-restricted-imports: 0 */
+
+'use client';
+
+import { useSliderStore } from '@/providers/slider-provider';
+
 import { PageIndicatorIcon } from '@/components/icons';
 
 const PageIndicator = () => {
-  const { state: { pages, currentPage } } = usePagination(); // prettier-ignore
+  const pages = useSliderStore(state => state.pages);
+  const currentPage = useSliderStore(state => state.currentPage);
 
   const pageNumbers = Array.from(pages.entries());
 

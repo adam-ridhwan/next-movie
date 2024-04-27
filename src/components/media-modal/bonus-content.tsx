@@ -3,7 +3,6 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { ContentRouteParams, TODO } from '@/lib/types';
-import { MediaHeader } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ id, mediaType }: ContentRouteParams) {
@@ -19,8 +18,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
     <section>
       <SliderProvider content={bonusContent} mediaType='bonus'>
         <DomContextProvider>
-          <MediaHeader>Bonus Content</MediaHeader>
-          <Slider />
+          <Slider headerTitle='Bonus Content' />
         </DomContextProvider>
       </SliderProvider>
     </section>

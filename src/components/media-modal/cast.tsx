@@ -3,7 +3,6 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { ContentRouteParams, TODO } from '@/lib/types';
-import { MediaHeader } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 export default async function Cast({ id, mediaType }: ContentRouteParams) {
@@ -17,8 +16,7 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
     <section>
       <SliderProvider content={firstTenActors} mediaType='cast'>
         <DomContextProvider>
-          <MediaHeader>Cast</MediaHeader>
-          <Slider />
+          <Slider headerTitle='Cast' />
         </DomContextProvider>
       </SliderProvider>
     </section>

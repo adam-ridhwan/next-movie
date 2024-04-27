@@ -10,6 +10,8 @@ import { MovieTvThumbnail } from '@/components/slider/tiles/movie-tv-thumbnail';
 
 import '../slider.css';
 
+import { useAnimation } from '@/lib/hooks/use-animation';
+
 type TileItemProps = {
   tile: Movie | void;
   i: number;
@@ -20,6 +22,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
   const { state: { pages, currentPage } } = usePagination(); // prettier-ignore
+  const { isAnimating } = useAnimation();
   const { tileItemRef } = useDomContext();
 
   if (!tile) return null;
@@ -49,6 +52,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
         'slider-tile--trailer': mediaType === 'trailer',
         'slider-tile--bonus': mediaType === 'bonus',
         'slider-tile--cast': mediaType === 'cast',
+        'pointer-events-none': isAnimating,
       })}
     >
       <ThumbnailSelector mediaType={mediaType} tile={tile} isVisible={isVisible} />
