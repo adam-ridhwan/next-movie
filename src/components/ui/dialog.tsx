@@ -25,8 +25,8 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       // prettier-ignore
-      `fixed inset-0 z-50 overflow-y-auto h-dvh pt-20 overflow-x-hidden grid justify-items-center
-      data-[state=open]:animate-in data-[state=closed]:animate-out 
+      `fixed h-dvh pt-20 inset-0 z-50 overflow-y-auto overflow-x-hidden grid justify-items-center
+      data-[state=open]:animate-in data-[state=closed]:animate-out
       data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0`,
       className
     )}
@@ -43,6 +43,13 @@ const DialogContent = React.forwardRef<
     <DialogOverlay>
       <DialogPrimitive.Content
         ref={ref}
+        onPointerDownOutside={e => {
+          // https://github.com/radix-ui/primitives/issues/1280#issuecomment-1198248523
+          const currentTarget = e.currentTarget as HTMLElement;
+          if (e.detail.originalEvent.offsetX > currentTarget.clientWidth) {
+            e.preventDefault();
+          }
+        }}
         className={cn(
           // prettier-ignore
           `relative h-fit min-h-full w-full md:w-[85%] max-w-[1300px] bg-appBackground shadow-lg rounded-t-2xl overflow-x-hidden pb-20
