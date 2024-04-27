@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { Media } from '@/routes';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePagination } from '@/lib/hooks/use-pagination';
 import { Movie } from '@/lib/types';
 import { extractYear } from '@/lib/utils';
@@ -9,15 +8,9 @@ import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
 export const MovieTvThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: boolean }) => {
   const { state: { mediaType } } = usePagination(); // prettier-ignore
-  const { state: { isMounted } } = usePageUtils(); // prettier-ignore
 
   return (
-    <Media.Link
-      id={tile.id.toString()}
-      mediaType={mediaType}
-      scroll={false}
-      tabIndex={isVisible && isMounted ? 0 : -1}
-    >
+    <Media.Link id={tile.id.toString()} mediaType={mediaType} scroll={false} tabIndex={isVisible ? 0 : -1}>
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
         {tile.backdrop_path || tile.poster_path ? (
           <>
