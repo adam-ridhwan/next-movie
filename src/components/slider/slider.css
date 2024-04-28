@@ -6,10 +6,6 @@
   --6-tiles: calc(1 / 6 * 100%);
   --7-tiles: calc(1 / 7 * 100%);
   --8-tiles: calc(1 / 8 * 100%);
-
-  --2-tiles-phone: calc(1 / 2 * 95%);
-  --3-tiles-phone: calc(1 / 3 * 95%);
-  --4-tiles-phone: calc(1 / 4 * 95%);
 }
 
 .slider-tile {
@@ -38,19 +34,19 @@
 
   .slider-tile--movie,
   .slider-tile--tv {
-    min-width: var(--3-tiles-phone);
-    max-width: var(--3-tiles-phone);
+    min-width: var(--3-tiles);
+    max-width: var(--3-tiles);
   }
 
   .slider-tile--trailer,
   .slider-tile--bonus {
-    min-width: var(--2-tiles-phone);
-    max-width: var(--2-tiles-phone);
+    min-width: var(--2-tiles);
+    max-width: var(--2-tiles);
   }
 
   .slider-tile--cast {
-    min-width: var(--4-tiles-phone);
-    max-width: var(--4-tiles-phone);
+    min-width: var(--4-tiles);
+    max-width: var(--4-tiles);
   }
 }
 
