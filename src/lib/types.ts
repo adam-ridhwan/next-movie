@@ -91,5 +91,4 @@ type DiscoverProps = {
 };
 
 export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps;
-
 export type FetchTMDBParams = Prettify<{ mediaType: MediaType } & CategoryProps>;
