@@ -18,26 +18,44 @@ export const MovieSchema = z.object({
   id: z.number(),
   original_language: z.string(),
   original_title: z.string(),
-  original_name: z.string(),
-  name: z.string(),
-  first_air_date: z.string(),
   overview: z.string(),
   popularity: z.number(),
   poster_path: z.string(),
-  profile_path: z.string(),
   release_date: z.string(),
   title: z.string(),
   video: z.boolean(),
   vote_average: z.number(),
   vote_count: z.number(),
-  uuid: z.string(),
-  key: z.string(),
-  character: z.string(),
 });
-export type Movie = z.infer<typeof MovieSchema>;
+
+export const TvSchema = z.object({
+  adult: z.boolean(),
+  backdrop_path: z.string(),
+  genre_ids: z.array(z.number()),
+  id: z.number(),
+  origin_country: z.array(z.string()),
+  original_language: z.string(),
+  original_name: z.string(),
+  overview: z.string(),
+  popularity: z.number(),
+  poster_path: z.string(),
+  first_air_date: z.string(),
+  name: z.string(),
+  vote_average: z.number(),
+  vote_count: z.number(),
+});
+
+export const MovieTvSchema = z.object({
+  page: z.number(),
+  results: z.array(z.union([MovieSchema, TvSchema])),
+  total_pages: z.number(),
+  total_results: z.number(),
+});
+
+export type MovieTv = z.infer<typeof MovieTvSchema>;
 
 export const nonEmptyTilesSchema = z.array(MovieSchema);
-export type Pages = Map<number, Movie[]>;
+export type Pages = Map<number, TODO[]>;
 
 export const GENRES = {
   ACTION: 28,
@@ -64,6 +82,7 @@ export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
 export type MediaType = 'movie' | 'tv';
+export type Section = 'movie' | 'tv' | 'trailer' | 'bonus' | 'cast';
 
 type CategoryWithIdProps = {
   id: string;
@@ -82,4 +101,5 @@ type DiscoverProps = {
 };
 
 export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps;
-export type FetchTMDBParams = Prettify<{ mediaType: MediaType } & CategoryProps>;
+export type DefaultCategoryProps = { label: string; mediaType: MediaType };
+export type FetchTMDBParams = Prettify<DefaultCategoryProps & CategoryProps>;

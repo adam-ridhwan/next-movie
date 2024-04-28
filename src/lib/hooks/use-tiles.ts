@@ -1,16 +1,16 @@
 import { MINIMUM_TILE_COUNT } from '@/lib/constants';
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePagination } from '@/lib/hooks/use-pagination';
-import { Movie } from '@/lib/types';
+import { TODO } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
 
 export const useTiles = () => {
   const {
-    state: { MEDIA, pages, currentPage },
+    state: { CONTENT, pages, currentPage },
   } = usePagination();
   const { state: { isMounted, hasPaginated } } = usePageUtils(); // prettier-ignore
 
-  if (MEDIA.length <= MINIMUM_TILE_COUNT) return { tilesToRender: MEDIA };
+  if (CONTENT.length <= MINIMUM_TILE_COUNT) return { tilesToRender: CONTENT };
 
   const getPrevPageTiles = () => {
     if (!isMounted || !hasPaginated) return [];
@@ -38,7 +38,7 @@ export const useTiles = () => {
     });
   };
 
-  const tilesToRender: Movie[] = [
+  const tilesToRender: TODO[] = [
     ...getPrevPageTiles(),
     ...getCurrentPageTiles(),
     ...getNextPageTiles()

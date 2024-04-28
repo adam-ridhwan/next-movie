@@ -1,30 +1,37 @@
-'use client';
-
 import Image from 'next/image';
+import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { MediaRoute } from '@/routes';
 
-import { GENRES, MediaType, Movie } from '@/lib/types';
+import { FetchTMDBParams, GENRES, MovieSchema, MovieTvSchema } from '@/lib/types';
 import { getFirstSentence, getObjectKey, toPascalCase } from '@/lib/utils';
 import { HeadingLarge } from '@/components/fonts';
 
-type EpicStageProps = {
-  content: Movie;
-  mediaType: MediaType;
-};
+const EpicStage = async () => {
+  const params: FetchTMDBParams = { label: 'Popular movies', category: 'popular', mediaType: 'movie' };
+  const unknownResult = await fetchTMDB(params);
+  const zodResponse = MovieTvSchema.safeParse(unknownResult);
+  if (!zodResponse.success) throw new Error('Expected a movie result');
 
-const EpicStage = ({ content, mediaType }: EpicStageProps) => {
+  const fetchedPopularList = { ...params, results: zodResponse.data.results };
+
+  const unknownMovie = fetchedPopularList.results[0];
+  const zodResponse2 = MovieSchema.safeParse(unknownMovie);
+  if (!zodResponse2.success) throw new Error('Expected a movie object');
+
+  const firstContent = zodResponse2.data;
+
   const genres = getObjectKey({
     label: 'genre_ids',
     object: GENRES,
-    value: content.genre_ids,
+    value: firstContent.genre_ids,
   });
 
   return (
-    <MediaRoute.Link id={content.id.toString()} mediaType={mediaType} scroll={false}>
+    <MediaRoute.Link id={firstContent.id.toString()} mediaType={params.mediaType} scroll={false}>
       <div className='relative mb-4 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
-          src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
-          alt={content.original_title}
+          src={`https://image.tmdb.org/t/p/original${firstContent.backdrop_path}`}
+          alt={firstContent.original_title}
           priority
           fill
           className='object-cover'
@@ -33,7 +40,7 @@ const EpicStage = ({ content, mediaType }: EpicStageProps) => {
         <div className='absolute bottom-0 left-0 right-0 z-10 h-1/2 bg-gradient-to-t from-black' />
 
         <div className='absolute bottom-0 left-0 z-50 flex w-1/2 flex-col gap-2 p-10'>
-          <HeadingLarge>{content.title}</HeadingLarge>
+          <HeadingLarge>{firstContent.title}</HeadingLarge>
           <ul className='flex flex-row gap-2'>
             {genres.map(genre => (
               <li key={genre}>
@@ -41,7 +48,7 @@ const EpicStage = ({ content, mediaType }: EpicStageProps) => {
               </li>
             ))}
           </ul>
-          <p className='text-overview'>{getFirstSentence(content.overview)}</p>
+          <p className='text-overview'>{getFirstSentence(firstContent.overview)}</p>
         </div>
       </div>
     </MediaRoute.Link>

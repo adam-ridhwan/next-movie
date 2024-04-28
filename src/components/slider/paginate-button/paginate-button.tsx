@@ -11,7 +11,7 @@ type PaginationButtonProps = {
 };
 
 const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps) => {
-  const { state: { MEDIA } } = usePagination(); // prettier-ignore
+  const { state: { CONTENT } } = usePagination(); // prettier-ignore
   const { isAnimating } = useAnimation();
 
   const iconClass = cn(
@@ -19,13 +19,13 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
     { 'opacity-100 group-hover/button:scale-125 ': isAnimating }
   );
 
-  const isRight = direction === 'right' && MEDIA.length > MINIMUM_TILE_COUNT;
-  const isLeft = direction === 'left' && MEDIA.length > MINIMUM_TILE_COUNT;
+  const isRight = direction === 'right' && CONTENT.length > MINIMUM_TILE_COUNT;
+  const isLeft = direction === 'left' && CONTENT.length > MINIMUM_TILE_COUNT;
 
   return (
     <>
       <button
-        disabled={isAnimating || MEDIA.length <= MINIMUM_TILE_COUNT}
+        disabled={isAnimating || CONTENT.length <= MINIMUM_TILE_COUNT}
         onClick={onClick}
         className={cn(
           'group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',

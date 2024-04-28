@@ -5,14 +5,15 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { useMapPages } from '@/lib/hooks/use-map-pages';
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePaginationLogger } from '@/lib/logger';
-import { MediaType, Movie, Pages } from '@/lib/types';
+import { MediaType, Pages, Section, TODO } from '@/lib/types';
 import { findIndexByKey, getMapValue } from '@/lib/utils';
 
 type UsePaginationReturn = {
   state: {
-    MEDIA: Movie[];
+    CONTENT: TODO[];
     pages: Pages;
     mediaType: MediaType;
+    section: Section;
     currentPage: number;
     maxPages: number;
   };
@@ -33,8 +34,9 @@ type UsePaginationReturn = {
 };
 
 export const usePagination = (): UsePaginationReturn => {
-  const MEDIA = useSliderStore(state => state.MEDIA);
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const mediaType = useSliderStore(state => state.mediaType);
+  const section = useSliderStore(state => state.section);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
   const setCurrentPage = useSliderStore(state => state.setCurrentPage);
@@ -63,7 +65,7 @@ export const usePagination = (): UsePaginationReturn => {
   const goToLastPage = () => {
     usePaginationLogger.last();
     setMapPages({
-      firstTileCurrentPageIndex: MEDIA.length - getTileCountPerPage(),
+      firstTileCurrentPageIndex: CONTENT.length - getTileCountPerPage(),
       isLastPage: true,
     });
   };
@@ -91,7 +93,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMinimizedPage(): firstTileCurrentPageIndex',
-      array: MEDIA,
+      array: CONTENT,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -111,7 +113,7 @@ export const usePagination = (): UsePaginationReturn => {
 
     const firstTileCurrentPageIndex = findIndexByKey({
       label: 'goToMaximizedPage(): firstTileCurrentPageIndex',
-      array: MEDIA,
+      array: CONTENT,
       key: 'id',
       value: firstTileCurrentPage.id,
     });
@@ -138,9 +140,10 @@ export const usePagination = (): UsePaginationReturn => {
 
   return {
     state: {
-      MEDIA,
+      CONTENT,
       mediaType,
       pages,
+      section,
       currentPage,
       maxPages,
     },

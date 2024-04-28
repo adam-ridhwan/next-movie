@@ -4,7 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { MEDIA_QUERY } from '@/lib/constants';
-import { Movie } from '@/lib/types';
+import { TODO } from '@/lib/types';
 
 type UsePageUtilsReturn = {
   state: {
@@ -19,20 +19,20 @@ type UsePageUtilsReturn = {
     getTileCountPerPage: () => number;
     getTileCount: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
-    updateUuids: (params: UpdateUuidsParams) => Movie[];
+    updateUuids: <Content>(params: UpdateUuidsParams) => Content[];
   };
 };
 
 type UpdateUuidsParams = {
-  newContentList: Movie[];
+  newContentList: TODO[];
   firstTileIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
 };
 
 export const usePageUtils = (): UsePageUtilsReturn => {
-  const MEDIA = useSliderStore(state => state.MEDIA);
-  const mediaType = useSliderStore(state => state.mediaType);
+  const CONTENT = useSliderStore(state => state.CONTENT);
+  const section = useSliderStore(state => state.section);
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
   const hasPaginated = useSliderStore(state => state.hasPaginated);
@@ -42,7 +42,7 @@ export const usePageUtils = (): UsePageUtilsReturn => {
   const getTileCountPerPage = () => {
     const windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth;
 
-    if (mediaType === 'cast') {
+    if (section === 'cast') {
       if (windowWidth < MEDIA_QUERY.SM) return 5;
       if (windowWidth < MEDIA_QUERY.MD) return 6;
       if (windowWidth < MEDIA_QUERY.LG) return 7;
@@ -60,7 +60,9 @@ export const usePageUtils = (): UsePageUtilsReturn => {
 
   const getStartIndex = (currentIndex: number, leftTilesTotal: number) => {
     // Prevents negative modulo
-    return (((currentIndex - leftTilesTotal + MEDIA.length) % MEDIA.length) + MEDIA.length) % MEDIA.length;
+    return (
+      (((currentIndex - leftTilesTotal + CONTENT.length) % CONTENT.length) + CONTENT.length) % CONTENT.length
+    );
   };
 
   const updateUuids = ({

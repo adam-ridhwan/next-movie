@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
-import { Movie } from '@/lib/types';
+import { TODO } from '@/lib/types';
 import { extractInitials } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingLarge } from '@/components/fonts';
 
-export const CastThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: boolean }) => {
+export const CastThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
     <>
       <div className='relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
