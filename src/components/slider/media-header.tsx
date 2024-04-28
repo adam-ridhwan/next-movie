@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import { Divider } from '@/components/divider';
 import PageIndicator from '@/components/slider/page-indicator/page-indicator';
