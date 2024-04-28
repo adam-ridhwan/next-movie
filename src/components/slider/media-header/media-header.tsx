@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Divider } from '@/components/divider';
-import PageIndicator from '@/components/slider/page-indicator/page-indicator';
+import PageIndicator from '@/components/slider/media-header/page-indicator';
 
 type MediaHeaderProps = {
   children: string;
