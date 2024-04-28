@@ -1,3 +1,5 @@
+'use server';
+
 import { env } from '@/lib/env';
 import { FetchTMDBParams } from '@/lib/types';
 
