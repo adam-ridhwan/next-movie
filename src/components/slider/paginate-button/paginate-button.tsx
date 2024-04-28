@@ -1,7 +1,7 @@
 import { MINIMUM_TILE_COUNT, SlideDirection } from '@/lib/constants';
-import { useAnimation } from '@/lib/hooks/use-animation';
-import { usePagination } from '@/lib/hooks/use-pagination';
 import { cn } from '@/lib/utils';
+import { useAnimation } from '@/hooks/use-animation';
+import { usePagination } from '@/hooks/use-pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 
 type PaginationButtonProps = {

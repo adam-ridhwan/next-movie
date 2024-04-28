@@ -3,10 +3,10 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { useValidators } from '@/lib/hooks/use-validators';
 import { Pages, TODO } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { useValidators } from '@/hooks/use-validators';
 
 type SetMapTilesParams = {
   firstTileCurrentPageIndex: number;

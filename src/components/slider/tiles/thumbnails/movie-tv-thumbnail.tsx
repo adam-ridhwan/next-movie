@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { MediaRoute } from '@/routes';
 
-import { usePagination } from '@/lib/hooks/use-pagination';
 import { TODO } from '@/lib/types';
 import { extractYear } from '@/lib/utils';
+import { usePagination } from '@/hooks/use-pagination';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
 export const MovieTvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {

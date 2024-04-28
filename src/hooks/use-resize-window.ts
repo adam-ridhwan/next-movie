@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useRef } from 'react';
 import chalk from 'chalk';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { usePagination } from '@/lib/hooks/use-pagination';
-import { useResizeDirection } from '@/lib/hooks/use-resize-direction';
 import { logger } from '@/lib/logger';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { usePagination } from '@/hooks/use-pagination';
+import { useResizeDirection } from '@/hooks/use-resize-direction';
 
 const log = (label: string) => logger(chalk.bgHex('#FC86F3').black(`${label}`));
 

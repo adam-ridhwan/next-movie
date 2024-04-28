@@ -1,16 +1,16 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { usePagination } from '@/lib/hooks/use-pagination';
 import { Section, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { usePagination } from '@/hooks/use-pagination';
 import { BonusTrailerThumbnail } from '@/components/slider/tiles/thumbnails/bonus-trailer-thumbnail';
 import { CastThumbnail } from '@/components/slider/tiles/thumbnails/cast-thumbnail';
 import { MovieTvThumbnail } from '@/components/slider/tiles/thumbnails/movie-tv-thumbnail';
 
 import '../slider.css';
 
-import { useAnimation } from '@/lib/hooks/use-animation';
+import { useAnimation } from '@/hooks/use-animation';
 
 type TileItemProps = {
   tile: TODO | void;

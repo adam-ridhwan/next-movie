@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BrowseRoute } from '@/routes';
 
-import { useEffectOnce } from '@/lib/hooks/use-effect-once';
+import { useEffectOnce } from '@/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Media = ({ children }: { children: ReactNode }) => {

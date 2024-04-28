@@ -1,11 +1,11 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { useAnimation } from '@/lib/hooks/use-animation';
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { usePagination } from '@/lib/hooks/use-pagination';
-import { useSlide } from '@/lib/hooks/use-slide';
-import { useTiles } from '@/lib/hooks/use-tiles';
 import { cn } from '@/lib/utils';
+import { useAnimation } from '@/hooks/use-animation';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { usePagination } from '@/hooks/use-pagination';
+import { useSlide } from '@/hooks/use-slide';
+import { useTiles } from '@/hooks/use-tiles';
 import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileContainer = () => {
