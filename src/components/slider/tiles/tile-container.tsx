@@ -37,7 +37,7 @@ const TileContainer = () => {
       {/* Mobile */}
       {/* prettier-ignore */}
       <div className={cn(
-        'hide-scrollbar flex flex-row overflow-x-auto',
+        'hide-scrollbar flex flex-row overflow-x-auto px-leftRightCustom',
         'sm:hidden',
         )}>
         {MEDIA.map((tile, i) => (

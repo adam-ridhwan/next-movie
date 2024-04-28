@@ -39,7 +39,7 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
         {isLeft && <ChevronLeftIcon className={iconClass} />}
       </button>
 
-      <div className='w-leftRightCustom min-w-leftRightCustom sm:hidden' />
+
     </>
   );
 };

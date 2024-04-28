@@ -28,7 +28,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
   if (!tile) return null;
 
   const firstTileCurrentPage = pages.get(currentPage)?.[0];
-  const ref = tile.uuid === firstTileCurrentPage?.uuid ? tileItemRef : undefined;
+  // const ref = tile.uuid === firstTileCurrentPage?.uuid ? tileItemRef : undefined;
 
   const tilesPerPage = getTileCountPerPage();
 
@@ -45,7 +45,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
 
   return (
     <div
-      ref={ref}
+      ref={tileItemRef}
       className={cn('slider-tile', `tile-${label}`, {
         'slider-tile--movie': mediaType === 'movie',
         'slider-tile--tv': mediaType === 'tv',

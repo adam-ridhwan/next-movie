@@ -10,7 +10,13 @@ export const MovieTvThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: 
   const { state: { mediaType } } = usePagination(); // prettier-ignore
 
   return (
-    <Media.Link id={tile.id.toString()} mediaType={mediaType} scroll={false} tabIndex={isVisible ? 0 : -1}>
+    // prettier-ignore
+    <Media.Link
+      id={tile.id.toString()}
+      mediaType={mediaType}
+      scroll={false}
+      tabIndex={isVisible ? 0 : -1}
+    >
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
         {tile.backdrop_path || tile.poster_path ? (
           <>
