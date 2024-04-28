@@ -72,7 +72,7 @@ export const GENRES = {
 export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
-export type MediaType = 'movie' | 'tv' | 'trailer' | 'cast' | 'bonus';
+export type MediaType = 'movie' | 'tv';
 
 type CategoryWithIdProps = {
   id: string;
