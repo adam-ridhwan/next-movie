@@ -36,15 +36,6 @@ export const MovieSchema = z.object({
 });
 export type Movie = z.infer<typeof MovieSchema>;
 
-export const MediaSchema = z.object({
-  id: z.number(),
-  title: z.string(),
-  release_date: z.string(),
-  overview: z.string(),
-  poster_path: z.string(),
-  key: z.string(),
-});
-
 export const nonEmptyTilesSchema = z.array(MovieSchema);
 export type Pages = Map<number, Movie[]>;
 

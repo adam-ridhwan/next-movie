@@ -3,7 +3,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { ContentRouteParams } from '@/lib/types';
 
-export default async function Backdrop({ id, mediaType }: ContentRouteParams) {
+export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
   const details = await fetchTMDB({ category: 'details', mediaType, id });
 
   return (
