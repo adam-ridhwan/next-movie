@@ -4,7 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { MEDIA_QUERY } from '@/lib/constants';
-import { Movie, TODO } from '@/lib/types';
+import { Movie } from '@/lib/types';
 
 type UsePageUtilsReturn = {
   state: {
@@ -20,13 +20,6 @@ type UsePageUtilsReturn = {
     getTileCount: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
     updateUuids: (params: UpdateUuidsParams) => Movie[];
-    getMapValue: <K, V>({ label, map, key }: GetMapValueParams<K, V>) => V;
-    findIndexByKey: <T, K extends keyof T>({
-      label,
-      array,
-      key,
-      value,
-    }: FindItemByIndexParams<T, K>) => number;
   };
 };
 
@@ -35,19 +28,6 @@ type UpdateUuidsParams = {
   firstTileIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;
-};
-
-type GetMapValueParams<K, V> = {
-  label: string;
-  map: Map<K, V>;
-  key: K;
-};
-
-type FindItemByIndexParams<T, K extends keyof T> = {
-  label: string;
-  array: T[];
-  key: K;
-  value: T[K] | undefined;
 };
 
 export const usePageUtils = (): UsePageUtilsReturn => {
@@ -108,24 +88,6 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     return newContentList.map(tile => ({ ...tile, uuid: uuid() }));
   };
 
-  const getMapValue = <K, V>({ label, map, key }: GetMapValueParams<K, V>): V => {
-    const result = map.get(key);
-    if (result === undefined) throw new Error(`${label}: Key not found: ${key}`);
-    return result;
-  };
-
-  const findIndexByKey = <T, K extends keyof T>({
-    label,
-    array,
-    key,
-    value,
-  }: FindItemByIndexParams<T, K>): number => {
-    if (value === undefined) throw new Error(`${label}: Value is undefined`);
-    const index = array.findIndex(item => item[key] === value);
-    if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
-    return index;
-  };
-
   const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
   return {
@@ -142,8 +104,6 @@ export const usePageUtils = (): UsePageUtilsReturn => {
       getTileCount,
       getStartIndex,
       updateUuids,
-      getMapValue,
-      findIndexByKey,
     },
   };
 };

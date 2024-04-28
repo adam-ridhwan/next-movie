@@ -6,6 +6,7 @@ import { useMapPages } from '@/lib/hooks/use-map-pages';
 import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { usePaginationLogger } from '@/lib/logger';
 import { MediaType, Movie, Pages } from '@/lib/types';
+import { findIndexByKey, getMapValue } from '@/lib/utils';
 
 type UsePaginationReturn = {
   state: {
@@ -44,7 +45,7 @@ export const usePagination = (): UsePaginationReturn => {
   const markAsPaginated = useSliderStore(state => state.markAsPaginated);
 
   const { setMapPages } = useMapPages();
-  const { actions: { getTileCountPerPage, findIndexByKey, getMapValue } } = usePageUtils(); // prettier-ignore
+  const { actions: { getTileCountPerPage,  } } = usePageUtils(); // prettier-ignore
 
   const isFirstPage = currentPage === 1;
   const isSecondPage = currentPage === 2;

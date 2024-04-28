@@ -3,7 +3,6 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { ContentRouteParams } from '@/lib/types';
-import { MediaHeader } from '@/components/fonts';
 import Slider from '@/components/slider/slider';
 
 export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams) {
@@ -19,8 +18,7 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
   return (
     <SliderProvider content={moreLikesThis} mediaType={mediaType}>
       <DomContextProvider>
-        <MediaHeader>More like this</MediaHeader>
-        <Slider />
+        <Slider headerTitle='More like this' />
       </DomContextProvider>
     </SliderProvider>
   );

@@ -1,20 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
 import { Movie } from '@/lib/types';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
 export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: boolean }) => {
-  const { state: { isMounted } } = usePageUtils(); // prettier-ignore
-
   return (
     <Link
       // TODO: Switch to Media.Link when the bonus trailer drawer is implemented
       href={`https://www.youtube.com/watch?v=${tile.key}`}
       target='_blank'
       rel='noreferrer'
-      tabIndex={isVisible && isMounted ? 0 : -1}
+      tabIndex={isVisible ? 0 : -1}
     >
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
         {tile.key ? (

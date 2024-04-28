@@ -12,15 +12,8 @@ export const useAnimation = (): UseAnimationReturn => {
   const isAnimating = useSliderStore(state => state.isAnimating);
   const setIsAnimating = useSliderStore(state => state.setIsAnimating);
 
-  const enableAnimation = () => {
-    document.body.style.pointerEvents = 'none';
-    return setIsAnimating(true);
-  };
-
-  const disableAnimation = () => {
-    document.body.style.pointerEvents = '';
-    return setIsAnimating(false);
-  };
+  const enableAnimation = () => setIsAnimating(true);
+  const disableAnimation = () => setIsAnimating(false);
 
   return { isAnimating, enableAnimation, disableAnimation };
 };

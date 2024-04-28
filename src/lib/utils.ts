@@ -7,6 +7,9 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export type KeysOf<T> = keyof T;
 export type ValuesOf<T> = T[keyof T];
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
 
 export const capitalize = (str: string): string => {
   const words = str.split(' ');
@@ -56,4 +59,27 @@ export const toPascalCase = (inputString: GenreLabel) => {
 export const getFirstSentence = (text: string) => {
   const match = text.match(/^(.*?[.])\s/);
   return match ? match[1] : text;
+};
+
+export const getMapValue = <K, V>({ label, map, key }: { label: string; map: Map<K, V>; key: K }): V => {
+  const result = map.get(key);
+  if (result === undefined) throw new Error(`${label}: Key not found: ${key}`);
+  return result;
+};
+
+export const findIndexByKey = <T, K extends keyof T>({
+  label,
+  array,
+  key,
+  value,
+}: {
+  label: string;
+  array: T[];
+  key: K;
+  value: T[K] | undefined;
+}): number => {
+  if (value === undefined) throw new Error(`${label}: Value is undefined`);
+  const index = array.findIndex(item => item[key] === value);
+  if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
+  return index;
 };

@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { KeysOf, ValuesOf } from '@/lib/utils';
+import { KeysOf, Prettify, ValuesOf } from '@/lib/utils';
 
 export type TODO = any;
 
@@ -72,47 +72,19 @@ export const GENRES = {
 export type GenreLabel = KeysOf<typeof GENRES>;
 export type GenreId = ValuesOf<typeof GENRES>;
 
-const MEDIA_TYPES = {
-  MOVIE: 'movie',
-  TV: 'tv',
-  TRAILER: 'trailer',
-  CAST: 'cast',
-  BONUS: 'bonus',
-} as const;
-export type MediaType = ValuesOf<typeof MEDIA_TYPES>;
+export type MediaType = 'movie' | 'tv' | 'trailer' | 'cast' | 'bonus';
 
-const CATEGORIES = {
-  CREDITS: 'credits',
-  DETAILS: 'details',
-  DISCOVER: 'discover',
-  KEYWORDS: 'keywords',
-  POPULAR: 'popular',
-  RECOMMENDATIONS: 'recommendations',
-  SIMILAR: 'similar',
-  TRENDING: 'trending',
-  VIDEOS: 'videos',
-  IMAGES: 'images',
-} as const;
-export type Category = ValuesOf<typeof CATEGORIES>;
-
-export type CategoryWithIdProps = {
+type CategoryWithIdProps = {
   id: string;
-  category:
-    | typeof CATEGORIES.CREDITS
-    | typeof CATEGORIES.DETAILS
-    | typeof CATEGORIES.KEYWORDS
-    | typeof CATEGORIES.RECOMMENDATIONS
-    | typeof CATEGORIES.SIMILAR
-    | typeof CATEGORIES.VIDEOS
-    | typeof CATEGORIES.IMAGES;
+  category: 'credits' | 'details' | 'keywords' | 'recommendations' | 'similar' | 'videos' | 'images';
 };
 
-export type CategoryWithoutIdProps = {
-  category: typeof CATEGORIES.POPULAR | typeof CATEGORIES.TRENDING;
+type CategoryWithoutIdProps = {
+  category: 'popular' | 'trending';
 };
 
-export type DiscoverProps = {
-  category: typeof CATEGORIES.DISCOVER;
+type DiscoverProps = {
+  category: 'discover';
   genreId: GenreId;
   page?: number;
   language?: string;
@@ -120,6 +92,4 @@ export type DiscoverProps = {
 
 export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps;
 
-export type FetchTMDBParams = {
-  mediaType: MediaType;
-} & CategoryProps;
+export type FetchTMDBParams = Prettify<{ mediaType: MediaType } & CategoryProps>;
