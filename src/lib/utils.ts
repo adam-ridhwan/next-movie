@@ -7,6 +7,9 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export type KeysOf<T> = keyof T;
 export type ValuesOf<T> = T[keyof T];
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
 
 export const capitalize = (str: string): string => {
   const words = str.split(' ');
