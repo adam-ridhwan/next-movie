@@ -6,37 +6,37 @@ const defaultInfo = {
   search: z.object({})
 };
 
-import * as BrowseRoute from "@/app/browse/page.info";
-import * as MediaRoute from "@/app/browse/[mediaType]/[id]/page.info";
-import * as MoviesRoute from "@/app/movies/page.info";
-import * as TvRoute from "@/app/tv/page.info";
+import * as BrowseRouteRoute from "@/app/browse/page.info";
+import * as MediaRouteRoute from "@/app/browse/[mediaType]/[id]/page.info";
+import * as MoviesRouteRoute from "@/app/movies/page.info";
+import * as TvRouteRoute from "@/app/tv/page.info";
 
-export const Browse = makeRoute(
+export const BrowseRoute = makeRoute(
   "/browse",
   {
     ...defaultInfo,
-    ...BrowseRoute.Route
+    ...BrowseRouteRoute.Route
   }
 );
-export const Media = makeRoute(
+export const MediaRoute = makeRoute(
   "/browse/[mediaType]/[id]",
   {
     ...defaultInfo,
-    ...MediaRoute.Route
+    ...MediaRouteRoute.Route
   }
 );
-export const Movies = makeRoute(
+export const MoviesRoute = makeRoute(
   "/movies",
   {
     ...defaultInfo,
-    ...MoviesRoute.Route
+    ...MoviesRouteRoute.Route
   }
 );
-export const Tv = makeRoute(
+export const TvRoute = makeRoute(
   "/tv",
   {
     ...defaultInfo,
-    ...TvRoute.Route
+    ...TvRouteRoute.Route
   }
 );
 

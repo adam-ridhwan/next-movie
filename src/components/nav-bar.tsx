@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Browse } from '@/routes';
+import { BrowseRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
@@ -16,16 +16,16 @@ const NavBar = () => {
         <LogoIcon />
 
         <nav>
-          <Browse.Link>
+          <BrowseRoute.Link>
             <BodySmall
               className={cn('transition-colors hover:text-primary/50', {
-                'text-primary': pathname === Browse(),
-                'text-primary/70': pathname !== Browse(),
+                'text-primary': pathname === BrowseRoute(),
+                'text-primary/70': pathname !== BrowseRoute(),
               })}
             >
-              Browse
+              BrowseRoute
             </BodySmall>
-          </Browse.Link>
+          </BrowseRoute.Link>
         </nav>
       </div>
     </div>

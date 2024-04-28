@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Media } from '@/routes';
+import { MediaRoute } from '@/routes';
 
 import { GENRES, MediaType, Movie } from '@/lib/types';
 import { getFirstSentence, getObjectKey, toPascalCase } from '@/lib/utils';
@@ -20,7 +20,7 @@ const EpicStage = ({ content, mediaType }: EpicStageProps) => {
   });
 
   return (
-    <Media.Link id={content.id.toString()} mediaType={mediaType} scroll={false}>
+    <MediaRoute.Link id={content.id.toString()} mediaType={mediaType} scroll={false}>
       <div className='relative mb-4 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
           src={`https://image.tmdb.org/t/p/original${content.backdrop_path}`}
@@ -44,7 +44,7 @@ const EpicStage = ({ content, mediaType }: EpicStageProps) => {
           <p className='text-overview'>{getFirstSentence(content.overview)}</p>
         </div>
       </div>
-    </Media.Link>
+    </MediaRoute.Link>
   );
 };
 

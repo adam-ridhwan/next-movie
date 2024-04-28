@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const Route = {
-  name: 'Media',
+  name: 'MediaRoute',
   params: z.object({
     mediaType: z.string(),
     id: z.string(),

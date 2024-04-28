@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Media } from '@/routes';
+import { MediaRoute } from '@/routes';
 
 import { usePagination } from '@/lib/hooks/use-pagination';
 import { Movie } from '@/lib/types';
@@ -11,7 +11,7 @@ export const MovieTvThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: 
 
   return (
     // prettier-ignore
-    <Media.Link
+    <MediaRoute.Link
       id={tile.id.toString()}
       mediaType={mediaType}
       scroll={false}
@@ -54,6 +54,6 @@ export const MovieTvThumbnail = ({ tile, isVisible }: { tile: Movie; isVisible: 
           </BodySmall>
         </div>
       </div>
-    </Media.Link>
+    </MediaRoute.Link>
   );
 };
