@@ -74,16 +74,16 @@ export type GenreId = ValuesOf<typeof GENRES>;
 
 export type MediaType = 'movie' | 'tv' | 'trailer' | 'cast' | 'bonus';
 
-export type CategoryWithIdProps = {
+type CategoryWithIdProps = {
   id: string;
   category: 'credits' | 'details' | 'keywords' | 'recommendations' | 'similar' | 'videos' | 'images';
 };
 
-export type CategoryWithoutIdProps = {
+type CategoryWithoutIdProps = {
   category: 'popular' | 'trending';
 };
 
-export type DiscoverProps = {
+type DiscoverProps = {
   category: 'discover';
   genreId: GenreId;
   page?: number;
