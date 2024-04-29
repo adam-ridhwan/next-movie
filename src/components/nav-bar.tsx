@@ -1,17 +1,17 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useSearchContext } from '@/providers/search-provider';
 import { BrowseRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
+import { useSearch } from '@/hooks/use-search';
 import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
 import SearchInput from '@/components/search-input/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
-  const { handleLinkNavigation } = useSearchContext();
+  const { handleLinkNavigation } = useSearch();
 
   return (
     <div className='flex h-16 items-center bg-black'>

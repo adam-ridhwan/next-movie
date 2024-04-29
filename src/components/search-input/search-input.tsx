@@ -1,8 +1,9 @@
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useSearchContext } from '@/providers/search-provider';
 import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { useSearch } from '@/hooks/use-search';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
@@ -12,10 +13,9 @@ const SearchInput = () => {
     isExpanding,
     isSearchFocused,
     searchInputRef,
-    handlesFocus,
-    handleSearch,
-    handleClear
   } = useSearchContext(); // prettier-ignore
+
+  const { handlesFocus, handleSearch, handleClear } = useSearch();
 
   return (
     <div
