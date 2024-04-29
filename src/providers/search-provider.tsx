@@ -30,6 +30,7 @@ type SearchContextType = {
 
 export const SearchContext = createContext<SearchContextType>(null);
 
+// TODO: Implement custom hooks for the functions
 export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
   const { replace } = useRouter();
   const pathname = usePathname();
