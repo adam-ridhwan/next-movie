@@ -1,34 +1,30 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { usePagination } from '@/lib/hooks/use-pagination';
-import { MediaType, Movie } from '@/lib/types';
+import { Content, Section, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { usePagination } from '@/hooks/use-pagination';
 import { BonusTrailerThumbnail } from '@/components/slider/tiles/thumbnails/bonus-trailer-thumbnail';
 import { CastThumbnail } from '@/components/slider/tiles/thumbnails/cast-thumbnail';
 import { MovieTvThumbnail } from '@/components/slider/tiles/thumbnails/movie-tv-thumbnail';
 
 import '../slider.css';
 
-import { useAnimation } from '@/lib/hooks/use-animation';
+import { useAnimation } from '@/hooks/use-animation';
 
 type TileItemProps = {
-  tile: Movie | void;
+  tile: Content;
   i: number;
 };
 
 const TileItem = ({ tile, i }: TileItemProps) => {
-  const { state: { mediaType } } = usePagination(); // prettier-ignore
+  const { state: {  section } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
-  const { state: { pages, currentPage } } = usePagination(); // prettier-ignore
   const { isAnimating } = useAnimation();
   const { tileItemRef } = useDomContext();
 
   if (!tile) return null;
-
-  const firstTileCurrentPage = pages.get(currentPage)?.[0];
-  // const ref = tile.uuid === firstTileCurrentPage?.uuid ? tileItemRef : undefined;
 
   const tilesPerPage = getTileCountPerPage();
 
@@ -47,15 +43,15 @@ const TileItem = ({ tile, i }: TileItemProps) => {
     <div
       ref={tileItemRef}
       className={cn('slider-tile', `tile-${label}`, {
-        'slider-tile--movie': mediaType === 'movie',
-        'slider-tile--tv': mediaType === 'tv',
-        'slider-tile--trailer': mediaType === 'trailer',
-        'slider-tile--bonus': mediaType === 'bonus',
-        'slider-tile--cast': mediaType === 'cast',
+        'slider-tile--movie': section === 'movie',
+        'slider-tile--tv': section === 'tv',
+        'slider-tile--trailer': section === 'trailer',
+        'slider-tile--bonus': section === 'bonus',
+        'slider-tile--cast': section === 'cast',
         'pointer-events-none': isAnimating,
       })}
     >
-      <ThumbnailSelector mediaType={mediaType} tile={tile} isVisible={isVisible} />
+      <ThumbnailSelector section={section} tile={tile} isVisible={isVisible} />
     </div>
   );
 };
@@ -63,13 +59,13 @@ const TileItem = ({ tile, i }: TileItemProps) => {
 export default TileItem;
 
 type ThumbnailSelectorProps = {
-  mediaType: MediaType;
-  tile: Movie;
+  section: Section;
+  tile: TODO;
   isVisible: boolean;
 };
 
-const ThumbnailSelector = ({ mediaType, tile, isVisible }: ThumbnailSelectorProps) => {
-  switch (mediaType) {
+const ThumbnailSelector = ({ section, tile, isVisible }: ThumbnailSelectorProps) => {
+  switch (section) {
     case 'movie':
     case 'tv':
       return <MovieTvThumbnail tile={tile} isVisible={isVisible} />;

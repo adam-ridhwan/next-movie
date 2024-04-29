@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams, TODO } from '@/lib/types';
 
-export default async function Backdrop({ id, mediaType }: ContentRouteParams) {
-  const details = await fetchTMDB({ category: 'details', mediaType, id });
+export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
+  const details: TODO = await fetchTMDB({ mediaType, id, label: '', category: 'details' });
 
   return (
     <div className='relative aspect-video overflow-hidden rounded-2xl'>

@@ -1,3 +1,5 @@
+'use server';
+
 import { env } from '@/lib/env';
 import { FetchTMDBParams } from '@/lib/types';
 
@@ -37,7 +39,7 @@ const createUrl = (params: FetchTMDBParams): string => {
   }
 };
 
-export const fetchTMDB = async (params: FetchTMDBParams) => {
+export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
   const url = createUrl(params);
   if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
 
@@ -51,6 +53,8 @@ export const fetchTMDB = async (params: FetchTMDBParams) => {
     };
 
     const response = await fetch(url, options);
+    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+
     return await response.json();
   } catch (error) {
     console.error('fetchTMDB', error);

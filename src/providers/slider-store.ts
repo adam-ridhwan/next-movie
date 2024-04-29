@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { MediaType, Movie, Pages } from '@/lib/types';
+import { Content, MediaType, Pages, Section } from '@/lib/types';
 
 type SetPagesParams = {
   pages: Pages;
@@ -14,8 +14,9 @@ type SetPagesParams = {
 };
 
 type SliderState = {
-  MEDIA: Movie[];
+  CONTENT: Content[];
   mediaType: MediaType;
+  section: Section;
   pages: Pages;
   maxPages: number;
   currentPage: number;
@@ -65,12 +66,13 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) =>
+export const createSliderStore = (CONTENT: Content[], mediaType: MediaType, section: Section) =>
   create(
     devtools<SliderStore>(set => ({
-      MEDIA,
+      CONTENT,
       mediaType,
-      pages: new Map<number, Movie[]>().set(1, MEDIA.slice(0, 7)),
+      section,
+      pages: new Map<number, Content[]>().set(1, CONTENT.slice(0, 7)),
       maxPages: 0,
       currentPage: 1,
       tileCountPerPage: 0,
@@ -82,8 +84,8 @@ export const createSliderStore = (MEDIA: Movie[], mediaType: MediaType) =>
       isMounted: false,
 
       setPages: (params: SetPagesParams) => set(() => params),
-      setCurrentPage: currentPage => set(() => ({ currentPage })),
-      setSlideAmount: slideAmount => set(() => ({ slideAmount })),
+      setCurrentPage: (currentPage: number) => set(() => ({ currentPage })),
+      setSlideAmount: (slideAmount: number) => set(() => ({ slideAmount })),
       setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
       markAsPaginated: () => set(() => ({ hasPaginated: true })),
     }))

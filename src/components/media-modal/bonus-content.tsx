@@ -5,8 +5,8 @@ import { SliderProvider } from '@/providers/slider-provider';
 import { ContentRouteParams, TODO } from '@/lib/types';
 import Slider from '@/components/slider/slider';
 
-export default async function Trailers({ id, mediaType }: ContentRouteParams) {
-  const videos = await fetchTMDB({ category: 'videos', mediaType, id });
+export default async function Trailers({ mediaType, id }: ContentRouteParams) {
+  const videos: TODO = await fetchTMDB({ mediaType, id, label: 'Bonus Content', category: 'videos' });
 
   const bonusContent = videos.results.filter(
     (video: TODO) => video.type === 'Featurette' && video.site === 'YouTube'
@@ -16,7 +16,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
 
   return (
     <section>
-      <SliderProvider content={bonusContent} mediaType='bonus'>
+      <SliderProvider content={bonusContent} mediaType={mediaType} section='bonus'>
         <DomContextProvider>
           <Slider headerTitle='Bonus Content' />
         </DomContextProvider>

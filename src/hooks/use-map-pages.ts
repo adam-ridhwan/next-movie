@@ -3,10 +3,10 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { usePageUtils } from '@/lib/hooks/use-page-utils';
-import { useValidators } from '@/lib/hooks/use-validators';
-import { Movie, Pages } from '@/lib/types';
+import { Pages, TODO } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
+import { usePageUtils } from '@/hooks/use-page-utils';
+import { useValidators } from '@/hooks/use-validators';
 
 type SetMapTilesParams = {
   firstTileCurrentPageIndex: number;
@@ -15,7 +15,7 @@ type SetMapTilesParams = {
 };
 
 export const useMapPages = () => {
-  const MEDIA = useSliderStore(state => state.MEDIA);
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const pages = useSliderStore(state => state.pages);
   const setPages = useSliderStore(state => state.setPages);
   const currentPage = useSliderStore(state => state.currentPage);
@@ -26,7 +26,7 @@ export const useMapPages = () => {
   } = usePageUtils();
 
   const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
-    const newPages: Pages = new Map<number, Movie[]>();
+    const newPages: Pages = new Map<number, TODO[]>();
     const newTileCountPerPage = getTileCountPerPage();
     let newFirstPageLength = newTileCountPerPage;
     let newLastPageLength = newTileCountPerPage;
@@ -38,17 +38,17 @@ export const useMapPages = () => {
     });
 
     const leftTileCount = getTileCount(firstTileCurrentPageIndex / newTileCountPerPage);
-    const rightTileCount = getTileCount((MEDIA.length - firstTileCurrentPageIndex) / newTileCountPerPage);
+    const rightTileCount = getTileCount((CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage);
 
     const newTileCount = leftTileCount + rightTileCount;
     const newMaxPages = newTileCount / newTileCountPerPage;
     let newCurrentPage = -1;
 
     let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTileCount);
-    let newContentList: Movie[] = [];
+    let newContentList: TODO[] = [];
 
     for (let i = 0; i < newTileCount; i++) {
-      if (startIndex >= MEDIA.length) startIndex = 0;
+      if (startIndex >= CONTENT.length) startIndex = 0;
 
       const pageNumber = Math.floor(i / newTileCountPerPage);
       const isNewFirstPage = pageNumber === 1;
@@ -59,7 +59,7 @@ export const useMapPages = () => {
       const idMatches = newContentList.some(tile => tile.id === firstTileCurrentPage.id);
       if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
 
-      const newContentItem = MEDIA[startIndex++];
+      const newContentItem = CONTENT[startIndex++];
 
       newContentList.push(
         isLeftPlaceholder || isRightPlaceholder
@@ -69,7 +69,7 @@ export const useMapPages = () => {
 
       if (newContentList.length !== newTileCountPerPage) continue;
 
-      const firstTileIndex = newContentList.findIndex(tile => tile.id === MEDIA[0].id);
+      const firstTileIndex = newContentList.findIndex(tile => tile.id === CONTENT[0].id);
 
       if (isNewFirstPage && firstTileIndex > 0) {
         newFirstPageLength = newTileCountPerPage - firstTileIndex;

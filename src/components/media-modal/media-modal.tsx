@@ -2,9 +2,9 @@
 
 import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Browse } from '@/routes';
+import { BrowseRoute } from '@/routes';
 
-import { useEffectOnce } from '@/lib/hooks/use-effect-once';
+import { useEffectOnce } from '@/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Media = ({ children }: { children: ReactNode }) => {
@@ -14,7 +14,7 @@ const Media = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog open onOpenChange={() => router.push(Browse(), { scroll: false })}>
+    <Dialog open onOpenChange={() => router.push(BrowseRoute(), { scroll: false })}>
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );
