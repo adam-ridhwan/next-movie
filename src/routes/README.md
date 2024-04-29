@@ -61,11 +61,11 @@ The system provides three typed hooks to use in your application `usePush`, `use
 For each hook you give the route to get the appropriate data back.
 
 ```ts
-import { Search } from "@/routes";
+import { SearchInput } from "@/routes";
 import { useSearchParams } from "@/routes/hooks";
 
 export default MyClientComponent() {
-  const searchParams = useSearchParams(Search);
+  const searchParams = useSearchParams(SearchInput);
   return <div>{searchParams.query}</div>;
 }
 ```

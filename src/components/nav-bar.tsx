@@ -6,7 +6,7 @@ import { BrowseRoute } from '@/routes';
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
-import Search from '@/components/search/search';
+import SearchInput from '@/components/search-input/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -29,7 +29,7 @@ const NavBar = () => {
             </BrowseRoute.Link>
           </nav>
 
-          <Search />
+          <SearchInput />
         </div>
       </div>
     </div>

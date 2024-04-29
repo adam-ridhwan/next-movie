@@ -11,6 +11,8 @@ export default async function Page({ searchParams }: { searchParams?: { q?: stri
   const movies: TODO = await fetchTMDB({ category: 'search', mediaType: 'movie', q: query });
   const tiles = movies.results;
 
+  if (!tiles) return null;
+
   return (
     <div className='flex flex-col gap-8 px-leftRightCustom pt-10'>
       <div className='flex flex-row gap-2'>

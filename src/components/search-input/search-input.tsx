@@ -1,26 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BrowseRoute } from '@/routes';
+import { X } from 'lucide-react';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { cn } from '@/lib/utils';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 import { SearchIcon } from '@/components/icons';
 
-const Search = () => {
+const SearchInput = () => {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [_, setSearchText] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
     if (!inputRef.current) return;
-    if (searchParams.get('q')) {
-      setIsSearchFocused(true);
-    }
+    if (searchParams.get('q')) setIsSearchFocused(true);
   });
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const Search = () => {
       inputRef.current.blur();
       inputRef.current.value = '';
       setIsSearchFocused(false);
-      setSearchText('');
     } else {
       inputRef.current.focus();
       setIsSearchFocused(true);
@@ -46,13 +44,19 @@ const Search = () => {
     setIsAnimating(false);
   };
 
-  const handleSearch = (query: string) => {
-    if (query.length === 0) return replace(BrowseRoute());
-
+  const handleSearch = useDebouncedCallback((query: string) => {
     const params = new URLSearchParams(searchParams);
-    if (query) params.set('q', query);
-    else params.delete('q');
-    replace(`/search?${params.toString()}`); // FIXME: SearchRoute({ q: query }); does not work
+    if (query) {
+      params.set('q', query);
+    } else {
+      params.delete('q');
+    }
+    replace(`/search?${params.toString()}`);
+  }, 1000);
+
+  const handleClear = () => {
+    if (inputRef.current) inputRef.current.value = '';
+    replace(BrowseRoute());
   };
 
   return (
@@ -61,7 +65,12 @@ const Search = () => {
         'border-primary/80': isSearchFocused,
       })}
     >
-      <button disabled={isAnimating} onClick={() => focusSearch()} className='grid size-8 place-items-center'>
+      <button
+        type='button'
+        disabled={isAnimating}
+        onClick={() => focusSearch()}
+        className='grid size-8 place-items-center'
+      >
         <SearchIcon />
       </button>
 
@@ -69,22 +78,33 @@ const Search = () => {
         Search input
       </label>
 
-      <input
-        id='search-input'
-        ref={inputRef}
-        disabled={isAnimating}
-        type='text'
-        defaultValue={searchParams.get('q')?.toString()}
-        onChange={e => handleSearch(e.target.value)}
-        placeholder='Movies, TV shows, genres'
+      <div
         className={cn(
-          'h-8 bg-black text-sm',
+          'flex flex-row overflow-hidden',
           { 'w-0': !isSearchFocused },
           { 'w-52 px-2 transition-all duration-300': isSearchFocused }
         )}
-      />
+      >
+        <input
+          id='search-input'
+          ref={inputRef}
+          disabled={isAnimating}
+          type='text'
+          defaultValue={searchParams.get('q')?.toString()}
+          onChange={e => {
+            if (pathname === BrowseRoute()) replace(`/search`);
+            return handleSearch(e.target.value);
+          }}
+          placeholder='Movies, TV shows, genres'
+          className={cn('h-8 bg-black pr-2 text-sm')}
+        />
+
+        <button disabled={isAnimating} onClick={() => handleClear()} className='pr-2'>
+          <X className='h-5 w-5' />
+        </button>
+      </div>
     </div>
   );
 };
 
-export default Search;
+export default SearchInput;
