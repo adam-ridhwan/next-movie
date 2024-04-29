@@ -8,7 +8,7 @@ export async function Label({ mediaType, id }: ContentRouteParams) {
 
   return (
     <>
-      <HeadingLarge>{`${details.original_name || details.original_title || '-'}`}</HeadingLarge>
+      <HeadingLarge>{details.name || details.original_title || details.original_name}</HeadingLarge>
       <p className=''>{details.overview}</p>
     </>
   );
