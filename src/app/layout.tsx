@@ -1,6 +1,6 @@
 import './globals.css';
 
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { SearchContextProvider } from '@/providers/search-provider';
@@ -24,9 +24,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <HydrationOverlay>
         <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
           <main className='flex flex-col overflow-x-hidden'>
-            <SearchContextProvider>
-              <NavBar />
-            </SearchContextProvider>
+            <Suspense>
+              <SearchContextProvider>
+                <NavBar />
+              </SearchContextProvider>
+            </Suspense>
             <div className='container min-h-[100dvh] flex-1'>{children}</div>
             <footer className='p-10'></footer>
           </main>
