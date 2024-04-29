@@ -23,7 +23,7 @@ const NavBar = () => {
                 'text-primary/70': pathname !== BrowseRoute(),
               })}
             >
-              BrowseRoute
+              Browse
             </BodySmall>
           </BrowseRoute.Link>
         </nav>
