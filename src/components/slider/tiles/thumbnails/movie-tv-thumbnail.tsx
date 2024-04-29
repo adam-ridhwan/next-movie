@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { MediaRoute } from '@/routes';
 
-import { SliderContent, TODO } from '@/lib/types';
+import { SliderContent } from '@/lib/types';
 import { extractYear } from '@/lib/utils';
 import { usePagination } from '@/hooks/use-pagination';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
-export const MovieTvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
+export const MovieTvThumbnail = ({ tile, isVisible }: { tile: SliderContent; isVisible: boolean }) => {
   const { state: { mediaType } } = usePagination(); // prettier-ignore
 
   return (

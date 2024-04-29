@@ -3,7 +3,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { FetchTMDBParams, MovieTvSchema, Section } from '@/lib/types';
+import { FetchTMDBParams, Section } from '@/lib/types';
 import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -16,10 +16,8 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
   ];
 
   const contentPromises = content.map(async content => {
-    const unknownResult = await fetchTMDB({ ...content });
-    const parsedMovieTv = MovieTvSchema.safeParse(unknownResult);
-    if (!parsedMovieTv.success) throw new Error('Error');
-    return { ...content, results: parsedMovieTv.data.results };
+    const moviesTvs = await fetchTMDB({ ...content });
+    return { ...content, results: moviesTvs.results };
   });
 
   const fetchedContent = await Promise.all(contentPromises);

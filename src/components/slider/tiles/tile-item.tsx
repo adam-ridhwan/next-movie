@@ -1,6 +1,6 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { Content, Section } from '@/lib/types';
+import { Section, SliderContent } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -13,7 +13,7 @@ import '../slider.css';
 import { useAnimation } from '@/hooks/use-animation';
 
 type TileItemProps = {
-  tile: Content;
+  tile: SliderContent;
   i: number;
 };
 
@@ -60,7 +60,7 @@ export default TileItem;
 
 type ThumbnailSelectorProps = {
   section: Section;
-  tile: Content;
+  tile: SliderContent;
   isVisible: boolean;
 };
 

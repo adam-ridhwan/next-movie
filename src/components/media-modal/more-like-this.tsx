@@ -2,7 +2,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
-import { ContentRouteParams, FetchTMDBParams, MovieTvSchema } from '@/lib/types';
+import { ContentRouteParams, FetchTMDBParams } from '@/lib/types';
 import Slider from '@/components/slider/slider';
 
 export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams) {
@@ -12,9 +12,8 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
   ];
 
   const contentPromises = content.map(async content => {
-    const unknownResult = await fetchTMDB({ ...content });
-    const parsedMovieTv = MovieTvSchema.safeParse(unknownResult);
-    return { ...content, results: parsedMovieTv?.data?.results ?? [] };
+    const movieTvs = await fetchTMDB({ ...content });
+    return { ...content, results: movieTvs.results ?? [] };
   });
 
   const [recommendations, similar] = await Promise.all(contentPromises);
