@@ -4,11 +4,11 @@ import { createContext, ReactNode, useContext, useRef } from 'react';
 import { createSliderStore, SliderStore } from '@/providers/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
-import { MediaType, Section, TODO } from '@/lib/types';
+import { Content, MediaType, Section } from '@/lib/types';
 
 export type SliderProviderProps = {
   children: ReactNode;
-  content: TODO[];
+  content: Content[];
   mediaType: MediaType;
   section: Section;
 };

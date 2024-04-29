@@ -27,6 +27,7 @@ export const MovieSchema = z.object({
   vote_average: z.number(),
   vote_count: z.number(),
 });
+export type Movie = z.infer<typeof MovieSchema>;
 
 export const TvSchema = z.object({
   adult: z.boolean(),
@@ -44,6 +45,7 @@ export const TvSchema = z.object({
   vote_average: z.number(),
   vote_count: z.number(),
 });
+export type Tv = z.infer<typeof TvSchema>;
 
 export const MovieTvSchema = z.object({
   page: z.number(),
@@ -52,7 +54,7 @@ export const MovieTvSchema = z.object({
   total_results: z.number(),
 });
 
-export type MovieTv = z.infer<typeof MovieTvSchema>;
+export type Content = Movie | Tv;
 
 export const nonEmptyTilesSchema = z.array(MovieSchema);
 export type Pages = Map<number, TODO[]>;

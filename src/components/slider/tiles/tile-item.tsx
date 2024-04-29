@@ -1,6 +1,6 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { Section, TODO } from '@/lib/types';
+import { Content, Section, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -13,22 +13,18 @@ import '../slider.css';
 import { useAnimation } from '@/hooks/use-animation';
 
 type TileItemProps = {
-  tile: TODO | void;
+  tile: Content;
   i: number;
 };
 
 const TileItem = ({ tile, i }: TileItemProps) => {
-  const { state: { mediaType, section } } = usePagination(); // prettier-ignore
+  const { state: {  section } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
-  const { state: { pages, currentPage } } = usePagination(); // prettier-ignore
   const { isAnimating } = useAnimation();
   const { tileItemRef } = useDomContext();
 
   if (!tile) return null;
-
-  const firstTileCurrentPage = pages.get(currentPage)?.[0];
-  // const ref = tile.uuid === firstTileCurrentPage?.uuid ? tileItemRef : undefined;
 
   const tilesPerPage = getTileCountPerPage();
 
