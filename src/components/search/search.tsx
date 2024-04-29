@@ -1,10 +1,16 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { BrowseRoute, SearchRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
 import { SearchIcon } from '@/components/icons';
 
 const Search = () => {
-  const [searchText, setSearchText] = useState('');
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [_, setSearchText] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -26,6 +32,20 @@ const Search = () => {
     setIsAnimating(false);
   };
 
+  const handleSearch = (query: string) => {
+    if (query.length === 0) return replace(BrowseRoute());
+
+    const params = new URLSearchParams(searchParams);
+    if (query) params.set('q', query);
+    else params.delete('q');
+    replace(SearchRoute({ query }));
+  };
+
+  useEffect(() => {
+    if (!inputRef.current) return;
+    if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();
+  }, [pathname, isSearchFocused]);
+
   return (
     <div
       className={cn('absolute right-0 flex flex-row items-center border border-transparent bg-black', {
@@ -45,8 +65,8 @@ const Search = () => {
         ref={inputRef}
         disabled={isAnimating}
         type='text'
-        value={searchText}
-        onChange={e => setSearchText(e.target.value)}
+        defaultValue={searchParams.get('q')?.toString()}
+        onChange={e => handleSearch(e.target.value)}
         placeholder='Movies, TV shows, genres'
         className={cn(
           'h-8 bg-black text-sm',

@@ -9,6 +9,7 @@ const defaultInfo = {
 import * as BrowseRouteRoute from "@/app/browse/page.info";
 import * as MediaRouteRoute from "@/app/browse/[mediaType]/[id]/page.info";
 import * as MoviesRouteRoute from "@/app/movies/page.info";
+import * as SearchRouteRoute from "@/app/search/page.info";
 import * as TvRouteRoute from "@/app/tv/page.info";
 
 export const BrowseRoute = makeRoute(
@@ -30,6 +31,13 @@ export const MoviesRoute = makeRoute(
   {
     ...defaultInfo,
     ...MoviesRouteRoute.Route
+  }
+);
+export const SearchRoute = makeRoute(
+  "/search",
+  {
+    ...defaultInfo,
+    ...SearchRouteRoute.Route
   }
 );
 export const TvRoute = makeRoute(
