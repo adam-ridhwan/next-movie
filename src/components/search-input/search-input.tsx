@@ -44,7 +44,8 @@ const SearchInput = () => {
     setIsAnimating(false);
   };
 
-  const handleSearch = useDebouncedCallback((query: string) => {
+  const handleSearch = (query: string) => {
+    if (query.length === 0) return replace(BrowseRoute());
     const params = new URLSearchParams(searchParams);
     if (query) {
       params.set('q', query);
@@ -52,7 +53,7 @@ const SearchInput = () => {
       params.delete('q');
     }
     replace(`/search?${params.toString()}`);
-  }, 1000);
+  };
 
   const handleClear = () => {
     if (inputRef.current) inputRef.current.value = '';
