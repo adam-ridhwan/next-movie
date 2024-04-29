@@ -12,7 +12,7 @@ import {
   useState,
 } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute, SearchRoute } from '@/routes';
+import { BrowseRoute } from '@/routes';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
@@ -67,7 +67,6 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
   };
 
   const handleSearch = (query: string) => {
-    if (pathname === BrowseRoute()) replace(SearchRoute());
     if (query.length === 0) return replace(BrowseRoute());
 
     const params = new URLSearchParams(searchParams);
