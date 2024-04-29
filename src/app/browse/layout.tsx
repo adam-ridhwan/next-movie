@@ -36,7 +36,7 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
           section={content.section}
         >
           <DomContextProvider>
-            <Slider headerTitle={content.label} />
+            <Slider headerTitle={content.label || ''} />
           </DomContextProvider>
         </SliderProvider>
       ))}
