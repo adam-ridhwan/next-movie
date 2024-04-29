@@ -4,11 +4,16 @@
 
 import { useSliderStore } from '@/providers/slider-provider';
 
+import { usePageUtils } from '@/hooks/use-page-utils';
 import { PageIndicatorIcon } from '@/components/icons';
 
 const PageIndicator = () => {
+  const CONTENT = useSliderStore(state => state.CONTENT);
   const pages = useSliderStore(state => state.pages);
   const currentPage = useSliderStore(state => state.currentPage);
+  const { actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
+
+  if (CONTENT.length <= getTileCountPerPage()) return null;
 
   const pageNumbers = Array.from(pages.entries());
 

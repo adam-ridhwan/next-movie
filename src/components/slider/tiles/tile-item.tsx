@@ -1,6 +1,6 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { Content, Section, TODO } from '@/lib/types';
+import { Section, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -10,21 +10,21 @@ import { MovieTvThumbnail } from '@/components/slider/tiles/thumbnails/movie-tv-
 
 import '../slider.css';
 
+import { forwardRef } from 'react';
+
 import { useAnimation } from '@/hooks/use-animation';
 
 type TileItemProps = {
-  tile: Content;
+  tile: TODO;
   i: number;
 };
 
-const TileItem = ({ tile, i }: TileItemProps) => {
+// eslint-disable-next-line react/display-name
+const TileItem = forwardRef<HTMLDivElement, TileItemProps>(({ tile, i }, ref) => {
   const { state: {  section } } = usePagination(); // prettier-ignore
   const { state: { isMounted } } = usePageUtils(); // prettier-ignore
   const { state: { hasPaginated }, actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
   const { isAnimating } = useAnimation();
-  const { tileItemRef } = useDomContext();
-
-  if (!tile) return null;
 
   const tilesPerPage = getTileCountPerPage();
 
@@ -41,7 +41,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
 
   return (
     <div
-      ref={tileItemRef}
+      ref={ref}
       className={cn('slider-tile', `tile-${label}`, {
         'slider-tile--movie': section === 'movie',
         'slider-tile--tv': section === 'tv',
@@ -54,7 +54,7 @@ const TileItem = ({ tile, i }: TileItemProps) => {
       <ThumbnailSelector section={section} tile={tile} isVisible={isVisible} />
     </div>
   );
-};
+});
 
 export default TileItem;
 

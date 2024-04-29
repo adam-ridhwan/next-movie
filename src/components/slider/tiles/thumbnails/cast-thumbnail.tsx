@@ -11,7 +11,7 @@ export const CastThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: bool
         {tile.profile_path ? (
           <Image
             src={`https://image.tmdb.org/t/p/w500${tile.profile_path}`}
-            alt={tile.title || tile.name}
+            alt={tile.id.toString() || 'Image not found'}
             priority
             unoptimized
             fill

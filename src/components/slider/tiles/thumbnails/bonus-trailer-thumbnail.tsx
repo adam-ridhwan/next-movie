@@ -17,7 +17,7 @@ export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisib
         {tile.key ? (
           <Image
             src={`https://img.youtube.com/vi/${tile.key}/hqdefault.jpg`}
-            alt={tile.title || tile.name}
+            alt={'Image not found'}
             priority
             unoptimized
             fill
@@ -26,7 +26,7 @@ export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisib
         ) : (
           <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
             <HeadingExtraSmall className='line-clamp-1'>
-              {tile.name || tile.original_title || tile.original_name}
+              {`${tile.name || tile.original_title || tile.original_name || ''}`}
             </HeadingExtraSmall>
           </div>
         )}

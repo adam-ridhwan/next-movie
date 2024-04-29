@@ -4,28 +4,30 @@ import { ContentRouteParams, TODO } from '@/lib/types';
 import { capitalize } from '@/lib/utils';
 
 export async function Actors({ id, mediaType }: ContentRouteParams) {
-  const credits: TODO = await fetchTMDB({ label: '', category: 'credits', mediaType, id });
-  if (!credits.cast) return null;
+  const credits = await fetchTMDB({ category: 'credits', mediaType, id });
+  if (!credits) return null;
   const actors = credits.cast.filter(({ known_for_department }: TODO) => known_for_department === 'Acting');
   const firstThreeActors = actors.slice(0, 3).map((actor: TODO) => actor.name);
   return <Metadata label='Actors' metadata={firstThreeActors} />;
 }
 
 export async function Genres({ id, mediaType }: ContentRouteParams) {
-  const details: TODO = await fetchTMDB({ label: '', category: 'details', mediaType, id });
-  if (!details.genres) return null;
+  const details = await fetchTMDB({ category: 'details', mediaType, id });
+  if (!details) return null;
   const genres = details.genres.map(({ name }: TODO) => name).slice(0, 3);
+  if (genres !== undefined) return null;
   return <Metadata label='Genres' metadata={genres} />;
 }
 
 export async function Keywords({ id, mediaType }: ContentRouteParams) {
-  const keywords: TODO = await fetchTMDB({ label: '', category: 'keywords', mediaType, id });
-  const parsedKeyword = keywords.keywords || keywords.results;
-  const firstThreeKeywords = parsedKeyword.map(({ name }: TODO) => name).slice(0, 3);
+  const keywords = await fetchTMDB({ category: 'keywords', mediaType, id });
+  if (!keywords) return null;
+  const keywordList = keywords.keywords || keywords.results;
+  const firstThreeKeywords = keywordList.map(({ name }: TODO) => name).slice(0, 3);
   return <Metadata label='Keywords' metadata={firstThreeKeywords} />;
 }
 
-export function Metadata({ label, metadata }: { label: string; metadata: string[] }) {
+export function Metadata({ label, metadata }: { label: string; metadata: Array<string> }) {
   if (!metadata.length) return null;
 
   return (

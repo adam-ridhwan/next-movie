@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams, TODO } from '@/lib/types';
+import { ContentRouteParams } from '@/lib/types';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
-  const details: TODO = await fetchTMDB({ mediaType, id, label: '', category: 'details' });
+  const details = await fetchTMDB({ category: 'details', mediaType, id });
 
   return (
     <div className='relative aspect-video overflow-hidden rounded-2xl'>
       <Image
         src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
-        alt={details.original_title || details.original_name}
+        alt={details.title || ''}
         priority
         unoptimized
         fill

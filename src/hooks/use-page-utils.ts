@@ -19,7 +19,7 @@ type UsePageUtilsReturn = {
     getTileCountPerPage: () => number;
     getTileCount: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
-    updateUuids: <Content>(params: UpdateUuidsParams) => Content[];
+    updateUuids: (params: UpdateUuidsParams) => TODO[];
   };
 };
 
