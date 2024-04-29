@@ -1,6 +1,6 @@
 import { useDomContext } from '@/providers/dom-provider';
 
-import { Content, Section, TODO } from '@/lib/types';
+import { Content, Section } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -60,7 +60,7 @@ export default TileItem;
 
 type ThumbnailSelectorProps = {
   section: Section;
-  tile: TODO;
+  tile: Content;
   isVisible: boolean;
 };
 

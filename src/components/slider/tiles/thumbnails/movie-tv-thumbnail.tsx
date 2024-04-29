@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { MediaRoute } from '@/routes';
 
-import { TODO } from '@/lib/types';
+import { SliderContent, TODO } from '@/lib/types';
 import { extractYear } from '@/lib/utils';
 import { usePagination } from '@/hooks/use-pagination';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';

@@ -4,7 +4,7 @@ import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { MEDIA_QUERY } from '@/lib/constants';
-import { TODO } from '@/lib/types';
+import { Content } from '@/lib/types';
 
 type UsePageUtilsReturn = {
   state: {
@@ -19,12 +19,12 @@ type UsePageUtilsReturn = {
     getTileCountPerPage: () => number;
     getTileCount: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
-    updateUuids: <Content>(params: UpdateUuidsParams) => Content[];
+    updateUuids: (params: UpdateUuidsParams) => Content[];
   };
 };
 
 type UpdateUuidsParams = {
-  newContentList: TODO[];
+  newContentList: Content[];
   firstTileIndex: number;
   isFirstPage?: boolean;
   isLastPage?: boolean;

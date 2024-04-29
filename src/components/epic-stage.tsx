@@ -8,17 +8,17 @@ import { HeadingLarge } from '@/components/fonts';
 
 const EpicStage = async () => {
   const params: FetchTMDBParams = { label: 'Popular movies', category: 'popular', mediaType: 'movie' };
-  const unknownResult = await fetchTMDB(params);
-  const zodResponse = MovieTvSchema.safeParse(unknownResult);
-  if (!zodResponse.success) throw new Error('Expected a movie result');
+  const unknownTMDBResponse = await fetchTMDB(params);
+  const parsedMovieTv = MovieTvSchema.safeParse(unknownTMDBResponse);
+  if (!parsedMovieTv.success) throw new Error('Expected a movie result');
 
-  const fetchedPopularList = { ...params, results: zodResponse.data.results };
+  const fetchedPopularList = { ...params, results: parsedMovieTv.data.results };
 
   const unknownMovie = fetchedPopularList.results[0];
-  const zodResponse2 = MovieSchema.safeParse(unknownMovie);
-  if (!zodResponse2.success) throw new Error('Expected a movie object');
+  const parsedMovie = MovieSchema.safeParse(unknownMovie);
+  if (!parsedMovie.success) throw new Error('Expected a movie object');
 
-  const firstContent = zodResponse2.data;
+  const firstContent = parsedMovie.data;
 
   const genres = getObjectKey({
     label: 'genre_ids',

@@ -1,5 +1,5 @@
 import { MINIMUM_TILE_COUNT } from '@/lib/constants';
-import { TODO } from '@/lib/types';
+import { Content } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -38,7 +38,7 @@ export const useTiles = () => {
     });
   };
 
-  const tilesToRender: TODO[] = [
+  const tilesToRender: Content[] = [
     ...getPrevPageTiles(),
     ...getCurrentPageTiles(),
     ...getNextPageTiles()

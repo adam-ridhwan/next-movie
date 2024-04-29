@@ -8,27 +8,27 @@ import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
 export default async function BrowseLayout({ children }: { children: ReactNode }) {
-  const contentList: Array<FetchTMDBParams & { section: Section }> = [
+  const content: Array<FetchTMDBParams & { section: Section }> = [
     { label: 'Trending: Movies', category: 'trending', mediaType: 'movie', section: 'movie' },
     { label: 'Trending: TV Shows', category: 'trending', mediaType: 'tv', section: 'tv' },
     { label: 'Action Movies', category: 'discover', mediaType: 'movie', section: 'movie', genreId: 28 },
     { label: 'Drama Movies', category: 'discover', mediaType: 'movie', section: 'tv', genreId: 18 },
   ];
 
-  const fetches = contentList.map(async content => {
+  const contentPromises = content.map(async content => {
     const unknownResult = await fetchTMDB({ ...content });
-    const zodResponse = MovieTvSchema.safeParse(unknownResult);
-    if (!zodResponse.success) throw new Error('Error');
-    return { ...content, results: zodResponse.data.results };
+    const parsedMovieTv = MovieTvSchema.safeParse(unknownResult);
+    if (!parsedMovieTv.success) throw new Error('Error');
+    return { ...content, results: parsedMovieTv.data.results };
   });
 
-  const fetchedContentList = await Promise.all(fetches);
+  const fetchedContent = await Promise.all(contentPromises);
 
   return (
     <>
       <EpicStage />
 
-      {fetchedContentList.map(content => (
+      {fetchedContent.map(content => (
         <SliderProvider
           key={content.label}
           content={content.results}

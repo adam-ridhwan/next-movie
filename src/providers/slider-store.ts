@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { Content, MediaType, Pages, Section } from '@/lib/types';
+import { MediaType, Pages, Section, SliderContent } from '@/lib/types';
 
 type SetPagesParams = {
   pages: Pages;
@@ -14,7 +14,7 @@ type SetPagesParams = {
 };
 
 type SliderState = {
-  CONTENT: Content[];
+  CONTENT: SliderContent[];
   mediaType: MediaType;
   section: Section;
   pages: Pages;
@@ -66,13 +66,13 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (CONTENT: Content[], mediaType: MediaType, section: Section) =>
+export const createSliderStore = (CONTENT: SliderContent[], mediaType: MediaType, section: Section) =>
   create(
     devtools<SliderStore>(set => ({
       CONTENT,
       mediaType,
       section,
-      pages: new Map<number, Content[]>().set(1, CONTENT.slice(0, 7)),
+      pages: new Map<number, SliderContent[]>().set(1, CONTENT.slice(0, 7)),
       maxPages: 0,
       currentPage: 1,
       tileCountPerPage: 0,

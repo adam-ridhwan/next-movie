@@ -3,14 +3,14 @@
 import { useSliderStore } from '@/providers/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
-import { MediaType, Pages, Section, TODO } from '@/lib/types';
+import { MediaType, Pages, Section, SliderContent } from '@/lib/types';
 import { findIndexByKey, getMapValue } from '@/lib/utils';
 import { useMapPages } from '@/hooks/use-map-pages';
 import { usePageUtils } from '@/hooks/use-page-utils';
 
 type UsePaginationReturn = {
   state: {
-    CONTENT: TODO[];
+    CONTENT: SliderContent[];
     pages: Pages;
     mediaType: MediaType;
     section: Section;
