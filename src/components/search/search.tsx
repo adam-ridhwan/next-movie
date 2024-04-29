@@ -38,13 +38,9 @@ const Search = () => {
     const params = new URLSearchParams(searchParams);
     if (query) params.set('q', query);
     else params.delete('q');
-    replace(SearchRoute({ query }));
+    replace(`/search?${params.toString()}`); // FIXME: SearchRoute({ q: query }); does not work
   };
 
-  /* ──────────────────────────────────────────────────────────────
-   * FIXME: Focus the search input when the user clears the search query
-   *  (aka, when the user navigates to the browse page)
-   * ─────────────────────────────────────────────────────────── */
   useEffect(() => {
     if (!inputRef.current) return;
     if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();

@@ -15,7 +15,6 @@ const NavBar = () => {
     <div className='flex h-16 flex-row items-center justify-between bg-black px-leftRightCustom'>
       <div className='relative flex w-full flex-row items-center gap-8'>
         <LogoIcon />
-
         <nav>
           <BrowseRoute.Link>
             <BodySmall
