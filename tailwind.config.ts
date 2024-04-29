@@ -75,7 +75,7 @@ module.exports = {
         },
         white: 'hsl(0, 0%, 100%)',
         red: 'hsl(0, 97%, 63%)',
-        appBackground: '#2d2d2d',
+        appBackground: 'hsl(0, 0%, 15%)',
         darkBlue: 'hsl(223, 23%, 46%)',
         darkerBlue: 'hsl(223, 36%, 14%)',
         darkestBlue: 'hsl(223, 30%, 9%)',
