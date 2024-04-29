@@ -11,14 +11,16 @@ export async function Actors({ id, mediaType }: ContentRouteParams) {
     ({ known_for_department }) => known_for_department === 'Acting'
   );
   const firstThreeActors = actors.slice(0, 3).map(actor => actor.name);
+  if (firstThreeActors !== undefined) return null;
   return <Metadata label='Actors' metadata={firstThreeActors} />;
 }
 
 export async function Genres({ id, mediaType }: ContentRouteParams) {
   const details = await fetchTMDB({ category: 'details', mediaType, id });
   const parseDetails = DetailsSchema.safeParse(details);
-  if (!parseDetails.success) return null;
+  if (!parseDetails.success || !parseDetails.data.genres) return null;
   const genres = parseDetails.data.genres.map(({ name }) => name).slice(0, 3);
+  if (genres !== undefined) return null;
   return <Metadata label='Genres' metadata={genres} />;
 }
 
@@ -33,7 +35,7 @@ export async function Keywords({ id, mediaType }: ContentRouteParams) {
   return <Metadata label='Keywords' metadata={firstThreeKeywords} />;
 }
 
-export function Metadata({ label, metadata }: { label: string; metadata: string[] }) {
+export function Metadata({ label, metadata }: { label: string; metadata: Array<string> }) {
   if (!metadata.length) return null;
 
   return (
