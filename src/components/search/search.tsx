@@ -41,6 +41,10 @@ const Search = () => {
     replace(SearchRoute({ query }));
   };
 
+  /* ──────────────────────────────────────────────────────────────
+   * FIXME: Focus the search input when the user clears the search query
+   *  (aka, when the user navigates to the browse page)
+   * ─────────────────────────────────────────────────────────── */
   useEffect(() => {
     if (!inputRef.current) return;
     if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();
