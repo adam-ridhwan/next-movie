@@ -107,17 +107,17 @@ export const useMapPages = () => {
       return newCurrentPage;
     };
 
-    console.table({
-      startIndex: startIndex,
-      newCurrentPage: getNewCurrentPage(),
-      tilesPerPage: newTileCountPerPage,
-      leftTileCount: leftTileCount,
-      rightTileCount: rightTileCount,
-      totalTiles: leftTileCount + rightTileCount,
-      newMaxPages: newMaxPages,
-      newFirstPageLength: newFirstPageLength,
-      newLastPageLength: newLastPageLength,
-    });
+    // console.table({
+    //   startIndex: startIndex,
+    //   newCurrentPage: getNewCurrentPage(),
+    //   tilesPerPage: newTileCountPerPage,
+    //   leftTileCount: leftTileCount,
+    //   rightTileCount: rightTileCount,
+    //   totalTiles: leftTileCount + rightTileCount,
+    //   newMaxPages: newMaxPages,
+    //   newFirstPageLength: newFirstPageLength,
+    //   newLastPageLength: newLastPageLength,
+    // });
 
     setPages({
       pages: newPages,

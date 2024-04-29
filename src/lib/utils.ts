@@ -7,6 +7,8 @@ import { GenreLabel } from '@/lib/types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
+export const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 export type KeysOf<T> = keyof T;
 export type ValuesOf<T> = T[keyof T];
 export type Prettify<T> = {

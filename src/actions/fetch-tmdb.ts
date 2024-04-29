@@ -16,10 +16,19 @@ const createUrl = (params: FetchTMDBParams): string => {
       return `${BASE_URL}/${params.category}/${params.mediaType}/day`;
 
     case 'discover': {
-      const url = new URL(`${BASE_URL}/discover/${params.mediaType}`);
+      const url = new URL(`${BASE_URL}/${params.category}/${params.mediaType}`);
       url.searchParams.append('with_genres', params.genreId.toString() || '28');
       url.searchParams.append('page', params.page?.toString() || '1');
       url.searchParams.append('with_original_language', params.language || 'en');
+      return url.href;
+    }
+
+    case 'search': {
+      const url = new URL(`${BASE_URL}/${params.category}/${params.mediaType}`);
+      url.searchParams.append('query', params.q);
+      url.searchParams.append('include_adult', 'false');
+      url.searchParams.append('language', 'en-US');
+      url.searchParams.append('page', '1');
       return url.href;
     }
 
