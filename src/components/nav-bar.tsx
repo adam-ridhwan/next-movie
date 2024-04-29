@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useSearchContext } from '@/providers/search-provider';
 import { BrowseRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
@@ -10,14 +11,16 @@ import SearchInput from '@/components/search-input/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
+  const { handleLinkNavigation } = useSearchContext();
 
   return (
     <div className='flex h-16 items-center bg-black'>
       <div className='container flex flex-row items-center justify-between px-leftRightCustom'>
         <div className='relative flex w-full flex-row items-center gap-8'>
           <LogoIcon />
+
           <nav>
-            <BrowseRoute.Link>
+            <BrowseRoute.Link onClick={() => handleLinkNavigation()}>
               <BodySmall
                 className={cn('transition-colors hover:text-primary/50', {
                   'text-primary': pathname === BrowseRoute(),

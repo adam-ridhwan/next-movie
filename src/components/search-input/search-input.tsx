@@ -1,64 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute } from '@/routes';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchContext } from '@/providers/search-provider';
 import { X } from 'lucide-react';
-import { useDebouncedCallback } from 'use-debounce';
 
 import { cn } from '@/lib/utils';
-import { useEffectOnce } from '@/hooks/use-effect-once';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
-  const { replace } = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffectOnce(() => {
-    if (!inputRef.current) return;
-    if (searchParams.get('q')) setIsSearchFocused(true);
-  });
-
-  useEffect(() => {
-    if (!inputRef.current) return;
-    if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();
-  }, [pathname, isSearchFocused]);
-
-  const focusSearch = () => {
-    if (!inputRef.current) return;
-
-    setIsAnimating(true);
-
-    if (isSearchFocused) {
-      inputRef.current.blur();
-      inputRef.current.value = '';
-      setIsSearchFocused(false);
-    } else {
-      inputRef.current.focus();
-      setIsSearchFocused(true);
-    }
-
-    setIsAnimating(false);
-  };
-
-  const handleSearch = (query: string) => {
-    if (query.length === 0) return replace(BrowseRoute());
-    const params = new URLSearchParams(searchParams);
-    if (query) {
-      params.set('q', query);
-    } else {
-      params.delete('q');
-    }
-    replace(`/search?${params.toString()}`);
-  };
-
-  const handleClear = () => {
-    if (inputRef.current) inputRef.current.value = '';
-    replace(BrowseRoute());
-  };
+  const {
+    isExpanding,
+    isSearchFocused,
+    searchInputRef,
+    handlesFocus,
+    handleSearch,
+    handleClear
+  } = useSearchContext(); // prettier-ignore
 
   return (
     <div
@@ -68,8 +25,8 @@ const SearchInput = () => {
     >
       <button
         type='button'
-        disabled={isAnimating}
-        onClick={() => focusSearch()}
+        disabled={isExpanding}
+        onClick={() => handlesFocus()}
         className='grid size-8 place-items-center'
       >
         <SearchIcon />
@@ -88,19 +45,20 @@ const SearchInput = () => {
       >
         <input
           id='search-input'
-          ref={inputRef}
-          disabled={isAnimating}
+          ref={searchInputRef}
+          disabled={isExpanding}
           type='text'
           defaultValue={searchParams.get('q')?.toString()}
-          onChange={e => {
-            if (pathname === BrowseRoute()) replace(`/search`);
-            return handleSearch(e.target.value);
-          }}
+          onChange={e => handleSearch(e.target.value)}
           placeholder='Movies, TV shows, genres'
           className={cn('h-8 bg-black pr-2 text-sm')}
         />
 
-        <button disabled={isAnimating} onClick={() => handleClear()} className='pr-2'>
+        <button
+          disabled={isExpanding}
+          onClick={() => handleClear()}
+          className={cn('pr-2', { hidden: (searchParams.get('q')?.length ?? 0) < 1 })}
+        >
           <X className='h-5 w-5' />
         </button>
       </div>
