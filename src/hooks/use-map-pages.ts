@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { Content, Pages } from '@/lib/types';
+import { Pages, TODO } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { useValidators } from '@/hooks/use-validators';
@@ -26,7 +26,7 @@ export const useMapPages = () => {
   } = usePageUtils();
 
   const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
-    const newPages: Pages = new Map<number, Content[]>();
+    const newPages: Pages = new Map<number, TODO[]>();
     const newTileCountPerPage = getTileCountPerPage();
     let newFirstPageLength = newTileCountPerPage;
     let newLastPageLength = newTileCountPerPage;
@@ -45,7 +45,7 @@ export const useMapPages = () => {
     let newCurrentPage = -1;
 
     let startIndex = getStartIndex(firstTileCurrentPageIndex, leftTileCount);
-    let newContentList: Content[] = [];
+    let newContentList: TODO[] = [];
 
     for (let i = 0; i < newTileCount; i++) {
       if (startIndex >= CONTENT.length) startIndex = 0;
@@ -107,19 +107,17 @@ export const useMapPages = () => {
       return newCurrentPage;
     };
 
-    // if (mediaType === 'cast') {
-    //   console.table({
-    //     startIndex: startIndex,
-    //     newCurrentPage: getNewCurrentPage(),
-    //     tilesPerPage: newTileCountPerPage,
-    //     leftTileCount: leftTileCount,
-    //     rightTileCount: rightTileCount,
-    //     totalTiles: leftTileCount + rightTileCount,
-    //     newMaxPages: newMaxPages,
-    //     newFirstPageLength: newFirstPageLength,
-    //     newLastPageLength: newLastPageLength,
-    //   });
-    // }
+    console.table({
+      startIndex: startIndex,
+      newCurrentPage: getNewCurrentPage(),
+      tilesPerPage: newTileCountPerPage,
+      leftTileCount: leftTileCount,
+      rightTileCount: rightTileCount,
+      totalTiles: leftTileCount + rightTileCount,
+      newMaxPages: newMaxPages,
+      newFirstPageLength: newFirstPageLength,
+      newLastPageLength: newLastPageLength,
+    });
 
     setPages({
       pages: newPages,

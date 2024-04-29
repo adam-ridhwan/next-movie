@@ -10,11 +10,11 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileContainer = () => {
   const { state: { CONTENT } } = usePagination(); // prettier-ignore
-  const { state: { hasPaginated } } = usePageUtils(); // prettier-ignore
+  const { state: { hasPaginated }, } = usePageUtils(); // prettier-ignore
   const { tilesToRender } = useTiles();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
-  const { tileContainerRef } = useDomContext();
+  const { tileContainerRef, tileItemRef } = useDomContext();
 
   return (
     <div className='relative w-full overflow-hidden'>
@@ -29,9 +29,9 @@ const TileContainer = () => {
         )}
         style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
       >
-        {tilesToRender.map((tile, i) => (
-          <TileItem key={tile?.uuid || i} tile={tile} i={i} />
-        ))}
+        {tilesToRender.map((tile, i) => {
+          return <TileItem key={tile?.uuid || i} ref={i === 0 ? tileItemRef : undefined} tile={tile} i={i} />;
+        })}
       </div>
 
       {/* Mobile */}

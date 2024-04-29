@@ -1,16 +1,13 @@
-import { MINIMUM_TILE_COUNT } from '@/lib/constants';
-import { Content } from '@/lib/types';
+import { TODO } from '@/lib/types';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
 
 export const useTiles = () => {
-  const {
-    state: { CONTENT, pages, currentPage },
-  } = usePagination();
-  const { state: { isMounted, hasPaginated } } = usePageUtils(); // prettier-ignore
+  const { state: { CONTENT, pages, currentPage } } = usePagination(); // prettier-ignore
+  const { state: { isMounted, hasPaginated }, actions:{ getTileCountPerPage } } = usePageUtils(); // prettier-ignore
 
-  if (CONTENT.length <= MINIMUM_TILE_COUNT) return { tilesToRender: CONTENT };
+  if (CONTENT.length <= getTileCountPerPage()) return { tilesToRender: CONTENT };
 
   const getPrevPageTiles = () => {
     if (!isMounted || !hasPaginated) return [];
@@ -38,7 +35,7 @@ export const useTiles = () => {
     });
   };
 
-  const tilesToRender: Content[] = [
+  const tilesToRender: TODO[] = [
     ...getPrevPageTiles(),
     ...getCurrentPageTiles(),
     ...getNextPageTiles()

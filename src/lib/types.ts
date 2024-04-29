@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-import { z } from 'zod';
-
 import { KeysOf, Prettify, ValuesOf } from '@/lib/utils';
 
 export type TODO = any;
@@ -11,9 +9,7 @@ export type ContentRouteParams = {
   id: string;
 };
 
-export type SliderContent = any;
-
-export type Pages = Map<number, SliderContent[]>;
+export type Pages = Map<number, TODO[]>;
 
 export const GENRES = {
   ACTION: 28,

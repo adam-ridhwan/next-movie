@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { SliderContent } from '@/lib/types';
+import { TODO } from '@/lib/types';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
-export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: SliderContent; isVisible: boolean }) => {
+export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
     <Link
       // TODO: Switch to Media.Link when the bonus trailer drawer is implemented
