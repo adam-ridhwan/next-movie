@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute, SearchRoute } from '@/routes';
+import { BrowseRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
+import { useEffectOnce } from '@/hooks/use-effect-once';
 import { SearchIcon } from '@/components/icons';
 
 const Search = () => {
@@ -15,6 +16,18 @@ const Search = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  useEffectOnce(() => {
+    if (!inputRef.current) return;
+    if (searchParams.get('q')) {
+      setIsSearchFocused(true);
+    }
+  });
+
+  useEffect(() => {
+    if (!inputRef.current) return;
+    if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();
+  }, [pathname, isSearchFocused]);
+
   const focusSearch = () => {
     if (!inputRef.current) return;
 
@@ -22,6 +35,7 @@ const Search = () => {
 
     if (isSearchFocused) {
       inputRef.current.blur();
+      inputRef.current.value = '';
       setIsSearchFocused(false);
       setSearchText('');
     } else {
@@ -40,11 +54,6 @@ const Search = () => {
     else params.delete('q');
     replace(`/search?${params.toString()}`); // FIXME: SearchRoute({ q: query }); does not work
   };
-
-  useEffect(() => {
-    if (!inputRef.current) return;
-    if (pathname === BrowseRoute() && isSearchFocused) inputRef.current.focus();
-  }, [pathname, isSearchFocused]);
 
   return (
     <div
