@@ -63,3 +63,7 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+#search-input:focus {
+  outline: none;
+}

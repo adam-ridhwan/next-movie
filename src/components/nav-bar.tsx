@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
     <div className='flex h-16 flex-row items-center justify-between bg-black px-leftRightCustom'>
-      <div className='flex flex-row items-center gap-8'>
+      <div className='relative flex w-full flex-row items-center gap-8'>
         <LogoIcon />
 
         <nav>
@@ -28,8 +28,9 @@ const NavBar = () => {
             </BodySmall>
           </BrowseRoute.Link>
         </nav>
+
+        <Search />
       </div>
-      <Search />
     </div>
   );
 };
