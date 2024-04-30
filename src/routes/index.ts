@@ -25,7 +25,7 @@ export const MoviesRoute = makeRoute('/movies', {
   ...defaultInfo,
   ...MoviesRouteRoute.Route,
 });
-export const SearchRoute = makeRoute('/search-input', {
+export const SearchRoute = makeRoute('/search', {
   ...defaultInfo,
   ...SearchRouteRoute.Route,
 });

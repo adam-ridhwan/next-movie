@@ -1,6 +1,5 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { DomContextProvider } from '@/providers/dom-provider';
-import { SliderProvider } from '@/providers/slider-provider';
+import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { ContentRouteParams, TODO } from '@/lib/types';
 import Slider from '@/components/slider/slider';
@@ -15,12 +14,8 @@ export default async function Trailers({ mediaType, id }: ContentRouteParams) {
   if (!bonusContent.length) return null;
 
   return (
-    <section>
-      <SliderProvider content={bonusContent} mediaType={mediaType} section='bonus'>
-        <DomContextProvider>
-          <Slider headerTitle='Bonus Content' />
-        </DomContextProvider>
-      </SliderProvider>
-    </section>
+    <SliderProvider content={bonusContent} mediaType={mediaType} section='bonus'>
+      <Slider headerTitle='Bonus Content' />
+    </SliderProvider>
   );
 }

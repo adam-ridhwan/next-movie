@@ -1,6 +1,6 @@
 /* eslint no-restricted-imports: 0 */
 
-import { useSliderStore } from '@/providers/slider-provider';
+import { useSliderStore } from '@/providers/slider/slider-provider';
 
 type UseAnimationReturn = {
   isAnimating: boolean;

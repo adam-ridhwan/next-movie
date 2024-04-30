@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useSliderStore } from '@/providers/slider-provider';
+import { useSliderStore } from '@/providers/slider/slider-provider';
 
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { PageIndicatorIcon } from '@/components/icons';

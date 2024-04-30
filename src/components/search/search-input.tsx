@@ -1,32 +1,29 @@
 import { useSearchParams } from 'next/navigation';
-import { useSearchContext } from '@/providers/search-provider';
+import { useSearchStore } from '@/providers/search/search-provider';
 import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import { useSearch } from '@/hooks/use-search';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
   const searchParams = useSearchParams();
 
   const {
-    isExpanding,
-    isSearchFocused,
-    searchInputRef,
-  } = useSearchContext(); // prettier-ignore
-
-  const { handlesFocus, handleSearch, handleClear } = useSearch();
+    state: { isSearchInputExpanding, isSearchInputFocused },
+    actions: { handleFocus, handleSearch, handleClear },
+    refs: { searchInputRef, searchContainerRef },
+  } = useSearchStore();
 
   return (
     <div
       className={cn('absolute right-0 flex flex-row items-center border border-transparent bg-black', {
-        'border-primary/80': isSearchFocused,
+        'border-primary/80': isSearchInputFocused,
       })}
     >
       <button
         type='button'
-        disabled={isExpanding}
-        onClick={() => handlesFocus()}
+        disabled={isSearchInputExpanding}
+        onClick={handleFocus}
         className='grid size-8 place-items-center'
       >
         <SearchIcon />
@@ -37,29 +34,32 @@ const SearchInput = () => {
       </label>
 
       <div
+        ref={searchContainerRef}
         className={cn(
-          'flex flex-row overflow-hidden',
-          { 'w-0': !isSearchFocused },
-          { 'w-52 px-2 transition-all duration-300': isSearchFocused }
+          'flex h-8 overflow-hidden',
+          { 'w-0': !isSearchInputFocused },
+          { 'w-52  transition-all duration-300': isSearchInputFocused }
         )}
       >
         <input
           id='search-input'
           ref={searchInputRef}
-          disabled={isExpanding}
+          disabled={isSearchInputExpanding}
           type='text'
           defaultValue={searchParams.get('q')?.toString()}
           onChange={e => handleSearch(e.target.value)}
           placeholder='Movies, TV shows, genres'
-          className={cn('h-8 bg-black pr-2 text-sm')}
+          className={cn('w-full bg-black text-sm')}
         />
 
         <button
-          disabled={isExpanding}
-          onClick={() => handleClear()}
-          className={cn('pr-2', { hidden: (searchParams.get('q')?.length ?? 0) < 1 })}
+          disabled={isSearchInputExpanding}
+          onClick={handleClear}
+          className={cn('flex aspect-square items-center justify-center', {
+            hidden: (searchParams.get('q')?.length ?? 0) < 1,
+          })}
         >
-          <X className='h-5 w-5' />
+          <X className='size-4' />
         </button>
       </div>
     </div>

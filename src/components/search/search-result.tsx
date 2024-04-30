@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { useDebounce } from 'use-debounce';
+import { useDebounceValue } from 'usehooks-ts';
 
 import { TODO } from '@/lib/types';
 import { cn, extractYear, fetcher } from '@/lib/utils';
@@ -13,7 +13,7 @@ import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/compon
 const SearchResult = () => {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounce(query, 300);
+  const [debouncedQuery] = useDebounceValue(query, 300);
 
   useEffect(() => setQuery(searchParams.get('q') || ''), [searchParams]);
 
@@ -26,7 +26,7 @@ const SearchResult = () => {
   if (error) throw new Error('Failed to load search results');
 
   return (
-    <div className='flex flex-col gap-8 px-leftRightCustom pt-10'>
+    <div className='flex flex-col gap-8 px-leftRightCustom pt-24'>
       <div className='flex flex-row gap-2'>
         <HeadingSmall className='text-muted-foreground'>Search result for: </HeadingSmall>
         <HeadingSmall>{query}</HeadingSmall>

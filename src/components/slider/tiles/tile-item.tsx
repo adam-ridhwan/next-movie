@@ -1,5 +1,3 @@
-import { useDomContext } from '@/providers/dom-provider';
-
 import { Section, TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';

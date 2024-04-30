@@ -1,6 +1,6 @@
 /* eslint no-restricted-imports: 0 */
 
-import { useSliderStore } from '@/providers/slider-provider';
+import { useSliderStore } from '@/providers/slider/slider-provider';
 
 import { usePaginationLogger } from '@/lib/logger';
 import { MediaType, Pages, Section, TODO } from '@/lib/types';
