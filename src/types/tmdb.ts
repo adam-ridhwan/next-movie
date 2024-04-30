@@ -39,6 +39,14 @@ export type TvList = z.infer<typeof TvListSchema>;
 export type Movie = z.infer<typeof MovieSchema>;
 export type Tv = z.infer<typeof TvSchema>;
 
+const KnownForDepartmentSchema = z.union([
+  z.literal('Acting'),
+  z.literal('Crew'),
+  z.literal('Directing'),
+  z.literal('Production'),
+  z.literal('Writing'),
+]);
+
 export const CastSchema = z.object({
   id: z.number(),
   cast_id: z.number().optional().nullable(),
@@ -49,7 +57,7 @@ export const CastSchema = z.object({
   character: z.string().nullable(),
   adult: z.boolean().nullable(),
   gender: z.number().nullable(),
-  known_for_department: z.string().nullable(),
+  known_for_department: KnownForDepartmentSchema.nullable(),
 });
 
 export const CreditsSchema = z.object({
@@ -59,3 +67,31 @@ export const CreditsSchema = z.object({
 
 export type Cast = z.infer<typeof CastSchema>;
 export type Credits = z.infer<typeof CreditsSchema>;
+
+const SiteSchema = z.union([z.literal('YouTube'), z.literal('Vimeo')]);
+const VideoTypeSchema = z.union([
+  z.literal('Trailer'),
+  z.literal('Teaser'),
+  z.literal('Clip'),
+  z.literal('Featurette'),
+  z.literal('Behind the Scenes'),
+  z.literal('Opening Credits'),
+]);
+
+const VideoSchema = z.object({
+  id: z.string(),
+  name: z.string().nullable(),
+  key: z.string().nullable(),
+  site: SiteSchema.nullable(),
+  type: VideoTypeSchema.nullable(),
+  official: z.boolean().nullable(),
+  published_at: z.string().nullable(),
+});
+
+export const VideoListSchema = z.object({
+  id: z.number(),
+  results: z.array(VideoSchema),
+});
+
+export type Video = z.infer<typeof VideoSchema>;
+export type VideoList = z.infer<typeof VideoListSchema>;
