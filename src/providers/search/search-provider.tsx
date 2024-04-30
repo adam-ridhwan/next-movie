@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute } from '@/routes';
+import { BrowseRoute, SearchRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
 import { QUERY } from '@/lib/constants';
@@ -89,7 +89,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     const params = new URLSearchParams(searchParams);
     if (query) params.set(QUERY, query);
     else params.delete(QUERY);
-    replace(`/search?${params.toString()}`);
+    replace(SearchRoute(undefined, { q: query }));
   };
 
   const handleClear = () => {
