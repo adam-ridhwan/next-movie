@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const MovieSchema = z.object({
+const MovieSchema = z.object({
   id: z.number(),
   original_title: z.string().nullable(),
   title: z.string().nullable(),
@@ -17,7 +17,7 @@ export const MovieSchema = z.object({
   adult: z.boolean().nullable(),
 });
 
-export const TvSchema = z.object({
+const TvSchema = z.object({
   id: z.number(),
   original_name: z.string().nullable(),
   name: z.string().nullable(),

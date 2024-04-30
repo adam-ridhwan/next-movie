@@ -3,6 +3,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { FetchTMDBParams, Section } from '@/types/global';
+import { MovieListSchema, TvListSchema } from '@/types/tmdb';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -16,8 +17,13 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
 
   const fetchedContent = await Promise.all(
     content.map(async content => {
-      const moviesTvs = await fetchTMDB({ ...content });
-      return { ...content, results: moviesTvs.results };
+      const media = await fetchTMDB({ ...content });
+      const schema = content.mediaType === 'movie' ? MovieListSchema : TvListSchema;
+
+      const parsedMedia = schema.safeParse(media);
+      if (!parsedMedia.success) throw new Error(`BrowseLayout() Invalid ${content.label} media schema`);
+
+      return { ...content, results: parsedMedia.data.results };
     })
   );
 
