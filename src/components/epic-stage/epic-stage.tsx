@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { MediaRoute } from '@/routes';
 
 import { FetchTMDBParams, GENRES } from '@/lib/types';
 import { getFirstSentence, getObjectKey, toPascalCase } from '@/lib/utils';
+import ThumbnailLink from '@/components/epic-stage/thumbnail-link';
 import { HeadingLarge } from '@/components/fonts';
 
 const EpicStage = async () => {
@@ -18,7 +18,7 @@ const EpicStage = async () => {
   });
 
   return (
-    <MediaRoute.Link id={firstMovie.id.toString()} mediaType={params.mediaType} scroll={false}>
+    <ThumbnailLink content={firstMovie}>
       <div className='relative mb-4 mt-16 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
           src={`https://image.tmdb.org/t/p/original${firstMovie.backdrop_path}`}
@@ -42,7 +42,7 @@ const EpicStage = async () => {
           <p className='text-overview'>{getFirstSentence(firstMovie.overview)}</p>
         </div>
       </div>
-    </MediaRoute.Link>
+    </ThumbnailLink>
   );
 };
 
