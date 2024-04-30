@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
-import { SliderRefProvider } from '@/providers/slider/slider-ref-provider';
 
 import { FetchTMDBParams, Section } from '@/lib/types';
 import EpicStage from '@/components/epic-stage/epic-stage';
