@@ -7,25 +7,25 @@ type SliderRefContextProps = {
   tileItemRef: RefObject<HTMLDivElement>;
 } | null;
 
-const SliderRefContext = createContext<SliderRefContextProps>(null);
+const Context = createContext<SliderRefContextProps>(null);
 
 export const SliderRefProvider = ({ children }: { children: ReactNode }) => {
   const tileContainerRef = useRef<HTMLDivElement>(null);
   const tileItemRef = useRef<HTMLDivElement>(null);
   return (
-    <SliderRefContext.Provider
+    <Context.Provider
       value={{
         tileContainerRef,
         tileItemRef,
       }}
     >
       {children}
-    </SliderRefContext.Provider>
+    </Context.Provider>
   );
 };
 
 export const useSliderRefContext = () => {
-  const context = useContext(SliderRefContext);
+  const context = useContext(Context);
   if (!context) throw new Error('useSliderRefContext must be used within a SliderRefProvider');
   return context;
 };

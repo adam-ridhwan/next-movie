@@ -14,20 +14,20 @@ export type SliderProviderProps = {
   section: Section;
 };
 
-const SliderStoreContext = createContext<StoreApi<SliderStore> | null>(null);
+const Context = createContext<StoreApi<SliderStore> | null>(null);
 
 export const SliderProvider = ({ children, content, mediaType, section }: SliderProviderProps) => {
   const storeRef = useRef<StoreApi<SliderStore>>();
   if (!storeRef.current) storeRef.current = createSliderStore(content, mediaType, section);
   return (
     <SliderRefProvider>
-      <SliderStoreContext.Provider value={storeRef.current}>{children}</SliderStoreContext.Provider>
+      <Context.Provider value={storeRef.current}>{children}</Context.Provider>
     </SliderRefProvider>
   );
 };
 
 export const useSliderStore = <T,>(selector: (store: SliderStore) => T): T => {
-  const store = useContext(SliderStoreContext);
+  const store = useContext(Context);
   if (!store) throw new Error(`useSliderStore must be use within SliderStoreProvider`);
   return useStore(store, selector);
 };
