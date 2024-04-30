@@ -16,7 +16,7 @@ type SearchContextProps = {
     handleFocus: () => void;
     handleSearch: (query: string) => void;
     handleClear: () => void;
-    handleLinkNavigation: () => void;
+    handleNavigate: () => void;
   };
   refs: {
     searchContainerRef: RefObject<HTMLDivElement>;
@@ -97,7 +97,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     replace(BrowseRoute());
   };
 
-  const handleLinkNavigation = () => {
+  const handleNavigate = () => {
     handleClear();
     blurSearchInput();
   };
@@ -113,7 +113,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
           handleFocus,
           handleSearch,
           handleClear,
-          handleLinkNavigation,
+          handleNavigate,
         },
         refs: {
           searchContainerRef,
