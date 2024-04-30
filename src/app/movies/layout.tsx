@@ -4,7 +4,6 @@ import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { FetchTMDBParams } from '@/types/global';
 import { MovieListSchema } from '@/types/tmdb';
-import { isNullish } from '@/lib/utils';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -40,7 +39,7 @@ const MoviesLayout = async ({ children }: { children: ReactNode }) => {
           mediaType='movie'
           section='movie'
         >
-          <Slider headerTitle={isNullish(content.label)} />
+          <Slider headerTitle={content.label} />
         </SliderProvider>
       )}
 
