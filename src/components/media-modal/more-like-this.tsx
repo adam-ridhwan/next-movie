@@ -23,9 +23,7 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
 
   return (
     <SliderProvider content={moreLikesThis} mediaType={mediaType} section={mediaType}>
-      <SliderRefProvider>
-        <Slider headerTitle='More like this' />
-      </SliderRefProvider>
+      <Slider headerTitle='More like this' />
     </SliderProvider>
   );
 }

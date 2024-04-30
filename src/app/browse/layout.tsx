@@ -33,9 +33,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
           mediaType={content.mediaType}
           section={content.section}
         >
-          <SliderRefProvider>
-            <Slider headerTitle={content.label || ''} />
-          </SliderRefProvider>
+          <Slider headerTitle={content.label || ''} />
         </SliderProvider>
       ))}
 

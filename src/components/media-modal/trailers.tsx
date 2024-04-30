@@ -17,9 +17,7 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
   return (
     <section>
       <SliderProvider content={trailers} mediaType={mediaType} section='trailer'>
-        <SliderRefProvider>
-          <Slider headerTitle='Trailers' />
-        </SliderRefProvider>
+        <Slider headerTitle='Trailers' />
       </SliderProvider>
     </section>
   );

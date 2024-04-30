@@ -14,9 +14,7 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
   return (
     <section>
       <SliderProvider content={firstTenActors} mediaType={mediaType} section='cast'>
-        <SliderRefProvider>
-          <Slider headerTitle='Cast' />
-        </SliderRefProvider>
+        <Slider headerTitle='Cast' />
       </SliderProvider>
     </section>
   );
