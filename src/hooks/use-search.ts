@@ -4,6 +4,7 @@ import { RefObject, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useSearchContext } from '@/providers/search-provider';
 import { BrowseRoute } from '@/routes';
+import { useOnClickOutside } from 'usehooks-ts';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
@@ -12,6 +13,7 @@ type UseSearchReturn = {
     isExpanding: boolean;
     isSearchInputFocused: boolean;
     searchInputRef: RefObject<HTMLInputElement>;
+    searchContainerRef: RefObject<HTMLDivElement>;
   };
   actions: {
     handlesFocus: () => void;
@@ -31,7 +33,8 @@ export const useSearch = (): UseSearchReturn => {
     setIsSearchInputFocused,
     isExpanding,
     setIsExpanding,
-    searchInputRef
+    searchInputRef,
+    searchContainerRef
   } = useSearchContext(); // prettier-ignore
 
   useEffectOnce(() => {
@@ -43,6 +46,12 @@ export const useSearch = (): UseSearchReturn => {
     if (!searchInputRef.current) return;
     if (pathname === BrowseRoute() && isSearchInputFocused) searchInputRef.current.focus();
   }, [pathname, isSearchInputFocused, searchInputRef]);
+
+  useOnClickOutside(searchContainerRef, () => {
+    if (searchParams.get('q')) return;
+    blurSearchInput();
+    collapseSearchInput();
+  });
 
   const expandSearchInput = () => setIsExpanding(true);
   const collapseSearchInput = () => setIsExpanding(false);
@@ -89,6 +98,7 @@ export const useSearch = (): UseSearchReturn => {
       isExpanding,
       isSearchInputFocused,
       searchInputRef,
+      searchContainerRef,
     },
     actions: {
       handlesFocus,

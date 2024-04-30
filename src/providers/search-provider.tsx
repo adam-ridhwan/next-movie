@@ -17,6 +17,7 @@ type SearchContextType = {
   isSearchInputFocused: boolean;
   setIsSearchInputFocused: Dispatch<SetStateAction<boolean>>;
   searchInputRef: RefObject<HTMLInputElement>;
+  searchContainerRef: RefObject<HTMLDivElement>;
 } | null;
 
 export const SearchContext = createContext<SearchContextType>(null);
@@ -26,6 +27,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
   const [isExpanding, setIsExpanding] = useState(false);
   const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <SearchContext.Provider
@@ -35,6 +37,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
         isSearchInputFocused,
         setIsSearchInputFocused,
         searchInputRef,
+        searchContainerRef,
       }}
     >
       {children}

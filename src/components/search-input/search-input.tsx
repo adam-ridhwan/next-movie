@@ -9,7 +9,7 @@ const SearchInput = () => {
   const searchParams = useSearchParams();
 
   const {
-    state: { isExpanding, isSearchInputFocused, searchInputRef },
+    state: { isExpanding, isSearchInputFocused, searchInputRef, searchContainerRef },
     actions: { handlesFocus, handleSearch, handleClear },
   } = useSearch();
 
@@ -33,6 +33,7 @@ const SearchInput = () => {
       </label>
 
       <div
+        ref={searchContainerRef}
         className={cn(
           'flex h-8 overflow-hidden',
           { 'w-0': !isSearchInputFocused },
