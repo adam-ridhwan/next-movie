@@ -1,4 +1,5 @@
 import { TIMEOUT_DURATION } from '@/lib/constants';
+import { wait } from '@/lib/utils';
 import { useAnimation } from '@/hooks/use-animation';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
@@ -10,7 +11,10 @@ const PaginateRightButton = () => {
     status: { isLastPage, isSecondToLastPage },
     actions: { goToFirstPage, goToLastPage, goToNextPage },
   } = usePagination();
-  const { state: { hasPaginated }, actions: { markAsPaginated, wait } } = usePageUtils(); // prettier-ignore
+  const {
+    state: { hasPaginated },
+    actions: { markAsPaginated },
+  } = usePageUtils();
   const { slide, getSlideAmount } = useSlide();
   const { enableAnimation, disableAnimation } = useAnimation();
 

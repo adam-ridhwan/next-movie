@@ -1,13 +1,14 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, Suspense, useContext, useEffect, useRef } from 'react';
+import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute } from '@/routes';
+import { BrowseRoute, SearchRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
+import { QUERY } from '@/lib/constants';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
-type SearchContextType = {
+type SearchContextProps = {
   state: {
     isSearchInputExpanding: boolean;
     isSearchInputFocused: boolean;
@@ -16,7 +17,7 @@ type SearchContextType = {
     handleFocus: () => void;
     handleSearch: (query: string) => void;
     handleClear: () => void;
-    handleLinkNavigation: () => void;
+    handleNavigate: () => void;
   };
   refs: {
     searchContainerRef: RefObject<HTMLDivElement>;
@@ -24,9 +25,11 @@ type SearchContextType = {
   };
 } | null;
 
-const Context = createContext<SearchContextType>(null);
+type SearchProviderProps = { children: ReactNode };
 
-export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
+const SearchContext = createContext<SearchContextProps>(null);
+
+export const SearchProvider = ({ children }: SearchProviderProps) => {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,8 +50,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
-    if (!searchInputRef.current) return;
-    if (searchParams.get('q')) focusSearchInput();
+    if (searchParams.get(QUERY)) focusSearchInput();
   });
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
   }, [pathname, isSearchInputFocused, searchInputRef]);
 
   useOnClickOutside(searchContainerRef, () => {
-    if (searchParams.get('q')) return;
+    if (searchParams.get(QUERY)) return;
     blurSearchInput();
     collapseSearchInput();
   });
@@ -85,9 +87,9 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
     if (query.length === 0) return replace(BrowseRoute());
 
     const params = new URLSearchParams(searchParams);
-    if (query) params.set('q', query);
-    else params.delete('q');
-    replace(`/search?${params.toString()}`);
+    if (query) params.set(QUERY, query);
+    else params.delete(QUERY);
+    replace(SearchRoute(undefined, { q: query }));
   };
 
   const handleClear = () => {
@@ -95,13 +97,13 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
     replace(BrowseRoute());
   };
 
-  const handleLinkNavigation = () => {
+  const handleNavigate = () => {
     handleClear();
     blurSearchInput();
   };
 
   return (
-    <Context.Provider
+    <SearchContext.Provider
       value={{
         state: {
           isSearchInputExpanding,
@@ -111,7 +113,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
           handleFocus,
           handleSearch,
           handleClear,
-          handleLinkNavigation,
+          handleNavigate,
         },
         refs: {
           searchContainerRef,
@@ -120,12 +122,12 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
       }}
     >
       {children}
-    </Context.Provider>
+    </SearchContext.Provider>
   );
 };
 
 export const useSearchStore = () => {
-  const context = useContext(Context);
-  if (!context) throw new Error('useSliderRefContext must be used within a SliderRefProvider');
+  const context = useContext(SearchContext);
+  if (!context) throw new Error('useSearchStore must be used within a SearchProvider');
   return context;
 };

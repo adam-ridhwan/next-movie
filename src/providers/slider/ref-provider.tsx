@@ -2,30 +2,34 @@
 
 import { createContext, ReactNode, RefObject, useContext, useRef } from 'react';
 
-type SliderRefContextProps = {
+type RefContextProps = {
   tileContainerRef: RefObject<HTMLDivElement>;
   tileItemRef: RefObject<HTMLDivElement>;
 } | null;
 
-const Context = createContext<SliderRefContextProps>(null);
+type RefProviderProps = {
+  children: ReactNode;
+};
 
-export const SliderRefProvider = ({ children }: { children: ReactNode }) => {
+const RefContext = createContext<RefContextProps>(null);
+
+export const RefProvider = ({ children }: RefProviderProps) => {
   const tileContainerRef = useRef<HTMLDivElement>(null);
   const tileItemRef = useRef<HTMLDivElement>(null);
   return (
-    <Context.Provider
+    <RefContext.Provider
       value={{
         tileContainerRef,
         tileItemRef,
       }}
     >
       {children}
-    </Context.Provider>
+    </RefContext.Provider>
   );
 };
 
-export const useSliderRefContext = () => {
-  const context = useContext(Context);
-  if (!context) throw new Error('useSliderRefContext must be used within a SliderRefProvider');
+export const useRefContext = () => {
+  const context = useContext(RefContext);
+  if (!context) throw new Error('useRefContext must be used within a RefProvider');
   return context;
 };

@@ -1,7 +1,8 @@
 export const DEVELOPMENT_MODE = process.env.NEXT_PUBLIC_NODE_ENV === 'development';
 
 export const TIMEOUT_DURATION = 700;
-export const MINIMUM_TILE_COUNT = 6;
+
+export const QUERY = 'q';
 
 export const MEDIA_QUERY = {
   SM: 800,

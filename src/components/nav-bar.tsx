@@ -11,7 +11,7 @@ import SearchInput from '@/components/search/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
-  const { actions: { handleLinkNavigation } } = useSearchStore(); // prettier-ignore
+  const { actions: { handleNavigate } } = useSearchStore(); // prettier-ignore
 
   return (
     <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>
@@ -20,7 +20,7 @@ const NavBar = () => {
           <LogoIcon />
 
           <nav>
-            <BrowseRoute.Link onClick={handleLinkNavigation}>
+            <BrowseRoute.Link onClick={handleNavigate}>
               <BodySmall
                 className={cn('transition-colors hover:text-primary/50', {
                   'text-primary': pathname === BrowseRoute(),

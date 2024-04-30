@@ -59,6 +59,6 @@ type SearchProps = {
   q: string;
 };
 
-export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps;
 export type DefaultCategoryProps = { label?: string; mediaType: MediaType };
+export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps;
 export type FetchTMDBParams = Prettify<DefaultCategoryProps & CategoryProps>;

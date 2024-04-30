@@ -10,6 +10,8 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
   const actors = credits.cast.filter(({ known_for_department }: TODO) => known_for_department === 'Acting');
   const firstTenActors = actors.slice(0, 10);
 
+  if (!firstTenActors.length) return null;
+
   return (
     <SliderProvider content={firstTenActors} mediaType={mediaType} section='cast'>
       <Slider headerTitle='Cast' />

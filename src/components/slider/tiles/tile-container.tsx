@@ -1,4 +1,4 @@
-import { useSliderRefContext } from '@/providers/slider/slider-ref-provider';
+import { useRefContext } from '@/providers/slider/ref-provider';
 
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/hooks/use-animation';
@@ -14,7 +14,7 @@ const TileContainer = () => {
   const { tilesToRender } = useTiles();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
-  const { tileContainerRef, tileItemRef } = useSliderRefContext();
+  const { tileContainerRef, tileItemRef } = useRefContext();
 
   return (
     <div className='relative w-full overflow-hidden'>

@@ -15,7 +15,6 @@ type UsePageUtilsReturn = {
   };
   actions: {
     markAsPaginated: () => void;
-    wait: (ms: number) => Promise<void>;
     getTileCountPerPage: () => number;
     getTileCount: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
@@ -90,8 +89,6 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     return newContentList.map(tile => ({ ...tile, uuid: uuid() }));
   };
 
-  const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
-
   return {
     state: {
       firstPageLength,
@@ -101,7 +98,6 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     },
     actions: {
       markAsPaginated,
-      wait,
       getTileCountPerPage,
       getTileCount,
       getStartIndex,
