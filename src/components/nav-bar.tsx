@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useSearchStore } from '@/providers/search/search-provider';
-import { BrowseRoute, MoviesRoute } from '@/routes';
+import { BrowseRoute, MoviesRoute, TvRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
@@ -35,6 +35,20 @@ const NavBar = () => {
                 Home
               </BodySmall>
             </BrowseRoute.Link>
+
+            <TvRoute.Link
+              onClick={handleNavigate}
+              className={cn({ 'pointer-events-none select-none': isActiveRoute(TvRoute()) })}
+            >
+              <BodySmall
+                className={cn('transition-colors duration-300 hover:text-primary/50', {
+                  'text-primary': isActiveRoute(TvRoute()),
+                  'text-primary/70': !isActiveRoute(TvRoute()),
+                })}
+              >
+                TV Shows
+              </BodySmall>
+            </TvRoute.Link>
 
             <MoviesRoute.Link
               onClick={handleNavigate}
