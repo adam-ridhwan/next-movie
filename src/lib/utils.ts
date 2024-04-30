@@ -10,7 +10,7 @@ export const wait = (ms: number): Promise<void> => new Promise(resolve => setTim
 export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export type KeyOf<T> = keyof T;
-export type ValuesOf<T> = T[keyof T];
+export type ValueOf<T> = T[keyof T];
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {}; // eslint-disable-line @typescript-eslint/ban-types

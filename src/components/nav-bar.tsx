@@ -11,6 +11,7 @@ import SearchInput from '@/components/search/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
+
   const { actions: { handleNavigate } } = useSearchStore(); // prettier-ignore
 
   const isActiveRoute = (route: string) => pathname === route;
