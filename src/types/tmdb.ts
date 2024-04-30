@@ -1,28 +1,29 @@
 import { z } from 'zod';
 
-const MovieSchema = z.object({
+const BaseMediaSchema = z.object({
   id: z.number(),
-  original_title: z.string().nullable(),
-  title: z.string().nullable(),
-  overview: z.string().nullable(),
   backdrop_path: z.string().nullable(),
   poster_path: z.string().nullable(),
-  release_date: z.string().nullable(),
+  overview: z.string().nullable(),
   genre_ids: z.array(z.number()).nullable(),
   original_language: z.string().nullable(),
 });
 
-const TvSchema = z.object({
-  id: z.number(),
-  original_name: z.string().nullable(),
-  name: z.string().nullable(),
-  backdrop_path: z.string().nullable(),
-  poster_path: z.string().nullable(),
-  first_air_date: z.string().nullable(),
-  overview: z.string().nullable(),
-  genre_ids: z.array(z.number()).nullable(),
-  original_language: z.string().nullable(),
-});
+const MovieSchema = BaseMediaSchema.merge(
+  z.object({
+    original_title: z.string().nullable(),
+    title: z.string().nullable(),
+    release_date: z.string().nullable(),
+  })
+);
+
+const TvSchema = BaseMediaSchema.merge(
+  z.object({
+    original_name: z.string().nullable(),
+    name: z.string().nullable(),
+    first_air_date: z.string().nullable(),
+  })
+);
 
 const MediaListSchema = z.object({
   page: z.number(),
