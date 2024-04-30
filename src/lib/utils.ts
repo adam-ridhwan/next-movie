@@ -45,8 +45,10 @@ export const getObjectKey = <K extends string, V>({
 }: {
   label: string;
   object: Record<K, V>;
-  value: V[];
+  value: V[] | null;
 }): K[] => {
+  if (!value) return [];
+
   return value.map(v => {
     for (const [key, val] of Object.entries(object) as [K, V][]) {
       if (val === v) return key;
@@ -88,4 +90,8 @@ export const findIndexByKey = <T, K extends keyof T>({
   const index = array.findIndex(item => item[key] === value);
   if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;
+};
+
+export const isNullish = (...values: any[]): string => {
+  return values.find(value => value !== undefined) ?? '-';
 };

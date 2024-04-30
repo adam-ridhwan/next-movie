@@ -48,7 +48,7 @@ const createUrl = (params: FetchTMDBParams): string => {
   }
 };
 
-export const fetchTMDB = async (params: FetchTMDBParams): Promise<TODO> => {
+export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
   const url = createUrl(params);
   if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
 
