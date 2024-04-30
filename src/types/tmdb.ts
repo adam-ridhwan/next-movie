@@ -16,7 +16,6 @@ export const MovieSchema = z.object({
   video: z.boolean().nullable(),
   adult: z.boolean().nullable(),
 });
-export type Movie = z.infer<typeof MovieSchema>;
 
 export const TvSchema = z.object({
   id: z.number(),
@@ -26,20 +25,27 @@ export const TvSchema = z.object({
   poster_path: z.string().nullable(),
   first_air_date: z.string().nullable(),
   overview: z.string().nullable(),
-  genre_ids: z.array(z.number()).optional().nullable(),
-  original_language: z.string().optional().nullable(),
-  origin_country: z.array(z.string()).optional().nullable(),
-  popularity: z.number().optional().nullable(),
-  vote_average: z.number().optional().nullable(),
-  vote_count: z.number().optional().nullable(),
-  adult: z.boolean().optional().nullable(),
+  genre_ids: z.array(z.number()).nullable(),
+  original_language: z.string().nullable(),
+  origin_country: z.array(z.string()).nullable(),
+  popularity: z.number().nullable(),
+  vote_average: z.number().nullable(),
+  vote_count: z.number().nullable(),
+  adult: z.boolean().nullable(),
 });
-export type Tv = z.infer<typeof TvSchema>;
 
-export const MediaSchema = z.object({
-  page: z.number(),
-  results: z.array(MovieSchema),
-  total_pages: z.number(),
-  total_results: z.number(),
-});
-export type Media = z.infer<typeof MediaSchema>;
+const MediaListSchema = (schema: z.ZodSchema) =>
+  z.object({
+    page: z.number(),
+    results: z.array(schema),
+    total_pages: z.number(),
+    total_results: z.number(),
+  });
+
+export const MovieListSchema = MediaListSchema(MovieSchema);
+export const TvListSchema = MediaListSchema(TvSchema);
+
+export type MovieList = z.infer<typeof MovieListSchema>;
+export type TvList = z.infer<typeof TvListSchema>;
+export type Movie = z.infer<typeof MovieSchema>;
+export type Tv = z.infer<typeof TvSchema>;

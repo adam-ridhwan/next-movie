@@ -2,14 +2,14 @@ import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { GENRES } from '@/types/global';
-import { MediaSchema } from '@/types/tmdb';
+import { MovieListSchema } from '@/types/tmdb';
 import { getFirstSentence, getObjectKey, isNullish, toPascalCase } from '@/lib/utils';
 import ThumbnailLink from '@/components/epic-stage/thumbnail-link';
 import { HeadingLarge } from '@/components/fonts';
 
 const EpicStage = async () => {
   const popularMovies = await fetchTMDB({ category: 'popular', mediaType: 'movie' });
-  const parsedPopularMovies = MediaSchema.safeParse(popularMovies);
+  const parsedPopularMovies = MovieListSchema.safeParse(popularMovies);
   if (!parsedPopularMovies.success) throw new Error('EpicStage() Invalid popularMovies schema');
 
   const firstMovie = parsedPopularMovies.data.results[0];
