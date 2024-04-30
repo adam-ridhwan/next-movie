@@ -11,7 +11,7 @@ import SearchInput from '@/components/search-input/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
-  const { handleLinkNavigation } = useSearch();
+  const { actions: { handleLinkNavigation } } = useSearch(); // prettier-ignore
 
   return (
     <div className='flex h-16 items-center bg-black'>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useSearchContext } from '@/providers/search-provider';
 import { BrowseRoute } from '@/routes';
@@ -8,10 +8,17 @@ import { BrowseRoute } from '@/routes';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type UseSearchReturn = {
-  handlesFocus: () => void;
-  handleSearch: (query: string) => void;
-  handleClear: () => void;
-  handleLinkNavigation: () => void;
+  state: {
+    isExpanding: boolean;
+    isSearchInputFocused: boolean;
+    searchInputRef: RefObject<HTMLInputElement>;
+  };
+  actions: {
+    handlesFocus: () => void;
+    handleSearch: (query: string) => void;
+    handleClear: () => void;
+    handleLinkNavigation: () => void;
+  };
 };
 
 export const useSearch = (): UseSearchReturn => {
@@ -19,34 +26,43 @@ export const useSearch = (): UseSearchReturn => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { isSearchFocused, setIsSearchFocused, isExpanding, setIsExpanding, searchInputRef } =
-    useSearchContext();
+  const {
+    isSearchInputFocused,
+    setIsSearchInputFocused,
+    isExpanding,
+    setIsExpanding,
+    searchInputRef
+  } = useSearchContext(); // prettier-ignore
 
   useEffectOnce(() => {
     if (!searchInputRef.current) return;
-    if (searchParams.get('q')) setIsSearchFocused(true);
+    if (searchParams.get('q')) setIsSearchInputFocused(true);
   });
 
   useEffect(() => {
     if (!searchInputRef.current) return;
-    if (pathname === BrowseRoute() && isSearchFocused) searchInputRef.current.focus();
-  }, [pathname, isSearchFocused, searchInputRef]);
+    if (pathname === BrowseRoute() && isSearchInputFocused) searchInputRef.current.focus();
+  }, [pathname, isSearchInputFocused, searchInputRef]);
+
+  const expandSearchInput = () => setIsExpanding(true);
+  const collapseSearchInput = () => setIsExpanding(false);
+  const focusSearchInput = () => {
+    if (!searchInputRef.current) return;
+    searchInputRef.current.focus();
+    setIsSearchInputFocused(true);
+  };
+  const blurSearchInput = () => {
+    if (!searchInputRef.current) return;
+    searchInputRef.current.blur();
+    searchInputRef.current.value = '';
+    setIsSearchInputFocused(false);
+  };
 
   const handlesFocus = () => {
-    if (!searchInputRef.current) return;
-
-    setIsExpanding(true);
-
-    if (isSearchFocused) {
-      searchInputRef.current.blur();
-      searchInputRef.current.value = '';
-      setIsSearchFocused(false);
-    } else {
-      searchInputRef.current.focus();
-      setIsSearchFocused(true);
-    }
-
-    setIsExpanding(false);
+    expandSearchInput();
+    if (isSearchInputFocused) blurSearchInput();
+    else focusSearchInput();
+    collapseSearchInput();
   };
 
   const handleSearch = (query: string) => {
@@ -65,12 +81,20 @@ export const useSearch = (): UseSearchReturn => {
 
   const handleLinkNavigation = () => {
     handleClear();
-    setIsSearchFocused(false);
+    setIsSearchInputFocused(false);
   };
+
   return {
-    handlesFocus,
-    handleSearch,
-    handleClear,
-    handleLinkNavigation,
+    state: {
+      isExpanding,
+      isSearchInputFocused,
+      searchInputRef,
+    },
+    actions: {
+      handlesFocus,
+      handleSearch,
+      handleClear,
+      handleLinkNavigation,
+    },
   };
 };

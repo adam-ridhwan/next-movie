@@ -14,8 +14,8 @@ import {
 type SearchContextType = {
   isExpanding: boolean;
   setIsExpanding: Dispatch<SetStateAction<boolean>>;
-  isSearchFocused: boolean;
-  setIsSearchFocused: Dispatch<SetStateAction<boolean>>;
+  isSearchInputFocused: boolean;
+  setIsSearchInputFocused: Dispatch<SetStateAction<boolean>>;
   searchInputRef: RefObject<HTMLInputElement>;
 } | null;
 
@@ -24,7 +24,7 @@ export const SearchContext = createContext<SearchContextType>(null);
 // TODO: Implement custom hooks for the functions
 export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
   const [isExpanding, setIsExpanding] = useState(false);
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -32,8 +32,8 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
       value={{
         isExpanding,
         setIsExpanding,
-        isSearchFocused,
-        setIsSearchFocused,
+        isSearchInputFocused,
+        setIsSearchInputFocused,
         searchInputRef,
       }}
     >

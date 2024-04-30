@@ -1,5 +1,4 @@
 import { useSearchParams } from 'next/navigation';
-import { useSearchContext } from '@/providers/search-provider';
 import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -10,17 +9,14 @@ const SearchInput = () => {
   const searchParams = useSearchParams();
 
   const {
-    isExpanding,
-    isSearchFocused,
-    searchInputRef,
-  } = useSearchContext(); // prettier-ignore
-
-  const { handlesFocus, handleSearch, handleClear } = useSearch();
+    state: { isExpanding, isSearchInputFocused, searchInputRef },
+    actions: { handlesFocus, handleSearch, handleClear },
+  } = useSearch();
 
   return (
     <div
       className={cn('absolute right-0 flex flex-row items-center border border-transparent bg-black', {
-        'border-primary/80': isSearchFocused,
+        'border-primary/80': isSearchInputFocused,
       })}
     >
       <button
@@ -39,8 +35,8 @@ const SearchInput = () => {
       <div
         className={cn(
           'flex flex-row overflow-hidden',
-          { 'w-0': !isSearchFocused },
-          { 'w-52 px-2 transition-all duration-300': isSearchFocused }
+          { 'w-0': !isSearchInputFocused },
+          { 'w-52 px-2 transition-all duration-300': isSearchInputFocused }
         )}
       >
         <input
