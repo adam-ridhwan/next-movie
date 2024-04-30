@@ -5,7 +5,7 @@ import { ContentRouteParams, TODO } from '@/types/global';
 import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ id, mediaType }: ContentRouteParams) {
-  const videos = await fetchTMDB({ label: 'Trailers', category: 'videos', mediaType, id });
+  const videos = await fetchTMDB({ category: 'videos', mediaType, id });
 
   const trailers = videos.results.filter(
     (video: TODO) => video.type === 'Trailer' && video.site === 'YouTube'

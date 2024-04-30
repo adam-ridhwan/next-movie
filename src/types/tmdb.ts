@@ -41,7 +41,7 @@ export type Tv = z.infer<typeof TvSchema>;
 
 export const CastSchema = z.object({
   id: z.number(),
-  cast_id: z.number().nullable(),
+  cast_id: z.number().optional().nullable(),
   credit_id: z.string().nullable(),
   name: z.string().nullable(),
   original_name: z.string().nullable(),
