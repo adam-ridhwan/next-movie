@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { useSearch } from '@/hooks/use-search';
 import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
-import SearchInput from '@/components/search-input/search-input';
+import SearchInput from '@/components/search/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
