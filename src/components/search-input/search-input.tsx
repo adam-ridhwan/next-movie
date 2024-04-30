@@ -34,9 +34,9 @@ const SearchInput = () => {
 
       <div
         className={cn(
-          'flex flex-row overflow-hidden',
+          'flex h-8 overflow-hidden',
           { 'w-0': !isSearchInputFocused },
-          { 'w-52 px-2 transition-all duration-300': isSearchInputFocused }
+          { 'w-52  transition-all duration-300': isSearchInputFocused }
         )}
       >
         <input
@@ -47,15 +47,17 @@ const SearchInput = () => {
           defaultValue={searchParams.get('q')?.toString()}
           onChange={e => handleSearch(e.target.value)}
           placeholder='Movies, TV shows, genres'
-          className={cn('h-8 bg-black pr-2 text-sm')}
+          className={cn('w-full bg-black text-sm')}
         />
 
         <button
           disabled={isExpanding}
           onClick={() => handleClear()}
-          className={cn('pr-2', { hidden: (searchParams.get('q')?.length ?? 0) < 1 })}
+          className={cn('flex aspect-square items-center justify-center', {
+            hidden: (searchParams.get('q')?.length ?? 0) < 1,
+          })}
         >
-          <X className='h-5 w-5' />
+          <X className='size-4' />
         </button>
       </div>
     </div>
