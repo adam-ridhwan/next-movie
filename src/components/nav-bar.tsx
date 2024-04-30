@@ -20,7 +20,10 @@ const NavBar = () => {
           <LogoIcon />
 
           <nav>
-            <BrowseRoute.Link onClick={handleNavigate}>
+            <BrowseRoute.Link
+              onClick={handleNavigate}
+              className={cn({ 'pointer-events-none select-none': pathname === BrowseRoute() })}
+            >
               <BodySmall
                 className={cn('transition-colors hover:text-primary/50', {
                   'text-primary': pathname === BrowseRoute(),
