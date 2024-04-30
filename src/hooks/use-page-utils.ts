@@ -1,6 +1,6 @@
 /* eslint no-restricted-imports: 0 */
 
-import { useSliderStore } from '@/providers/slider-provider';
+import { useSliderStore } from '@/providers/slider/slider-provider';
 import { v4 as uuid } from 'uuid';
 
 import { MEDIA_QUERY } from '@/lib/constants';

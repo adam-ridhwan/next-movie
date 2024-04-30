@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { DomContextProvider } from '@/providers/dom-provider';
-import { SliderProvider } from '@/providers/slider-provider';
+import { SliderProvider } from '@/providers/slider/slider-provider';
+import { SliderRefProvider } from '@/providers/slider/slider-ref-provider';
 
 import { FetchTMDBParams, Section } from '@/lib/types';
 import EpicStage from '@/components/epic-stage/epic-stage';
@@ -33,9 +33,9 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
           mediaType={content.mediaType}
           section={content.section}
         >
-          <DomContextProvider>
+          <SliderRefProvider>
             <Slider headerTitle={content.label || ''} />
-          </DomContextProvider>
+          </SliderRefProvider>
         </SliderProvider>
       ))}
 

@@ -2,7 +2,7 @@
 
 import { RefObject, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useSearchContext } from '@/providers/search-provider';
+import { useSearchContext } from '@/providers/search/search-provider';
 import { BrowseRoute } from '@/routes';
 import { useOnClickOutside } from 'usehooks-ts';
 

@@ -1,7 +1,7 @@
 /* eslint no-restricted-imports: 0 */
 
-import { useDomContext } from '@/providers/dom-provider';
-import { useSliderStore } from '@/providers/slider-provider';
+import { useSliderStore } from '@/providers/slider/slider-provider';
+import { useSliderRefContext } from '@/providers/slider/slider-ref-provider';
 
 import { SlideDirection } from '@/lib/constants';
 
@@ -23,7 +23,7 @@ export const useSlide = (): UseSlideReturn => {
   const firstPageLength = useSliderStore(state => state.firstPageLength);
   const lastPageLength = useSliderStore(state => state.lastPageLength);
 
-  const { tileContainerRef, tileItemRef } = useDomContext();
+  const { tileContainerRef, tileItemRef } = useSliderRefContext();
 
   const slide = (amount: number) => setSlideAmount(amount);
 

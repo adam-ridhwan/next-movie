@@ -1,6 +1,6 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { DomContextProvider } from '@/providers/dom-provider';
-import { SliderProvider } from '@/providers/slider-provider';
+import { SliderProvider } from '@/providers/slider/slider-provider';
+import { SliderRefProvider } from '@/providers/slider/slider-ref-provider';
 
 import { ContentRouteParams, FetchTMDBParams } from '@/lib/types';
 import Slider from '@/components/slider/slider';
@@ -23,9 +23,9 @@ export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams
 
   return (
     <SliderProvider content={moreLikesThis} mediaType={mediaType} section={mediaType}>
-      <DomContextProvider>
+      <SliderRefProvider>
         <Slider headerTitle='More like this' />
-      </DomContextProvider>
+      </SliderRefProvider>
     </SliderProvider>
   );
 }

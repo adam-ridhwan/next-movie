@@ -47,6 +47,6 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
 
 export const useSearchContext = () => {
   const context = useContext(SearchContext);
-  if (!context) throw new Error('useSearchContext must be used within a RefContextProvider');
+  if (!context) throw new Error('useSearchContext must be used within a SliderRefProvider');
   return context;
 };

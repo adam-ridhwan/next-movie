@@ -1,6 +1,6 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { DomContextProvider } from '@/providers/dom-provider';
-import { SliderProvider } from '@/providers/slider-provider';
+import { SliderProvider } from '@/providers/slider/slider-provider';
+import { SliderRefProvider } from '@/providers/slider/slider-ref-provider';
 
 import { ContentRouteParams, TODO } from '@/lib/types';
 import Slider from '@/components/slider/slider';
@@ -14,9 +14,9 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
   return (
     <section>
       <SliderProvider content={firstTenActors} mediaType={mediaType} section='cast'>
-        <DomContextProvider>
+        <SliderRefProvider>
           <Slider headerTitle='Cast' />
-        </DomContextProvider>
+        </SliderRefProvider>
       </SliderProvider>
     </section>
   );

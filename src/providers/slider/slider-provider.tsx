@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useRef } from 'react';
-import { createSliderStore, SliderStore } from '@/providers/slider-store';
+import { createSliderStore, SliderStore } from '@/providers/slider/slider-store';
 import { StoreApi, useStore } from 'zustand';
 
 import { MediaType, Section, TODO } from '@/lib/types';

@@ -3,7 +3,7 @@ import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { SearchContextProvider } from '@/providers/search-provider';
+import { SearchContextProvider } from '@/providers/search/search-provider';
 import { HydrationOverlay } from '@builder.io/react-hydration-overlay';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
