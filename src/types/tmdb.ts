@@ -34,16 +34,14 @@ const TvSchema = z.object({
   adult: z.boolean().nullable(),
 });
 
-const MediaListSchema = (schema: z.ZodSchema) =>
-  z.object({
-    page: z.number(),
-    results: z.array(schema),
-    total_pages: z.number(),
-    total_results: z.number(),
-  });
+const MediaListSchema = z.object({
+  page: z.number(),
+  total_pages: z.number(),
+  total_results: z.number(),
+});
 
-export const MovieListSchema = MediaListSchema(MovieSchema);
-export const TvListSchema = MediaListSchema(TvSchema);
+export const MovieListSchema = MediaListSchema.extend({ results: z.array(MovieSchema) });
+export const TvListSchema = MediaListSchema.extend({ results: z.array(TvSchema) });
 
 export type MovieList = z.infer<typeof MovieListSchema>;
 export type TvList = z.infer<typeof TvListSchema>;

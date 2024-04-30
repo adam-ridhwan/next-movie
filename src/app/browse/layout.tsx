@@ -8,7 +8,7 @@ import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
 const BrowseLayout = async ({ children }: { children: ReactNode }) => {
-  const content: Array<FetchTMDBParams & { section: Section }> = [
+  const contentParams: Array<FetchTMDBParams & { section: Section }> = [
     { label: 'Trending: Movies', category: 'trending', mediaType: 'movie', section: 'movie' },
     { label: 'Trending: TV Shows', category: 'trending', mediaType: 'tv', section: 'tv' },
     { label: 'Action Movies', category: 'discover', mediaType: 'movie', section: 'movie', genreId: 28 },
@@ -16,14 +16,17 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
   ];
 
   const fetchedContent = await Promise.all(
-    content.map(async content => {
-      const media = await fetchTMDB({ ...content });
-      const schema = content.mediaType === 'movie' ? MovieListSchema : TvListSchema;
+    contentParams.map(async params => {
+      const media = await fetchTMDB({ ...params });
+      const schema = params.mediaType === 'movie' ? MovieListSchema : TvListSchema;
 
       const parsedMedia = schema.safeParse(media);
-      if (!parsedMedia.success) throw new Error(`BrowseLayout() Invalid ${content.label} media schema`);
+      if (!parsedMedia.success) throw new Error(`BrowseLayout() Invalid ${params.label} media schema`);
 
-      return { ...content, results: parsedMedia.data.results };
+      return {
+        ...params,
+        results: parsedMedia.data.results,
+      };
     })
   );
 
