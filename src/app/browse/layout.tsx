@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { FetchTMDBParams, Section } from '@/lib/types';
+import { FetchTMDBParams, Section } from '@/types/global';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 

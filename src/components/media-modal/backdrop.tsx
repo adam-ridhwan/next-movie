@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams } from '@/types/global';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
   const details = await fetchTMDB({ category: 'details', mediaType, id });

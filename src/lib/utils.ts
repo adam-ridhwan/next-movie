@@ -3,7 +3,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { GenreLabel } from '@/lib/types';
+import { GenreLabel } from '@/types/global';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

@@ -1,7 +1,7 @@
 'use server';
 
+import { FetchTMDBParams, TODO } from '@/types/global';
 import { env } from '@/lib/env';
-import { FetchTMDBParams, TODO } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 

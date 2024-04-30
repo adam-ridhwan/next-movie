@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { Pages, TODO } from '@/lib/types';
+import { Pages, TODO } from '@/types/global';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { useValidators } from '@/hooks/use-validators';

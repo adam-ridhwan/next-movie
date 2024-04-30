@@ -1,4 +1,4 @@
-import { Section, TODO } from '@/lib/types';
+import { Section, TODO } from '@/types/global';
 import { cn } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';

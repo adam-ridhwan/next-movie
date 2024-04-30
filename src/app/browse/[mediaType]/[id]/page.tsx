@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams } from '@/types/global';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';

@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { useSearchStore } from '@/providers/search/search-provider';
 import { MediaRoute } from '@/routes';
 
-import { TODO } from '@/lib/types';
+import { TODO } from '@/types/global';
 import { cn } from '@/lib/utils';
 
 type ThumbnailLinkProps = {

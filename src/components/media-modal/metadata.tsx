@@ -1,6 +1,6 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams, TODO } from '@/lib/types';
+import { ContentRouteParams, TODO } from '@/types/global';
 import { capitalize } from '@/lib/utils';
 
 export async function Actors({ id, mediaType }: ContentRouteParams) {

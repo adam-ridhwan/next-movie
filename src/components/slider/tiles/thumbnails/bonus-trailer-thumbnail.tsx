@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { TODO } from '@/lib/types';
+import { TODO } from '@/types/global';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 
 export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {

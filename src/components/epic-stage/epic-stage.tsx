@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { FetchTMDBParams, GENRES } from '@/lib/types';
+import { FetchTMDBParams, GENRES } from '@/types/global';
 import { getFirstSentence, getObjectKey, toPascalCase } from '@/lib/utils';
 import ThumbnailLink from '@/components/epic-stage/thumbnail-link';
 import { HeadingLarge } from '@/components/fonts';

@@ -1,6 +1,6 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams } from '@/types/global';
 import { HeadingLarge } from '@/components/fonts';
 
 export async function Label({ mediaType, id }: ContentRouteParams) {

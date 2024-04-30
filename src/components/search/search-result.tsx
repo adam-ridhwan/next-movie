@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useDebounceValue } from 'usehooks-ts';
 
-import { TODO } from '@/lib/types';
+import { TODO } from '@/types/global';
 import { cn, extractYear, fetcher } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/components/fonts';
 
