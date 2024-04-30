@@ -27,6 +27,7 @@ const TvLayout = async ({ children }: { children: ReactNode }) => {
       };
     })
   );
+
   return (
     <>
       <EpicStage mediaType='tv' />
