@@ -9,8 +9,8 @@ import Slider from '@/components/slider/slider';
 
 const TvLayout = async ({ children }: { children: ReactNode }) => {
   const fetchTMDBParams: Array<FetchTMDBParams & { label: string }> = [
-    { label: 'Action TV', category: 'discover', mediaType: 'tv', genreId: 10759, page: 3 },
-    { label: 'Sci-Fi TV', category: 'discover', mediaType: 'tv', genreId: 10765, page: 2 },
+    { label: 'Action TV', category: 'discover', mediaType: 'tv', genreId: 10759, page: 2 },
+    { label: 'Sci-Fi TV', category: 'discover', mediaType: 'tv', genreId: 10765, page: 3 },
     { label: 'Trending: TV', category: 'trending', mediaType: 'tv' },
     { label: 'Popular: TV', category: 'popular', mediaType: 'tv' },
   ];

@@ -9,7 +9,7 @@ import Slider from '@/components/slider/slider';
 
 const MoviesLayout = async ({ children }: { children: ReactNode }) => {
   const fetchTMDBParams: Array<FetchTMDBParams & { label: string }> = [
-    { label: 'Action Movies', category: 'discover', mediaType: 'movie', genreId: 28, page: 3 },
+    { label: 'Action Movies', category: 'discover', mediaType: 'movie', genreId: 28, page: 2 },
     { label: 'Sci-Fi Movies', category: 'discover', mediaType: 'movie', genreId: 878, page: 3 },
     { label: 'Trending: Movies', category: 'trending', mediaType: 'movie' },
     { label: 'Popular: Movies', category: 'popular', mediaType: 'movie' },
@@ -27,6 +27,7 @@ const MoviesLayout = async ({ children }: { children: ReactNode }) => {
       };
     })
   );
+
   return (
     <>
       <EpicStage mediaType='movie' />
