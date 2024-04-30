@@ -22,7 +22,7 @@ const SearchInput = () => {
       <button
         type='button'
         disabled={isExpanding}
-        onClick={() => handlesFocus()}
+        onClick={handlesFocus}
         className='grid size-8 place-items-center'
       >
         <SearchIcon />
@@ -53,7 +53,7 @@ const SearchInput = () => {
 
         <button
           disabled={isExpanding}
-          onClick={() => handleClear()}
+          onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
             hidden: (searchParams.get('q')?.length ?? 0) < 1,
           })}
