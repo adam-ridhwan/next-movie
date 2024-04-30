@@ -10,10 +10,11 @@ type ProvidersProps = {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
+    // prettier-ignore
     <HydrationOverlay>
       <Suspense>
         <SearchProvider>
-          {children} {/* prettier-ignore */}
+          {children}
         </SearchProvider>
       </Suspense>
     </HydrationOverlay>
