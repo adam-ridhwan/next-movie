@@ -4,10 +4,10 @@ import { DomContextProvider } from '@/providers/dom-provider';
 import { SliderProvider } from '@/providers/slider-provider';
 
 import { FetchTMDBParams, Section } from '@/lib/types';
-import EpicStage from '@/components/epic-stage';
+import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
-export default async function BrowseLayout({ children }: { children: ReactNode }) {
+const BrowseLayout = async ({ children }: { children: ReactNode }) => {
   const content: Array<FetchTMDBParams & { section: Section }> = [
     { label: 'Trending: Movies', category: 'trending', mediaType: 'movie', section: 'movie' },
     { label: 'Trending: TV Shows', category: 'trending', mediaType: 'tv', section: 'tv' },
@@ -15,12 +15,12 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
     { label: 'Drama Movies', category: 'discover', mediaType: 'movie', section: 'tv', genreId: 18 },
   ];
 
-  const contentPromises = content.map(async content => {
-    const moviesTvs = await fetchTMDB({ ...content });
-    return { ...content, results: moviesTvs.results };
-  });
-
-  const fetchedContent = await Promise.all(contentPromises);
+  const fetchedContent = await Promise.all(
+    content.map(async content => {
+      const moviesTvs = await fetchTMDB({ ...content });
+      return { ...content, results: moviesTvs.results };
+    })
+  );
 
   return (
     <>
@@ -42,4 +42,5 @@ export default async function BrowseLayout({ children }: { children: ReactNode }
       {children}
     </>
   );
-}
+};
+export default BrowseLayout;

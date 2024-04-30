@@ -17,23 +17,22 @@ export const metadata: Metadata = {
   description: 'Entertainment Web App by Frontend Mentor',
 };
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-      <SpeedInsights />
-      <HydrationOverlay>
+const RootLayout = async ({ children }: { children: ReactNode }) => (
+  <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
+    <SpeedInsights />
+    <HydrationOverlay>
+      <SearchContextProvider>
         <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
           <main className='flex flex-col overflow-x-hidden'>
             <Suspense>
-              <SearchContextProvider>
-                <NavBar />
-              </SearchContextProvider>
+              <NavBar />
             </Suspense>
             <div className='container min-h-[100dvh] flex-1'>{children}</div>
             <footer className='p-10'></footer>
           </main>
         </body>
-      </HydrationOverlay>
-    </html>
-  );
-}
+      </SearchContextProvider>
+    </HydrationOverlay>
+  </html>
+);
+export default RootLayout;
