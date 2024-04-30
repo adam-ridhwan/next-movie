@@ -17,7 +17,7 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
   const { isAnimating } = useAnimation();
 
   if (CONTENT.length <= getTileCountPerPage()) {
-    return <div className='w-leftRightCustom min-w-leftRightCustom' />;
+    return <div className='w-leftRightCustom min-w-leftRightCustom max-sm:hidden' />;
   }
 
   const iconClass = cn(
