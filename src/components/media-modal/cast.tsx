@@ -7,7 +7,9 @@ import Slider from '@/components/slider/slider';
 
 export default async function Cast({ id, mediaType }: ContentRouteParams) {
   const credits = await fetchTMDB({ mediaType, id, category: 'credits' });
+  console.log(credits);
   const parsedCredits = CreditsSchema.safeParse(credits);
+  console.log(parsedCredits.error?.message);
   if (!parsedCredits.success) throw new Error('Cast() Invalid credits schema');
 
   const cast = parsedCredits.data.cast.filter(

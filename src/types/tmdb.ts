@@ -10,11 +10,6 @@ const MovieSchema = z.object({
   release_date: z.string().nullable(),
   genre_ids: z.array(z.number()).nullable(),
   original_language: z.string().nullable(),
-  popularity: z.number().nullable(),
-  vote_average: z.number().nullable(),
-  vote_count: z.number().nullable(),
-  video: z.boolean().nullable(),
-  adult: z.boolean().nullable(),
 });
 
 const TvSchema = z.object({
@@ -27,11 +22,6 @@ const TvSchema = z.object({
   overview: z.string().nullable(),
   genre_ids: z.array(z.number()).nullable(),
   original_language: z.string().nullable(),
-  origin_country: z.array(z.string()).nullable(),
-  popularity: z.number().nullable(),
-  vote_average: z.number().nullable(),
-  vote_count: z.number().nullable(),
-  adult: z.boolean().nullable(),
 });
 
 const MediaListSchema = z.object({
@@ -50,38 +40,21 @@ export type Tv = z.infer<typeof TvSchema>;
 
 export const CastSchema = z.object({
   id: z.number(),
-  adult: z.boolean().nullable(),
-  gender: z.number().nullable(),
-  known_for_department: z.string().nullable(),
+  cast_id: z.number().nullable(),
+  credit_id: z.string().nullable(),
   name: z.string().nullable(),
   original_name: z.string().nullable(),
-  popularity: z.number().nullable(),
   profile_path: z.string().nullable(),
   character: z.string().nullable(),
-  credit_id: z.string().nullable(),
-  order: z.number().nullable(),
-});
-
-const CrewSchema = z.object({
-  id: z.number(),
   adult: z.boolean().nullable(),
   gender: z.number().nullable(),
   known_for_department: z.string().nullable(),
-  name: z.string().nullable(),
-  original_name: z.string().nullable(),
-  popularity: z.number().nullable(),
-  profile_path: z.string().nullable(),
-  credit_id: z.string().nullable(),
-  department: z.string().nullable(),
-  job: z.string().nullable(),
 });
 
 export const CreditsSchema = z.object({
   id: z.number(),
   cast: z.array(CastSchema),
-  crew: z.array(CrewSchema),
 });
 
 export type Cast = z.infer<typeof CastSchema>;
-export type Crew = z.infer<typeof CrewSchema>;
 export type Credits = z.infer<typeof CreditsSchema>;
