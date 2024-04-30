@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BrowseRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
+import { QUERY } from '@/lib/constants';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type SearchContextProps = {
@@ -49,7 +50,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
-    if (searchParams.get('q')) focusSearchInput();
+    if (searchParams.get(QUERY)) focusSearchInput();
   });
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   }, [pathname, isSearchInputFocused, searchInputRef]);
 
   useOnClickOutside(searchContainerRef, () => {
-    if (searchParams.get('q')) return;
+    if (searchParams.get(QUERY)) return;
     blurSearchInput();
     collapseSearchInput();
   });
@@ -86,8 +87,8 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     if (query.length === 0) return replace(BrowseRoute());
 
     const params = new URLSearchParams(searchParams);
-    if (query) params.set('q', query);
-    else params.delete('q');
+    if (query) params.set(QUERY, query);
+    else params.delete(QUERY);
     replace(`/search?${params.toString()}`);
   };
 
