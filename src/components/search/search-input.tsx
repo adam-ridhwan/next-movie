@@ -1,17 +1,18 @@
 import { useSearchParams } from 'next/navigation';
+import { useSearchStore } from '@/providers/search/search-provider';
 import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import { useSearch } from '@/hooks/use-search';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
   const searchParams = useSearchParams();
 
   const {
-    state: { isExpanding, isSearchInputFocused, searchInputRef, searchContainerRef },
-    actions: { handlesFocus, handleSearch, handleClear },
-  } = useSearch();
+    state: { isSearchInputExpanding, isSearchInputFocused },
+    actions: { handleFocus, handleSearch, handleClear },
+    refs: { searchInputRef, searchContainerRef },
+  } = useSearchStore();
 
   return (
     <div
@@ -21,8 +22,8 @@ const SearchInput = () => {
     >
       <button
         type='button'
-        disabled={isExpanding}
-        onClick={handlesFocus}
+        disabled={isSearchInputExpanding}
+        onClick={handleFocus}
         className='grid size-8 place-items-center'
       >
         <SearchIcon />
@@ -43,7 +44,7 @@ const SearchInput = () => {
         <input
           id='search-input'
           ref={searchInputRef}
-          disabled={isExpanding}
+          disabled={isSearchInputExpanding}
           type='text'
           defaultValue={searchParams.get('q')?.toString()}
           onChange={e => handleSearch(e.target.value)}
@@ -52,7 +53,7 @@ const SearchInput = () => {
         />
 
         <button
-          disabled={isExpanding}
+          disabled={isSearchInputExpanding}
           onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
             hidden: (searchParams.get('q')?.length ?? 0) < 1,

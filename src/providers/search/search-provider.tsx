@@ -1,52 +1,131 @@
 'use client';
 
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  RefObject,
-  SetStateAction,
-  useContext,
-  useRef,
-  useState,
-} from 'react';
+import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { BrowseRoute } from '@/routes';
+import { useBoolean, useOnClickOutside } from 'usehooks-ts';
+
+import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type SearchContextType = {
-  isExpanding: boolean;
-  setIsExpanding: Dispatch<SetStateAction<boolean>>;
-  isSearchInputFocused: boolean;
-  setIsSearchInputFocused: Dispatch<SetStateAction<boolean>>;
-  searchInputRef: RefObject<HTMLInputElement>;
-  searchContainerRef: RefObject<HTMLDivElement>;
+  state: {
+    isSearchInputExpanding: boolean;
+    isSearchInputFocused: boolean;
+  };
+  actions: {
+    handleFocus: () => void;
+    handleSearch: (query: string) => void;
+    handleClear: () => void;
+    handleLinkNavigation: () => void;
+  };
+  refs: {
+    searchInputRef: RefObject<HTMLInputElement>;
+    searchContainerRef: RefObject<HTMLDivElement>;
+  };
 } | null;
 
-export const SearchContext = createContext<SearchContextType>(null);
+const Context = createContext<SearchContextType>(null);
 
-// TODO: Implement custom hooks for the functions
 export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
-  const [isExpanding, setIsExpanding] = useState(false);
-  const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const {
+    value: isSearchInputExpanding,
+    setTrue: expandSearchInput,
+    setFalse: collapseSearchInput,
+  } = useBoolean(false);
+
+  const {
+    value: isSearchInputFocused,
+    setTrue: focusSearchInput,
+    setFalse: blurSearchInput,
+  } = useBoolean(false);
+
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
+  useEffectOnce(() => {
+    if (!searchInputRef.current) return;
+    if (searchParams.get('q')) focusSearchInput();
+  });
+
+  useEffect(() => {
+    if (!searchInputRef.current) return;
+    if (pathname === BrowseRoute() && isSearchInputFocused) searchInputRef.current.focus();
+  }, [pathname, isSearchInputFocused, searchInputRef]);
+
+  useOnClickOutside(searchContainerRef, () => {
+    if (searchParams.get('q')) return;
+    blurSearchInput();
+    collapseSearchInput();
+  });
+
+  const handleFocusSearchInput = () => {
+    if (!searchInputRef.current) return;
+    searchInputRef.current.focus();
+    focusSearchInput();
+  };
+  const handleBlurSearchInput = () => {
+    if (!searchInputRef.current) return;
+    searchInputRef.current.blur();
+    searchInputRef.current.value = '';
+    blurSearchInput();
+  };
+
+  const handleFocus = () => {
+    expandSearchInput();
+    if (isSearchInputFocused) handleBlurSearchInput();
+    else handleFocusSearchInput();
+    collapseSearchInput();
+  };
+
+  const handleSearch = (query: string) => {
+    if (query.length === 0) return replace(BrowseRoute());
+
+    const params = new URLSearchParams(searchParams);
+    if (query) params.set('q', query);
+    else params.delete('q');
+    replace(`/search?${params.toString()}`);
+  };
+
+  const handleClear = () => {
+    if (searchInputRef.current) searchInputRef.current.value = '';
+    replace(BrowseRoute());
+  };
+
+  const handleLinkNavigation = () => {
+    handleClear();
+    blurSearchInput();
+  };
+
   return (
-    <SearchContext.Provider
+    <Context.Provider
       value={{
-        isExpanding,
-        setIsExpanding,
-        isSearchInputFocused,
-        setIsSearchInputFocused,
-        searchInputRef,
-        searchContainerRef,
+        state: {
+          isSearchInputExpanding,
+          isSearchInputFocused,
+        },
+        actions: {
+          handleFocus,
+          handleSearch,
+          handleClear,
+          handleLinkNavigation,
+        },
+        refs: {
+          searchInputRef,
+          searchContainerRef,
+        },
       }}
     >
       {children}
-    </SearchContext.Provider>
+    </Context.Provider>
   );
 };
 
-export const useSearchContext = () => {
-  const context = useContext(SearchContext);
-  if (!context) throw new Error('useSearchContext must be used within a SliderRefProvider');
+export const useSearchStore = () => {
+  const context = useContext(Context);
+  if (!context) throw new Error('useSliderRefContext must be used within a SliderRefProvider');
   return context;
 };

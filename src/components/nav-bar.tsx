@@ -1,17 +1,17 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useSearchStore } from '@/providers/search/search-provider';
 import { BrowseRoute } from '@/routes';
 
 import { cn } from '@/lib/utils';
-import { useSearch } from '@/hooks/use-search';
 import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
 import SearchInput from '@/components/search/search-input';
 
 const NavBar = () => {
   const pathname = usePathname();
-  const { actions: { handleLinkNavigation } } = useSearch(); // prettier-ignore
+  const { actions: { handleLinkNavigation } } = useSearchStore(); // prettier-ignore
 
   return (
     <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>

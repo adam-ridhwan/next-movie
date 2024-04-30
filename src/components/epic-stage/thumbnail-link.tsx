@@ -1,11 +1,11 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { useSearchStore } from '@/providers/search/search-provider';
 import { MediaRoute } from '@/routes';
 
 import { TODO } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { useSearch } from '@/hooks/use-search';
 
 type ThumbnailLinkProps = {
   children: ReactNode;
@@ -14,7 +14,7 @@ type ThumbnailLinkProps = {
 
 // TODO: Implement carousel
 const ThumbnailLink = ({ children, content }: ThumbnailLinkProps) => {
-  const { state: { isSearchInputFocused } } = useSearch(); // prettier-ignore
+  const { state: { isSearchInputFocused } } = useSearchStore(); // prettier-ignore
 
   return (
     <MediaRoute.Link

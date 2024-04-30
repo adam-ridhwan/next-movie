@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useContext, useRef } from 'react';
 import { SliderRefProvider } from '@/providers/slider/slider-ref-provider';
-import { createSliderStore, SliderStore } from '@/providers/slider/slider-store';
+import { createSliderStore, SliderStore } from '@/providers/slider/slider-store-creator';
 import { StoreApi, useStore } from 'zustand';
 
 import { MediaType, Section, TODO } from '@/lib/types';
