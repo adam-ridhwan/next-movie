@@ -49,7 +49,6 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
-    if (!searchInputRef.current) return;
     if (searchParams.get('q')) focusSearchInput();
   });
 
