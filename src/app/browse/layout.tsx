@@ -4,7 +4,6 @@ import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { FetchTMDBParams, Section } from '@/types/global';
 import { MovieListSchema, TvListSchema } from '@/types/tmdb';
-import { isNullish } from '@/lib/utils';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -33,7 +32,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <EpicStage />
+      <EpicStage mediaType='movie' />
 
       {content.map(content => (
         <SliderProvider
@@ -42,7 +41,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
           mediaType={content.mediaType}
           section={content.section}
         >
-          <Slider headerTitle={isNullish(content.label)} />
+          <Slider headerTitle={content.label} />
         </SliderProvider>
       ))}
 

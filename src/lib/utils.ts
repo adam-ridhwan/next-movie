@@ -3,15 +3,13 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { GenreLabel } from '@/types/global';
-
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export type KeysOf<T> = keyof T;
+export type KeyOf<T> = keyof T;
 export type ValuesOf<T> = T[keyof T];
 export type Prettify<T> = {
   [K in keyof T]: T[K];
@@ -55,13 +53,6 @@ export const getObjectKey = <K extends string, V>({
     }
     throw new Error(`${label}: Value not found: ${v}`);
   });
-};
-
-export const toPascalCase = (inputString: GenreLabel) => {
-  return inputString
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/(?:^|\s)\S/g, c => c.toUpperCase());
 };
 
 export const getFirstSentence = (text: string) => {

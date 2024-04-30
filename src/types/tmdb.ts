@@ -29,6 +29,7 @@ const MediaListSchema = z.object({
   page: z.number(),
   total_pages: z.number(),
   total_results: z.number(),
+  media_type: z.union([z.literal('movie'), z.literal('tv')]).optional(),
 });
 
 export const MovieListSchema = MediaListSchema.extend({ results: z.array(MovieSchema) });
@@ -36,6 +37,7 @@ export const TvListSchema = MediaListSchema.extend({ results: z.array(TvSchema) 
 
 export type MovieList = z.infer<typeof MovieListSchema>;
 export type TvList = z.infer<typeof TvListSchema>;
+export type MediaList = MovieList | TvList;
 export type Movie = z.infer<typeof MovieSchema>;
 export type Tv = z.infer<typeof TvSchema>;
 
