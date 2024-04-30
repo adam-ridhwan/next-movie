@@ -19,8 +19,8 @@ type SearchContextType = {
     handleLinkNavigation: () => void;
   };
   refs: {
-    searchInputRef: RefObject<HTMLInputElement>;
     searchContainerRef: RefObject<HTMLDivElement>;
+    searchInputRef: RefObject<HTMLInputElement>;
   };
 } | null;
 
@@ -43,8 +43,8 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
     setFalse: blurSearchInput,
   } = useBoolean(false);
 
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
     if (!searchInputRef.current) return;
@@ -114,8 +114,8 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
           handleLinkNavigation,
         },
         refs: {
-          searchInputRef,
           searchContainerRef,
+          searchInputRef,
         },
       }}
     >
