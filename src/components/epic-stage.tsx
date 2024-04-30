@@ -19,7 +19,7 @@ const EpicStage = async () => {
 
   return (
     <MediaRoute.Link id={firstMovie.id.toString()} mediaType={params.mediaType} scroll={false}>
-      <div className='relative mb-4 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
+      <div className='relative mb-4 mt-16 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
           src={`https://image.tmdb.org/t/p/original${firstMovie.backdrop_path}`}
           alt={firstMovie.original_title}
@@ -30,7 +30,7 @@ const EpicStage = async () => {
 
         <div className='absolute bottom-0 left-0 right-0 z-10 h-1/2 bg-gradient-to-t from-black' />
 
-        <div className='absolute bottom-0 left-0 z-50 flex w-1/2 flex-col gap-2 p-10'>
+        <div className='absolute bottom-0 left-0 z-40 flex w-1/2 flex-col gap-2 p-10'>
           <HeadingLarge>{firstMovie.title}</HeadingLarge>
           <ul className='flex flex-row gap-2'>
             {genres.map(genre => (

@@ -14,7 +14,7 @@ const NavBar = () => {
   const { actions: { handleLinkNavigation } } = useSearch(); // prettier-ignore
 
   return (
-    <div className='flex h-16 items-center bg-black'>
+    <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>
       <div className='container flex flex-row items-center justify-between px-leftRightCustom'>
         <div className='relative flex w-full flex-row items-center gap-8'>
           <LogoIcon />

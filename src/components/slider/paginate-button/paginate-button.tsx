@@ -1,4 +1,4 @@
-import { MINIMUM_TILE_COUNT, SlideDirection } from '@/lib/constants';
+import { SlideDirection } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { useAnimation } from '@/hooks/use-animation';
 import { usePageUtils } from '@/hooks/use-page-utils';
@@ -13,7 +13,7 @@ type PaginationButtonProps = {
 
 const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps) => {
   const { state: { CONTENT } } = usePagination(); // prettier-ignore
-  const { actions:{ getTileCountPerPage } } = usePageUtils(); // prettier-ignore
+  const { actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
   const { isAnimating } = useAnimation();
 
   if (CONTENT.length <= getTileCountPerPage())
@@ -33,7 +33,7 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
         disabled={isAnimating}
         onClick={onClick}
         className={cn(
-          'group/button relative z-50 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
+          'group/button relative z-40 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
           className,
           { 'justify-start': direction === 'right' },
           { 'justify-end': direction === 'left' },
