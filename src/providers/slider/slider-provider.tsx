@@ -32,6 +32,6 @@ export const SliderProvider = ({ children, content, mediaType, section }: Slider
 
 export const useSliderStore = <T,>(selector: (store: SliderStore) => T): T => {
   const store = useContext(SliderContext);
-  if (!store) throw new Error(`useSliderStore must be use within SliderStoreProvider`);
+  if (!store) throw new Error(`useSliderStore must be use within SliderProvider`);
   return useStore(store, selector);
 };

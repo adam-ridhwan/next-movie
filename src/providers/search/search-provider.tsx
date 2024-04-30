@@ -128,6 +128,6 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
 
 export const useSearchStore = () => {
   const context = useContext(SearchContext);
-  if (!context) throw new Error('useRefContext must be used within a RefProvider');
+  if (!context) throw new Error('useSearchStore must be used within a SearchProvider');
   return context;
 };
