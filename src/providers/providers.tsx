@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, Suspense } from 'react';
-import { SearchContextProvider } from '@/providers/search/search-provider';
+import { SearchProvider } from '@/providers/search/search-provider';
 import { HydrationOverlay } from '@builder.io/react-hydration-overlay';
 
 type ProvidersProps = {
@@ -12,9 +12,9 @@ const Providers = ({ children }: ProvidersProps) => {
   return (
     <HydrationOverlay>
       <Suspense>
-        <SearchContextProvider>
+        <SearchProvider>
           {children} {/* prettier-ignore */}
-        </SearchContextProvider>
+        </SearchProvider>
       </Suspense>
     </HydrationOverlay>
   );

@@ -1,13 +1,13 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, Suspense, useContext, useEffect, useRef } from 'react';
+import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BrowseRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
-type SearchContextType = {
+type SearchContextProps = {
   state: {
     isSearchInputExpanding: boolean;
     isSearchInputFocused: boolean;
@@ -24,9 +24,11 @@ type SearchContextType = {
   };
 } | null;
 
-const Context = createContext<SearchContextType>(null);
+type SearchProviderProps = { children: ReactNode };
 
-export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
+const SearchContext = createContext<SearchContextProps>(null);
+
+export const SearchProvider = ({ children }: SearchProviderProps) => {
   const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -101,7 +103,7 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
   };
 
   return (
-    <Context.Provider
+    <SearchContext.Provider
       value={{
         state: {
           isSearchInputExpanding,
@@ -120,12 +122,12 @@ export const SearchContextProvider = ({ children }: { children: ReactNode }) => 
       }}
     >
       {children}
-    </Context.Provider>
+    </SearchContext.Provider>
   );
 };
 
 export const useSearchStore = () => {
-  const context = useContext(Context);
-  if (!context) throw new Error('useSliderRefContext must be used within a SliderRefProvider');
+  const context = useContext(SearchContext);
+  if (!context) throw new Error('useRefContext must be used within a RefProvider');
   return context;
 };
