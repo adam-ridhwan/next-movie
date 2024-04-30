@@ -16,8 +16,9 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
   const { actions: { getTileCountPerPage } } = usePageUtils(); // prettier-ignore
   const { isAnimating } = useAnimation();
 
-  if (CONTENT.length <= getTileCountPerPage())
+  if (CONTENT.length <= getTileCountPerPage()) {
     return <div className='w-leftRightCustom min-w-leftRightCustom' />;
+  }
 
   const iconClass = cn(
     'opacity-0 transition-transform max-w-[40px] group-hover/button:scale-125 group-hover/slider:opacity-100',
@@ -28,22 +29,20 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
   const isLeft = direction === 'left';
 
   return (
-    <>
-      <button
-        disabled={isAnimating}
-        onClick={onClick}
-        className={cn(
-          'group/button relative z-40 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
-          className,
-          { 'justify-start': direction === 'right' },
-          { 'justify-end': direction === 'left' },
-          'max-sm:hidden'
-        )}
-      >
-        {isRight && <ChevronRightIcon className={iconClass} />}
-        {isLeft && <ChevronLeftIcon className={iconClass} />}
-      </button>
-    </>
+    <button
+      disabled={isAnimating}
+      onClick={onClick}
+      className={cn(
+        'group/button relative z-40 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
+        className,
+        { 'justify-start': direction === 'right' },
+        { 'justify-end': direction === 'left' },
+        'max-sm:hidden'
+      )}
+    >
+      {isRight && <ChevronRightIcon className={iconClass} />}
+      {isLeft && <ChevronLeftIcon className={iconClass} />}
+    </button>
   );
 };
 

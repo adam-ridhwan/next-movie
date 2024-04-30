@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
-import { useDebounce } from 'use-debounce';
+import { useDebounceValue } from 'usehooks-ts';
 
 import { TODO } from '@/lib/types';
 import { cn, extractYear, fetcher } from '@/lib/utils';
@@ -13,7 +13,7 @@ import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/compon
 const SearchResult = () => {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounce(query, 300);
+  const [debouncedQuery] = useDebounceValue(query, 300);
 
   useEffect(() => setQuery(searchParams.get('q') || ''), [searchParams]);
 
