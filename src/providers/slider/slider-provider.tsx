@@ -21,7 +21,9 @@ export const SliderProvider = ({ children, content, mediaType, section }: Slider
   if (!storeRef.current) storeRef.current = createSliderStore(content, mediaType, section);
   return (
     <SliderRefProvider>
-      <Context.Provider value={storeRef.current}>{children}</Context.Provider>
+      <Context.Provider value={storeRef.current}>
+        <section>{children}</section>
+      </Context.Provider>
     </SliderRefProvider>
   );
 };

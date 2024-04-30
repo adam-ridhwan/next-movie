@@ -11,10 +11,8 @@ export default async function Cast({ id, mediaType }: ContentRouteParams) {
   const firstTenActors = actors.slice(0, 10);
 
   return (
-    <section>
-      <SliderProvider content={firstTenActors} mediaType={mediaType} section='cast'>
-        <Slider headerTitle='Cast' />
-      </SliderProvider>
-    </section>
+    <SliderProvider content={firstTenActors} mediaType={mediaType} section='cast'>
+      <Slider headerTitle='Cast' />
+    </SliderProvider>
   );
 }

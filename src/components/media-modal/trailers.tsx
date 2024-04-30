@@ -14,10 +14,8 @@ export default async function Trailers({ id, mediaType }: ContentRouteParams) {
   if (!trailers.length) return null;
 
   return (
-    <section>
-      <SliderProvider content={trailers} mediaType={mediaType} section='trailer'>
-        <Slider headerTitle='Trailers' />
-      </SliderProvider>
-    </section>
+    <SliderProvider content={trailers} mediaType={mediaType} section='trailer'>
+      <Slider headerTitle='Trailers' />
+    </SliderProvider>
   );
 }

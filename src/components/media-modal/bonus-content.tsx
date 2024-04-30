@@ -14,10 +14,8 @@ export default async function Trailers({ mediaType, id }: ContentRouteParams) {
   if (!bonusContent.length) return null;
 
   return (
-    <section>
-      <SliderProvider content={bonusContent} mediaType={mediaType} section='bonus'>
-        <Slider headerTitle='Bonus Content' />
-      </SliderProvider>
-    </section>
+    <SliderProvider content={bonusContent} mediaType={mediaType} section='bonus'>
+      <Slider headerTitle='Bonus Content' />
+    </SliderProvider>
   );
 }
