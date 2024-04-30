@@ -21,17 +21,17 @@ const RootLayout = async ({ children }: { children: ReactNode }) => (
   <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
     <SpeedInsights />
     <HydrationOverlay>
-      <SearchContextProvider>
-        <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
-          <main className='flex flex-col overflow-x-hidden'>
-            <Suspense>
+      <Suspense>
+        <SearchContextProvider>
+          <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
+            <main className='flex flex-col overflow-x-hidden'>
               <NavBar />
-            </Suspense>
-            <div className='container min-h-[100dvh] flex-1'>{children}</div>
-            <footer className='p-10'></footer>
-          </main>
-        </body>
-      </SearchContextProvider>
+              <div className='container min-h-[100dvh] flex-1'>{children}</div>
+              <footer className='p-10'></footer>
+            </main>
+          </body>
+        </SearchContextProvider>
+      </Suspense>
     </HydrationOverlay>
   </html>
 );

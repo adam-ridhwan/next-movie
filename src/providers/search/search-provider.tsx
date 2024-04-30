@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import { createContext, ReactNode, RefObject, Suspense, useContext, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { BrowseRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
