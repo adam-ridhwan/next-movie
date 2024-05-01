@@ -7,6 +7,7 @@ import { HeadingLarge } from '@/components/fonts';
 
 export async function Label({ mediaType, id }: ContentRouteParams) {
   const details = await fetchTMDB({ mediaType, id, category: 'details' });
+
   const schema = mediaType === 'movie' ? MovieDetailsSchema : TvDetailsSchema;
   const { success, data, error } = schema.safeParse(details);
   if (!success) throw new Error(`Label() Invalid ${mediaType} schema: ${error.message}`);

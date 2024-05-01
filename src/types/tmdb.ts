@@ -90,7 +90,7 @@ const BaseDetailsSchema = z.object({
       name: z.string(),
     })
   ),
-  homepage: z.string().url(),
+  homepage: z.string().nullable(),
   origin_country: z.array(z.string()),
   original_language: z.string(),
   overview: z.string(),
@@ -149,3 +149,21 @@ export const TvDetailsSchema = BaseDetailsSchema.extend({
 
 export type MovieDetails = z.infer<typeof MovieDetailsSchema>;
 export type TvDetails = z.infer<typeof TvDetailsSchema>;
+
+const KeywordSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export const KeywordMovieSchema = z.object({
+  id: z.number(),
+  keywords: z.array(KeywordSchema),
+});
+
+export const KeywordTvSchema = z.object({
+  id: z.number(),
+  results: z.array(KeywordSchema),
+});
+
+export type KeywordMovie = z.infer<typeof KeywordMovieSchema>;
+export type KeywordTv = z.infer<typeof KeywordTvSchema>;
