@@ -3,7 +3,8 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { GenreLabel } from '@/lib/types';
+import { MediaType } from '@/types/global';
+import { Movie, Tv } from '@/types/tmdb';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -11,8 +12,8 @@ export const wait = (ms: number): Promise<void> => new Promise(resolve => setTim
 
 export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export type KeysOf<T> = keyof T;
-export type ValuesOf<T> = T[keyof T];
+export type KeyOf<T> = keyof T;
+export type ValueOf<T> = T[keyof T];
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {}; // eslint-disable-line @typescript-eslint/ban-types
@@ -45,21 +46,16 @@ export const getObjectKey = <K extends string, V>({
 }: {
   label: string;
   object: Record<K, V>;
-  value: V[];
+  value: V[] | null;
 }): K[] => {
+  if (!value) return [];
+
   return value.map(v => {
     for (const [key, val] of Object.entries(object) as [K, V][]) {
       if (val === v) return key;
     }
     throw new Error(`${label}: Value not found: ${v}`);
   });
-};
-
-export const toPascalCase = (inputString: GenreLabel) => {
-  return inputString
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/(?:^|\s)\S/g, c => c.toUpperCase());
 };
 
 export const getFirstSentence = (text: string) => {
@@ -88,4 +84,15 @@ export const findIndexByKey = <T, K extends keyof T>({
   const index = array.findIndex(item => item[key] === value);
   if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;
+};
+
+export const isNullish = (...values: any[]): string => {
+  return values.find(value => value !== undefined) ?? '-';
+};
+
+// prettier-ignore
+export const isMovie = <ZMovie, ZTv>(
+  media: ZMovie | ZTv, mediaType: MediaType
+): media is ZMovie => {
+  return mediaType === 'movie';
 };

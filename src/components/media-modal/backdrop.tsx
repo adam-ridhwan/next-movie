@@ -1,16 +1,26 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/lib/types';
+import { ContentRouteParams } from '@/types/global';
+import { MovieDetails, MovieDetailsSchema, TvDetails, TvDetailsSchema } from '@/types/tmdb';
+import { isMovie, isNullish } from '@/lib/utils';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
-  const details = await fetchTMDB({ category: 'details', mediaType, id });
+  const details = await fetchTMDB({ mediaType, id, category: 'details' });
+
+  const schema = mediaType === 'movie' ? MovieDetailsSchema : TvDetailsSchema;
+  const { success, data, error } = schema.safeParse(details);
+  if (!success) throw new Error(`Backdrop() Invalid ${mediaType} schema: ${error.message}`);
+
+  const title = isMovie<MovieDetails, TvDetails>(data, mediaType)
+    ? isNullish(data.title, data.original_title)
+    : isNullish(data.name, data.original_name);
 
   return (
     <div className='relative aspect-video overflow-hidden rounded-2xl'>
       <Image
-        src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
-        alt={details.title || ''}
+        src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+        alt={title ?? 'Backdrop'}
         priority
         unoptimized
         fill

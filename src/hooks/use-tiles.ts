@@ -1,4 +1,4 @@
-import { TODO } from '@/lib/types';
+import { TODO } from '@/types/global';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';

@@ -2,8 +2,8 @@
 
 import { useSliderStore } from '@/providers/slider/slider-provider';
 
+import { MediaType, Pages, Section, TODO } from '@/types/global';
 import { usePaginationLogger } from '@/lib/logger';
-import { MediaType, Pages, Section, TODO } from '@/lib/types';
 import { findIndexByKey, getMapValue } from '@/lib/utils';
 import { useMapPages } from '@/hooks/use-map-pages';
 import { usePageUtils } from '@/hooks/use-page-utils';

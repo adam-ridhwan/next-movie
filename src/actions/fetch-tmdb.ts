@@ -1,7 +1,7 @@
 'use server';
 
+import { FetchTMDBParams } from '@/types/global';
 import { env } from '@/lib/env';
-import { FetchTMDBParams, TODO } from '@/lib/types';
 
 const { TMDB_READ_ACCESS_TOKEN } = env;
 
@@ -48,7 +48,7 @@ const createUrl = (params: FetchTMDBParams): string => {
   }
 };
 
-export const fetchTMDB = async (params: FetchTMDBParams): Promise<TODO> => {
+export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
   const url = createUrl(params);
   if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
 

@@ -5,7 +5,7 @@ import { RefProvider } from '@/providers/slider/ref-provider';
 import { createSliderStore, SliderStore } from '@/providers/slider/slider-store-creator';
 import { StoreApi, useStore } from 'zustand';
 
-import { MediaType, Section, TODO } from '@/lib/types';
+import { MediaType, Section, TODO } from '@/types/global';
 
 type SliderContextProps = StoreApi<SliderStore> | null;
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { MediaType, Pages, Section, TODO } from '@/lib/types';
+import { MediaType, Pages, Section, TODO } from '@/types/global';
 
 type SetPagesParams = {
   pages: Pages;
