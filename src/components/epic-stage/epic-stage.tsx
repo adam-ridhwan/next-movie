@@ -21,18 +21,22 @@ const EpicStage = async ({ mediaType }: EpicStageProps) => {
   const firstResult = data.results[0];
 
   // prettier-ignore
-  const genresObject = isMovie(firstResult, mediaType)
-    ? MOVIE_GENRES
-    : TV_GENRES;
-
-  const alt = isMovie(firstResult, mediaType)
-    ? isNullish((firstResult.title, firstResult.original_title))
-    : isNullish((firstResult.name, firstResult.original_name));
+  const genresObject =
+    isMovie(firstResult, mediaType)
+      ? MOVIE_GENRES
+      : TV_GENRES;
 
   // prettier-ignore
-  const title = isMovie(firstResult, mediaType)
-    ? isNullish(firstResult.title)
-    : isNullish(firstResult.name);
+  const alt =
+    isMovie(firstResult, mediaType)
+      ? isNullish((firstResult.title, firstResult.original_title))
+      : isNullish((firstResult.name, firstResult.original_name));
+
+  // prettier-ignore
+  const title =
+    isMovie(firstResult, mediaType)
+      ? isNullish(firstResult.title)
+      : isNullish(firstResult.name);
 
   return (
     <ThumbnailLink content={firstResult}>
