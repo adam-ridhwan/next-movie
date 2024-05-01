@@ -10,7 +10,7 @@ export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
 
   const schema = mediaType === 'movie' ? MovieDetailsSchema : TvDetailsSchema;
   const { success, data, error } = schema.safeParse(details);
-  if (!success) throw new Error(`Label() Invalid ${mediaType} schema: ${error.message}`);
+  if (!success) throw new Error(`Backdrop() Invalid ${mediaType} schema: ${error.message}`);
 
   const title = isMovie<MovieDetails, TvDetails>(data, mediaType)
     ? isNullish(data.title, data.original_title)
