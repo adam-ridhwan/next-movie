@@ -13,18 +13,26 @@ type ThumbnailLinkProps = {
 
 // TODO: Implement carousel
 const ThumbnailLink = ({ children, id }: ThumbnailLinkProps) => {
-  const { state: { isSearchInputFocused } } = useSearchStore(); // prettier-ignore
+  const {
+    state: { isSearchInputFocused },
+  } = useSearchStore();
 
-  return (
-    <MediaRoute.Link
-      id={id.toString()}
-      mediaType='movie'
-      scroll={false}
-      className={cn({ 'pointer-events-none': isSearchInputFocused })}
-    >
-      {children}
-    </MediaRoute.Link>
-  );
+  const ConditionalWrapper = ({ children }: { children: ReactNode }) => {
+    return isSearchInputFocused ? (
+      <div>{children}</div>
+    ) : (
+      <MediaRoute.Link
+        id={id.toString()}
+        mediaType='movie'
+        scroll={false}
+        className={cn({ 'pointer-events-none': isSearchInputFocused })}
+      >
+        {children}
+      </MediaRoute.Link>
+    );
+  };
+
+  return <ConditionalWrapper>{children}</ConditionalWrapper>;
 };
 
 export default ThumbnailLink;
