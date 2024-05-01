@@ -167,3 +167,10 @@ export const KeywordTvSchema = z.object({
 
 export type KeywordMovie = z.infer<typeof KeywordMovieSchema>;
 export type KeywordTv = z.infer<typeof KeywordTvSchema>;
+
+export const SearchResultsSchema = z.object({
+  movieData: MovieListSchema,
+  tvData: TvListSchema,
+});
+
+export type SearchResults = z.infer<typeof SearchResultsSchema>;

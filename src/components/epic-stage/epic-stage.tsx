@@ -38,7 +38,7 @@ const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) =>
     : isNullish(firstResult.name);
 
   return (
-    <ThumbnailLink content={firstResult}>
+    <ThumbnailLink id={firstResult.id}>
       <div className='relative mb-4 mt-16 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
           src={`https://image.tmdb.org/t/p/original${firstResult.backdrop_path || firstResult.poster_path}`}

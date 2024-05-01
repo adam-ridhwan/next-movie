@@ -1,5 +1,8 @@
 /* eslint-disable */
 
+import { z } from 'zod';
+
+import { MovieListSchema, TvListSchema } from '@/types/tmdb';
 import { KeyOf, Prettify } from '@/lib/utils';
 
 export type TODO = any;
