@@ -3,6 +3,9 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { MediaType } from '@/types/global';
+import { Movie, Tv } from '@/types/tmdb';
+
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 export const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
@@ -85,4 +88,11 @@ export const findIndexByKey = <T, K extends keyof T>({
 
 export const isNullish = (...values: any[]): string => {
   return values.find(value => value !== undefined) ?? '-';
+};
+
+// prettier-ignore
+export const isMovie = <ZMovie, ZTv>(
+  media: ZMovie | ZTv, mediaType: MediaType
+): media is ZMovie => {
+  return mediaType === 'movie';
 };

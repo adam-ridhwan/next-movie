@@ -80,3 +80,72 @@ export const VideoListSchema = z.object({
 
 export type Video = z.infer<typeof VideoSchema>;
 export type VideoList = z.infer<typeof VideoListSchema>;
+
+const BaseDetailsSchema = z.object({
+  id: z.number(),
+  backdrop_path: z.string(),
+  genres: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    })
+  ),
+  homepage: z.string().url(),
+  origin_country: z.array(z.string()),
+  original_language: z.string(),
+  overview: z.string(),
+  popularity: z.number().optional(),
+  poster_path: z.string(),
+  spoken_languages: z.array(
+    z.object({
+      english_name: z.string(),
+      iso_639_1: z.string(),
+      name: z.string(),
+    })
+  ),
+  tagline: z.string().nullable(),
+  vote_average: z.number(),
+  vote_count: z.number(),
+});
+
+export const MovieDetailsSchema = BaseDetailsSchema.extend({
+  title: z.string(),
+  original_title: z.string(),
+  belongs_to_collection: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+      poster_path: z.string(),
+      backdrop_path: z.string(),
+    })
+    .nullable(),
+  imdb_id: z.string(),
+  release_date: z.string(),
+  runtime: z.number(),
+  budget: z.number(),
+  revenue: z.number(),
+});
+
+export const TvDetailsSchema = BaseDetailsSchema.extend({
+  name: z.string(),
+  first_air_date: z.string(),
+  languages: z.array(z.string()),
+  number_of_episodes: z.number(),
+  number_of_seasons: z.number(),
+  original_name: z.string(),
+  seasons: z.array(
+    z.object({
+      air_date: z.string(),
+      episode_count: z.number(),
+      id: z.number(),
+      name: z.string(),
+      overview: z.string().nullable(),
+      poster_path: z.string().nullable(),
+      season_number: z.number(),
+      vote_average: z.number().nullable(),
+    })
+  ),
+});
+
+export type MovieDetails = z.infer<typeof MovieDetailsSchema>;
+export type TvDetails = z.infer<typeof TvDetailsSchema>;

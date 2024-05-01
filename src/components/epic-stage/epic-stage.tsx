@@ -3,7 +3,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global';
 import { Movie, MovieListSchema, Tv, TvListSchema } from '@/types/tmdb';
-import { getFirstSentence, isNullish } from '@/lib/utils';
+import { getFirstSentence, isMovie, isNullish } from '@/lib/utils';
 import ThumbnailLink from '@/components/epic-stage/thumbnail-link';
 import { HeadingLarge } from '@/components/fonts';
 
@@ -21,21 +21,23 @@ const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) =>
 
   const firstResult = data.results[0];
 
+  const isMovieType = isMovie<Movie, Tv>(firstResult, mediaType);
+
   // prettier-ignore
   const genresObject =
-    isMovie(firstResult, mediaType)
+    isMovieType
       ? MOVIE_GENRES
       : TV_GENRES;
 
   // prettier-ignore
   const alt =
-    isMovie(firstResult, mediaType)
+    isMovieType
       ? isNullish(firstResult.title, firstResult.original_title)
       : isNullish(firstResult.name, firstResult.original_name);
 
   // prettier-ignore
   const title =
-    isMovie(firstResult, mediaType)
+    isMovieType
       ? isNullish(firstResult.title)
       : isNullish(firstResult.name);
 
@@ -67,7 +69,5 @@ const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) =>
     </ThumbnailLink>
   );
 };
-
-const isMovie = (media: Movie | Tv, mediaType: MediaType): media is Movie => mediaType === 'movie';
 
 export default EpicStage;
