@@ -6,7 +6,7 @@ import { MovieDetails, MovieDetailsSchema, TvDetails, TvDetailsSchema } from '@/
 import { isMovie, isNullish } from '@/lib/utils';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
-  const details = await fetchTMDB({ category: 'details', mediaType, id });
+  const details = await fetchTMDB({ mediaType, id, category: 'details' });
 
   const schema = mediaType === 'movie' ? MovieDetailsSchema : TvDetailsSchema;
   const { success, data, error } = schema.safeParse(details);
