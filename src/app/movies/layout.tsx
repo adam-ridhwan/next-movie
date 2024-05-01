@@ -30,7 +30,7 @@ const MoviesLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <EpicStage mediaType='movie' />
+      <EpicStage mediaType='movie' category='trending' />
 
       {content.map(content =>
         // prettier-ignore

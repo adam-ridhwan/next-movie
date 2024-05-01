@@ -7,6 +7,7 @@ const BaseMediaSchema = z.object({
   overview: z.string().nullable(),
   genre_ids: z.array(z.number()).nullable(),
   original_language: z.string().nullable(),
+  vote_count: z.number().nullable(),
 });
 
 const MovieSchema = BaseMediaSchema.merge(

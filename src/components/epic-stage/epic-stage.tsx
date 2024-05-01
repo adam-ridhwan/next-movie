@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global';
+import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global';
 import { Movie, MovieListSchema, Tv, TvListSchema } from '@/types/tmdb';
 import { getFirstSentence, isNullish } from '@/lib/utils';
 import ThumbnailLink from '@/components/epic-stage/thumbnail-link';
@@ -9,10 +9,11 @@ import { HeadingLarge } from '@/components/fonts';
 
 type EpicStageProps = {
   mediaType: MediaType;
+  category?: EpicStageCategory;
 };
 
-const EpicStage = async ({ mediaType }: EpicStageProps) => {
-  const media = await fetchTMDB({ mediaType, category: 'popular' });
+const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) => {
+  const media = await fetchTMDB({ mediaType, category });
   const schema = mediaType === 'movie' ? MovieListSchema : TvListSchema;
 
   const { success, data, error } = schema.safeParse(media);
@@ -29,8 +30,8 @@ const EpicStage = async ({ mediaType }: EpicStageProps) => {
   // prettier-ignore
   const alt =
     isMovie(firstResult, mediaType)
-      ? isNullish((firstResult.title, firstResult.original_title))
-      : isNullish((firstResult.name, firstResult.original_name));
+      ? isNullish(firstResult.title, firstResult.original_title)
+      : isNullish(firstResult.name, firstResult.original_name);
 
   // prettier-ignore
   const title =
@@ -42,7 +43,7 @@ const EpicStage = async ({ mediaType }: EpicStageProps) => {
     <ThumbnailLink content={firstResult}>
       <div className='relative mb-4 mt-16 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
         <Image
-          src={`https://image.tmdb.org/t/p/original${firstResult.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original${firstResult.backdrop_path || firstResult.poster_path}`}
           alt={alt}
           priority
           fill

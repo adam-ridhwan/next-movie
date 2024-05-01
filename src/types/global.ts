@@ -58,24 +58,47 @@ export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type MediaType = 'movie' | 'tv';
 export type Section = 'movie' | 'tv' | 'trailer' | 'bonus' | 'cast';
 
+const CATEGORIES = {
+  credits: 'credits',
+  details: 'details',
+  keywords: 'keywords',
+  recommendations: 'recommendations',
+  similar: 'similar',
+  videos: 'videos',
+  images: 'images',
+  popular: 'popular',
+  trending: 'trending',
+  discover: 'discover',
+  search: 'search',
+} as const;
+
+export type EpicStageCategory = (typeof CATEGORIES)[typeof CATEGORIES.popular | typeof CATEGORIES.trending];
+
 type CategoryWithIdProps = {
   id: string;
-  category: 'credits' | 'details' | 'keywords' | 'recommendations' | 'similar' | 'videos' | 'images';
+  category:
+    | typeof CATEGORIES.credits
+    | typeof CATEGORIES.details
+    | typeof CATEGORIES.keywords
+    | typeof CATEGORIES.recommendations
+    | typeof CATEGORIES.similar
+    | typeof CATEGORIES.videos
+    | typeof CATEGORIES.images;
 };
 
 type CategoryWithoutIdProps = {
-  category: 'popular' | 'trending';
+  category: typeof CATEGORIES.popular | typeof CATEGORIES.trending;
 };
 
 type DiscoverProps = {
-  category: 'discover';
+  category: typeof CATEGORIES.discover;
   genreId: MovieGenreId | TvGenreId;
   page?: number;
   language?: string;
 };
 
 type SearchProps = {
-  category: 'search';
+  category: typeof CATEGORIES.search;
   q: string;
 };
 
