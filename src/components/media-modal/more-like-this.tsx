@@ -5,7 +5,7 @@ import { ContentRouteParams, FetchTMDBParams } from '@/types/global';
 import { MovieListSchema, TvListSchema } from '@/types/tmdb';
 import Slider from '@/components/slider/slider';
 
-export default async function MoreLikeThis({ id, mediaType }: ContentRouteParams) {
+export default async function MoreLikeThis({ mediaType, id }: ContentRouteParams) {
   const content: FetchTMDBParams[] = [
     { mediaType, id, category: 'recommendations' },
     { mediaType, id, category: 'similar' },
