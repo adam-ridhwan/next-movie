@@ -1,9 +1,8 @@
 import { z } from 'zod';
 
 export const Route = {
-  name: 'MediaRoute',
+  name: 'TvModal',
   params: z.object({
-    mediaType: z.string(),
     id: z.string(),
   }),
 };

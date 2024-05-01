@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchStore } from '@/providers/search/search-provider';
-import { BrowseRoute, MoviesRoute, TvRoute } from '@/routes';
+import { Home, Movies, Tv } from '@/routes';
 
 import { cn } from '@/lib/utils';
 import { BodySmall } from '@/components/fonts';
@@ -23,47 +23,47 @@ const NavBar = () => {
           <LogoIcon />
 
           <nav className='flex select-none flex-row gap-4'>
-            <BrowseRoute.Link
+            <Home.Link
               onClick={handleNavigate}
-              className={cn({ 'pointer-events-none ': isActiveRoute(BrowseRoute()) })}
+              className={cn({ 'pointer-events-none ': isActiveRoute(Home()) })}
             >
               <BodySmall
                 className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(BrowseRoute()),
-                  'text-primary/70': !isActiveRoute(BrowseRoute()),
+                  'text-primary': isActiveRoute(Home()),
+                  'text-primary/70': !isActiveRoute(Home()),
                 })}
               >
                 Home
               </BodySmall>
-            </BrowseRoute.Link>
+            </Home.Link>
 
-            <TvRoute.Link
+            <Tv.Link
               onClick={handleNavigate}
-              className={cn({ 'pointer-events-none select-none': isActiveRoute(TvRoute()) })}
+              className={cn({ 'pointer-events-none select-none': isActiveRoute(Tv()) })}
             >
               <BodySmall
                 className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(TvRoute()),
-                  'text-primary/70': !isActiveRoute(TvRoute()),
+                  'text-primary': isActiveRoute(Tv()),
+                  'text-primary/70': !isActiveRoute(Tv()),
                 })}
               >
                 TV Shows
               </BodySmall>
-            </TvRoute.Link>
+            </Tv.Link>
 
-            <MoviesRoute.Link
+            <Movies.Link
               onClick={handleNavigate}
-              className={cn({ 'pointer-events-none select-none': isActiveRoute(MoviesRoute()) })}
+              className={cn({ 'pointer-events-none select-none': isActiveRoute(Movies()) })}
             >
               <BodySmall
                 className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(MoviesRoute()),
-                  'text-primary/70': !isActiveRoute(MoviesRoute()),
+                  'text-primary': isActiveRoute(Movies()),
+                  'text-primary/70': !isActiveRoute(Movies()),
                 })}
               >
                 Movies
               </BodySmall>
-            </MoviesRoute.Link>
+            </Movies.Link>
           </nav>
 
           <SearchInput />

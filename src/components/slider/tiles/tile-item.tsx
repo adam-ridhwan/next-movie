@@ -4,13 +4,14 @@ import { usePageUtils } from '@/hooks/use-page-utils';
 import { usePagination } from '@/hooks/use-pagination';
 import { BonusTrailerThumbnail } from '@/components/slider/tiles/thumbnails/bonus-trailer-thumbnail';
 import { CastThumbnail } from '@/components/slider/tiles/thumbnails/cast-thumbnail';
-import { MovieTvThumbnail } from '@/components/slider/tiles/thumbnails/movie-tv-thumbnail';
+import { MovieThumbnail } from '@/components/slider/tiles/thumbnails/movie-thumbnail';
 
 import '../slider.css';
 
 import { forwardRef } from 'react';
 
 import { useAnimation } from '@/hooks/use-animation';
+import { TvThumbnail } from '@/components/slider/tiles/thumbnails/tv-thumbnail';
 
 type TileItemProps = {
   tile: TODO;
@@ -65,8 +66,9 @@ type ThumbnailSelectorProps = {
 const ThumbnailSelector = ({ section, tile, isVisible }: ThumbnailSelectorProps) => {
   switch (section) {
     case 'movie':
+      return <MovieThumbnail tile={tile} isVisible={isVisible} />;
     case 'tv':
-      return <MovieTvThumbnail tile={tile} isVisible={isVisible} />;
+      return <TvThumbnail tile={tile} isVisible={isVisible} />;
 
     case 'trailer':
     case 'bonus':

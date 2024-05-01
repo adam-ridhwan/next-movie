@@ -1,19 +1,15 @@
 import Image from 'next/image';
-import { MediaRoute } from '@/routes';
+import { MovieModal } from '@/routes';
 
 import { TODO } from '@/types/global';
 import { extractYear } from '@/lib/utils';
-import { usePagination } from '@/hooks/use-pagination';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
-export const MovieTvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
-  const { state: { mediaType } } = usePagination(); // prettier-ignore
-
+export const MovieThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
     // prettier-ignore
-    <MediaRoute.Link
+    <MovieModal.Link
       id={tile.id.toString()}
-      mediaType={mediaType}
       scroll={false}
       tabIndex={isVisible ? 0 : -1}
     >
@@ -54,6 +50,6 @@ export const MovieTvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: b
           </BodySmall>
         </div>
       </div>
-    </MediaRoute.Link>
+    </MovieModal.Link>
   );
 };

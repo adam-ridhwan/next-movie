@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { useSearchStore } from '@/providers/search/search-provider';
-import { MediaRoute } from '@/routes';
+import { MovieModal } from '@/routes';
 
 import { cn } from '@/lib/utils';
 
@@ -21,14 +21,14 @@ const ThumbnailLink = ({ children, id }: ThumbnailLinkProps) => {
     return isSearchInputFocused ? (
       <div>{children}</div>
     ) : (
-      <MediaRoute.Link
+      <MovieModal.Link
         id={id.toString()}
         mediaType='movie'
         scroll={false}
         className={cn({ 'pointer-events-none': isSearchInputFocused })}
       >
         {children}
-      </MediaRoute.Link>
+      </MovieModal.Link>
     );
   };
 
