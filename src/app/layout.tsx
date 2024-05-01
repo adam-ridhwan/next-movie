@@ -22,8 +22,8 @@ const RootLayout = async ({ children }: { children: ReactNode }) => (
         <Providers>
           <NavBar />
           <div className='container min-h-[100dvh] flex-1'>{children}</div>
-          <footer className='p-10'></footer>
         </Providers>
+        <footer className='p-10'></footer>
       </main>
     </body>
   </html>

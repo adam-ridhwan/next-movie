@@ -2,7 +2,6 @@
 
 import { ReactNode, Suspense } from 'react';
 import { SearchProvider } from '@/providers/search/search-provider';
-import { HydrationOverlay } from '@builder.io/react-hydration-overlay';
 
 type ProvidersProps = {
   children: ReactNode;
@@ -11,13 +10,11 @@ type ProvidersProps = {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     // prettier-ignore
-    <HydrationOverlay>
-      <Suspense>
-        <SearchProvider>
-          {children}
-        </SearchProvider>
-      </Suspense>
-    </HydrationOverlay>
+    <Suspense>
+      <SearchProvider>
+        {children}
+      </SearchProvider>
+    </Suspense>
   );
 };
 
