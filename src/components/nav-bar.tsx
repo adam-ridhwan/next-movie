@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useSearchStore } from '@/providers/search/search-provider';
 import { BrowseRoute, MoviesRoute, TvRoute } from '@/routes';
 
@@ -10,11 +9,12 @@ import { LogoIcon } from '@/components/icons';
 import SearchInput from '@/components/search/search-input';
 
 const NavBar = () => {
-  const pathname = usePathname();
+  const {
+    state: { lastActiveRoute },
+    actions: { handleNavigate },
+  } = useSearchStore();
 
-  const { actions: { handleNavigate } } = useSearchStore(); // prettier-ignore
-
-  const isActiveRoute = (route: string) => pathname === route;
+  const isActiveRoute = (route: string) => route === lastActiveRoute;
 
   return (
     <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>

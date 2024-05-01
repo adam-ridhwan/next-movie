@@ -1,8 +1,8 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
+import { createContext, ReactNode, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { BrowseRoute, SearchRoute } from '@/routes';
+import { SearchRoute } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
 import { QUERY } from '@/lib/constants';
@@ -12,6 +12,7 @@ type SearchContextProps = {
   state: {
     isSearchInputExpanding: boolean;
     isSearchInputFocused: boolean;
+    lastActiveRoute: string;
   };
   actions: {
     handleFocus: () => void;
@@ -34,6 +35,8 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [lastActiveRoute, setLastActiveRoute] = useState(pathname);
+
   const {
     value: isSearchInputExpanding,
     setTrue: expandSearchInput,
@@ -54,9 +57,10 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   });
 
   useEffect(() => {
-    if (!searchInputRef.current) return;
-    if (pathname === BrowseRoute() && isSearchInputFocused) searchInputRef.current.focus();
-  }, [pathname, isSearchInputFocused, searchInputRef]);
+    if (pathname === SearchRoute()) return;
+    if (isSearchInputFocused && searchInputRef.current) searchInputRef.current.focus();
+    setLastActiveRoute(pathname);
+  }, [isSearchInputFocused, pathname]);
 
   useOnClickOutside(searchContainerRef, () => {
     if (searchParams.get(QUERY)) return;
@@ -84,7 +88,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   };
 
   const handleSearch = (query: string) => {
-    if (query.length === 0) return replace(BrowseRoute());
+    if (query.length === 0) return replace(lastActiveRoute);
 
     const params = new URLSearchParams(searchParams);
     if (query) params.set(QUERY, query);
@@ -94,7 +98,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
 
   const handleClear = () => {
     if (searchInputRef.current) searchInputRef.current.value = '';
-    replace(BrowseRoute());
+    replace(lastActiveRoute);
   };
 
   const handleNavigate = () => {
@@ -108,6 +112,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
         state: {
           isSearchInputExpanding,
           isSearchInputFocused,
+          lastActiveRoute,
         },
         actions: {
           handleFocus,
