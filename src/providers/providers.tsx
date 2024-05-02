@@ -8,14 +8,12 @@ type ProvidersProps = {
   children: ReactNode;
 };
 
-const Providers = ({ children }: ProvidersProps) => {
-  return (
-    <NavigationProvider>
-      <Suspense>
-        <SearchProvider>{children}</SearchProvider>
-      </Suspense>
-    </NavigationProvider>
-  );
-};
+const Providers = ({ children }: ProvidersProps) => (
+  <NavigationProvider>
+    <Suspense>
+      <SearchProvider>{children}</SearchProvider>
+    </Suspense>
+  </NavigationProvider>
+);
 
 export default Providers;

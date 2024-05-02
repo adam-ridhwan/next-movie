@@ -20,7 +20,7 @@ const HomePage = async () => {
       const schema = params.mediaType === 'movie' ? MovieResponse : TvResponse;
 
       const { success, data, error } = schema.safeParse(media);
-      if (!success) throw new Error(`BrowseLayout() Invalid ${params.mediaType} schema : ${error.message}`);
+      if (!success) throw new Error(`HomePage() Invalid ${params.mediaType} schema : ${error.message}`);
 
       return {
         ...params,
