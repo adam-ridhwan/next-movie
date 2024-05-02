@@ -2,7 +2,6 @@
 
 import { ReactNode } from 'react';
 import { useSearchStore } from '@/providers/search/search-provider';
-import { MovieModal } from '@/routes';
 
 import { cn } from '@/lib/utils';
 
@@ -18,21 +17,21 @@ const ThumbnailLink = ({ children, id }: ThumbnailLinkProps) => {
   } = useSearchStore();
 
   const ConditionalWrapper = ({ children }: { children: ReactNode }) => {
-    return isSearchInputFocused ? (
-      <div>{children}</div>
-    ) : (
-      <MovieModal.Link
-        id={id.toString()}
-        mediaType='movie'
-        scroll={false}
-        className={cn({ 'pointer-events-none': isSearchInputFocused })}
-      >
-        {children}
-      </MovieModal.Link>
-    );
+    // return isSearchInputFocused ? (
+    //   <div>{children}</div>
+    // ) : (
+    //   <MovieModal.Link
+    //     id={id.toString()}
+    //     mediaType='movie'
+    //     scroll={false}
+    //     className={cn({ 'pointer-events-none': isSearchInputFocused })}
+    //   >
+    //     {children}
+    //   </MovieModal.Link>
+    // );
   };
 
-  return <ConditionalWrapper>{children}</ConditionalWrapper>;
+  // return <ConditionalWrapper>{children}</ConditionalWrapper>;
 };
 
 export default ThumbnailLink;

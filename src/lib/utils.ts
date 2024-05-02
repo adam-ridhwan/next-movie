@@ -3,7 +3,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { MediaType } from '@/types/global';
+import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global';
 import { Movie, Tv } from '@/types/tmdb';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
@@ -95,4 +95,8 @@ export const isMovie = <ZMovie, ZTv>(
   media: ZMovie | ZTv, mediaType: MediaType
 ): media is ZMovie => {
   return mediaType === 'movie';
+};
+
+export const isValidRoute = (route: string): route is NavRoute => {
+  return Object.values(NAV_ROUTES).find(navRoute => navRoute === route) !== undefined;
 };

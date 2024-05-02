@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, Suspense } from 'react';
+import { NavigationProvider } from '@/providers/navigation/navigation-provider';
 import { SearchProvider } from '@/providers/search/search-provider';
 
 type ProvidersProps = {
@@ -9,12 +10,11 @@ type ProvidersProps = {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    // prettier-ignore
-    <Suspense>
-      <SearchProvider>
-        {children}
-      </SearchProvider>
-    </Suspense>
+    <NavigationProvider>
+      <Suspense>
+        <SearchProvider>{children}</SearchProvider>
+      </Suspense>
+    </NavigationProvider>
   );
 };
 

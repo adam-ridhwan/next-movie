@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
@@ -6,7 +5,7 @@ import { FetchTMDBParams } from '@/types/global';
 import { MovieListSchema } from '@/types/tmdb';
 import Slider from '@/components/slider/slider';
 
-const MoviesLayout = async ({ children }: { children: ReactNode }) => {
+const MoviesLayout = async () => {
   const fetchTMDBParams: Array<FetchTMDBParams & { label: string }> = [
     { label: 'Action Movies', category: 'discover', mediaType: 'movie', genreId: 28, page: 2 },
     { label: 'Sci-Fi Movies', category: 'discover', mediaType: 'movie', genreId: 878, page: 3 },
@@ -28,7 +27,7 @@ const MoviesLayout = async ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <>
+    <div className='pt-16'>
       {content.map(content =>
         // prettier-ignore
         <SliderProvider
@@ -40,9 +39,7 @@ const MoviesLayout = async ({ children }: { children: ReactNode }) => {
           <Slider headerTitle={content.label} />
         </SliderProvider>
       )}
-
-      {children}
-    </>
+    </div>
   );
 };
 

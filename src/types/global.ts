@@ -1,11 +1,15 @@
 /* eslint-disable */
 
-import { z } from 'zod';
-
-import { MovieListSchema, TvListSchema } from '@/types/tmdb';
-import { KeyOf, Prettify } from '@/lib/utils';
+import { KeyOf, Prettify, ValueOf } from '@/lib/utils';
 
 export type TODO = any;
+
+export const NAV_ROUTES = {
+  home: '/home',
+  movie: '/movie',
+  tv: '/tv',
+} as const;
+export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
 export type ContentRouteParams = {
   mediaType: MediaType;

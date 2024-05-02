@@ -30,7 +30,6 @@ const MediaListSchema = z.object({
   page: z.number(),
   total_pages: z.number(),
   total_results: z.number(),
-  media_type: z.union([z.literal('movie'), z.literal('tv')]).optional(),
 });
 
 export const MovieListSchema = MediaListSchema.extend({ results: z.array(MovieSchema) });

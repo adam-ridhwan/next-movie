@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { TvModal } from '@/routes';
 
 import { TODO } from '@/types/global';
 import { extractYear } from '@/lib/utils';
@@ -8,11 +7,12 @@ import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 export const TvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
     // prettier-ignore
-    <TvModal.Link
-      id={tile.id.toString()}
-      scroll={false}
-      tabIndex={isVisible ? 0 : -1}
-    >
+    // <TvModal.Link
+    //   id={tile.id.toString()}
+    //   scroll={false}
+    //   tabIndex={isVisible ? 0 : -1}
+    // >
+    <>
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
         {tile.backdrop_path || tile.poster_path ? (
           <>
@@ -50,6 +50,8 @@ export const TvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolea
           </BodySmall>
         </div>
       </div>
-    </TvModal.Link>
+  </>
+
+    // </TvModal.Link>
   );
 };

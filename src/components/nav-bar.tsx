@@ -37,20 +37,6 @@ const NavBar = () => {
               </BodySmall>
             </Home.Link>
 
-            <Tv.Link
-              onClick={handleNavigate}
-              className={cn({ 'pointer-events-none select-none': isActiveRoute(Tv()) })}
-            >
-              <BodySmall
-                className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(Tv()),
-                  'text-primary/70': !isActiveRoute(Tv()),
-                })}
-              >
-                TV Shows
-              </BodySmall>
-            </Tv.Link>
-
             <Movies.Link
               onClick={handleNavigate}
               className={cn({ 'pointer-events-none select-none': isActiveRoute(Movies()) })}
@@ -64,6 +50,20 @@ const NavBar = () => {
                 Movies
               </BodySmall>
             </Movies.Link>
+
+            <Tv.Link
+              onClick={handleNavigate}
+              className={cn({ 'pointer-events-none select-none': isActiveRoute(Tv()) })}
+            >
+              <BodySmall
+                className={cn('transition-colors duration-300 hover:text-primary/50', {
+                  'text-primary': isActiveRoute(Tv()),
+                  'text-primary/70': !isActiveRoute(Tv()),
+                })}
+              >
+                TV Shows
+              </BodySmall>
+            </Tv.Link>
           </nav>
 
           <SearchInput />
