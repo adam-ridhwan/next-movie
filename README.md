@@ -7,7 +7,7 @@
 <h1 align="center">Next Imdb</h1>
 
 <p>
-    🍿[Live Preview](https://entertainment-web-app-kappa-rouge.vercel.app/home)
+    🍿Live Preview https://entertainment-web-app-kappa-rouge.vercel.app/home
 </p
 
 <br />
