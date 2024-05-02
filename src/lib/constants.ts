@@ -5,6 +5,7 @@ export const TIMEOUT_DURATION = 700;
 export const QUERY = 'q';
 
 export const MEDIA_QUERY = {
+  XS: 640,
   SM: 800,
   MD: 1000,
   LG: 1300,

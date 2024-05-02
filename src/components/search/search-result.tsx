@@ -39,7 +39,13 @@ const SearchResult = () => {
       </div>
 
       <div
-        className={cn('grid grid-cols-3 gap-x-2 gap-y-6 ', 'sm:gap-x-4', 'lg:grid-cols-4', 'xl:grid-cols-5')}
+        className={cn(
+          'grid grid-cols-3 gap-x-[1%] gap-y-6 ',
+          'custom-xs:grid-cols-2',
+          'custom-sm:grid-cols-3',
+          'custom-md:grid-cols-4',
+          'custom-lg:grid-cols-5'
+        )}
       >
         <Tiles data={mediaData?.movieData} mediaType='movie' />
         <Tiles data={mediaData?.tvData} mediaType='tv' />
