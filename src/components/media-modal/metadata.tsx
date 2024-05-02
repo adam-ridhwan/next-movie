@@ -47,7 +47,6 @@ export async function Keywords({ mediaType, id }: ContentRouteParams) {
   const { success, data, error } = schema.safeParse(keywords);
   if (!success) throw new Error(`Keywords() Invalid keywords schema: ${error.message}`);
 
-  // prettier-ignore
   const parsedKeywords = isMovie<KeywordsMovieResponse, KeywordsTvResponse>(data, mediaType)
     ? data.keywords
     : data.results;
