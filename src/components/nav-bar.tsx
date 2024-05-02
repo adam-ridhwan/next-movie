@@ -8,6 +8,12 @@ import { BodySmall } from '@/components/fonts';
 import { LogoIcon } from '@/components/icons';
 import SearchInput from '@/components/search/search-input';
 
+const tabs = [
+  { label: 'Home', route: Home(), Link: Home.Link },
+  { label: 'Movies', route: Movies(), Link: Movies.Link },
+  { label: 'TV Shows', route: Tv(), Link: Tv.Link },
+];
+
 const NavBar = () => {
   const {
     state: { lastActiveRoute },
@@ -23,47 +29,22 @@ const NavBar = () => {
           <LogoIcon />
 
           <nav className='flex select-none flex-row gap-4'>
-            <Home.Link
-              onClick={handleNavigate}
-              className={cn({ 'pointer-events-none ': isActiveRoute(Home()) })}
-            >
-              <BodySmall
-                className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(Home()),
-                  'text-primary/70': !isActiveRoute(Home()),
-                })}
+            {tabs.map(({ label, route, Link }) => (
+              <Link
+                key={label}
+                onClick={handleNavigate}
+                className={cn({ 'pointer-events-none': isActiveRoute(route) })}
               >
-                Home
-              </BodySmall>
-            </Home.Link>
-
-            <Movies.Link
-              onClick={handleNavigate}
-              className={cn({ 'pointer-events-none select-none': isActiveRoute(Movies()) })}
-            >
-              <BodySmall
-                className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(Movies()),
-                  'text-primary/70': !isActiveRoute(Movies()),
-                })}
-              >
-                Movies
-              </BodySmall>
-            </Movies.Link>
-
-            <Tv.Link
-              onClick={handleNavigate}
-              className={cn({ 'pointer-events-none select-none': isActiveRoute(Tv()) })}
-            >
-              <BodySmall
-                className={cn('transition-colors duration-300 hover:text-primary/50', {
-                  'text-primary': isActiveRoute(Tv()),
-                  'text-primary/70': !isActiveRoute(Tv()),
-                })}
-              >
-                TV Shows
-              </BodySmall>
-            </Tv.Link>
+                <BodySmall
+                  className={cn('transition-colors duration-300 hover:text-primary/50', {
+                    'text-primary': isActiveRoute(route),
+                    'text-primary/70': !isActiveRoute(route),
+                  })}
+                >
+                  {label}
+                </BodySmall>
+              </Link>
+            ))}
           </nav>
 
           <SearchInput />
