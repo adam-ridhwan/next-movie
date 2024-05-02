@@ -32,7 +32,7 @@ const SearchResult = () => {
   if (!success) throw new Error(`SearchResult() Invalid search results schema: ${error.message}`);
 
   return (
-    <div className='flex flex-col gap-8 px-leftRightCustom pt-24'>
+    <div className='px-custom flex flex-col gap-8 pt-24'>
       <div className='flex flex-row gap-2'>
         <HeadingSmall className='text-muted-foreground'>Search result for: </HeadingSmall>
         <HeadingSmall>{query}</HeadingSmall>

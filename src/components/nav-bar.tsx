@@ -24,7 +24,7 @@ const NavBar = () => {
 
   return (
     <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>
-      <div className='container flex flex-row items-center justify-between px-leftRightCustom'>
+      <div className='px-custom container flex flex-row items-center justify-between'>
         <div className='relative flex w-full flex-row items-center gap-8'>
           <LogoIcon />
 

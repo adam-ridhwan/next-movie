@@ -10,7 +10,7 @@ type MediaHeaderProps = {
 const MediaHeader = ({ children, className }: MediaHeaderProps) => (
   <>
     <Divider />
-    <div className='mx-[0.5%] flex justify-between px-leftRightCustom'>
+    <div className='px-custom mx-[0.5%] flex justify-between'>
       <p className={cn('mb-2 w-fit text-[17px] font-medium', className)}>{children}</p>
       <PageIndicator />
     </div>

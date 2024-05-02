@@ -5,5 +5,5 @@ type DividerProps = {
 };
 
 export const Divider = ({ className }: DividerProps) => {
-  return <div className={cn('mx-leftRightCustom my-4 border border-b-muted-foreground/20', className)} />;
+  return <div className={cn('mx-custom my-4 border border-b-muted-foreground/20', className)} />;
 };

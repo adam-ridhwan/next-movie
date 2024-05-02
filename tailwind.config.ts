@@ -21,12 +21,7 @@ module.exports = {
         'custom-md': '1000px',
         'custom-lg': '1300px',
       },
-      padding: { leftRightCustom: 'min(4%, 60px)' },
-      margin: { leftRightCustom: 'min(4%, 60px)' },
-      width: { leftRightCustom: 'min(4%, 60px)' },
-      right: { leftRightCustom: 'min(4%, 60px)' },
-      left: { leftRightCustom: 'min(4%, 60px)' },
-      minWidth: { leftRightCustom: 'min(4%, 60px)' },
+      spacing: { custom: 'min(4%, 60px)' },
       boxShadow: { tileShadow: '0 4px 7px rgba(0, 0, 0, 0.25)' },
       aspectRatio: { poster: '2 / 3' },
       colors: {
