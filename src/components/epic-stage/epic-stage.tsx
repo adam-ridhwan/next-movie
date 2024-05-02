@@ -1,31 +1,19 @@
 import Image from 'next/image';
-import { fetchTMDB } from '@/actions/fetch-tmdb';
+import { useHomepageStore } from '@/providers/homepage/homepage-provider';
+import { MediaModal } from '@/routes';
+import { Dot, Info } from 'lucide-react';
 
-import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global-types';
-import { Movie, MovieResponse, Tv, TvResponse } from '@/types/tmdb-types';
-import { getFirstSentence, isMovie, isNullish } from '@/lib/utils';
-import { HeadingLarge } from '@/components/fonts';
+import { MOVIE_GENRES, TV_GENRES } from '@/types/global-types';
+import { Movie, Tv } from '@/types/tmdb-types';
+import { isMovie, isNullish } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
-type EpicStageProps = {
-  mediaType: MediaType;
-  category?: EpicStageCategory;
-};
-
-const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) => {
-  const media = await fetchTMDB({ mediaType, category });
-  const schema = mediaType === 'movie' ? MovieResponse : TvResponse;
-
-  const { success, data, error } = schema.safeParse(media);
-  if (!success) throw new Error(`EpicStage() Invalid ${mediaType} schema: ${error.message}`);
-
-  const firstResult = data.results[0];
-
-  const isMovieType = isMovie<Movie, Tv>(firstResult, mediaType);
-
-  // prettier-ignore
-  const genresObject = isMovieType
-    ? MOVIE_GENRES
-    : TV_GENRES;
+// TODO: Create carousel component for epic stage
+const EpicStage = () => {
+  const { epicStageContent } = useHomepageStore();
+  const firstResult = epicStageContent[0];
+  const isMovieType = isMovie<Movie, Tv>(firstResult, 'movie');
 
   const alt = isMovieType
     ? isNullish(firstResult.title, firstResult.original_title)
@@ -36,28 +24,53 @@ const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) =>
     ? isNullish(firstResult.title)
     : isNullish(firstResult.name);
 
+  // prettier-ignore
+  const genresObject = isMovieType
+    ? MOVIE_GENRES
+    : TV_GENRES;
+
+  const genreIds = firstResult?.genre_ids ?? [];
+
   return (
-    <div className='relative mb-4 mt-16 aspect-video overflow-hidden min-[1700px]:rounded-b-2xl'>
+    <div className='relative mb-4 mt-16 aspect-poster overflow-hidden sm:aspect-video min-[1700px]:rounded-b-2xl'>
       <Image
         src={`https://image.tmdb.org/t/p/original${firstResult.backdrop_path || firstResult.poster_path}`}
         alt={alt}
+        unoptimized
         priority
         fill
-        className='object-cover'
+        className='object-cover max-sm:hidden'
+      />
+
+      <Image
+        src={`https://image.tmdb.org/t/p/original${firstResult.poster_path || firstResult.backdrop_path}`}
+        alt={alt}
+        unoptimized
+        priority
+        fill
+        className='object-cover sm:hidden'
       />
 
       <div className='absolute bottom-0 left-0 right-0 z-10 h-1/2 bg-gradient-to-t from-black' />
 
-      <div className='absolute bottom-0 left-0 z-40 flex w-1/2 flex-col gap-2 p-10'>
-        <HeadingLarge>{title}</HeadingLarge>
-        <ul className='flex flex-row gap-2'>
-          {firstResult?.genre_ids?.map((genreId: number) => (
-            <li key={genreId}>
-              <p className='text-genre'>{genresObject[genreId]}</p>
+      <div className='absolute bottom-0 left-0 z-40 flex flex-col gap-2 p-10'>
+        <HeadingLarge className='line-clamp-1'>{title}</HeadingLarge>
+
+        <ul className='flex flex-row'>
+          {genreIds.map((genreId: number, i: number) => (
+            <li key={genreId} className='flex'>
+              <BodyMedium className='font-medium text-primary/70'>{genresObject[genreId]}</BodyMedium>
+              {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
             </li>
           ))}
         </ul>
-        <p className='text-overview'>{getFirstSentence(isNullish(firstResult.overview))}</p>
+
+        <MediaModal.Link id={firstResult.id.toString()} mediaType='movie'>
+          <Button className='mt-4 flex w-fit gap-2' size='lg'>
+            <Info className='size-5' />
+            More Info
+          </Button>
+        </MediaModal.Link>
       </div>
     </div>
   );
