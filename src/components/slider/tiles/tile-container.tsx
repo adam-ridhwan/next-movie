@@ -22,7 +22,7 @@ const TileContainer = () => {
       <div
         ref={tileContainerRef}
         className={cn(
-          'flex flex-row',
+          'flex flex-row pt-2',
           { 'justify-center': hasPaginated },
           { 'transition-transform duration-700': isAnimating },
           'max-sm:hidden'

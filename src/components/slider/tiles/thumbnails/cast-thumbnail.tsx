@@ -19,7 +19,7 @@ export const CastThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: bool
           />
         ) : (
           <div className='absolute bottom-0 z-50 flex h-full w-full items-center justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
-            <HeadingLarge className='line-clamp-2 text-[42px]'>
+            <HeadingLarge className='line-clamp-2 text-[32px]'>
               {extractInitials(tile.name || tile.original_name)}
             </HeadingLarge>
           </div>
