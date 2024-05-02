@@ -48,7 +48,7 @@ const TileItem = forwardRef<HTMLDivElement, TileItemProps>(({ tile, i }, ref) =>
   };
 
   return (
-    <div ref={ref} className={cn(`slider-tile  group tile-${label}`, thumbnailBaseStyles)}>
+    <div ref={ref} className={cn(`slider-tile tile-${label}`, thumbnailBaseStyles)}>
       <ThumbnailSelector section={section} tile={tile} isVisible={isVisible} />
     </div>
   );
