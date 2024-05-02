@@ -1,10 +1,10 @@
 'use client';
 
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
-import { usePathname, useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Home, Movies, Tv } from '@/routes';
 
-import { NAV_ROUTES, NavRoute, TODO } from '@/types/global';
+import { NAV_ROUTES, TODO } from '@/types/global';
 import { isValidRoute } from '@/lib/utils';
 
 type NavigationContextProps = {
@@ -30,14 +30,6 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const isValid = isValidRoute(pathname);
     if (isValid && ROUTE_HANDLERS[pathname]) setLastActiveRoute(pathname);
   }, [pathname, setLastActiveRoute]);
-
-  const segment = useSelectedLayoutSegments();
-  const modalSegment = useSelectedLayoutSegment('modal');
-
-  useEffect(() => {
-    console.log({ segment: segment.toString(), modalSegment });
-    console.log({ lastActiveRoute, pathname });
-  }, [modalSegment, segment]);
 
   return (
     <NavigationContext.Provider value={{ lastActiveRoute, setLastActiveRoute }}>
