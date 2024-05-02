@@ -38,11 +38,12 @@
 
 - 🎞️ Complex Carousel Slider 
 - 📡 Server Action Data Fetching
-- 🔀 Next.js Parallel Routing
-- 📱 Responsive Design
-- 🛡️ Type safety with Zod
+- 🔍 Searching 
+- 🔀 Parallel Route Modals
+- 🛡️ Type Safety with Zod
 - 🪝 Custom React hooks
-- 🗃️ State management w/ Zustand
+- 🗃️ Zustand State Management
+- 📱 Responsive Design
 
 <h2>Acknowledgements</h2>
 
