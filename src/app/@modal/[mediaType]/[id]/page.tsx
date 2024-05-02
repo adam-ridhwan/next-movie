@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 
-import { ContentRouteParams } from '@/types/global';
+import { MediaType } from '@/types/global';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';
 import { Label } from '@/components/media-modal/label';
-import Media from '@/components/media-modal/media-modal';
+import MediaModal from '@/components/media-modal/media-modal';
 import { Actors, Genres, Keywords } from '@/components/media-modal/metadata';
 import MoreLikeThis from '@/components/media-modal/more-like-this';
 import Trailers from '@/components/media-modal/trailers';
@@ -17,7 +17,11 @@ import {
   TileLoadingSkeleton,
 } from '@/components/skeletons';
 
-export default function ContentModalPage({ params: { mediaType, id } }: { params: ContentRouteParams }) {
+export default async function MovieModal({
+  params: { mediaType, id },
+}: {
+  params: { mediaType: MediaType; id: string };
+}) {
   return (
     <>
       {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
@@ -27,7 +31,7 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
         data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'
       />
 
-      <Media>
+      <MediaModal>
         <Suspense fallback={<BackdropSkeleton />}>
           <Backdrop mediaType={mediaType} id={id} />
         </Suspense>
@@ -63,7 +67,7 @@ export default function ContentModalPage({ params: { mediaType, id } }: { params
         <Suspense fallback={<HeadshotsSkeleton />}>
           <Cast mediaType={mediaType} id={id} />
         </Suspense>
-      </Media>
+      </MediaModal>
     </>
   );
 }

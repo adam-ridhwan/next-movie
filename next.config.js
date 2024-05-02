@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { withHydrationOverlay } = require('@builder.io/react-hydration-overlay/next');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -10,13 +7,11 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/browse',
+        destination: '/home',
         permanent: true,
       },
     ];
   },
 };
 
-module.exports = withHydrationOverlay({
-  appRootSelector: 'main',
-})(nextConfig);
+module.exports = nextConfig;

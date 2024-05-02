@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
 export const Route = {
-  name: 'TvRoute',
+  name: 'Home',
   params: z.object({}),
 };

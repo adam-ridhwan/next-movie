@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
@@ -7,7 +6,7 @@ import { MovieListSchema, TvListSchema } from '@/types/tmdb';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
-const BrowseLayout = async ({ children }: { children: ReactNode }) => {
+const Home = async () => {
   const fetchTMDBParams: Array<FetchTMDBParams & { label: string; section: Section }> = [
     { label: 'Trending: Movies', section: 'movie', category: 'trending', mediaType: 'movie' },
     { label: 'Trending: TV Shows', section: 'tv', category: 'trending', mediaType: 'tv' },
@@ -31,7 +30,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <>
+    <div>
       <EpicStage mediaType='movie' />
 
       {content.map(content => (
@@ -44,9 +43,7 @@ const BrowseLayout = async ({ children }: { children: ReactNode }) => {
           <Slider headerTitle={content.label} />
         </SliderProvider>
       ))}
-
-      {children}
-    </>
+    </div>
   );
 };
-export default BrowseLayout;
+export default Home;

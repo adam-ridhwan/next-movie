@@ -11,21 +11,26 @@ import NavBar from '@/components/nav-bar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Entertainment Web App',
-  description: 'Entertainment Web App by Frontend Mentor',
+  title: 'Netflix Clone',
+  description: 'Netflix Clone built with Next.js',
 };
 
-const RootLayout = async ({ children }: { children: ReactNode }) => (
-  <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-    <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
-      <main className='flex flex-col overflow-x-hidden'>
-        <Providers>
-          <NavBar />
-          <div className='container min-h-[100dvh] flex-1'>{children}</div>
+const RootLayout = async ({ children, modal }: { children: ReactNode; modal: ReactNode }) => {
+  return (
+    <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
+      <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
+        <main className='flex flex-col overflow-x-hidden'>
+          <Providers>
+            <NavBar />
+            <div className='container min-h-[100dvh] flex-1'>
+              {children}
+              {modal}
+            </div>
+          </Providers>
           <footer className='p-10'></footer>
-        </Providers>
-      </main>
-    </body>
-  </html>
-);
+        </main>
+      </body>
+    </html>
+  );
+};
 export default RootLayout;

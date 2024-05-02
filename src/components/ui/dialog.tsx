@@ -61,6 +61,7 @@ const DialogContent = React.forwardRef<
         {...props}
       >
         {children}
+
         <DialogPrimitive.Close
           className={cn(
             `absolute right-4 top-4 rounded-full bg-appBackground p-1 opacity-70 ring-offset-background/50
