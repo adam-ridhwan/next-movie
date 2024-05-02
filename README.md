@@ -1,4 +1,4 @@
-<br />
+
 
 <div align="center">
   <img align="center" alt="Nextjs Logo" width="150px" height="150px" src="https://github.com/adam-ridhwan/next-movie/assets/76563028/8361c850-034b-476f-ac60-665f45c2a2df"/>
@@ -34,5 +34,11 @@
 - 🪝 Custom React hooks
 - 🗃️ State management w/ Zustand
 
+<h2>Acknowledgements</h2>
 
+<img  alt="TMDB Logo" width="100px" src="https://github.com/adam-ridhwan/next-imdb/assets/76563028/ac3b833f-3b4c-4152-8b78-6431d2731a63"/>
 
+<br/>
+<br/>
+
+Data provided by [TMDB](https://www.themoviedb.org/)
