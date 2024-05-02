@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { TODO } from '@/types/global';
+import { TODO } from '@/types/global-types';
 import { MEDIA_QUERY } from '@/lib/constants';
 
 type UsePageUtilsReturn = {
@@ -16,7 +16,7 @@ type UsePageUtilsReturn = {
   actions: {
     markAsPaginated: () => void;
     getTileCountPerPage: () => number;
-    getTileCount: (num: number) => number;
+    getTileCountBidirectional: (num: number) => number;
     getStartIndex: (currentIndex: number, leftTilesTotal: number) => number;
     updateUuids: (params: UpdateUuidsParams) => TODO[];
   };
@@ -55,7 +55,7 @@ export const usePageUtils = (): UsePageUtilsReturn => {
   };
 
   // +1 for left/right placeholders
-  const getTileCount = (num: number) => (Math.ceil(num) + 1) * getTileCountPerPage();
+  const getTileCountBidirectional = (num: number) => (Math.ceil(num) + 1) * getTileCountPerPage();
 
   const getStartIndex = (currentIndex: number, leftTilesTotal: number) => {
     // Prevents negative modulo
@@ -71,19 +71,17 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     isLastPage = false,
   }: UpdateUuidsParams) => {
     if (isFirstPage) {
-      const updatedFirstElements = newContentList.slice(0, firstTileIndex).map(tile => ({
-        ...tile,
-        uuid: uuid(),
-      }));
-      return [...updatedFirstElements, ...newContentList.slice(firstTileIndex)];
+      const updatedFirstPageElements = newContentList
+        .slice(0, firstTileIndex)
+        .map(tile => ({ ...tile, uuid: uuid() }));
+      return [...updatedFirstPageElements, ...newContentList.slice(firstTileIndex)];
     }
 
     if (isLastPage) {
-      const updatedLastElements = newContentList.slice(firstTileIndex).map(tile => ({
-        ...tile,
-        uuid: uuid(),
-      }));
-      return [...newContentList.slice(0, firstTileIndex), ...updatedLastElements];
+      const updatedLastPageElements = newContentList
+        .slice(firstTileIndex)
+        .map(tile => ({ ...tile, uuid: uuid() }));
+      return [...newContentList.slice(0, firstTileIndex), ...updatedLastPageElements];
     }
 
     return newContentList.map(tile => ({ ...tile, uuid: uuid() }));
@@ -99,7 +97,7 @@ export const usePageUtils = (): UsePageUtilsReturn => {
     actions: {
       markAsPaginated,
       getTileCountPerPage,
-      getTileCount,
+      getTileCountBidirectional,
       getStartIndex,
       updateUuids,
     },

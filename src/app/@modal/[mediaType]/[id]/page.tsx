@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { MediaType } from '@/types/global';
+import { MediaType } from '@/types/global-types';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';
@@ -36,7 +36,7 @@ export default async function MovieModal({
           <Backdrop mediaType={mediaType} id={id} />
         </Suspense>
 
-        <div className='flex flex-col gap-12 px-leftRightCustom py-4 pb-10 lg:flex-row'>
+        <div className='px-custom flex flex-col gap-12 py-4 pb-10 lg:flex-row'>
           <div className='mx-[0.5%] flex w-full flex-col gap-4 lg:w-3/5'>
             <Suspense fallback={<OverviewSkeleton />}>
               <Label mediaType={mediaType} id={id} />

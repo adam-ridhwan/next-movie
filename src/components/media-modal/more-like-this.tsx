@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { ContentRouteParams, FetchTMDBParams } from '@/types/global';
-import { MovieListSchema, TvListSchema } from '@/types/tmdb';
+import { ContentRouteParams, FetchTMDBParams } from '@/types/global-types';
+import { MovieResponse, TvResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 export default async function MoreLikeThis({ mediaType, id }: ContentRouteParams) {
@@ -10,7 +10,7 @@ export default async function MoreLikeThis({ mediaType, id }: ContentRouteParams
     { mediaType, id, category: 'recommendations' },
     { mediaType, id, category: 'similar' },
   ];
-  const schema = mediaType === 'movie' ? MovieListSchema : TvListSchema;
+  const schema = mediaType === 'movie' ? MovieResponse : TvResponse;
 
   const contentPromises = content.map(async content => {
     const movieTvs = await fetchTMDB({ ...content });

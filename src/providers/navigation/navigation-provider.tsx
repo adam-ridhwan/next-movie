@@ -4,7 +4,7 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffe
 import { usePathname } from 'next/navigation';
 import { Home, Movies, Tv } from '@/routes';
 
-import { NAV_ROUTES, TODO } from '@/types/global';
+import { NAV_ROUTES, TODO } from '@/types/global-types';
 import { isValidRoute } from '@/lib/utils';
 
 type NavigationContextProps = {

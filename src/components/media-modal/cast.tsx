@@ -1,13 +1,13 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { ContentRouteParams } from '@/types/global';
-import { CreditsSchema } from '@/types/tmdb';
+import { ContentRouteParams } from '@/types/global-types';
+import { CreditsResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 export default async function Cast({ id, mediaType }: ContentRouteParams) {
   const credits = await fetchTMDB({ mediaType, id, category: 'credits' });
-  const { success, data, error } = CreditsSchema.safeParse(credits);
+  const { success, data, error } = CreditsResponse.safeParse(credits);
   if (!success) throw new Error(`Cast() Invalid credits schema: ${error.message}`);
 
   // prettier-ignore

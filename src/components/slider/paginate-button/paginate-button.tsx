@@ -17,7 +17,7 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
   const { isAnimating } = useAnimation();
 
   if (CONTENT.length <= getTileCountPerPage()) {
-    return <div className='w-leftRightCustom min-w-leftRightCustom max-sm:hidden' />;
+    return <div className='w-custom min-w-custom max-sm:hidden' />;
   }
 
   const iconClass = cn(
@@ -33,7 +33,7 @@ const PaginateButton = ({ direction, onClick, className }: PaginationButtonProps
       disabled={isAnimating}
       onClick={onClick}
       className={cn(
-        'group/button relative z-40 flex w-leftRightCustom min-w-leftRightCustom items-center bg-transparent',
+        'group/button w-custom min-w-custom relative z-40 flex items-center bg-transparent',
         className,
         { 'justify-start': direction === 'right' },
         { 'justify-end': direction === 'left' },

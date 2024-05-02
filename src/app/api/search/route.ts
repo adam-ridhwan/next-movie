@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { SearchResultsSchema } from '@/types/tmdb';
+import { SearchResultsResponse } from '@/types/tmdb-types';
 import { QUERY } from '@/lib/constants';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     tvData: movieAndTv[1],
   };
 
-  const { success, data, error } = SearchResultsSchema.safeParse(results);
+  const { success, data, error } = SearchResultsResponse.safeParse(results);
   if (!success) {
     return NextResponse.json({ error: 'Validation failed', details: error }, { status: 400 });
   }

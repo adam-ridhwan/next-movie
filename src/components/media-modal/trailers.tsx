@@ -1,13 +1,13 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { ContentRouteParams } from '@/types/global';
-import { VideoListSchema } from '@/types/tmdb';
+import { ContentRouteParams } from '@/types/global-types';
+import { VideoResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ mediaType, id }: ContentRouteParams) {
   const videos = await fetchTMDB({ mediaType, id, category: 'videos' });
-  const { success, data, error } = VideoListSchema.safeParse(videos);
+  const { success, data, error } = VideoResponse.safeParse(videos);
   if (!success) throw new Error(`Trailers() Invalid videos schema: ${error.message}`);
 
   const trailers = data.results.filter(

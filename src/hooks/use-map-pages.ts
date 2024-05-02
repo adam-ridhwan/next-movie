@@ -3,7 +3,7 @@
 import { useSliderStore } from '@/providers/slider/slider-provider';
 import { v4 as uuid } from 'uuid';
 
-import { Pages, TODO } from '@/types/global';
+import { Pages, TODO } from '@/types/global-types';
 import { getMapValue } from '@/lib/utils';
 import { usePageUtils } from '@/hooks/use-page-utils';
 import { useValidators } from '@/hooks/use-validators';
@@ -22,7 +22,7 @@ export const useMapPages = () => {
 
   const { validatePages } = useValidators();
   const {
-    actions: { getTileCountPerPage, getTileCount, getStartIndex, updateUuids },
+    actions: { getTileCountPerPage, getTileCountBidirectional, getStartIndex, updateUuids },
   } = usePageUtils();
 
   const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
@@ -37,8 +37,10 @@ export const useMapPages = () => {
       key: currentPage,
     });
 
-    const leftTileCount = getTileCount(firstTileCurrentPageIndex / newTileCountPerPage);
-    const rightTileCount = getTileCount((CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage);
+    const leftTileCount = getTileCountBidirectional(firstTileCurrentPageIndex / newTileCountPerPage);
+    const rightTileCount = getTileCountBidirectional(
+      (CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage
+    );
 
     const newTileCount = leftTileCount + rightTileCount;
     const newMaxPages = newTileCount / newTileCountPerPage;

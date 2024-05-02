@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { MediaModal } from '@/routes';
 
-import { TODO } from '@/types/global';
+import { TODO } from '@/types/global-types';
 import { extractYear } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 

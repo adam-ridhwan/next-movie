@@ -1,4 +1,4 @@
 import HomePage from '@/components/home-page';
 
-const Default = async () => <HomePage />;
+const Default = () => <HomePage />;
 export default Default;

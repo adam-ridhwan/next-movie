@@ -4,7 +4,7 @@ export const TileLoadingSkeleton = ({ count }: { count: number }) => {
   return (
     <div>
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className=' flex flex-row px-leftRightCustom pb-[29px] pt-12'>
+        <div key={i} className=' px-custom flex flex-row pb-[29px] pt-12'>
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
@@ -63,7 +63,7 @@ export const OverviewSkeleton = () => {
 
 export const HeadshotsSkeleton = () => {
   return (
-    <div className='flex h-[274px] flex-row gap-4 px-leftRightCustom pt-5'>
+    <div className='px-custom flex h-[274px] flex-row gap-4 pt-5'>
       <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
       <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>
       <div className='aspect-[4/5] h-48 animate-netflix-pulse rounded-xl bg-muted-foreground/10'></div>

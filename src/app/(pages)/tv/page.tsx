@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { FetchTMDBParams } from '@/types/global';
-import { TvListSchema } from '@/types/tmdb';
+import { FetchTMDBParams } from '@/types/global-types';
+import { TvResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 const Tv = async () => {
@@ -16,7 +16,7 @@ const Tv = async () => {
   const content = await Promise.all(
     fetchTMDBParams.map(async params => {
       const media = await fetchTMDB({ ...params });
-      const { success, data, error } = TvListSchema.safeParse(media);
+      const { success, data, error } = TvResponse.safeParse(media);
       if (!success) throw new Error(`BrowseLayout() Invalid Tv schema : ${error.message}`);
 
       return {
