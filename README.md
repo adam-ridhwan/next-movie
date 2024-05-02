@@ -6,19 +6,25 @@
 
 <h1 align="center">Next Imdb</h1>
 
-<p>
-  🍿 Live Preview www.next-imdb.com
-</p
+<p>🍿 Live Preview www.next-imdb.com</p
 
 <br />
 <br />
 
-<img src="https://github.com/adam-ridhwan/next-movie/assets/76563028/5b3f7c0a-0bcd-4026-91ea-31790672fd6c" />
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/5b80e78a-f101-473a-a7fb-05d96c24e3aa' alt='screenshot 1' />
+
+<br />
+<br />
+
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/0c5645bc-99c6-463d-a14d-d9b4ac7db58a' alt='screenshot 2' />
+
+<br />
+<br />
+
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/860b233e-d62f-4d1d-bce0-06ead52eaa81' alt='screenshot 3' />
 
 
-<h2>
-  Features
-</h2>
+<h2>Features</h2>
 
 - 🎞️ Complex Carousel Slider 
 - 📡 Server Action Data Fetching
