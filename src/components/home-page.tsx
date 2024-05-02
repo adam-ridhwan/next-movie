@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { FetchTMDBParams, Section } from '@/types/global';
-import { MovieListSchema, TvListSchema } from '@/types/tmdb';
+import { FetchTMDBParams, Section } from '@/types/global-types';
+import { MovieListSchema, TvListSchema } from '@/types/tmdb-types';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 

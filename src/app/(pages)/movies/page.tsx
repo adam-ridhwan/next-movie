@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { FetchTMDBParams } from '@/types/global';
-import { MovieListSchema } from '@/types/tmdb';
+import { FetchTMDBParams } from '@/types/global-types';
+import { MovieListSchema } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 const Movies = async () => {

@@ -3,8 +3,8 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global';
-import { Movie, Tv } from '@/types/tmdb';
+import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global-types';
+import { Movie, Tv } from '@/types/tmdb-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

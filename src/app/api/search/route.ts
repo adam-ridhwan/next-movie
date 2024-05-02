@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { SearchResultsSchema } from '@/types/tmdb';
+import { SearchResultsSchema } from '@/types/tmdb-types';
 import { QUERY } from '@/lib/constants';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {

@@ -6,8 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useDebounceValue } from 'usehooks-ts';
 
-import { MediaType, TODO } from '@/types/global';
-import { Movie, MovieList, SearchResultsSchema, Tv, TvList } from '@/types/tmdb';
+import { MediaType, TODO } from '@/types/global-types';
+import { Movie, MovieList, SearchResultsSchema, Tv, TvList } from '@/types/tmdb-types';
 import { QUERY } from '@/lib/constants';
 import { cn, extractYear, fetcher, isMovie, isNullish } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/components/fonts';

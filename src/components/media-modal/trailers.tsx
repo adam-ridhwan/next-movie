@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { ContentRouteParams } from '@/types/global';
-import { VideoListSchema } from '@/types/tmdb';
+import { ContentRouteParams } from '@/types/global-types';
+import { VideoListSchema } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ mediaType, id }: ContentRouteParams) {

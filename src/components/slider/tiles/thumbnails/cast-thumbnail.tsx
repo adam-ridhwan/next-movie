@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { TODO } from '@/types/global';
+import { TODO } from '@/types/global-types';
 import { extractInitials } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingLarge } from '@/components/fonts';
 

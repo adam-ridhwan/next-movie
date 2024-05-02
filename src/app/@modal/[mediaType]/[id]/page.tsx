@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { MediaType } from '@/types/global';
+import { MediaType } from '@/types/global-types';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';

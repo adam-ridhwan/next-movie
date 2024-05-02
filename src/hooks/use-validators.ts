@@ -1,6 +1,6 @@
 /* eslint no-restricted-imports: 0 */
 
-import { Pages } from '@/types/global';
+import { Pages } from '@/types/global-types';
 
 type validatePagesParams = {
   label: string;

@@ -1,8 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { ContentRouteParams, FetchTMDBParams } from '@/types/global';
-import { MovieListSchema, TvListSchema } from '@/types/tmdb';
+import { ContentRouteParams, FetchTMDBParams } from '@/types/global-types';
+import { MovieListSchema, TvListSchema } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 export default async function MoreLikeThis({ mediaType, id }: ContentRouteParams) {

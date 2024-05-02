@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/types/global';
-import { MovieDetails, MovieDetailsSchema, TvDetails, TvDetailsSchema } from '@/types/tmdb';
+import { ContentRouteParams } from '@/types/global-types';
+import { MovieDetails, MovieDetailsSchema, TvDetails, TvDetailsSchema } from '@/types/tmdb-types';
 import { isMovie, isNullish } from '@/lib/utils';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {

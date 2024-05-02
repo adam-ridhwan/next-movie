@@ -1,6 +1,6 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { ContentRouteParams } from '@/types/global';
+import { ContentRouteParams } from '@/types/global-types';
 import {
   CreditsSchema,
   KeywordMovie,
@@ -9,7 +9,7 @@ import {
   KeywordTvSchema,
   MovieDetailsSchema,
   TvDetailsSchema,
-} from '@/types/tmdb';
+} from '@/types/tmdb-types';
 import { capitalize, isMovie } from '@/lib/utils';
 
 export async function Actors({ mediaType, id }: ContentRouteParams) {

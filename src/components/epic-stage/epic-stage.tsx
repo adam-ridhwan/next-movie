@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
-import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global';
-import { Movie, MovieListSchema, Tv, TvListSchema } from '@/types/tmdb';
+import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global-types';
+import { Movie, MovieListSchema, Tv, TvListSchema } from '@/types/tmdb-types';
 import { getFirstSentence, isMovie, isNullish } from '@/lib/utils';
 import { HeadingLarge } from '@/components/fonts';
 
