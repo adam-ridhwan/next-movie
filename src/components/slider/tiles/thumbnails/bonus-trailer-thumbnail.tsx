@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { TODO } from '@/types/global-types';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
+import { ArrowRightCircleIcon } from '@/components/icons';
 
 export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
@@ -13,7 +14,10 @@ export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisib
       rel='noreferrer'
       tabIndex={isVisible ? 0 : -1}
     >
-      <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
+      <div className='group relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
+        <div className='absolute z-10 h-full w-full bg-black/0 transition-colors duration-300 hover:bg-black/30' />
+        <ArrowRightCircleIcon className='pointer-events-none absolute left-1/2 top-1/2 z-20 size-9 -translate-x-[50%] -translate-y-[50%] opacity-0 shadow-xl transition-all group-hover:opacity-100' />
+
         {tile.key ? (
           <Image
             src={`https://img.youtube.com/vi/${tile.key}/hqdefault.jpg`}

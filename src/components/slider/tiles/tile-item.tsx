@@ -38,18 +38,17 @@ const TileItem = forwardRef<HTMLDivElement, TileItemProps>(({ tile, i }, ref) =>
   const isVisible = isTileVisible(i) && isMounted;
   const label = isVisible ? displayNumber : '';
 
+  const thumbnailBaseStyles = {
+    'slider-tile--movie': section === 'movie',
+    'slider-tile--tv': section === 'tv',
+    'slider-tile--trailer': section === 'trailer',
+    'slider-tile--bonus': section === 'bonus',
+    'slider-tile--cast': section === 'cast',
+    'pointer-events-none': isAnimating,
+  };
+
   return (
-    <div
-      ref={ref}
-      className={cn('slider-tile', `tile-${label}`, {
-        'slider-tile--movie': section === 'movie',
-        'slider-tile--tv': section === 'tv',
-        'slider-tile--trailer': section === 'trailer',
-        'slider-tile--bonus': section === 'bonus',
-        'slider-tile--cast': section === 'cast',
-        'pointer-events-none': isAnimating,
-      })}
-    >
+    <div ref={ref} className={cn(`slider-tile tile-${label}`, thumbnailBaseStyles)}>
       <ThumbnailSelector section={section} tile={tile} isVisible={isVisible} />
     </div>
   );
@@ -67,6 +66,7 @@ const ThumbnailSelector = ({ section, tile, isVisible }: ThumbnailSelectorProps)
   switch (section) {
     case 'movie':
       return <MovieThumbnail tile={tile} isVisible={isVisible} />;
+
     case 'tv':
       return <TvThumbnail tile={tile} isVisible={isVisible} />;
 

@@ -4,11 +4,12 @@ import { MediaModal } from '@/routes';
 import { TODO } from '@/types/global-types';
 import { extractYear } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
+import ThumbnailWrapper from '@/components/slider/tiles/thumbnails/thumbnail-wrapper';
 
 export const MovieThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
     <MediaModal.Link id={tile.id.toString()} mediaType='movie' scroll={false} tabIndex={isVisible ? 0 : -1}>
-      <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
+      <ThumbnailWrapper>
         {tile.backdrop_path || tile.poster_path ? (
           <>
             <Image
@@ -35,7 +36,7 @@ export const MovieThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boo
             </HeadingExtraSmall>
           </div>
         )}
-      </div>
+      </ThumbnailWrapper>
 
       <div className='pt-3 max-sm:hidden'>
         <div className='flex flex-col'>

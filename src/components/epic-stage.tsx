@@ -3,7 +3,7 @@ import { useHomepageStore } from '@/providers/homepage/homepage-provider';
 import { MediaModal } from '@/routes';
 import { Dot, Info } from 'lucide-react';
 
-import { MOVIE_GENRES, TV_GENRES } from '@/types/global-types';
+import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
 import { isMovie, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -29,7 +29,7 @@ const EpicStage = () => {
     ? MOVIE_GENRES
     : TV_GENRES;
 
-  const genreIds = firstResult?.genre_ids ?? [];
+  const genreIds = firstResult.genre_ids ?? [];
 
   return (
     <div className='relative mb-4 mt-16 aspect-poster overflow-hidden sm:aspect-video min-[1700px]:rounded-b-2xl'>
@@ -57,9 +57,12 @@ const EpicStage = () => {
         <HeadingLarge className='line-clamp-1'>{title}</HeadingLarge>
 
         <ul className='flex flex-row'>
-          {genreIds.map((genreId: number, i: number) => (
+          {genreIds.map((genreId: TODO, i: number) => (
             <li key={genreId} className='flex'>
-              <BodyMedium className='font-medium text-primary/70'>{genresObject[genreId]}</BodyMedium>
+              <BodyMedium className='font-medium text-primary/70'>
+                {/* @ts-expect-error genreid is a number but expecting a literal type */}
+                {genresObject[genreId]}
+              </BodyMedium>
               {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
             </li>
           ))}

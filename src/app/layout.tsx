@@ -23,7 +23,7 @@ const RootLayout = async ({ children, modal }: { children: ReactNode; modal: Rea
     { label: 'Trending: Movies', section: 'movie', category: 'trending', mediaType: 'movie' },
     { label: 'Trending: TV Shows', section: 'tv', category: 'trending', mediaType: 'tv' },
     { label: 'Action Movies', section: 'movie', category: 'discover', mediaType: 'movie', genreId: 28 },
-    { label: 'Drama Movies', section: 'tv', category: 'discover', mediaType: 'movie', genreId: 18 },
+    { label: 'Drama Movies', section: 'movie', category: 'discover', mediaType: 'movie', genreId: 18 },
   ];
 
   const homepageContent = await Promise.all(

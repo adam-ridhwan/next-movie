@@ -18,7 +18,7 @@ export type ContentRouteParams = {
 
 export type Pages = Map<number, TODO[]>;
 
-export const MOVIE_GENRES: Record<number, string> = {
+export const MOVIE_GENRES = {
   28: 'Action',
   12: 'Adventure',
   16: 'Animation',
@@ -40,7 +40,7 @@ export const MOVIE_GENRES: Record<number, string> = {
   37: 'Western',
 } as const;
 
-export const TV_GENRES: Record<number, string> = {
+export const TV_GENRES = {
   10759: 'Action',
   16: 'Animation',
   35: 'Comedy',
@@ -61,6 +61,7 @@ export const TV_GENRES: Record<number, string> = {
 
 export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
+export type GenreId = MovieGenreId | TvGenreId;
 
 export type MediaType = 'movie' | 'tv';
 export type Section = 'movie' | 'tv' | 'trailer' | 'bonus' | 'cast';
@@ -79,10 +80,9 @@ const CATEGORIES = {
   search: 'search',
 } as const;
 
-export type EpicStageCategory = (typeof CATEGORIES)[typeof CATEGORIES.popular | typeof CATEGORIES.trending];
-
 type CategoryWithIdProps = {
   id: string;
+  mediaType: MediaType;
   category:
     | typeof CATEGORIES.credits
     | typeof CATEGORIES.details
@@ -94,21 +94,23 @@ type CategoryWithIdProps = {
 };
 
 type CategoryWithoutIdProps = {
+  mediaType: MediaType;
   category: typeof CATEGORIES.popular | typeof CATEGORIES.trending;
 };
 
 type DiscoverProps = {
   category: typeof CATEGORIES.discover;
-  genreId: MovieGenreId | TvGenreId;
   page?: number;
   language?: string;
-};
+} & (DiscoverMovieProps | DiscoverTvProps);
+type DiscoverMovieProps = { mediaType: 'movie'; genreId: MovieGenreId };
+type DiscoverTvProps = { mediaType: 'tv'; genreId: TvGenreId };
 
 type SearchProps = {
+  mediaType: MediaType;
   category: typeof CATEGORIES.search;
   q: string;
 };
 
-export type DefaultCategoryProps = { mediaType: MediaType };
 export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps;
-export type FetchTMDBParams = Prettify<DefaultCategoryProps & CategoryProps>;
+export type FetchTMDBParams = Prettify<CategoryProps>;
