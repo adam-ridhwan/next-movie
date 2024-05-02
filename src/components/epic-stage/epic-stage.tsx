@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { EpicStageCategory, MediaType, MOVIE_GENRES, TV_GENRES } from '@/types/global-types';
-import { Movie, MovieListSchema, Tv, TvListSchema } from '@/types/tmdb-types';
+import { Movie, MovieResponse, Tv, TvResponse } from '@/types/tmdb-types';
 import { getFirstSentence, isMovie, isNullish } from '@/lib/utils';
 import { HeadingLarge } from '@/components/fonts';
 
@@ -13,7 +13,7 @@ type EpicStageProps = {
 
 const EpicStage = async ({ mediaType, category = 'popular' }: EpicStageProps) => {
   const media = await fetchTMDB({ mediaType, category });
-  const schema = mediaType === 'movie' ? MovieListSchema : TvListSchema;
+  const schema = mediaType === 'movie' ? MovieResponse : TvResponse;
 
   const { success, data, error } = schema.safeParse(media);
   if (!success) throw new Error(`EpicStage() Invalid ${mediaType} schema: ${error.message}`);

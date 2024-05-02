@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const BaseMediaSchema = z.object({
+const BaseMedia = z.object({
   id: z.number(),
   backdrop_path: z.string().nullable(),
   poster_path: z.string().nullable(),
@@ -10,7 +10,7 @@ const BaseMediaSchema = z.object({
   vote_count: z.number().nullable(),
 });
 
-const MovieSchema = BaseMediaSchema.merge(
+const Movie = BaseMedia.merge(
   z.object({
     original_title: z.string().nullable(),
     title: z.string().nullable(),
@@ -18,7 +18,7 @@ const MovieSchema = BaseMediaSchema.merge(
   })
 );
 
-const TvSchema = BaseMediaSchema.merge(
+const Tv = BaseMedia.merge(
   z.object({
     original_name: z.string().nullable(),
     name: z.string().nullable(),
@@ -26,22 +26,22 @@ const TvSchema = BaseMediaSchema.merge(
   })
 );
 
-const MediaListSchema = z.object({
+const MediaResponse = z.object({
   page: z.number(),
   total_pages: z.number(),
   total_results: z.number(),
 });
 
-export const MovieListSchema = MediaListSchema.extend({ results: z.array(MovieSchema) });
-export const TvListSchema = MediaListSchema.extend({ results: z.array(TvSchema) });
+export const MovieResponse = MediaResponse.extend({ results: z.array(Movie) });
+export const TvResponse = MediaResponse.extend({ results: z.array(Tv) });
 
-export type MovieList = z.infer<typeof MovieListSchema>;
-export type TvList = z.infer<typeof TvListSchema>;
-export type MediaList = MovieList | TvList;
-export type Movie = z.infer<typeof MovieSchema>;
-export type Tv = z.infer<typeof TvSchema>;
+export type MovieResponse = z.infer<typeof MovieResponse>;
+export type TvResponse = z.infer<typeof TvResponse>;
+export type MediaResponse = MovieResponse | TvResponse;
+export type Movie = z.infer<typeof Movie>;
+export type Tv = z.infer<typeof Tv>;
 
-export const CastSchema = z.object({
+export const Cast = z.object({
   id: z.number(),
   cast_id: z.number().optional().nullable(),
   credit_id: z.string().nullable(),
@@ -54,15 +54,15 @@ export const CastSchema = z.object({
   known_for_department: z.string().nullable(),
 });
 
-export const CreditsSchema = z.object({
+export const CreditsResponse = z.object({
   id: z.number(),
-  cast: z.array(CastSchema),
+  cast: z.array(Cast),
 });
 
-export type Cast = z.infer<typeof CastSchema>;
-export type Credits = z.infer<typeof CreditsSchema>;
+export type Cast = z.infer<typeof Cast>;
+export type CreditsResponse = z.infer<typeof CreditsResponse>;
 
-const VideoSchema = z.object({
+const Video = z.object({
   id: z.string(),
   name: z.string().nullable(),
   key: z.string().nullable(),
@@ -72,15 +72,15 @@ const VideoSchema = z.object({
   published_at: z.string().nullable(),
 });
 
-export const VideoListSchema = z.object({
+export const VideoResponse = z.object({
   id: z.number(),
-  results: z.array(VideoSchema),
+  results: z.array(Video),
 });
 
-export type Video = z.infer<typeof VideoSchema>;
-export type VideoList = z.infer<typeof VideoListSchema>;
+export type Video = z.infer<typeof Video>;
+export type VideoResponse = z.infer<typeof VideoResponse>;
 
-const BaseDetailsSchema = z.object({
+const BaseDetails = z.object({
   id: z.number(),
   backdrop_path: z.string().nullable(),
   poster_path: z.string().nullable(),
@@ -110,7 +110,7 @@ const BaseDetailsSchema = z.object({
   vote_count: z.number().nullable(),
 });
 
-export const MovieDetailsSchema = BaseDetailsSchema.extend({
+export const DetailsMovieResponse = BaseDetails.extend({
   title: z.string().nullable(),
   original_title: z.string().nullable(),
   belongs_to_collection: z
@@ -128,7 +128,7 @@ export const MovieDetailsSchema = BaseDetailsSchema.extend({
   revenue: z.number().nullable(),
 });
 
-export const TvDetailsSchema = BaseDetailsSchema.extend({
+export const DetailsTvResponse = BaseDetails.extend({
   name: z.string().nullable(),
   original_name: z.string().nullable(),
   first_air_date: z.string().nullable(),
@@ -151,30 +151,30 @@ export const TvDetailsSchema = BaseDetailsSchema.extend({
   ),
 });
 
-export type MovieDetails = z.infer<typeof MovieDetailsSchema>;
-export type TvDetails = z.infer<typeof TvDetailsSchema>;
+export type DetailsMovieResponse = z.infer<typeof DetailsMovieResponse>;
+export type DetailsTvResponse = z.infer<typeof DetailsTvResponse>;
 
-const KeywordSchema = z.object({
+const Keyword = z.object({
   id: z.number(),
   name: z.string(),
 });
 
-export const KeywordMovieSchema = z.object({
+export const KeywordsMovieResponse = z.object({
   id: z.number(),
-  keywords: z.array(KeywordSchema),
+  keywords: z.array(Keyword),
 });
 
-export const KeywordTvSchema = z.object({
+export const KeywordsTvResponse = z.object({
   id: z.number(),
-  results: z.array(KeywordSchema),
+  results: z.array(Keyword),
 });
 
-export type KeywordMovie = z.infer<typeof KeywordMovieSchema>;
-export type KeywordTv = z.infer<typeof KeywordTvSchema>;
+export type KeywordsMovieResponse = z.infer<typeof KeywordsMovieResponse>;
+export type KeywordsTvResponse = z.infer<typeof KeywordsTvResponse>;
 
-export const SearchResultsSchema = z.object({
-  movieData: MovieListSchema,
-  tvData: TvListSchema,
+export const SearchResultsResponse = z.object({
+  movieData: MovieResponse,
+  tvData: TvResponse,
 });
 
-export type SearchResults = z.infer<typeof SearchResultsSchema>;
+export type SearchResultsResponse = z.infer<typeof SearchResultsResponse>;

@@ -2,7 +2,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { FetchTMDBParams } from '@/types/global-types';
-import { MovieListSchema } from '@/types/tmdb-types';
+import { MovieResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
 const Movies = async () => {
@@ -16,7 +16,7 @@ const Movies = async () => {
   const content = await Promise.all(
     fetchTMDBParams.map(async params => {
       const media = await fetchTMDB({ ...params });
-      const { success, data, error } = MovieListSchema.safeParse(media);
+      const { success, data, error } = MovieResponse.safeParse(media);
       if (!success) throw new Error(`BrowseLayout() Invalid Movies schema : ${error.message}`);
 
       return {

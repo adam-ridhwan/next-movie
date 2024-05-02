@@ -2,7 +2,7 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { FetchTMDBParams, Section } from '@/types/global-types';
-import { MovieListSchema, TvListSchema } from '@/types/tmdb-types';
+import { MovieResponse, TvResponse } from '@/types/tmdb-types';
 import EpicStage from '@/components/epic-stage/epic-stage';
 import Slider from '@/components/slider/slider';
 
@@ -17,7 +17,7 @@ const HomePage = async () => {
   const content = await Promise.all(
     fetchTMDBParams.map(async params => {
       const media = await fetchTMDB({ ...params });
-      const schema = params.mediaType === 'movie' ? MovieListSchema : TvListSchema;
+      const schema = params.mediaType === 'movie' ? MovieResponse : TvResponse;
 
       const { success, data, error } = schema.safeParse(media);
       if (!success) throw new Error(`BrowseLayout() Invalid ${params.mediaType} schema : ${error.message}`);

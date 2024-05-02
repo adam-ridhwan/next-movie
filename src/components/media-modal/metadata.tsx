@@ -2,20 +2,18 @@ import { fetchTMDB } from '@/actions/fetch-tmdb';
 
 import { ContentRouteParams } from '@/types/global-types';
 import {
-  CreditsSchema,
-  KeywordMovie,
-  KeywordMovieSchema,
-  KeywordTv,
-  KeywordTvSchema,
-  MovieDetailsSchema,
-  TvDetailsSchema,
+  CreditsResponse,
+  DetailsMovieResponse,
+  DetailsTvResponse,
+  KeywordsMovieResponse,
+  KeywordsTvResponse,
 } from '@/types/tmdb-types';
 import { capitalize, isMovie } from '@/lib/utils';
 
 export async function Actors({ mediaType, id }: ContentRouteParams) {
   const credits = await fetchTMDB({ mediaType, id, category: 'credits' });
 
-  const { success, data, error } = CreditsSchema.safeParse(credits);
+  const { success, data, error } = CreditsResponse.safeParse(credits);
   if (!success) throw new Error(`Actors() Invalid credits schema: ${error.message}`);
   if (data.cast.length === 0) return null;
 
@@ -30,7 +28,7 @@ export async function Actors({ mediaType, id }: ContentRouteParams) {
 
 export async function Genres({ mediaType, id }: ContentRouteParams) {
   const details = await fetchTMDB({ mediaType, id, category: 'details' });
-  const schema = mediaType === 'movie' ? MovieDetailsSchema : TvDetailsSchema;
+  const schema = mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
 
   const { success, data, error } = schema.safeParse(details);
   if (!success) throw new Error(`Genres() Invalid ${mediaType} schema: ${error.message}`);
@@ -44,13 +42,13 @@ export async function Genres({ mediaType, id }: ContentRouteParams) {
 
 export async function Keywords({ mediaType, id }: ContentRouteParams) {
   const keywords = await fetchTMDB({ mediaType, id, category: 'keywords' });
-  const schema = mediaType === 'movie' ? KeywordMovieSchema : KeywordTvSchema;
+  const schema = mediaType === 'movie' ? KeywordsMovieResponse : KeywordsTvResponse;
 
   const { success, data, error } = schema.safeParse(keywords);
   if (!success) throw new Error(`Keywords() Invalid keywords schema: ${error.message}`);
 
   // prettier-ignore
-  const parsedKeywords = isMovie<KeywordMovie, KeywordTv>(data, mediaType)
+  const parsedKeywords = isMovie<KeywordsMovieResponse, KeywordsTvResponse>(data, mediaType)
     ? data.keywords
     : data.results;
   if (!parsedKeywords.length) return null;

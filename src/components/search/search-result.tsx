@@ -6,8 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useDebounceValue } from 'usehooks-ts';
 
-import { MediaType, TODO } from '@/types/global-types';
-import { Movie, MovieList, SearchResultsSchema, Tv, TvList } from '@/types/tmdb-types';
+import { MediaType } from '@/types/global-types';
+import { Movie, MovieResponse, SearchResultsResponse, Tv, TvResponse } from '@/types/tmdb-types';
 import { QUERY } from '@/lib/constants';
 import { cn, extractYear, fetcher, isMovie, isNullish } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/components/fonts';
@@ -28,7 +28,7 @@ const SearchResult = () => {
   if (isLoading || !swrData) return <></>;
   if (swrError) throw new Error('Failed to load search results');
 
-  const { success, data: mediaData, error } = SearchResultsSchema.safeParse(swrData.data);
+  const { success, data: mediaData, error } = SearchResultsResponse.safeParse(swrData.data);
   if (!success) throw new Error(`SearchResult() Invalid search results schema: ${error.message}`);
 
   return (
@@ -51,65 +51,61 @@ const SearchResult = () => {
 export default SearchResult;
 
 type TilesProps = {
-  data: MovieList | TvList;
+  data: MovieResponse | TvResponse;
   mediaType: MediaType;
 };
 
 const Tiles = ({ data, mediaType }: TilesProps) => {
   const { results } = data;
 
-  return (
-    <>
-      {results.map(tile => {
-        const title = isMovie<Movie, Tv>(tile, mediaType)
-          ? isNullish(tile.title, tile.original_title)
-          : isNullish(tile.name, tile.original_name);
+  return results.map(tile => {
+    const title = isMovie<Movie, Tv>(tile, mediaType)
+      ? isNullish(tile.title, tile.original_title)
+      : isNullish(tile.name, tile.original_name);
 
-        const releaseDate = isMovie<Movie, Tv>(tile, mediaType)
-          ? isNullish(tile.release_date)
-          : isNullish(tile.first_air_date);
+    const releaseDate = isMovie<Movie, Tv>(tile, mediaType)
+      ? isNullish(tile.release_date)
+      : isNullish(tile.first_air_date);
 
-        return (
-          <div key={tile.id} className='flex flex-col'>
-            <div
-              className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'
-              key={tile.id}
-            >
-              {tile.backdrop_path || tile.poster_path ? (
-                <>
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
-                    alt={title}
-                    priority
-                    unoptimized
-                    fill
-                    className='object-cover max-sm:hidden'
-                  />
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
-                    alt={title}
-                    priority
-                    unoptimized
-                    fill
-                    className='object-cover sm:hidden'
-                  />
-                </>
-              ) : (
-                <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
-                  <HeadingExtraSmall className='line-clamp-2'>{title}</HeadingExtraSmall>
-                </div>
-              )}
+    return (
+      <div key={tile.id} className='flex flex-col'>
+        <div
+          className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'
+          key={tile.id}
+        >
+          {tile.backdrop_path || tile.poster_path ? (
+            <>
+              <Image
+                src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
+                alt={title}
+                priority
+                unoptimized
+                fill
+                className='object-cover max-sm:hidden'
+              />
+              <Image
+                src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
+                alt={title}
+                priority
+                unoptimized
+                fill
+                className='object-cover sm:hidden'
+              />
+            </>
+          ) : (
+            <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
+              <HeadingExtraSmall className='line-clamp-2'>{title}</HeadingExtraSmall>
             </div>
+          )}
+        </div>
 
-            <div className='pt-3 max-sm:hidden'>
-              <div className='flex flex-col'>
-                <BodyMedium className='line-clamp-1'>{title}</BodyMedium>
-                <BodySmall className='line-clamp-1'>{extractYear(releaseDate)}</BodySmall>
-              </div>
-            </div>
+        <div className='pt-3 max-sm:hidden'>
+          <div className='flex flex-col'>
+            <BodyMedium className='line-clamp-1'>{title}</BodyMedium>
+            <BodySmall className='line-clamp-1'>{extractYear(releaseDate)}</BodySmall>
           </div>
-        );
-      })}
-    </>
-  );
+        </div>
+      </div>
+    );
+  });
 };
