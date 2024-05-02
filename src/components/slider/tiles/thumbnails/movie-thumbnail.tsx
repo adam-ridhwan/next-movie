@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { MovieModal } from '@/routes';
+import { MediaModal } from '@/routes';
 
 import { TODO } from '@/types/global';
 import { extractYear } from '@/lib/utils';
@@ -7,7 +7,7 @@ import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
 export const MovieThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
-    <MovieModal.Link id={tile.id.toString()} mediaType='movie' scroll={false} tabIndex={isVisible ? 0 : -1}>
+    <MediaModal.Link id={tile.id.toString()} mediaType='movie' scroll={false} tabIndex={isVisible ? 0 : -1}>
       <div className='relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
         {tile.backdrop_path || tile.poster_path ? (
           <>
@@ -45,6 +45,6 @@ export const MovieThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boo
           </BodySmall>
         </div>
       </div>
-    </MovieModal.Link>
+    </MediaModal.Link>
   );
 };

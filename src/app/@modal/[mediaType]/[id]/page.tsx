@@ -25,11 +25,11 @@ export default async function MovieModal({
   return (
     <>
       {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
-      {/*<div*/}
-      {/*  className='fixed inset-0 z-50 bg-black/80*/}
-      {/*  data-[state=open]:animate-in data-[state=closed]:animate-out*/}
-      {/*  data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'*/}
-      {/*/>*/}
+      <div
+        className='fixed inset-0 z-50 bg-black/80
+        data-[state=open]:animate-in data-[state=closed]:animate-out
+        data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0'
+      />
 
       <MediaModal>
         <Suspense fallback={<BackdropSkeleton />}>

@@ -19,17 +19,14 @@ const NavigationContext = createContext<NavigationContextProps>(null);
 const ROUTE_HANDLERS = {
   [NAV_ROUTES.home]: () => Home(),
   [NAV_ROUTES.tv]: () => Tv(),
-  [NAV_ROUTES.movie]: () => Movies(),
+  [NAV_ROUTES.movies]: () => Movies(),
 };
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
   const pathname = usePathname();
-  const [lastActiveRoute, setLastActiveRoute] = useState<NavRoute>(NAV_ROUTES.home);
-
-  console.log('RENDERING', pathname);
+  const [lastActiveRoute, setLastActiveRoute] = useState<NavRoute>('/movies');
 
   useEffect(() => {
-    console.log('NavigationProvider useeffect', pathname);
     const isValid = isValidRoute(pathname);
     if (isValid && ROUTE_HANDLERS[pathname]) setLastActiveRoute(pathname);
   }, [pathname, setLastActiveRoute]);

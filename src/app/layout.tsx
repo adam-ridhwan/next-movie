@@ -15,20 +15,22 @@ export const metadata: Metadata = {
   description: 'Netflix Clone built with Next.js',
 };
 
-const RootLayout = async ({ children, pages }: { children: ReactNode; pages: ReactNode }) => (
-  <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-    <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
-      <main className='flex flex-col overflow-x-hidden'>
-        <Providers>
-          <NavBar />
-          <div className='container min-h-[100dvh] flex-1'>
-            {children}
-            {pages}
-          </div>
-        </Providers>
-        <footer className='p-10'></footer>
-      </main>
-    </body>
-  </html>
-);
+const RootLayout = async ({ children, modal }: { children: ReactNode; modal: ReactNode }) => {
+  return (
+    <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
+      <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
+        <main className='flex flex-col overflow-x-hidden'>
+          <Providers>
+            <NavBar />
+            <div className='container min-h-[100dvh] flex-1'>
+              {children}
+              {modal}
+            </div>
+          </Providers>
+          <footer className='p-10'></footer>
+        </main>
+      </body>
+    </html>
+  );
+};
 export default RootLayout;

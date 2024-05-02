@@ -1,3 +1,3 @@
-export default function Default() {
-  return null;
+export default async function Default() {
+  return <div className='px-leftRightCustom pt-20 text-lg'>Default home</div>;
 }

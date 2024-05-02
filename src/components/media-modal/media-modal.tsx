@@ -16,13 +16,7 @@ const Media = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog
-      open
-      onOpenChange={() => {
-        console.log('lastActiveRoute media-modal', lastActiveRoute);
-        router.push(lastActiveRoute, { scroll: false });
-      }}
-    >
+    <Dialog defaultOpen={true} onOpenChange={() => router.push(lastActiveRoute, { scroll: false })}>
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );

@@ -6,7 +6,7 @@ export type TODO = any;
 
 export const NAV_ROUTES = {
   home: '/home',
-  movie: '/movie',
+  movies: '/movies',
   tv: '/tv',
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
