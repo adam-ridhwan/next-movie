@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation';
 import { useSearchStore } from '@/providers/search/search-provider';
 import { Home, Movies, Tv } from '@/routes';
 
@@ -15,6 +17,13 @@ const NavBar = () => {
   } = useSearchStore();
 
   const isActiveRoute = (route: string) => route === lastActiveRoute;
+
+  // const segment = useSelectedLayoutSegments();
+  // const modalSegment = useSelectedLayoutSegment('modal');
+  //
+  // useEffect(() => {
+  //   console.log({ segment: segment.toString(), modalSegment });
+  // }, [modalSegment, segment]);
 
   return (
     <div className='fixed top-0 z-50 flex h-16 w-full items-center bg-black'>

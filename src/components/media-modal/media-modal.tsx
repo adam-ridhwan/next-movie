@@ -3,6 +3,7 @@
 import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useNavigationStore } from '@/providers/navigation/navigation-provider';
+import { Home } from '@/routes';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -16,7 +17,13 @@ const Media = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog defaultOpen={true} onOpenChange={() => router.push(lastActiveRoute, { scroll: false })}>
+    <Dialog
+      defaultOpen={true}
+      onOpenChange={() => {
+        console.log('closing', lastActiveRoute);
+        router.push(lastActiveRoute ?? Home(), { scroll: false });
+      }}
+    >
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );

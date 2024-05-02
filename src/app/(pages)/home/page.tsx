@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
