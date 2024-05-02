@@ -33,6 +33,7 @@
   <img width='500px' src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/f6676b72-201d-4268-9ba8-d88b96a7d985' alt='screenshot 4' />
 </div>
 
+![Untitled design (1)](https://github.com/adam-ridhwan/next-imdb/assets/76563028/15e2c630-8726-4a6a-9a9e-c1dc07701a4b)
 
 <h2>Features</h2>
 
