@@ -11,17 +11,27 @@
 <br />
 <br />
 
-<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/5b80e78a-f101-473a-a7fb-05d96c24e3aa' alt='screenshot 1' />
+<h2>Screenshots</h2>
+
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/bd619cdb-57ac-41bc-b64d-a3628ce829b5' alt='screenshot 1' />
 
 <br />
 <br />
 
-<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/0c5645bc-99c6-463d-a14d-d9b4ac7db58a' alt='screenshot 2' />
+
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/46a4bd4f-9b5e-4375-95df-0ccc0d361277' alt='screenshot 2' />
 
 <br />
 <br />
 
-<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/860b233e-d62f-4d1d-bce0-06ead52eaa81' alt='screenshot 3' />
+<img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/bbc3e8b4-2c53-48a5-8903-39655208c003' alt='screenshot 3' />
+
+<br />
+<br />
+
+<div align='center'>
+  <img width='500px' src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/f6676b72-201d-4268-9ba8-d88b96a7d985' alt='screenshot 4' />
+</div>
 
 
 <h2>Features</h2>
