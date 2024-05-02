@@ -7,7 +7,7 @@
 <h1 align="center">Next Imdb</h1>
 
 <p>
-    🍿Live Preview www.next-imdb.com
+    🍿 Live Preview www.next-imdb.com
 </p
 
 <br />
