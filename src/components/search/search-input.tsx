@@ -57,7 +57,7 @@ const SearchInput = () => {
           disabled={isSearchInputExpanding}
           onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
-            hidden: (searchParams.get('q')?.length ?? 0) < 1,
+            hidden: (searchParams.get(QUERY)?.length ?? 0) < 1,
           })}
         >
           <X className='size-4' />
