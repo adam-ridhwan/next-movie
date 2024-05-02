@@ -4,7 +4,7 @@ import { useHomepageStore } from '@/providers/homepage/homepage-provider';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import { TODO } from '@/types/global-types';
-import EpicStage from '@/components/epic-stage/epic-stage';
+import EpicStage from '@/components/epic-stage';
 import Slider from '@/components/slider/slider';
 
 const HomePage = () => {

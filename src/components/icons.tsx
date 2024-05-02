@@ -25,21 +25,6 @@ export const SearchIcon = ({ className }: SVGProps) => (
   </svg>
 );
 
-export const DotIcon = ({ className }: SVGProps) => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className={cn('h-4 w-4 fill-white', className)}
-  >
-    <circle cx='12.1' cy='12.1' r='1' />
-  </svg>
-);
-
 export const LoadingIcon = ({ className }: SVGProps) => (
   <Loader2 className={cn('h-5 w-5 animate-spin', className)} />
 );
