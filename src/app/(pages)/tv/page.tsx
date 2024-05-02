@@ -5,7 +5,7 @@ import { FetchTMDBParams } from '@/types/global';
 import { TvListSchema } from '@/types/tmdb';
 import Slider from '@/components/slider/slider';
 
-const TvLayout = async () => {
+const Tv = async () => {
   const fetchTMDBParams: Array<FetchTMDBParams & { label: string }> = [
     { label: 'Action TV', category: 'discover', mediaType: 'tv', genreId: 10759, page: 2 },
     { label: 'Sci-Fi TV', category: 'discover', mediaType: 'tv', genreId: 10765, page: 3 },
@@ -43,4 +43,4 @@ const TvLayout = async () => {
   );
 };
 
-export default TvLayout;
+export default Tv;
