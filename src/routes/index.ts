@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import * as HomeRoute from '@/app/(pages)/home/page.info';
 import * as MoviesRoute from '@/app/(pages)/movies/page.info';
-import * as SearchRouteRoute from '@/app/(pages)/search/page.info';
+import * as SearchRoute from '@/app/(pages)/search/page.info';
 import * as TvRoute from '@/app/(pages)/tv/page.info';
 import * as ModalCatchAllRoute from '@/app/@modal/[...catchAll]/page.info';
 import * as MediaModalRoute from '@/app/@modal/[mediaType]/[id]/page.info';
@@ -23,19 +23,19 @@ export const Movies = makeRoute('/movies', {
   ...defaultInfo,
   ...MoviesRoute.Route,
 });
-export const SearchRoute = makeRoute('/search', {
+export const Search = makeRoute('/search', {
   ...defaultInfo,
-  ...SearchRouteRoute.Route,
+  ...SearchRoute.Route,
 });
 export const Tv = makeRoute('/tv', {
   ...defaultInfo,
   ...TvRoute.Route,
 });
-export const ModalCatchAll = makeRoute('[...catchAll]', {
+export const ModalCatchAll = makeRoute('/[...catchAll]', {
   ...defaultInfo,
   ...ModalCatchAllRoute.Route,
 });
-export const MediaModal = makeRoute('[mediaType]/[id]', {
+export const MediaModal = makeRoute('/[mediaType]/[id]', {
   ...defaultInfo,
   ...MediaModalRoute.Route,
 });
