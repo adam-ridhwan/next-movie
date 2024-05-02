@@ -6,6 +6,8 @@
 
 <h1 align="center">Next Imdb</h1>
 
+<p>🍿Live Preview</p
+
 <br />
 <br />
 
