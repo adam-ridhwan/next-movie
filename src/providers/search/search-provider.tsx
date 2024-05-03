@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Home, Search } from '@/routes';
+import { Search } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
 import { QUERY } from '@/lib/constants';
@@ -35,7 +35,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [lastActiveRoute, setLastActiveRoute] = useState(Home());
+  const [lastActiveRoute, setLastActiveRoute] = useState(pathname);
 
   const {
     value: isSearchInputExpanding,
