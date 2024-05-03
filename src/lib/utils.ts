@@ -39,19 +39,12 @@ export const extractInitials = (name: string): string =>
     .slice(0, 2)
     .join('');
 
-export const getObjectKey = <K extends string, V>({
-  label,
-  object,
-  value,
-}: {
-  label: string;
-  object: Record<K, V>;
-  value: V;
-}): K => {
-  for (const [key, val] of Object.entries(object) as [K, V][]) {
-    if (val === value) return key;
-  }
-  throw new Error(`${label}: Value not found: ${value}`);
+// prettier-ignore
+export const getKeyByValue = <K extends number, V>(
+  object: Record<K, V>,
+  value: V
+): K | null => {
+  return Object.keys(object).find(key => object[key as unknown as K] === value) as unknown as K;
 };
 
 export const getFirstSentence = (text: string) => {

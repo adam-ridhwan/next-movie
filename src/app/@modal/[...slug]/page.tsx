@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import { GenreSlug, MediaType, MOVIE_GENRES, TODO } from '@/types/global-types';
-import { getObjectKey } from '@/lib/utils';
+import { GenreId, MOVIE_GENRES, TODO } from '@/types/global-types';
+import { getKeyByValue } from '@/lib/utils';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';
@@ -40,99 +40,89 @@ function extractGenreSlug(slug: string) {
     genre = genre.slice(0, -1);
   }
 
-  return { genre, type: mediaType === 'movies' ? 'movie' : mediaType };
+  return {
+    type: mediaType === 'movies' ? 'movie' : mediaType,
+    genre,
+  };
 }
 
-/**
- * Possible slugs:-
- *
- * movie/[id]
- * tv/[id]
- * adventure-movies
- * animation-tv
- * science-fiction-movies
- */
-
 const MediaPage = async ({ params }: MediaPageProps) => {
-  console.log(params);
   if (isEmpty(params)) return null;
 
-  const mediaType = params.slug[0];
-  const id = params.slug[1];
-  const genre = extractGenreSlug('adventure-movies');
+  const slug = params.slug[0];
+  const mediaId = params.slug[1];
+  const genre = extractGenreSlug(slug);
 
-  console.log({ mediaType, id });
+  const genreId = getKeyByValue(MOVIE_GENRES, genre?.genre);
 
-  const genreId = getObjectKey({ label: 'genreId', object: MOVIE_GENRES, value: genre?.genre });
+  const mediaType = slug === 'movie' || slug === 'tv' ? slug : 'genre';
 
-  return (
-    <>
-      <ModalSelector mediaType={mediaType} id={id} />;
-    </>
-  );
+  return <ModalSelector mediaType={mediaType} slug={slug} mediaId={mediaId} genreId={genreId} />;
 };
 export default MediaPage;
 
 type ModalSelectorProps = {
-  mediaType: string;
-  id: string;
+  mediaType: 'movie' | 'tv' | 'genre';
+  slug: string;
+  mediaId: string;
+  genreId: GenreId | null;
 };
 
-const ModalSelector = ({ mediaType, id }: ModalSelectorProps) => {
+const ModalSelector = ({ mediaType, slug, mediaId, genreId }: ModalSelectorProps) => {
   switch (mediaType) {
     case 'movie':
     case 'tv':
       return (
         <>
-          {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
           <Overlay />
           <MediaModal>
             <Suspense fallback={<BackdropSkeleton />}>
-              <Backdrop mediaType={mediaType} id={id} />
+              <Backdrop mediaType={mediaType} id={mediaId} />
             </Suspense>
 
             <div className='flex flex-col gap-12 px-custom py-4 pb-10 lg:flex-row'>
               <div className='mx-[0.5%] flex w-full flex-col gap-4 lg:w-3/5'>
                 <Suspense fallback={<OverviewSkeleton />}>
-                  <Label mediaType={mediaType} id={id} />
+                  <Label mediaType={mediaType} id={mediaId} />
                 </Suspense>
               </div>
 
               <div className='flex w-full flex-col justify-center gap-4 lg:w-2/5'>
                 <Suspense fallback={<MetadataSkeleton />}>
-                  <Actors mediaType={mediaType} id={id} />
-                  <Genres mediaType={mediaType} id={id} />
-                  <Keywords mediaType={mediaType} id={id} />
+                  <Actors mediaType={mediaType} id={mediaId} />
+                  <Genres mediaType={mediaType} id={mediaId} />
+                  <Keywords mediaType={mediaType} id={mediaId} />
                 </Suspense>
               </div>
             </div>
 
             <Suspense fallback={<TileLoadingSkeleton count={1} />}>
-              <MoreLikeThis mediaType={mediaType} id={id} />
+              <MoreLikeThis mediaType={mediaType} id={mediaId} />
             </Suspense>
 
             <Suspense>
-              <Trailers mediaType={mediaType} id={id} />
+              <Trailers mediaType={mediaType} id={mediaId} />
             </Suspense>
 
             <Suspense>
-              <BonusContent mediaType={mediaType} id={id} />
+              <BonusContent mediaType={mediaType} id={mediaId} />
             </Suspense>
 
             <Suspense fallback={<HeadshotsSkeleton />}>
-              <Cast mediaType={mediaType} id={id} />
+              <Cast mediaType={mediaType} id={mediaId} />
             </Suspense>
           </MediaModal>
         </>
       );
 
-    case 'adventure-movies':
+    case 'genre':
       return (
         <>
-          {/* Need this so that when we navigate directly to url, the overlay appears immediately */}
           <Overlay />
           <MediaModal>
-            <div>Genres</div>
+            <div>
+              {slug}:{genreId}
+            </div>
           </MediaModal>
         </>
       );
