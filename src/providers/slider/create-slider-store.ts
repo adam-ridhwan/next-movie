@@ -67,26 +67,24 @@ export type SliderStore = SliderState & SliderActions;
  */
 
 export const createSliderStore = (CONTENT: TODO[], mediaType: MediaType, section: Section) =>
-  create(
-    devtools<SliderStore>(set => ({
-      CONTENT,
-      mediaType,
-      section,
-      pages: new Map<number, TODO[]>().set(1, CONTENT.slice(0, 7)),
-      maxPages: 0,
-      currentPage: 1,
-      tileCountPerPage: 0,
-      firstPageLength: 0,
-      lastPageLength: 0,
-      slideAmount: 0,
-      hasPaginated: false,
-      isAnimating: false,
-      isMounted: false,
+  create(set => ({
+    CONTENT,
+    mediaType,
+    section,
+    pages: new Map<number, TODO[]>().set(1, CONTENT.slice(0, 7)),
+    maxPages: 0,
+    currentPage: 1,
+    tileCountPerPage: 0,
+    firstPageLength: 0,
+    lastPageLength: 0,
+    slideAmount: 0,
+    hasPaginated: false,
+    isAnimating: false,
+    isMounted: false,
 
-      setPages: (params: SetPagesParams) => set(() => params),
-      setCurrentPage: (currentPage: number) => set(() => ({ currentPage })),
-      setSlideAmount: (slideAmount: number) => set(() => ({ slideAmount })),
-      setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
-      markAsPaginated: () => set(() => ({ hasPaginated: true })),
-    }))
-  );
+    setPages: (params: SetPagesParams) => set(() => params),
+    setCurrentPage: (currentPage: number) => set(() => ({ currentPage })),
+    setSlideAmount: (slideAmount: number) => set(() => ({ slideAmount })),
+    setIsAnimating: (isAnimating: boolean) => set(() => ({ isAnimating })),
+    markAsPaginated: () => set(() => ({ hasPaginated: true })),
+  }));
