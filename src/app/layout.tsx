@@ -14,8 +14,8 @@ import NavBar from '@/components/nav-bar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Netflix Clone',
-  description: 'Netflix Clone built with Next.js',
+  title: 'Next Imdb',
+  description: 'Imdb clone built with Next.js',
 };
 
 const RootLayout = async ({ children, modal }: { children: ReactNode; modal: ReactNode }) => {
