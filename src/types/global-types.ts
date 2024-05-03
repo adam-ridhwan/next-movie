@@ -63,8 +63,20 @@ export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type GenreId = MovieGenreId | TvGenreId;
 
-export type MediaType = 'movie' | 'tv';
-export type Section = 'movie' | 'tv' | 'trailer' | 'bonus' | 'cast';
+const MEDIA_TYPES = {
+  movie: 'movie',
+  tv: 'tv',
+} as const;
+export type MediaType = ValueOf<typeof MEDIA_TYPES>;
+
+const SECTIONS = {
+  movie: MEDIA_TYPES.movie,
+  tv: MEDIA_TYPES.tv,
+  trailer: 'trailer',
+  bonus: 'bonus',
+  cast: 'cast',
+} as const;
+export type Section = ValueOf<typeof SECTIONS>;
 
 const CATEGORIES = {
   credits: 'credits',
@@ -103,8 +115,8 @@ type DiscoverProps = {
   page?: number;
   language?: string;
 } & (DiscoverMovieProps | DiscoverTvProps);
-type DiscoverMovieProps = { mediaType: 'movie'; genreId: MovieGenreId };
-type DiscoverTvProps = { mediaType: 'tv'; genreId: TvGenreId };
+type DiscoverMovieProps = { mediaType: typeof MEDIA_TYPES.movie; genreId: MovieGenreId };
+type DiscoverTvProps = { mediaType: typeof MEDIA_TYPES.tv; genreId: TvGenreId };
 
 type SearchProps = {
   mediaType: MediaType;
