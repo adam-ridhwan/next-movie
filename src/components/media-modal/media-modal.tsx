@@ -7,6 +7,7 @@ import { Home } from '@/routes';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import Overlay from '@/components/media-modal/overlay';
 
 const Media = ({ children }: { children: ReactNode }) => {
   const router = useRouter();

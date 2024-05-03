@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useHomepageStore } from '@/providers/homepage/homepage-provider';
-import { MediaModal } from '@/routes';
 import { Dot, Info } from 'lucide-react';
 
 import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
@@ -60,7 +59,7 @@ const EpicStage = () => {
           {genreIds.map((genreId: TODO, i: number) => (
             <li key={genreId} className='flex'>
               <BodyMedium className='font-medium text-primary/70'>
-                {/* @ts-expect-error genreid is a number but expecting a literal type */}
+                {/*@ts-expect-error genreid is a number but expecting a literal type */}
                 {genresObject[genreId]}
               </BodyMedium>
               {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
@@ -68,12 +67,12 @@ const EpicStage = () => {
           ))}
         </ul>
 
-        <MediaModal.Link id={firstResult.id.toString()} mediaType='movie'>
-          <Button className='mt-4 flex w-fit gap-2' size='lg'>
-            <Info className='size-5' />
-            More Info
-          </Button>
-        </MediaModal.Link>
+        {/*<ModalCatchAll.Link id={firstResult.id.toString()} mediaType='movie'>*/}
+        <Button className='mt-4 flex w-fit gap-2' size='lg'>
+          <Info className='size-5' />
+          More Info
+        </Button>
+        {/*</ModalCatchAll.Link>*/}
       </div>
     </div>
   );

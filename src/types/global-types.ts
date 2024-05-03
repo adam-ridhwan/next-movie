@@ -19,49 +19,53 @@ export type ContentRouteParams = {
 export type Pages = Map<number, TODO[]>;
 
 export const MOVIE_GENRES = {
-  28: 'Action',
-  12: 'Adventure',
-  16: 'Animation',
-  35: 'Comedy',
-  80: 'Crime',
-  99: 'Documentary',
-  18: 'Drama',
-  10751: 'Family',
-  14: 'Fantasy',
-  36: 'History',
-  27: 'Horror',
-  10402: 'Music',
-  9648: 'Mystery',
-  10749: 'Romance',
-  878: 'Science Fiction',
-  10770: 'Tv Movie',
-  53: 'Thriller',
-  10752: 'War',
-  37: 'Western',
+  28: 'action',
+  12: 'adventure',
+  16: 'animation',
+  35: 'comedy',
+  80: 'crime',
+  99: 'documentary',
+  18: 'drama',
+  10751: 'family',
+  14: 'fantasy',
+  36: 'history',
+  27: 'horror',
+  10402: 'music',
+  9648: 'mystery',
+  10749: 'romance',
+  878: 'science-fiction',
+  10770: 'tv-movie',
+  53: 'thriller',
+  10752: 'war',
+  37: 'western',
 } as const;
 
 export const TV_GENRES = {
-  10759: 'Action',
-  16: 'Animation',
-  35: 'Comedy',
-  80: 'Crime',
-  99: 'Documentary',
-  18: 'Drama',
-  10751: 'Family',
-  10762: 'Kids',
-  9648: 'Mystery',
-  10763: 'News',
-  10764: 'Reality',
-  10765: 'Sci-Fi',
-  10766: 'Soap',
-  10767: 'Talk',
-  10768: 'War',
-  37: 'Western',
+  10759: 'action',
+  16: 'animation',
+  35: 'comedy',
+  80: 'crime',
+  99: 'documentary',
+  18: 'drama',
+  10751: 'family',
+  10762: 'kids',
+  9648: 'mystery',
+  10763: 'news',
+  10764: 'reality',
+  10765: 'science-fiction',
+  10766: 'soap',
+  10767: 'talk',
+  10768: 'war',
+  37: 'western',
 } as const;
 
 export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type GenreId = MovieGenreId | TvGenreId;
+
+export type MovieGenreSlug = ValueOf<typeof MOVIE_GENRES>;
+export type TvGenreSlug = ValueOf<typeof TV_GENRES>;
+export type GenreSlug = MovieGenreSlug | TvGenreSlug;
 
 const MEDIA_TYPES = {
   movie: 'movie',

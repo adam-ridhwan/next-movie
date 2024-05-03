@@ -5,8 +5,7 @@ import * as HomeRoute from '@/app/(pages)/home/page.info';
 import * as MoviesRoute from '@/app/(pages)/movies/page.info';
 import * as SearchRoute from '@/app/(pages)/search/page.info';
 import * as TvRoute from '@/app/(pages)/tv/page.info';
-import * as ModalCatchAllRoute from '@/app/@modal/[...catchAll]/page.info';
-import * as MediaModalRoute from '@/app/@modal/[mediaType]/[id]/page.info';
+import * as MediaModalRoute from '@/app/@modal/[...slug]/page.info';
 import * as ApiSearchRoute from '@/app/api/search/route.info';
 
 import { makeGetRoute, makeRoute } from './makeRoute';
@@ -15,27 +14,23 @@ const defaultInfo = {
   search: z.object({}),
 };
 
-export const Home = makeRoute('/home', {
+export const Home = makeRoute('/(pages)/home', {
   ...defaultInfo,
   ...HomeRoute.Route,
 });
-export const Movies = makeRoute('/movies', {
+export const Movies = makeRoute('/(pages)/movies', {
   ...defaultInfo,
   ...MoviesRoute.Route,
 });
-export const Search = makeRoute('/search', {
+export const Search = makeRoute('/(pages)/search', {
   ...defaultInfo,
   ...SearchRoute.Route,
 });
-export const Tv = makeRoute('/tv', {
+export const Tv = makeRoute('/(pages)/tv', {
   ...defaultInfo,
   ...TvRoute.Route,
 });
-export const ModalCatchAll = makeRoute('/[...catchAll]', {
-  ...defaultInfo,
-  ...ModalCatchAllRoute.Route,
-});
-export const MediaModal = makeRoute('/[mediaType]/[id]', {
+export const MediaModal = makeRoute('/[...slug]', {
   ...defaultInfo,
   ...MediaModalRoute.Route,
 });

@@ -10,7 +10,7 @@ const HeadingLarge = ({ children, className }: FontProps) => (
 );
 
 const HeadingMedium = ({ children, className }: FontProps) => (
-  <span className={cn('text-[24px] font-medium', className)}>{children}</span>
+  <span className={cn('text-[20px] font-medium', className)}>{children}</span>
 );
 
 const HeadingSmall = ({ children, className }: FontProps) => (

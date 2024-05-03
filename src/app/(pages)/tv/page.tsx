@@ -27,7 +27,7 @@ const Tv = async () => {
   );
 
   const genresArray = Object.entries(TV_GENRES).map(([key, value]) => {
-    return { id: key, name: value };
+    return { id: key, slug: value, mediaType: 'tv' };
   });
 
   return (

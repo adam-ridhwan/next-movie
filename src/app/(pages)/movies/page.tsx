@@ -27,7 +27,7 @@ const Movies = async () => {
   );
 
   const genresArray = Object.entries(MOVIE_GENRES).map(([key, value]) => {
-    return { id: key, name: value };
+    return { id: key, slug: value, mediaType: 'movies' };
   });
 
   return (

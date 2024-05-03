@@ -46,16 +46,12 @@ export const getObjectKey = <K extends string, V>({
 }: {
   label: string;
   object: Record<K, V>;
-  value: V[] | null;
-}): K[] => {
-  if (!value) return [];
-
-  return value.map(v => {
-    for (const [key, val] of Object.entries(object) as [K, V][]) {
-      if (val === v) return key;
-    }
-    throw new Error(`${label}: Value not found: ${v}`);
-  });
+  value: V;
+}): K => {
+  for (const [key, val] of Object.entries(object) as [K, V][]) {
+    if (val === value) return key;
+  }
+  throw new Error(`${label}: Value not found: ${value}`);
 };
 
 export const getFirstSentence = (text: string) => {
