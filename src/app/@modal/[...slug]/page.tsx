@@ -29,21 +29,14 @@ function isEmpty(obj: TODO) {
 
 function extractGenreSlug(slug: string) {
   const match = slug.match(/^(.+?)-(movies|tv)$/);
-
   if (!match) return null;
 
   let genre = match[1];
   const mediaType = match[2];
 
-  // Convert plural to singular if necessary
-  if (mediaType === 'movies' && genre.endsWith('s')) {
-    genre = genre.slice(0, -1);
-  }
+  if (mediaType === 'movies' && genre.endsWith('s')) genre = genre.slice(0, -1);
 
-  return {
-    type: mediaType === 'movies' ? 'movie' : mediaType,
-    genre,
-  };
+  return genre;
 }
 
 const MediaPage = async ({ params }: MediaPageProps) => {
@@ -53,9 +46,8 @@ const MediaPage = async ({ params }: MediaPageProps) => {
   const mediaId = params.slug[1];
   const genre = extractGenreSlug(slug);
 
-  const genreId = getKeyByValue(MOVIE_GENRES, genre?.genre);
-
   const mediaType = slug === 'movie' || slug === 'tv' ? slug : 'genre';
+  const genreId = getKeyByValue(MOVIE_GENRES, genre);
 
   return <ModalSelector mediaType={mediaType} slug={slug} mediaId={mediaId} genreId={genreId} />;
 };
