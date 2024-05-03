@@ -6,7 +6,7 @@ import { ArrowRightCircleIcon } from '@/components/icons';
 
 const GenresThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
   return (
-    <MediaModal.Link id={tile.id.toString()} mediaType='movie' scroll={false} tabIndex={isVisible ? 0 : -1}>
+    <MediaModal.Link mediaType='action-movie' scroll={false} tabIndex={isVisible ? 0 : -1}>
       <div className='group relative mb-4 flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-black/50 shadow-tileShadow '>
         <HeadingMedium className='z-40 select-none p-6 text-primary'>{tile.name}</HeadingMedium>
         <ArrowRightCircleIcon className='pointer-events-none absolute left-1/2 top-1/2 z-30 size-9 -translate-x-[50%] -translate-y-[50%] opacity-0 shadow-xl transition-all duration-300 group-hover:opacity-100' />
