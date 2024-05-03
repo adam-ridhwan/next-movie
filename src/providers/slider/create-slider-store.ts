@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 import { MediaType, Pages, Section, TODO } from '@/types/global-types';
 
@@ -15,7 +14,7 @@ type SetPagesParams = {
 
 type SliderState = {
   CONTENT: TODO[];
-  mediaType: MediaType;
+  mediaType: MediaType | undefined;
   section: Section;
   pages: Pages;
   maxPages: number;
@@ -66,8 +65,8 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (CONTENT: TODO[], mediaType: MediaType, section: Section) =>
-  create(set => ({
+export const createSliderStore = (CONTENT: TODO[], mediaType: MediaType | undefined, section: Section) =>
+  create<SliderStore>(set => ({
     CONTENT,
     mediaType,
     section,

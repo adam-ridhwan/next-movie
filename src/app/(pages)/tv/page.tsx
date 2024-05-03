@@ -1,7 +1,7 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import { FetchTMDBParams } from '@/types/global-types';
+import { FetchTMDBParams, TV_GENRES } from '@/types/global-types';
 import { TvResponse } from '@/types/tmdb-types';
 import Slider from '@/components/slider/slider';
 
@@ -26,15 +26,23 @@ const Tv = async () => {
     })
   );
 
+  const genresArray = Object.entries(TV_GENRES).map(([key, value]) => {
+    return { id: key, name: value };
+  });
+
   return (
     <div className='pt-16'>
+      <SliderProvider key='Genres' content={genresArray} mediaType='tv' section='genre'>
+        <Slider headerTitle='Genres' />
+      </SliderProvider>
+
       {content.map(content =>
         // prettier-ignore
         <SliderProvider
           key={content.label}
           content={content.results}
-          mediaType="tv"
-          section="tv"
+          mediaType='tv'
+          section='tv'
         >
           <Slider headerTitle={content.label} />
         </SliderProvider>

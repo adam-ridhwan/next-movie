@@ -75,6 +75,7 @@ const SECTIONS = {
   trailer: 'trailer',
   bonus: 'bonus',
   cast: 'cast',
+  genre: 'genre',
 } as const;
 export type Section = ValueOf<typeof SECTIONS>;
 

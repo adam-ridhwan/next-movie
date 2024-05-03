@@ -12,7 +12,7 @@ type SliderContextProps = StoreApi<SliderStore> | null;
 type SliderProviderProps = {
   children: ReactNode;
   content: TODO[];
-  mediaType: MediaType;
+  mediaType?: MediaType;
   section: Section;
 };
 
