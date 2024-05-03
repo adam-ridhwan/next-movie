@@ -14,7 +14,7 @@ type SetPagesParams = {
 
 type SliderState = {
   CONTENT: TODO[];
-  mediaType: MediaType | undefined;
+  mediaType: MediaType;
   section: Section;
   pages: Pages;
   maxPages: number;
@@ -65,7 +65,7 @@ export type SliderStore = SliderState & SliderActions;
  *   UUIDs are updated before adding tiles to the pages map.
  */
 
-export const createSliderStore = (CONTENT: TODO[], mediaType: MediaType | undefined, section: Section) =>
+export const createSliderStore = (CONTENT: TODO[], mediaType: MediaType, section: Section) =>
   create<SliderStore>(set => ({
     CONTENT,
     mediaType,
