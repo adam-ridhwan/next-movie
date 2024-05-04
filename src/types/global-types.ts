@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+import { z } from 'zod';
+
 import { KeyOf, Prettify, ValueOf } from '@/lib/utils';
 
 export type TODO = any;
@@ -11,123 +13,150 @@ export const NAV_ROUTES = {
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
+const MediaType = z.enum(['movie', 'tv'] as const);
+
+const Section = z.enum([
+  MediaType.enum.movie,
+  MediaType.enum.tv,
+  'trailer',
+  'bonus',
+  'cast',
+  'genre',
+] as const);
+
+const Category = z.enum([
+  'credits',
+  'details',
+  'keywords',
+  'recommendations',
+  'similar',
+  'videos',
+  'images',
+  'popular',
+  'trending',
+  'discover',
+  'search',
+] as const);
+
+const Genre = z.enum([
+  'action',
+  'adventure',
+  'animation',
+  'comedy',
+  'crime',
+  'documentary',
+  'drama',
+  'family',
+  'fantasy',
+  'kids',
+  'history',
+  'horror',
+  'music',
+  'mystery',
+  'news',
+  'reality',
+  'romance',
+  'science-fiction',
+  'soap',
+  'talk',
+  'tv-movie',
+  'thriller',
+  'war',
+  'western',
+] as const);
+
+export const MOVIE_GENRES = {
+  28: Genre.enum.action,
+  12: Genre.enum.adventure,
+  16: Genre.enum.animation,
+  35: Genre.enum.comedy,
+  80: Genre.enum.crime,
+  99: Genre.enum.documentary,
+  18: Genre.enum.drama,
+  10751: Genre.enum.family,
+  14: Genre.enum.fantasy,
+  36: Genre.enum.history,
+  27: Genre.enum.horror,
+  10402: Genre.enum.music,
+  9648: Genre.enum.mystery,
+  10749: Genre.enum.romance,
+  878: Genre.enum['science-fiction'],
+  10770: Genre.enum['tv-movie'],
+  53: Genre.enum.thriller,
+  10752: Genre.enum.war,
+  37: Genre.enum.western,
+} as const;
+
+export const TV_GENRES = {
+  10759: Genre.enum.action,
+  16: Genre.enum.animation,
+  35: Genre.enum.comedy,
+  80: Genre.enum.crime,
+  99: Genre.enum.documentary,
+  18: Genre.enum.drama,
+  10751: Genre.enum.family,
+  10762: Genre.enum.kids,
+  9648: Genre.enum.mystery,
+  10763: Genre.enum.news,
+  10764: Genre.enum.reality,
+  10765: Genre.enum['science-fiction'],
+  10766: Genre.enum.soap,
+  10767: Genre.enum.talk,
+  10768: Genre.enum.war,
+  37: Genre.enum.western,
+} as const;
+
 export type ContentRouteParams = {
   mediaType: MediaType;
   id: string;
 };
 
+export type MediaType = z.infer<typeof MediaType>;
+export type Genre = z.infer<typeof Genre>;
+export type Section = z.infer<typeof Section>;
 export type Pages = Map<number, TODO[]>;
 
-export const MOVIE_GENRES = {
-  28: 'action',
-  12: 'adventure',
-  16: 'animation',
-  35: 'comedy',
-  80: 'crime',
-  99: 'documentary',
-  18: 'drama',
-  10751: 'family',
-  14: 'fantasy',
-  36: 'history',
-  27: 'horror',
-  10402: 'music',
-  9648: 'mystery',
-  10749: 'romance',
-  878: 'science-fiction',
-  10770: 'tv-movie',
-  53: 'thriller',
-  10752: 'war',
-  37: 'western',
-} as const;
-
-export const TV_GENRES = {
-  10759: 'action',
-  16: 'animation',
-  35: 'comedy',
-  80: 'crime',
-  99: 'documentary',
-  18: 'drama',
-  10751: 'family',
-  10762: 'kids',
-  9648: 'mystery',
-  10763: 'news',
-  10764: 'reality',
-  10765: 'science-fiction',
-  10766: 'soap',
-  10767: 'talk',
-  10768: 'war',
-  37: 'western',
-} as const;
-
 export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
-export type TvGenreId = KeyOf<typeof TV_GENRES>;
-export type GenreId = MovieGenreId | TvGenreId;
-
 export type MovieGenreSlug = ValueOf<typeof MOVIE_GENRES>;
+
+export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type TvGenreSlug = ValueOf<typeof TV_GENRES>;
-export type GenreSlug = MovieGenreSlug | TvGenreSlug;
 
-const MEDIA_TYPES = {
-  movie: 'movie',
-  tv: 'tv',
-} as const;
-export type MediaType = ValueOf<typeof MEDIA_TYPES>;
-
-const SECTIONS = {
-  movie: MEDIA_TYPES.movie,
-  tv: MEDIA_TYPES.tv,
-  trailer: 'trailer',
-  bonus: 'bonus',
-  cast: 'cast',
-  genre: 'genre',
-} as const;
-export type Section = ValueOf<typeof SECTIONS>;
-
-const CATEGORIES = {
-  credits: 'credits',
-  details: 'details',
-  keywords: 'keywords',
-  recommendations: 'recommendations',
-  similar: 'similar',
-  videos: 'videos',
-  images: 'images',
-  popular: 'popular',
-  trending: 'trending',
-  discover: 'discover',
-  search: 'search',
-} as const;
+export type GenreId = MovieGenreId | TvGenreId;
 
 type CategoryWithIdProps = {
   id: string;
   mediaType: MediaType;
   category:
-    | typeof CATEGORIES.credits
-    | typeof CATEGORIES.details
-    | typeof CATEGORIES.keywords
-    | typeof CATEGORIES.recommendations
-    | typeof CATEGORIES.similar
-    | typeof CATEGORIES.videos
-    | typeof CATEGORIES.images;
+    | typeof Category.enum.credits
+    | typeof Category.enum.details
+    | typeof Category.enum.keywords
+    | typeof Category.enum.recommendations
+    | typeof Category.enum.similar
+    | typeof Category.enum.videos
+    | typeof Category.enum.images;
 };
 
 type CategoryWithoutIdProps = {
   mediaType: MediaType;
-  category: typeof CATEGORIES.popular | typeof CATEGORIES.trending;
+  category: typeof Category.enum.popular | typeof Category.enum.trending;
 };
 
+type DiscoverMovieProps = { mediaType: typeof MediaType.enum.movie; genreId: MovieGenreId };
+type DiscoverTvProps = { mediaType: typeof MediaType.enum.tv; genreId: TvGenreId };
+
 type DiscoverProps = {
-  category: typeof CATEGORIES.discover;
+  category: typeof Category.enum.discover;
   page?: number;
   language?: string;
 } & (DiscoverMovieProps | DiscoverTvProps);
-type DiscoverMovieProps = { mediaType: typeof MEDIA_TYPES.movie; genreId: MovieGenreId };
-type DiscoverTvProps = { mediaType: typeof MEDIA_TYPES.tv; genreId: TvGenreId };
 
 type SearchProps = {
   mediaType: MediaType;
-  category: typeof CATEGORIES.search;
+  category: typeof Category.enum.search;
   q: string;
 };
 
-export type CategoryProps = CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps;
-export type FetchTMDBParams = Prettify<CategoryProps>;
+export type FetchTMDBParams = Prettify<
+  CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps
+>;
