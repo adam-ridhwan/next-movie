@@ -5,7 +5,7 @@ import { Dot, Info } from 'lucide-react';
 
 import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
-import { isMovie, isNullish, slugify } from '@/lib/utils';
+import { isMovie, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
