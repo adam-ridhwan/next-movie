@@ -7,7 +7,8 @@ import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+export const wait = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -78,7 +79,8 @@ export const findIndexByKey = <T, K extends keyof T>({
 }): number => {
   if (value === undefined) throw new Error(`${label}: Value is undefined`);
   const index = array.findIndex(item => item[key] === value);
-  if (index === -1) throw new Error(`${label}: Index of item not found for value: ${value}`);
+  if (index === -1)
+    throw new Error(`${label}: Index of item not found for value: ${value}`);
   return index;
 };
 
@@ -94,5 +96,19 @@ export const isMovie = <ZMovie, ZTv>(
 };
 
 export const isValidRoute = (route: string): route is NavRoute => {
-  return Object.values(NAV_ROUTES).find(navRoute => navRoute === route) !== undefined;
+  return (
+    Object.values(NAV_ROUTES).find(navRoute => navRoute === route) !== undefined
+  );
 };
+
+export const slugify = (...args: string[]) =>
+  args
+    .map(part => {
+      return part
+        .toString()
+        .toLowerCase()
+        .replace(/[^a-z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    })
+    .join('-');

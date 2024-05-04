@@ -1,6 +1,7 @@
 import { MediaModal } from '@/routes';
 
 import { TODO } from '@/types/global-types';
+import { slugify } from '@/lib/utils';
 import { HeadingMedium } from '@/components/fonts';
 import { ArrowRightCircleIcon } from '@/components/icons';
 
@@ -13,7 +14,7 @@ const GenresThumbnail = ({
 }) => {
   return (
     <MediaModal.Link
-      slug={[`${tile.slug}-${tile.mediaType}`]}
+      slug={[slugify(tile.slug, tile.mediaType)]}
       scroll={false}
       tabIndex={isVisible ? 0 : -1}
     >
