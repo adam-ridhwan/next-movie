@@ -17,7 +17,26 @@ const MediaType = z.enum(['movie', 'tv'] as const);
 
 export const MainRoute = z.enum(['home', 'movies', 'tv', 'search'] as const);
 
-export const Slug = z.tuple([MainRoute]).or(z.tuple([MediaType, z.string()]));
+const GenreSlug = z.string().refine(
+  slug => {
+    const suffixes: Record<string, number> = { '-movies': 7, '-tv': 3 };
+
+    const foundSuffix = Object.keys(suffixes).find(suffix =>
+      slug.endsWith(suffix)
+    );
+
+    if (!foundSuffix) return false;
+
+    const baseGenre = slug.slice(0, -suffixes[foundSuffix]);
+    return Genre.safeParse(baseGenre).success;
+  },
+  { message: "Must be a valid genre with '-movies' or '-tv' suffix." }
+);
+
+export const Slug = z.union([
+  z.tuple([z.union([MainRoute, GenreSlug])]),
+  z.tuple([MediaType, z.string()]),
+]);
 
 const Section = z.enum([
   'movie',
