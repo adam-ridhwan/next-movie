@@ -13,6 +13,10 @@ export const NAV_ROUTES = {
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
+export const MainRoute = z.enum(['home', 'movies', 'movie', 'tv', 'search'] as const);
+
+export const Slug = z.tuple([MainRoute, z.string()]);
+
 const MediaType = z.enum(['movie', 'tv'] as const);
 
 const Section = z.enum([
