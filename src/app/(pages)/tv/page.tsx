@@ -24,8 +24,16 @@ const Tv = async () => {
         genreId: 10765,
         page: 3,
       },
-      { label: 'Trending: TV', category: 'trending', mediaType: 'tv' },
-      { label: 'Popular: TV', category: 'popular', mediaType: 'tv' },
+      {
+        label: 'Trending: TV',
+        category: 'trending',
+        mediaType: 'tv',
+      },
+      {
+        label: 'Popular: TV',
+        category: 'popular',
+        mediaType: 'tv',
+      },
     ];
 
     const content = await Promise.all(
