@@ -19,15 +19,11 @@ const EpicStage = () => {
     ? isNullish(firstResult.title, firstResult.original_title)
     : isNullish(firstResult.name, firstResult.original_name);
 
-  // prettier-ignore
   const title = isMovieType
     ? isNullish(firstResult.title)
     : isNullish(firstResult.name);
 
-  // prettier-ignore
-  const genresObject = isMovieType
-    ? MOVIE_GENRES
-    : TV_GENRES;
+  const genresObject = isMovieType ? MOVIE_GENRES : TV_GENRES;
 
   const genreIds = firstResult.genre_ids ?? [];
 
