@@ -4,7 +4,6 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global-types';
-import { Movie, Tv } from '@/types/tmdb-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -52,7 +51,15 @@ export const getFirstSentence = (text: string) => {
   return match ? match[1] : text;
 };
 
-export const getMapValue = <K, V>({ label, map, key }: { label: string; map: Map<K, V>; key: K }): V => {
+export const getMapValue = <K, V>({
+  label,
+  map,
+  key,
+}: {
+  label: string;
+  map: Map<K, V>;
+  key: K;
+}): V => {
   const result = map.get(key);
   if (result === undefined) throw new Error(`${label}: Key not found: ${key}`);
   return result;

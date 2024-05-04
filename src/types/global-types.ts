@@ -15,18 +15,11 @@ export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
 export const MainRoute = z.enum(['home', 'movies', 'movie', 'tv', 'search'] as const);
 
-export const Slug = z.tuple([MainRoute, z.string()]);
+export const Slug = z.tuple([MainRoute, z.string().optional()]);
 
 const MediaType = z.enum(['movie', 'tv'] as const);
 
-const Section = z.enum([
-  MediaType.enum.movie,
-  MediaType.enum.tv,
-  'trailer',
-  'bonus',
-  'cast',
-  'genre',
-] as const);
+const Section = z.enum(['movie', 'tv', 'trailer', 'bonus', 'cast', 'genre'] as const);
 
 const Category = z.enum([
   'credits',
