@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import { useHomepageStore } from '@/providers/homepage/homepage-provider';
+import { MediaModal } from '@/routes';
 import { Dot, Info } from 'lucide-react';
 
 import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
-import { isMovie, isNullish } from '@/lib/utils';
+import { isMovie, isNullish, slugify } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
@@ -67,12 +68,15 @@ const EpicStage = () => {
           ))}
         </ul>
 
-        {/*<ModalCatchAll.Link id={firstResult.id.toString()} mediaType='movie'>*/}
-        <Button className='mt-4 flex w-fit gap-2' size='lg'>
-          <Info className='size-5' />
-          More Info
-        </Button>
-        {/*</ModalCatchAll.Link>*/}
+        <MediaModal.Link
+          slug={['movie', firstResult.id.toString()]}
+          scroll={false}
+        >
+          <Button className='mt-4 flex w-fit gap-2' size='lg'>
+            <Info className='size-5' />
+            More Info
+          </Button>
+        </MediaModal.Link>
       </div>
     </div>
   );
