@@ -13,13 +13,20 @@ export const NAV_ROUTES = {
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
-export const MainRoute = z.enum(['home', 'movies', 'movie', 'tv', 'search'] as const);
-
-export const Slug = z.tuple([MainRoute, z.string().optional()]);
-
 const MediaType = z.enum(['movie', 'tv'] as const);
 
-const Section = z.enum(['movie', 'tv', 'trailer', 'bonus', 'cast', 'genre'] as const);
+export const MainRoute = z.enum(['home', 'movies', 'tv', 'search'] as const);
+
+export const Slug = z.tuple([MainRoute]).or(z.tuple([MediaType, z.string()]));
+
+const Section = z.enum([
+  'movie',
+  'tv',
+  'trailer',
+  'bonus',
+  'cast',
+  'genre',
+] as const);
 
 const Category = z.enum([
   'credits',
@@ -114,10 +121,10 @@ export type Section = z.infer<typeof Section>;
 export type Pages = Map<number, TODO[]>;
 
 export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
-export type MovieGenreSlug = ValueOf<typeof MOVIE_GENRES>;
+export type MovieGenre = ValueOf<typeof MOVIE_GENRES>;
 
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
-export type TvGenreSlug = ValueOf<typeof TV_GENRES>;
+export type TvGenre = ValueOf<typeof TV_GENRES>;
 
 export type GenreId = MovieGenreId | TvGenreId;
 
@@ -139,8 +146,14 @@ type CategoryWithoutIdProps = {
   category: typeof Category.enum.popular | typeof Category.enum.trending;
 };
 
-type DiscoverMovieProps = { mediaType: typeof MediaType.enum.movie; genreId: MovieGenreId };
-type DiscoverTvProps = { mediaType: typeof MediaType.enum.tv; genreId: TvGenreId };
+type DiscoverMovieProps = {
+  mediaType: typeof MediaType.enum.movie;
+  genreId: MovieGenreId;
+};
+type DiscoverTvProps = {
+  mediaType: typeof MediaType.enum.tv;
+  genreId: TvGenreId;
+};
 
 type DiscoverProps = {
   category: typeof Category.enum.discover;
