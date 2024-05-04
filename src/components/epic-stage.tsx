@@ -5,7 +5,7 @@ import { Dot, Info } from 'lucide-react';
 
 import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
-import { isMovie, isNullish } from '@/lib/utils';
+import { deslugify, isMovie, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
@@ -57,7 +57,7 @@ const EpicStage = () => {
             <li key={genreId} className='flex'>
               <BodyMedium className='font-medium text-primary/70'>
                 {/*@ts-expect-error genreid is a number but expecting a literal type */}
-                {genresObject[genreId]}
+                {deslugify(genresObject[genreId])}
               </BodyMedium>
               {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
             </li>

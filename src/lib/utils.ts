@@ -39,12 +39,13 @@ export const extractInitials = (name: string): string =>
     .slice(0, 2)
     .join('');
 
-// prettier-ignore
-export const getKeyByValue = <K extends number, V>(
+export const getGenreIdBySlug = <K extends number, V>(
   object: Record<K, V>,
   value: V
 ): K | null => {
-  return Object.keys(object).find(key => object[key as unknown as K] === value) as unknown as K;
+  return Object.keys(object).find(
+    key => object[key as unknown as K] === value
+  ) as unknown as K;
 };
 
 export const getFirstSentence = (text: string) => {
@@ -88,9 +89,9 @@ export const isNullish = (...values: any[]): string => {
   return values.find(value => value !== undefined) ?? '-';
 };
 
-// prettier-ignore
 export const isMovie = <ZMovie, ZTv>(
-  media: ZMovie | ZTv, mediaType: MediaType
+  media: ZMovie | ZTv,
+  mediaType: MediaType
 ): media is ZMovie => {
   return mediaType === 'movie';
 };
@@ -101,8 +102,8 @@ export const isValidRoute = (route: string): route is NavRoute => {
   );
 };
 
-export const slugify = (...args: string[]) =>
-  args
+export const slugify = (...args: string[]) => {
+  return args
     .map(part => {
       return part
         .toString()
@@ -112,3 +113,11 @@ export const slugify = (...args: string[]) =>
         .replace(/-+/g, '-');
     })
     .join('-');
+};
+
+export const deslugify = (slug: string): string => {
+  return slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};

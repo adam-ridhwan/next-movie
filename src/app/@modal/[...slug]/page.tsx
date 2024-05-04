@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { GenreId, MOVIE_GENRES, TODO } from '@/types/global-types';
-import { getKeyByValue } from '@/lib/utils';
+import { getGenreIdBySlug } from '@/lib/utils';
 import Backdrop from '@/components/media-modal/backdrop';
 import BonusContent from '@/components/media-modal/bonus-content';
 import Cast from '@/components/media-modal/cast';
@@ -23,11 +23,9 @@ type MediaPageProps = {
   params: TODO;
 };
 
-function isEmpty(obj: TODO) {
-  return Object.keys(obj).length === 0;
-}
+const isEmpty = (obj: TODO) => Object.keys(obj).length === 0;
 
-function extractGenreSlug(slug: string) {
+const extractGenreSlug = (slug: string) => {
   const match = slug.match(/^(.+?)-(movies|tv)$/);
   if (!match) return null;
 
@@ -37,7 +35,7 @@ function extractGenreSlug(slug: string) {
   if (mediaType === 'movies' && genre.endsWith('s')) genre = genre.slice(0, -1);
 
   return genre;
-}
+};
 
 const MediaPage = async ({ params }: MediaPageProps) => {
   if (isEmpty(params)) return null;
@@ -47,9 +45,16 @@ const MediaPage = async ({ params }: MediaPageProps) => {
   const genre = extractGenreSlug(slug);
 
   const mediaType = slug === 'movie' || slug === 'tv' ? slug : 'genre';
-  const genreId = getKeyByValue(MOVIE_GENRES, genre);
+  const genreId = getGenreIdBySlug(MOVIE_GENRES, genre);
 
-  return <ModalSelector mediaType={mediaType} slug={slug} mediaId={mediaId} genreId={genreId} />;
+  return (
+    <ModalSelector
+      mediaType={mediaType}
+      slug={slug}
+      mediaId={mediaId}
+      genreId={genreId}
+    />
+  );
 };
 export default MediaPage;
 
@@ -60,7 +65,12 @@ type ModalSelectorProps = {
   genreId: GenreId | null;
 };
 
-const ModalSelector = ({ mediaType, slug, mediaId, genreId }: ModalSelectorProps) => {
+const ModalSelector = ({
+  mediaType,
+  slug,
+  mediaId,
+  genreId,
+}: ModalSelectorProps) => {
   switch (mediaType) {
     case 'movie':
     case 'tv':
