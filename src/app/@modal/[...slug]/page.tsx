@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
+import { ErrorPage } from '@/routes';
 
 import {
   GenreId,
@@ -53,7 +54,7 @@ const MediaModalPage = async ({ params }: MediaPageProps) => {
 
   const parsedMediaModalSlug = MediaModalSlug.safeParse(params.slug);
   if (!parsedMediaModalSlug.success) {
-    redirect('/error');
+    redirect(ErrorPage());
   }
 
   const mediaCategorySlug = parsedMediaModalSlug.data[0];
@@ -71,7 +72,7 @@ const MediaModalPage = async ({ params }: MediaPageProps) => {
     const genreObj = mediaType === 'movie' ? MOVIE_GENRES : TV_GENRES;
 
     const id = getGenreIdBySlug(genreObj, genre);
-    if (!id) return null;
+    if (!id) redirect(ErrorPage());
 
     return <GenreModal slug={genre} id={id} />;
   }
