@@ -5,13 +5,12 @@ import { slugify } from '@/lib/utils';
 import { HeadingMedium } from '@/components/fonts';
 import { ArrowRightCircleIcon } from '@/components/icons';
 
-const GenresThumbnail = ({
-  tile,
-  isVisible,
-}: {
+type GenresThumbnailProps = {
   tile: TODO;
   isVisible: boolean;
-}) => {
+};
+
+const GenresThumbnail = ({ tile, isVisible }: GenresThumbnailProps) => {
   return (
     <MediaModal.Link
       slug={[slugify(tile.slug, tile.mediaType)]}

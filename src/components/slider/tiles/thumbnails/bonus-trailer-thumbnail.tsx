@@ -5,7 +5,15 @@ import { TODO } from '@/types/global-types';
 import { BodyMedium, HeadingExtraSmall } from '@/components/fonts';
 import { ArrowRightCircleIcon } from '@/components/icons';
 
-export const BonusTrailerThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
+type BonusTrailerThumbnailProps = {
+  tile: TODO;
+  isVisible: boolean;
+};
+
+export const BonusTrailerThumbnail = ({
+  tile,
+  isVisible,
+}: BonusTrailerThumbnailProps) => {
   return (
     <Link
       // TODO: Switch to Media.Link when the bonus trailer drawer is implemented

@@ -6,10 +6,19 @@ import { extractYear } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 import ThumbnailWrapper from '@/components/slider/tiles/thumbnails/thumbnail-wrapper';
 
-export const TvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
+type TvThumbnailProps = {
+  tile: TODO;
+  isVisible: boolean;
+};
+
+export const TvThumbnail = ({ tile, isVisible }: TvThumbnailProps) => {
   return (
     <>
-      <MediaModal.Link slug={['tv', tile.id.toString()]} scroll={false} tabIndex={isVisible ? 0 : -1}>
+      <MediaModal.Link
+        slug={['tv', tile.id.toString()]}
+        scroll={false}
+        tabIndex={isVisible ? 0 : -1}
+      >
         <ThumbnailWrapper>
           {tile.backdrop_path || tile.poster_path ? (
             <>
@@ -41,7 +50,9 @@ export const TvThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolea
 
         <div className='pt-3 max-sm:hidden'>
           <div className='flex flex-col'>
-            <BodyMedium className='line-clamp-1'>{tile.name || tile.title || tile.original_title}</BodyMedium>
+            <BodyMedium className='line-clamp-1'>
+              {tile.name || tile.title || tile.original_title}
+            </BodyMedium>
             <BodySmall className='line-clamp-1'>
               {extractYear(tile.release_date || tile.first_air_date)}
             </BodySmall>

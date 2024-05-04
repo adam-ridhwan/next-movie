@@ -4,7 +4,12 @@ import { TODO } from '@/types/global-types';
 import { extractInitials } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingLarge } from '@/components/fonts';
 
-export const CastThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: boolean }) => {
+type CastThumbnailProps = {
+  tile: TODO;
+  isVisible: boolean;
+};
+
+export const CastThumbnail = ({ tile, isVisible }: CastThumbnailProps) => {
   return (
     <>
       <div className='group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
@@ -30,8 +35,12 @@ export const CastThumbnail = ({ tile, isVisible }: { tile: TODO; isVisible: bool
 
       <div className='pt-3'>
         <div className='flex flex-col items-center'>
-          <BodyMedium className='line-clamp-1 text-center'>{tile.name || ''}</BodyMedium>
-          <BodySmall className='line-clamp-1 text-center'>{tile.character || ''}</BodySmall>
+          <BodyMedium className='line-clamp-1 text-center'>
+            {tile.name || ''}
+          </BodyMedium>
+          <BodySmall className='line-clamp-1 text-center'>
+            {tile.character || ''}
+          </BodySmall>
         </div>
       </div>
     </>
