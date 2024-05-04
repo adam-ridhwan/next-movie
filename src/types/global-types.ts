@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { KeyOf, Prettify, ValueOf } from '@/lib/utils';
+import { KeyOf, KeysOfValue, Prettify, ValueOf } from '@/lib/utils';
 
 export type TODO = any;
 
@@ -13,11 +13,11 @@ export const NAV_ROUTES = {
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
-const MediaType = z.enum(['movie', 'tv'] as const);
+export const MediaType = z.enum(['movie', 'tv'] as const);
 
 export const MainRoute = z.enum(['home', 'movies', 'tv', 'search'] as const);
 
-const GenreSlug = z.string().refine(
+export const GenreSlug = z.string().refine(
   slug => {
     const suffixes: Record<string, number> = { '-movies': 7, '-tv': 3 };
 
@@ -33,9 +33,9 @@ const GenreSlug = z.string().refine(
   { message: "Must be a valid genre with '-movies' or '-tv' suffix." }
 );
 
-export const Slug = z.union([
-  z.tuple([z.union([MainRoute, GenreSlug])]),
+export const MediaModalSlug = z.union([
   z.tuple([MediaType, z.string()]),
+  z.tuple([GenreSlug]),
 ]);
 
 const Section = z.enum([
@@ -61,7 +61,7 @@ const Category = z.enum([
   'search',
 ] as const);
 
-const Genre = z.enum([
+export const Genre = z.enum([
   'action',
   'adventure',
   'animation',
@@ -134,18 +134,22 @@ export type ContentRouteParams = {
   id: string;
 };
 
+export type MediaModalSlug = z.infer<typeof MediaModalSlug>;
+
 export type MediaType = z.infer<typeof MediaType>;
-export type Genre = z.infer<typeof Genre>;
 export type Section = z.infer<typeof Section>;
 export type Pages = Map<number, TODO[]>;
+
+export type Genre = MovieGenre | TvGenre;
+export type GenreObj = typeof MOVIE_GENRES | typeof TV_GENRES;
+export type GenreId = MovieGenreId | TvGenreId;
+export type GenreSlug = z.infer<typeof Genre>;
 
 export type MovieGenreId = KeyOf<typeof MOVIE_GENRES>;
 export type MovieGenre = ValueOf<typeof MOVIE_GENRES>;
 
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type TvGenre = ValueOf<typeof TV_GENRES>;
-
-export type GenreId = MovieGenreId | TvGenreId;
 
 type CategoryWithIdProps = {
   id: string;

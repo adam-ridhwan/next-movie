@@ -3,7 +3,15 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { MediaType, NAV_ROUTES, NavRoute } from '@/types/global-types';
+import {
+  Genre,
+  GenreId,
+  GenreObj,
+  GenreSlug,
+  MediaType,
+  NAV_ROUTES,
+  NavRoute,
+} from '@/types/global-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -14,9 +22,14 @@ export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export type KeyOf<T> = keyof T;
 export type ValueOf<T> = T[keyof T];
+
 export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {}; // eslint-disable-line @typescript-eslint/ban-types
+
+export type KeysOfValue<T, TCondition> = {
+  [K in keyof T]: T[K] extends TCondition ? K : never;
+}[keyof T];
 
 export const capitalize = (str: string): string => {
   const words = str.split(' ');
@@ -39,13 +52,42 @@ export const extractInitials = (name: string): string =>
     .slice(0, 2)
     .join('');
 
-export const getGenreIdBySlug = <K extends number, V>(
-  object: Record<K, V>,
-  value: V
-): K | null => {
-  return Object.keys(object).find(
-    key => object[key as unknown as K] === value
-  ) as unknown as K;
+export const getGenreIdBySlug = (
+  object: GenreObj,
+  value: GenreSlug
+): GenreId | undefined => {
+  return objectKeys(object).find(key => object[key] === value);
+};
+
+const objectKeys = <Obj extends object>(obj: Obj): (keyof Obj)[] => {
+  return Object.keys(obj) as (keyof Obj)[];
+};
+
+export const extractGenreMediaTypeSlugs = (
+  slug: string
+): [GenreSlug, MediaType] => {
+  const match = slug.match(/^(.+?)-(movies|tv)$/);
+  if (!match)
+    throw new Error(`extractGenreMediaTypeSlugs() Invalid slug: ${slug}`);
+
+  let genre = match[1];
+  let mediaType = match[2];
+
+  if (mediaType === 'movies' && mediaType.endsWith('s')) {
+    mediaType = mediaType.slice(0, -1);
+  }
+
+  const parsedGenreSlug = Genre.safeParse(genre);
+  if (!parsedGenreSlug.success)
+    throw new Error(`extractGenreMediaTypeSlugs() Invalid genre: ${genre}`);
+
+  const parsedMediaType = MediaType.safeParse(mediaType);
+  if (!parsedMediaType.success)
+    throw new Error(
+      `extractGenreMediaTypeSlugs() Invalid media type: ${mediaType}`
+    );
+
+  return [parsedGenreSlug.data, parsedMediaType.data];
 };
 
 export const getFirstSentence = (text: string) => {
@@ -101,6 +143,10 @@ export const isValidRoute = (route: string): route is NavRoute => {
     Object.values(NAV_ROUTES).find(navRoute => navRoute === route) !== undefined
   );
 };
+
+// export const isValidGenreSlug = (slug: string): slug is GenreSlug => {
+//   return Genre.safeParse(slug).success;
+// };
 
 export const slugify = (...args: string[]) => {
   return args

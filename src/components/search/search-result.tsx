@@ -58,7 +58,7 @@ const SearchResult = () => {
     <div className='flex flex-col gap-8 px-custom pt-24'>
       <div className='flex flex-row gap-2'>
         <HeadingSmall className='text-muted-foreground'>
-          Search result for:{' '}
+          Search results for:
         </HeadingSmall>
         <HeadingSmall>{query}</HeadingSmall>
       </div>
