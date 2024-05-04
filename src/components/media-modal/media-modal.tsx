@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useNavigationStore } from '@/providers/navigation/navigation-provider';
 import { Home } from '@/routes';
 
 import { useEffectOnce } from '@/hooks/use-effect-once';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import Overlay from '@/components/media-modal/overlay';
 
 const Media = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -18,7 +17,12 @@ const Media = ({ children }: { children: ReactNode }) => {
   useEffectOnce(() => setIsMounted(true));
 
   return (
-    <Dialog defaultOpen={true} onOpenChange={() => router.push(lastActiveRoute ?? Home(), { scroll: false })}>
+    <Dialog
+      defaultOpen={true}
+      onOpenChange={() =>
+        router.push(lastActiveRoute ?? Home(), { scroll: false })
+      }
+    >
       {isMounted && <DialogContent>{children}</DialogContent>}
     </Dialog>
   );

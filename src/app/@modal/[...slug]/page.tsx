@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 
 import {
   GenreId,
@@ -52,8 +53,7 @@ const MediaModalPage = async ({ params }: MediaPageProps) => {
 
   const parsedMediaModalSlug = MediaModalSlug.safeParse(params.slug);
   if (!parsedMediaModalSlug.success) {
-    // TODO: Add error page for invalid routes
-    return null;
+    redirect('/error');
   }
 
   const mediaCategorySlug = parsedMediaModalSlug.data[0];
