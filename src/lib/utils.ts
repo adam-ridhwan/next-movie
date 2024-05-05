@@ -9,8 +9,10 @@ import {
   GenreObj,
   GenreSlug,
   MediaType,
+  MOVIE_GENRES,
   NAV_ROUTES,
   NavRoute,
+  TV_GENRES,
 } from '@/types/global-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
@@ -53,10 +55,11 @@ export const extractInitials = (name: string): string =>
     .join('');
 
 export const getGenreIdBySlug = (
-  object: GenreObj,
-  value: GenreSlug
+  value: GenreSlug,
+  mediaType: MediaType
 ): GenreId | undefined => {
-  return objectKeys(object).find(key => object[key] === value);
+  const genreObj = mediaType === 'movie' ? MOVIE_GENRES : TV_GENRES;
+  return objectKeys(genreObj).find(key => genreObj[key] === value);
 };
 
 const objectKeys = <Obj extends object>(obj: Obj): (keyof Obj)[] => {
