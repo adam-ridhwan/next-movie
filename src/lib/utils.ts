@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge';
 import {
   Genre,
   GenreId,
-  GenreObj,
   GenreSlug,
   MediaType,
   MOVIE_GENRES,
