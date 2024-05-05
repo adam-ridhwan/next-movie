@@ -1,39 +1,15 @@
-import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { ErrorPage } from '@/routes';
 
 import {
-  GenreId,
   GenreSlug,
   MediaModalSlug,
   MediaType,
-  MOVIE_GENRES,
   TODO,
-  TV_GENRES,
 } from '@/types/global-types';
 import { extractGenreMediaTypeSlugs, getGenreIdBySlug } from '@/lib/utils';
 import GenreModal from '@/components/media-modal/genre/genre-modal';
-import MediaModal from '@/components/media-modal/media-modal';
-import Backdrop from '@/components/media-modal/movie-tv/backdrop';
-import BonusContent from '@/components/media-modal/movie-tv/bonus-content';
-import Cast from '@/components/media-modal/movie-tv/cast';
-import { Label } from '@/components/media-modal/movie-tv/label';
-import {
-  Actors,
-  Genres,
-  Keywords,
-} from '@/components/media-modal/movie-tv/metadata';
-import MoreLikeThis from '@/components/media-modal/movie-tv/more-like-this';
 import MovieTvModal from '@/components/media-modal/movie-tv/movie-tv-modal';
-import Overlay from '@/components/media-modal/movie-tv/overlay';
-import Trailers from '@/components/media-modal/movie-tv/trailers';
-import {
-  BackdropSkeleton,
-  HeadshotsSkeleton,
-  MetadataSkeleton,
-  OverviewSkeleton,
-  TileLoadingSkeleton,
-} from '@/components/skeletons';
 
 type MediaPageProps = {
   params: {
