@@ -12,15 +12,19 @@ import {
   TV_GENRES,
 } from '@/types/global-types';
 import { extractGenreMediaTypeSlugs, getGenreIdBySlug } from '@/lib/utils';
-import Backdrop from '@/components/media-modal/backdrop';
-import BonusContent from '@/components/media-modal/bonus-content';
-import Cast from '@/components/media-modal/cast';
-import { Label } from '@/components/media-modal/label';
 import MediaModal from '@/components/media-modal/media-modal';
-import { Actors, Genres, Keywords } from '@/components/media-modal/metadata';
-import MoreLikeThis from '@/components/media-modal/more-like-this';
-import Overlay from '@/components/media-modal/overlay';
-import Trailers from '@/components/media-modal/trailers';
+import Backdrop from '@/components/media-modal/movie-tv/backdrop';
+import BonusContent from '@/components/media-modal/movie-tv/bonus-content';
+import Cast from '@/components/media-modal/movie-tv/cast';
+import { Label } from '@/components/media-modal/movie-tv/label';
+import {
+  Actors,
+  Genres,
+  Keywords,
+} from '@/components/media-modal/movie-tv/metadata';
+import MoreLikeThis from '@/components/media-modal/movie-tv/more-like-this';
+import Overlay from '@/components/media-modal/movie-tv/overlay';
+import Trailers from '@/components/media-modal/movie-tv/trailers';
 import {
   BackdropSkeleton,
   HeadshotsSkeleton,
