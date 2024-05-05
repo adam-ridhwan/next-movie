@@ -10,6 +10,7 @@ import {
   Actors,
   Genres,
   Keywords,
+  ReleaseDate,
 } from '@/components/media-modal/movie-tv/metadata';
 import MoreLikeThis from '@/components/media-modal/movie-tv/more-like-this';
 import Overlay from '@/components/media-modal/movie-tv/overlay';
@@ -47,6 +48,7 @@ const MovieTvModal = ({ mediaType, mediaId }: MediaModalProps) => (
             <Actors mediaType={mediaType} id={mediaId} />
             <Genres mediaType={mediaType} id={mediaId} />
             <Keywords mediaType={mediaType} id={mediaId} />
+            <ReleaseDate mediaType={mediaType} id={mediaId} />
           </Suspense>
         </div>
       </div>

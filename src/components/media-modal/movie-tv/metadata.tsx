@@ -10,7 +10,7 @@ import {
   KeywordsMovieResponse,
   KeywordsTvResponse,
 } from '@/types/tmdb-types';
-import { capitalize, isMovie } from '@/lib/utils';
+import { capitalize, extractYear, isMovie, isMovieDetails } from '@/lib/utils';
 
 export async function Actors({ mediaType, id }: ContentRouteParams) {
   try {
@@ -81,13 +81,38 @@ export async function Keywords({ mediaType, id }: ContentRouteParams) {
   }
 }
 
-export function Metadata({
-  label,
-  metadata,
-}: {
+export async function ReleaseDate({ mediaType, id }: ContentRouteParams) {
+  try {
+    const details = await fetchTMDB({ mediaType, id, category: 'details' });
+    const schema =
+      mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
+
+    const { success, data, error } = schema.safeParse(details);
+    if (!success) {
+      throw new Error(
+        `ReleaseDate() Invalid ${mediaType} schema: ${error.message}`
+      );
+    }
+
+    const releaseDate = isMovieDetails(data)
+      ? data.release_date
+      : data.first_air_date;
+    if (!releaseDate) return null;
+
+    return (
+      <Metadata label='Release Year' metadata={[extractYear(releaseDate)]} />
+    );
+  } catch (err) {
+    redirect(ErrorPage());
+  }
+}
+
+type MetadataProps = {
   label: string;
   metadata: Array<string>;
-}) {
+};
+
+export function Metadata({ label, metadata }: MetadataProps) {
   if (!metadata.length) return null;
 
   return (
