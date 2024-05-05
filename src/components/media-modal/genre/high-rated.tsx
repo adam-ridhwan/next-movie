@@ -22,15 +22,12 @@ type SpotlightProps = {
 };
 
 const getParams = (mediaType: MediaType, genreId: GenreId): FetchTMDBParams => {
-  const currentDate = new Date().toLocaleDateString('en-CA');
-
   if (mediaType === 'movie' && isMovieGenreId(genreId)) {
     return {
       category: 'discover',
-      primary_release_date_gte: '2024-01-01',
-      primary_release_date_lte: currentDate,
       mediaType: 'movie',
-      page: 2,
+      vote_average_gte: 8,
+      page: 1,
       genreId,
     };
   }
@@ -38,15 +35,14 @@ const getParams = (mediaType: MediaType, genreId: GenreId): FetchTMDBParams => {
   if (mediaType === 'tv' && isTvGenreId(genreId)) {
     return {
       category: 'discover',
-      first_air_date_gte: '2024-01-01',
-      first_air_date_lte: currentDate,
       mediaType: 'tv',
-      page: 2,
+      vote_average_gte: 8,
+      page: 1,
       genreId,
     };
   }
 
-  throw new Error('getFetchTMDBParamsNew(): Invalid genreId');
+  throw new Error('NewMovieTv(): Invalid params');
 };
 
 const NewMovieTv = async ({ slug, mediaType, genreId }: SpotlightProps) => {
@@ -60,7 +56,7 @@ const NewMovieTv = async ({ slug, mediaType, genreId }: SpotlightProps) => {
       section={mediaType}
     >
       <Slider
-        headerTitle={`New ${deslugify(slug)} ${capitalizeMedia(mediaType)}`}
+        headerTitle={`High Rated ${deslugify(slug)} ${capitalizeMedia(mediaType)}`}
       />
     </SliderProvider>
   );

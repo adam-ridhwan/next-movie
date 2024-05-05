@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { GenreId, GenreSlug, MediaType } from '@/types/global-types';
+import HighRated from '@/components/media-modal/genre/high-rated';
 import NewMovieTv from '@/components/media-modal/genre/new';
 import Spotlight from '@/components/media-modal/genre/spotlight';
 import MediaModal from '@/components/media-modal/media-modal';
@@ -30,6 +31,10 @@ const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
 
           <Suspense>
             <NewMovieTv slug={slug} mediaType={mediaType} genreId={genreId} />
+          </Suspense>
+
+          <Suspense>
+            <HighRated slug={slug} mediaType={mediaType} genreId={genreId} />
           </Suspense>
         </div>
       </MediaModal>

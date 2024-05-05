@@ -186,6 +186,8 @@ export type DiscoverProps = {
   category: typeof Category.enum.discover;
   page?: number;
   language?: string;
+  vote_average_gte?: number;
+  vote_average_lte?: number;
 } & (DiscoverMovieProps | DiscoverTvProps);
 
 type SearchProps = {

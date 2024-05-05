@@ -21,6 +21,11 @@ const createUrl = (params: FetchTMDBParams): string => {
       url.searchParams.append('page', params.page?.toString() || '1');
       url.searchParams.append('with_original_language', 'en');
       url.searchParams.append('sort_by', 'popularity.desc');
+      url.searchParams.append('with_origin_country', 'US');
+      url.searchParams.append(
+        'vote_average.gte',
+        params.vote_average_gte?.toString() || '0'
+      );
 
       if (
         params.mediaType === 'movie' &&
