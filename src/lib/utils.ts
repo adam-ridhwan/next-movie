@@ -144,6 +144,7 @@ export const isMovie = <ZMovie, ZTv>(
   return mediaType === 'movie';
 };
 
+// TODO: use __typename to determine mediaType
 export const isMovieGenreId = (genreId: GenreId): genreId is MovieGenreId => {
   return genreId in MOVIE_GENRES;
 };

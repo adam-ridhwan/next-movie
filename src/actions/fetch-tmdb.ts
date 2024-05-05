@@ -19,11 +19,44 @@ const createUrl = (params: FetchTMDBParams): string => {
       const url = new URL(`${BASE_URL}/${params.category}/${params.mediaType}`);
       url.searchParams.append('with_genres', params.genreId.toString() || '28');
       url.searchParams.append('page', params.page?.toString() || '1');
-      url.searchParams.append('with_original_language', params.language || 'en');
+      url.searchParams.append('with_original_language', 'en');
+      url.searchParams.append('sort_by', 'popularity.desc');
+
+      if (
+        params.mediaType === 'movie' &&
+        params.primary_release_date_gte &&
+        params.primary_release_date_lte
+      ) {
+        url.searchParams.append(
+          'primary_release_date.gte',
+          params.primary_release_date_gte
+        );
+        url.searchParams.append(
+          'primary_release_date.lte',
+          params.primary_release_date_lte
+        );
+      }
+
+      if (
+        params.mediaType === 'tv' &&
+        params.first_air_date_gte &&
+        params.first_air_date_lte
+      ) {
+        url.searchParams.append(
+          'first_air_date.gte',
+          params.first_air_date_gte
+        );
+        url.searchParams.append(
+          'first_air_date.lte',
+          params.first_air_date_lte
+        );
+      }
+
       return url.href;
     }
 
     case 'search': {
+      1;
       const url = new URL(`${BASE_URL}/${params.category}/${params.mediaType}`);
       url.searchParams.append('query', params.q);
       url.searchParams.append('include_adult', 'false');
@@ -49,10 +82,10 @@ const createUrl = (params: FetchTMDBParams): string => {
 };
 
 export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
-  const url = createUrl(params);
-  if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
-
   try {
+    const url = createUrl(params);
+    if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
+
     const options = {
       method: 'GET',
       headers: {

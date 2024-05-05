@@ -170,19 +170,21 @@ type CategoryWithoutIdProps = {
 export type DiscoverMovieProps = {
   mediaType: typeof MediaType.enum.movie;
   genreId: MovieGenreId;
+  primary_release_date_gte?: string;
+  primary_release_date_lte?: string;
 };
 
 export type DiscoverTvProps = {
   mediaType: typeof MediaType.enum.tv;
   genreId: TvGenreId;
+  first_air_date_gte?: string;
+  first_air_date_lte?: string;
 };
 
 export type DiscoverProps = {
   category: typeof Category.enum.discover;
   page?: number;
   language?: string;
-  release_date_gte?: string;
-  release_date_lte?: string;
 } & (DiscoverMovieProps | DiscoverTvProps);
 
 type SearchProps = {

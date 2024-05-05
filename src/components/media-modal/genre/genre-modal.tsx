@@ -22,15 +22,17 @@ type GenreModalProps = {
 // release_date.lte=2024-05-01
 // -
 
-const getFetchParams = (
+const getFetchTMDBParams = (
   mediaType: MediaType,
   genreId: GenreId
 ): FetchTMDBParams | null => {
+  const currentDate = new Date().toLocaleDateString('en-CA');
+
   if (mediaType === 'movie' && isMovieGenreId(genreId)) {
     return {
       category: 'discover',
-      release_date_gte: '2024-01-01',
-      release_date_lte: '2024-05-01',
+      primary_release_date_gte: '2024-01-01',
+      primary_release_date_lte: currentDate,
       mediaType: 'movie',
       genreId,
     };
@@ -39,8 +41,8 @@ const getFetchParams = (
   if (mediaType === 'tv' && isTvGenreId(genreId)) {
     return {
       category: 'discover',
-      release_date_gte: '2024-01-01',
-      release_date_lte: '2024-05-01',
+      first_air_date_gte: '2024-01-01',
+      first_air_date_lte: currentDate,
       mediaType: 'tv',
       genreId,
     };
@@ -50,8 +52,10 @@ const getFetchParams = (
 };
 
 const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
-  const params = getFetchParams(mediaType, genreId);
-  const newMedia = params ? await fetchTMDB(params) : null;
+  const params = getFetchTMDBParams(mediaType, genreId);
+  if (!params) throw new Error('getFetchTMDBParams(): Invalid genreId');
+
+  const releasedThisYear = await fetchTMDB(params);
 
   return (
     <>
