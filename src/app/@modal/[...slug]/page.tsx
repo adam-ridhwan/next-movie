@@ -53,10 +53,12 @@ const MediaModalPage = async ({ params }: MediaPageProps) => {
   if (parsedGenreSlug.success) {
     const [genre, mediaType] = extractGenreMediaTypeSlugs(parsedGenreSlug.data);
 
-    const id = getGenreIdBySlug(genre, mediaType);
-    if (!id) redirect(ErrorPage());
+    const genreIdSlug = getGenreIdBySlug(genre, mediaType);
+    if (!genreIdSlug) redirect(ErrorPage());
 
-    return <GenreModal slug={genre} genreId={id} />;
+    return (
+      <GenreModal mediaType={mediaType} slug={genre} genreId={genreIdSlug} />
+    );
   }
 };
 export default MediaModalPage;
