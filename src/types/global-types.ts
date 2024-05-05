@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { KeyOf, KeysOfValue, Prettify, ValueOf } from '@/lib/utils';
+import { KeyOf, Prettify, ValueOf } from '@/lib/utils';
 
 export type TODO = any;
 
@@ -14,8 +14,6 @@ export const NAV_ROUTES = {
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
 export const MediaType = z.enum(['movie', 'tv'] as const);
-
-export const MainRoute = z.enum(['home', 'movies', 'tv', 'search'] as const);
 
 export const GenreSlug = z.string().refine(
   slug => {
@@ -45,6 +43,7 @@ const Section = z.enum([
   'bonus',
   'cast',
   'genre',
+  'spotlight',
 ] as const);
 
 const Category = z.enum([
@@ -169,19 +168,26 @@ type CategoryWithoutIdProps = {
   category: typeof Category.enum.popular | typeof Category.enum.trending;
 };
 
-type DiscoverMovieProps = {
+export type DiscoverMovieProps = {
   mediaType: typeof MediaType.enum.movie;
   genreId: MovieGenreId;
-};
-type DiscoverTvProps = {
-  mediaType: typeof MediaType.enum.tv;
-  genreId: TvGenreId;
+  primary_release_date_gte?: string;
+  primary_release_date_lte?: string;
 };
 
-type DiscoverProps = {
+export type DiscoverTvProps = {
+  mediaType: typeof MediaType.enum.tv;
+  genreId: TvGenreId;
+  first_air_date_gte?: string;
+  first_air_date_lte?: string;
+};
+
+export type DiscoverProps = {
   category: typeof Category.enum.discover;
   page?: number;
   language?: string;
+  vote_average_gte?: number;
+  vote_average_lte?: number;
 } & (DiscoverMovieProps | DiscoverTvProps);
 
 type SearchProps = {

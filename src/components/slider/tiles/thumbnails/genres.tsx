@@ -16,7 +16,7 @@ const GenresThumbnail = ({ tile, isVisible }: GenresThumbnailProps) => (
     scroll={false}
     tabIndex={isVisible ? 0 : -1}
   >
-    <div className='group relative mb-4 flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-black/50 shadow-tileShadow '>
+    <div className='group relative mb-4 flex aspect-square flex-col justify-end overflow-hidden rounded-2xl bg-black/50 shadow-tileShadow sm:aspect-video '>
       <HeadingMedium className='z-40 select-none p-6 text-primary'>
         {deslugify(tile.slug)}
       </HeadingMedium>

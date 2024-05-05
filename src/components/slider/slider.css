@@ -9,14 +9,15 @@
 }
 
 .slider-tile {
-  padding-inline: 0.5%;
+  padding-inline: min(2%, 6px);
 }
 
 .slider-tile--movie,
 .slider-tile--tv,
 .slider-tile--trailer,
 .slider-tile--bonus,
-.slider-tile--genre {
+.slider-tile--genre,
+.slider-tile--spotlight {
   min-width: var(--2-tiles);
   max-width: var(--2-tiles);
 }
@@ -33,7 +34,8 @@
   }
 
   .slider-tile--movie,
-  .slider-tile--tv {
+  .slider-tile--tv,
+  .slider-tile--spotlight {
     min-width: var(--3-tiles);
     max-width: var(--3-tiles);
   }
@@ -55,7 +57,8 @@
   .slider-tile--tv,
   .slider-tile--trailer,
   .slider-tile--bonus,
-  .slider-tile--genre {
+  .slider-tile--genre,
+  .slider-tile--spotlight {
     min-width: var(--3-tiles);
     max-width: var(--3-tiles);
   }
@@ -71,7 +74,8 @@
   .slider-tile--tv,
   .slider-tile--trailer,
   .slider-tile--bonus,
-  .slider-tile--genre{
+  .slider-tile--genre,
+  .slider-tile--spotlight {
     min-width: var(--4-tiles);
     max-width: var(--4-tiles);
   }
@@ -87,7 +91,8 @@
   .slider-tile--tv,
   .slider-tile--trailer,
   .slider-tile--bonus,
-  .slider-tile--genre{
+  .slider-tile--genre,
+  .slider-tile--spotlight {
     min-width: var(--5-tiles);
     max-width: var(--5-tiles);
   }

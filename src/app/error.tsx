@@ -6,7 +6,11 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { HeadingLarge } from '@/components/fonts';
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+type ErrorProps = {
+  reset: () => void;
+};
+
+export default function Error({ reset }: ErrorProps) {
   const router = useRouter();
 
   const refreshAndReset = () => {
@@ -17,7 +21,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   };
 
   return (
-    <div className='flex h-full flex-col items-center justify-center gap-8 pt-20'>
+    <div className='flex h-full flex-col items-center justify-center gap-8 pt-32'>
       <HeadingLarge>Something went wrong!</HeadingLarge>
       <Button className='w-fit' onClick={() => refreshAndReset()}>
         Try again

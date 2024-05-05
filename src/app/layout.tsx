@@ -18,12 +18,41 @@ export const metadata: Metadata = {
   description: 'Imdb clone built with Next.js',
 };
 
-const RootLayout = async ({ children, modal }: { children: ReactNode; modal: ReactNode }) => {
-  const fetchTMDBParams: Array<FetchTMDBParams & { label: string; section: Section }> = [
-    { label: 'Trending: Movies', section: 'movie', category: 'trending', mediaType: 'movie' },
-    { label: 'Trending: TV Shows', section: 'tv', category: 'trending', mediaType: 'tv' },
-    { label: 'Action Movies', section: 'movie', category: 'discover', mediaType: 'movie', genreId: 28 },
-    { label: 'Drama Movies', section: 'movie', category: 'discover', mediaType: 'movie', genreId: 18 },
+type RootLayoutProps = {
+  children: ReactNode;
+  modal: ReactNode;
+};
+
+const RootLayout = async ({ children, modal }: RootLayoutProps) => {
+  const fetchTMDBParams: Array<
+    FetchTMDBParams & { label: string; section: Section }
+  > = [
+    {
+      label: 'Trending: Movies',
+      section: 'movie',
+      category: 'trending',
+      mediaType: 'movie',
+    },
+    {
+      label: 'Trending: TV Shows',
+      section: 'tv',
+      category: 'trending',
+      mediaType: 'tv',
+    },
+    {
+      label: 'Action Movies',
+      section: 'movie',
+      category: 'discover',
+      mediaType: 'movie',
+      genreId: 28,
+    },
+    {
+      label: 'Drama Movies',
+      section: 'movie',
+      category: 'discover',
+      mediaType: 'movie',
+      genreId: 18,
+    },
   ];
 
   const homepageContent = await Promise.all(
@@ -33,7 +62,9 @@ const RootLayout = async ({ children, modal }: { children: ReactNode; modal: Rea
 
       const { success, data, error } = schema.safeParse(media);
       if (!success)
-        throw new Error(`RootLayout() Invalid homepageContent ${params.mediaType}: ${error.message}`);
+        throw new Error(
+          `RootLayout() Invalid homepageContent ${params.mediaType}: ${error.message}`
+        );
 
       return {
         ...params,
@@ -42,15 +73,26 @@ const RootLayout = async ({ children, modal }: { children: ReactNode; modal: Rea
     })
   );
 
-  const epicStageContent = await fetchTMDB({ mediaType: 'movie', category: 'popular' });
+  const epicStageContent = await fetchTMDB({
+    mediaType: 'movie',
+    category: 'popular',
+  });
   const { success, data, error } = MovieResponse.safeParse(epicStageContent);
-  if (!success) throw new Error(`RootLayout() Invalid epicStageContent: ${error.message}`);
+  if (!success)
+    throw new Error(`RootLayout() Invalid epicStageContent: ${error.message}`);
 
   return (
     <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
-      <body className={cn(`${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`)}>
+      <body
+        className={cn(
+          `${inter.className} dark flex flex-col overflow-x-hidden bg-appBackground`
+        )}
+      >
         <main className='flex flex-col overflow-x-hidden'>
-          <Providers homepageContent={homepageContent} epicStageContent={data.results}>
+          <Providers
+            homepageContent={homepageContent}
+            epicStageContent={data.results}
+          >
             <NavBar />
             <div className='container min-h-[100dvh] flex-1'>
               {children}
