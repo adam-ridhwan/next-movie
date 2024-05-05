@@ -16,7 +16,7 @@ import {
   TV_GENRES,
   TvGenreId,
 } from '@/types/global-types';
-import { DetailsMovieResponse } from '@/types/tmdb-types';
+import { DetailsMovieResponse, DetailsTvResponse } from '@/types/tmdb-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -159,8 +159,10 @@ export const isTvGenreId = (genreId: any): genreId is TvGenreId => {
   return genreId in TV_GENRES;
 };
 
-export const isMovieDetails = (data: TODO): data is DetailsMovieResponse => {
-  return data.__typename === 'DetailsMovieResponse';
+export const isMovieDetails = (
+  data: DetailsMovieResponse | DetailsTvResponse
+): data is DetailsMovieResponse => {
+  return data.hasOwnProperty('release_date');
 };
 
 export const isValidRoute = (route: string): route is NavRoute => {

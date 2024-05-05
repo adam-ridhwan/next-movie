@@ -99,9 +99,7 @@ export async function ReleaseDate({ mediaType, id }: ContentRouteParams) {
       : data.first_air_date;
     if (!releaseDate) return null;
 
-    return (
-      <Metadata label='Release Year' metadata={[extractYear(releaseDate)]} />
-    );
+    return <Metadata label='Released' metadata={[extractYear(releaseDate)]} />;
   } catch (err) {
     redirect(ErrorPage());
   }

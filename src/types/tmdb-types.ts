@@ -111,7 +111,6 @@ const BaseDetails = z.object({
 });
 
 export const DetailsMovieResponse = BaseDetails.extend({
-  __typename: z.enum(['DetailsMovieResponse']).optional(),
   title: z.string().nullable(),
   original_title: z.string().nullable(),
   belongs_to_collection: z
@@ -130,7 +129,6 @@ export const DetailsMovieResponse = BaseDetails.extend({
 });
 
 export const DetailsTvResponse = BaseDetails.extend({
-  __typename: z.enum(['DetailsTvResponse']).optional(),
   name: z.string().nullable(),
   original_name: z.string().nullable(),
   first_air_date: z.string().nullable(),
