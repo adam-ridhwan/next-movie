@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { KeyOf, KeysOfValue, Prettify, ValueOf } from '@/lib/utils';
+import { KeyOf, Prettify, ValueOf } from '@/lib/utils';
 
 export type TODO = any;
 
@@ -14,8 +14,6 @@ export const NAV_ROUTES = {
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 
 export const MediaType = z.enum(['movie', 'tv'] as const);
-
-export const MainRoute = z.enum(['home', 'movies', 'tv', 'search'] as const);
 
 export const GenreSlug = z.string().refine(
   slug => {
@@ -169,19 +167,22 @@ type CategoryWithoutIdProps = {
   category: typeof Category.enum.popular | typeof Category.enum.trending;
 };
 
-type DiscoverMovieProps = {
+export type DiscoverMovieProps = {
   mediaType: typeof MediaType.enum.movie;
   genreId: MovieGenreId;
 };
-type DiscoverTvProps = {
+
+export type DiscoverTvProps = {
   mediaType: typeof MediaType.enum.tv;
   genreId: TvGenreId;
 };
 
-type DiscoverProps = {
+export type DiscoverProps = {
   category: typeof Category.enum.discover;
   page?: number;
   language?: string;
+  release_date_gte?: string;
+  release_date_lte?: string;
 } & (DiscoverMovieProps | DiscoverTvProps);
 
 type SearchProps = {
