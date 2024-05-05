@@ -9,7 +9,7 @@
 }
 
 .slider-tile {
-  padding-inline: 0.5%;
+  padding-inline: min(2%, 6px);
 }
 
 .slider-tile--movie,

@@ -22,7 +22,7 @@ const Slider = ({ headerTitle }: SliderProps) => {
   useResizeWindow();
 
   return (
-    <div className='group/slider flex flex-col pt-10'>
+    <div className='group/slider flex flex-col'>
       <MediaHeader>{headerTitle}</MediaHeader>
 
       <div className='relative flex w-full flex-row'>

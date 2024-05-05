@@ -1,21 +1,10 @@
-import { fetchTMDB } from '@/actions/fetch-tmdb';
-import { SliderProvider } from '@/providers/slider/slider-provider';
+import { Suspense } from 'react';
 
-import {
-  FetchTMDBParams,
-  GenreId,
-  GenreSlug,
-  MediaType,
-} from '@/types/global-types';
-import {
-  capitalizeMedia,
-  deslugify,
-  isMovieGenreId,
-  isTvGenreId,
-} from '@/lib/utils';
+import { GenreId, GenreSlug, MediaType } from '@/types/global-types';
+import NewMovieTv from '@/components/media-modal/genre/new';
+import Spotlight from '@/components/media-modal/genre/spotlight';
 import MediaModal from '@/components/media-modal/media-modal';
 import Overlay from '@/components/media-modal/movie-tv/overlay';
-import Slider from '@/components/slider/slider';
 
 type GenreModalProps = {
   slug: GenreSlug;
@@ -29,54 +18,21 @@ type GenreModalProps = {
 // release_date.lte=2024-05-01
 // -
 
-const getFetchTMDBParams = (
-  mediaType: MediaType,
-  genreId: GenreId
-): FetchTMDBParams | null => {
-  const currentDate = new Date().toLocaleDateString('en-CA');
-
-  if (mediaType === 'movie' && isMovieGenreId(genreId)) {
-    return {
-      category: 'discover',
-      primary_release_date_gte: '2024-01-01',
-      primary_release_date_lte: currentDate,
-      mediaType: 'movie',
-      genreId,
-    };
-  }
-
-  if (mediaType === 'tv' && isTvGenreId(genreId)) {
-    return {
-      category: 'discover',
-      first_air_date_gte: '2024-01-01',
-      first_air_date_lte: currentDate,
-      mediaType: 'tv',
-      genreId,
-    };
-  }
-
-  return null;
-};
-
 const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
-  const params = getFetchTMDBParams(mediaType, genreId);
-  if (!params) throw new Error('getFetchTMDBParams(): Invalid genreId');
-
-  const releasedThisYear = await fetchTMDB(params);
-
+  console.log('mediaType', mediaType); // 244744
   return (
     <>
       <Overlay />
       <MediaModal>
-        <SliderProvider
-          content={releasedThisYear.results}
-          mediaType={mediaType}
-          section='spotlight'
-        >
-          <Slider
-            headerTitle={`${deslugify(slug)} ${capitalizeMedia(mediaType)} released this year`}
-          />
-        </SliderProvider>
+        <div className='pt-10'>
+          <Suspense>
+            <Spotlight slug={slug} mediaType={mediaType} genreId={genreId} />
+          </Suspense>
+
+          <Suspense>
+            <NewMovieTv slug={slug} mediaType={mediaType} genreId={genreId} />
+          </Suspense>
+        </div>
       </MediaModal>
     </>
   );
