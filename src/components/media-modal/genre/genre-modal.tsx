@@ -19,7 +19,6 @@ type GenreModalProps = {
 // -
 
 const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
-  console.log('mediaType', mediaType); // 244744
   return (
     <>
       <Overlay />
