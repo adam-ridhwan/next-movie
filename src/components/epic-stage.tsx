@@ -5,7 +5,7 @@ import { Dot, Info } from 'lucide-react';
 
 import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
-import { isMovie, isNullish } from '@/lib/utils';
+import { deslugify, isMovie, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
@@ -19,15 +19,11 @@ const EpicStage = () => {
     ? isNullish(firstResult.title, firstResult.original_title)
     : isNullish(firstResult.name, firstResult.original_name);
 
-  // prettier-ignore
   const title = isMovieType
     ? isNullish(firstResult.title)
     : isNullish(firstResult.name);
 
-  // prettier-ignore
-  const genresObject = isMovieType
-    ? MOVIE_GENRES
-    : TV_GENRES;
+  const genresObject = isMovieType ? MOVIE_GENRES : TV_GENRES;
 
   const genreIds = firstResult.genre_ids ?? [];
 
@@ -60,15 +56,18 @@ const EpicStage = () => {
           {genreIds.map((genreId: TODO, i: number) => (
             <li key={genreId} className='flex'>
               <BodyMedium className='font-medium text-primary/70'>
-                {/* @ts-expect-error genreid is a number but expecting a literal type */}
-                {genresObject[genreId]}
+                {/*@ts-expect-error genreid is a number but expecting a literal type */}
+                {deslugify(genresObject[genreId])}
               </BodyMedium>
               {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
             </li>
           ))}
         </ul>
 
-        <MediaModal.Link id={firstResult.id.toString()} mediaType='movie'>
+        <MediaModal.Link
+          slug={['movie', firstResult.id.toString()]}
+          scroll={false}
+        >
           <Button className='mt-4 flex w-fit gap-2' size='lg'>
             <Info className='size-5' />
             More Info

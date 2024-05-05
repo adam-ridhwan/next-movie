@@ -1,9 +1,10 @@
 import { z } from 'zod';
 
+import { MediaModalSlug } from '@/types/global-types';
+
 export const Route = {
   name: 'MediaModal',
   params: z.object({
-    mediaType: z.string(),
-    id: z.string(),
+    slug: MediaModalSlug,
   }),
 };

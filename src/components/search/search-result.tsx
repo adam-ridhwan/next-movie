@@ -7,10 +7,21 @@ import useSWR from 'swr';
 import { useDebounceValue } from 'usehooks-ts';
 
 import { MediaType } from '@/types/global-types';
-import { Movie, MovieResponse, SearchResultsResponse, Tv, TvResponse } from '@/types/tmdb-types';
+import {
+  Movie,
+  MovieResponse,
+  SearchResultsResponse,
+  Tv,
+  TvResponse,
+} from '@/types/tmdb-types';
 import { QUERY } from '@/lib/constants';
 import { cn, extractYear, fetcher, isMovie, isNullish } from '@/lib/utils';
-import { BodyMedium, BodySmall, HeadingExtraSmall, HeadingSmall } from '@/components/fonts';
+import {
+  BodyMedium,
+  BodySmall,
+  HeadingExtraSmall,
+  HeadingSmall,
+} from '@/components/fonts';
 
 const SearchResult = () => {
   const searchParams = useSearchParams();
@@ -23,18 +34,32 @@ const SearchResult = () => {
     data: swrData,
     error: swrError,
     isLoading,
-  } = useSWR(debouncedQuery ? `/api/search?q=${encodeURIComponent(debouncedQuery)}` : null, fetcher);
+  } = useSWR(
+    debouncedQuery
+      ? `/api/search?q=${encodeURIComponent(debouncedQuery)}`
+      : null,
+    fetcher
+  );
 
   if (isLoading || !swrData) return <></>;
   if (swrError) throw new Error('Failed to load search results');
 
-  const { success, data: mediaData, error } = SearchResultsResponse.safeParse(swrData.data);
-  if (!success) throw new Error(`SearchResult() Invalid search results schema: ${error.message}`);
+  const {
+    success,
+    data: mediaData,
+    error,
+  } = SearchResultsResponse.safeParse(swrData.data);
+  if (!success)
+    throw new Error(
+      `SearchResult() Invalid search results schema: ${error.message}`
+    );
 
   return (
-    <div className='px-custom flex flex-col gap-8 pt-24'>
+    <div className='flex flex-col gap-8 px-custom pt-24'>
       <div className='flex flex-row gap-2'>
-        <HeadingSmall className='text-muted-foreground'>Search result for: </HeadingSmall>
+        <HeadingSmall className='text-muted-foreground'>
+          Search results for:
+        </HeadingSmall>
         <HeadingSmall>{query}</HeadingSmall>
       </div>
 
@@ -100,7 +125,9 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
             </>
           ) : (
             <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
-              <HeadingExtraSmall className='line-clamp-2'>{title}</HeadingExtraSmall>
+              <HeadingExtraSmall className='line-clamp-2'>
+                {title}
+              </HeadingExtraSmall>
             </div>
           )}
         </div>
@@ -108,7 +135,9 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
         <div className='pt-3 max-sm:hidden'>
           <div className='flex flex-col'>
             <BodyMedium className='line-clamp-1'>{title}</BodyMedium>
-            <BodySmall className='line-clamp-1'>{extractYear(releaseDate)}</BodySmall>
+            <BodySmall className='line-clamp-1'>
+              {extractYear(releaseDate)}
+            </BodySmall>
           </div>
         </div>
       </div>

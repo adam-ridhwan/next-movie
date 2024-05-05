@@ -11,6 +11,7 @@ import '../slider.css';
 import { forwardRef } from 'react';
 
 import { useAnimation } from '@/hooks/use-animation';
+import GenresThumbnail from '@/components/slider/tiles/thumbnails/genres';
 import { TvThumbnail } from '@/components/slider/tiles/thumbnails/tv-thumbnail';
 
 type TileItemProps = {
@@ -40,6 +41,7 @@ const TileItem = forwardRef<HTMLDivElement, TileItemProps>(({ tile, i }, ref) =>
 
   const thumbnailBaseStyles = {
     'slider-tile--movie': section === 'movie',
+    'slider-tile--genre': section === 'genre',
     'slider-tile--tv': section === 'tv',
     'slider-tile--trailer': section === 'trailer',
     'slider-tile--bonus': section === 'bonus',
@@ -76,6 +78,9 @@ const ThumbnailSelector = ({ section, tile, isVisible }: ThumbnailSelectorProps)
 
     case 'cast':
       return <CastThumbnail tile={tile} isVisible={isVisible} />;
+
+    case 'genre':
+      return <GenresThumbnail tile={tile} isVisible={isVisible} />;
 
     default:
       return <></>;

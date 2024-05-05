@@ -29,9 +29,9 @@ const TileContainer = () => {
         )}
         style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
       >
-        {tilesToRender.map((tile, i) => {
-          return <TileItem key={tile?.uuid || i} ref={i === 0 ? tileItemRef : undefined} tile={tile} i={i} />;
-        })}
+        {tilesToRender.map((tile, i) => (
+          <TileItem key={tile?.uuid || i} ref={i === 0 ? tileItemRef : undefined} tile={tile} i={i} />
+        ))}
       </div>
 
       {/* Mobile */}

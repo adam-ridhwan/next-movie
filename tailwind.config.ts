@@ -59,7 +59,7 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
         white: 'hsl(0, 0%, 100%)',
-        red: 'hsl(0, 97%, 63%)',
+        red: 'hsl(0, 97%, 60%)',
         appBackground: 'hsl(0, 0%, 15%)',
         darkBlue: 'hsl(223, 23%, 46%)',
         darkerBlue: 'hsl(223, 36%, 14%)',
