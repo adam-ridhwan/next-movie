@@ -8,6 +8,7 @@ import { HeadingLarge, HeadingMedium } from '@/components/fonts';
 
 const Error = () => {
   const { replace } = useRouter();
+
   return (
     <div className='flex h-full flex-col items-center justify-center gap-6 pt-32'>
       <HeadingLarge className='text-[40px] font-thin text-primary'>
