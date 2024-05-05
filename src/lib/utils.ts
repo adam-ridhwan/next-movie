@@ -9,15 +9,18 @@ import {
   GenreSlug,
   MediaType,
   MOVIE_GENRES,
+  MovieGenreId,
   NAV_ROUTES,
   NavRoute,
   TV_GENRES,
+  TvGenreId,
 } from '@/types/global-types';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-export const wait = (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
+export const wait = (ms: number): Promise<void> => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
 
 export const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -46,12 +49,13 @@ export const extractYear = (dateString: string | undefined): string => {
   return match ? match[0] : '-';
 };
 
-export const extractInitials = (name: string): string =>
-  name
+export const extractInitials = (name: string): string => {
+  return name
     .split(' ')
     .map(n => n[0])
     .slice(0, 2)
     .join('');
+};
 
 export const getGenreIdBySlug = (
   value: GenreSlug,
@@ -61,8 +65,8 @@ export const getGenreIdBySlug = (
   return objectKeys(genreObj).find(key => genreObj[key] === value);
 };
 
-const objectKeys = <Obj extends object>(obj: Obj): (keyof Obj)[] => {
-  return Object.keys(obj) as (keyof Obj)[];
+const objectKeys = <TObj extends object>(obj: TObj): (keyof TObj)[] => {
+  return Object.keys(obj) as (keyof TObj)[];
 };
 
 export const extractGenreMediaTypeSlugs = (
@@ -140,15 +144,19 @@ export const isMovie = <ZMovie, ZTv>(
   return mediaType === 'movie';
 };
 
+export const isMovieGenreId = (genreId: GenreId): genreId is MovieGenreId => {
+  return genreId in MOVIE_GENRES;
+};
+
+export const isTvGenreId = (genreId: any): genreId is TvGenreId => {
+  return genreId in TV_GENRES;
+};
+
 export const isValidRoute = (route: string): route is NavRoute => {
   return (
     Object.values(NAV_ROUTES).find(navRoute => navRoute === route) !== undefined
   );
 };
-
-// export const isValidGenreSlug = (slug: string): slug is GenreSlug => {
-//   return Genre.safeParse(slug).success;
-// };
 
 export const slugify = (...args: string[]) => {
   return args
