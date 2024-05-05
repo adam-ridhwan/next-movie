@@ -29,6 +29,8 @@ export const HomepageProvider = ({
 
 export const useHomepageStore = () => {
   const context = useContext(HomepageContext);
-  if (!context) throw new Error('useHomepageStore must be used within a HomepageProvider');
+  if (!context) {
+    throw new Error('useHomepageStore must be used within a HomepageProvider');
+  }
   return context;
 };
