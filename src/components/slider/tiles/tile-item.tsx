@@ -13,6 +13,8 @@ import { TvThumbnail } from '@/components/slider/tiles/thumbnails/tv-thumbnail';
 
 import '../slider.css';
 
+import { SpotlightThumbnail } from '@/components/slider/tiles/thumbnails/spotlight-thumbnail';
+
 type TileItemProps = {
   tile: TODO;
   i: number;
@@ -49,6 +51,7 @@ const TileItem = forwardRef<HTMLDivElement, TileItemProps>(
       'slider-tile--trailer': section === 'trailer',
       'slider-tile--bonus': section === 'bonus',
       'slider-tile--cast': section === 'cast',
+      'slider-tile--spotlight': section === 'spotlight',
       'pointer-events-none': isAnimating,
     };
 
@@ -96,6 +99,9 @@ const ThumbnailSelector = ({
 
     case 'genre':
       return <GenresThumbnail tile={tile} isVisible={isVisible} />;
+
+    case 'spotlight':
+      return <SpotlightThumbnail tile={tile} isVisible={isVisible} />;
 
     default:
       return null;

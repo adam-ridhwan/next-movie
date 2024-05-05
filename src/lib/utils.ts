@@ -41,6 +41,10 @@ export const capitalize = (str: string): string => {
   return words.join(' ');
 };
 
+export const capitalizeMedia = (mediaType: MediaType): string => {
+  return mediaType === 'movie' ? 'Movies' : 'TV Shows';
+};
+
 export const extractYear = (dateString: string | undefined): string => {
   if (typeof dateString !== 'string') return '-';
 

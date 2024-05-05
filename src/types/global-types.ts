@@ -43,6 +43,7 @@ const Section = z.enum([
   'bonus',
   'cast',
   'genre',
+  'spotlight',
 ] as const);
 
 const Category = z.enum([

@@ -10,7 +10,7 @@ import TileItem from '@/components/slider/tiles/tile-item';
 
 const TileContainer = () => {
   const { state: { CONTENT } } = usePagination(); // prettier-ignore
-  const { state: { hasPaginated }, } = usePageUtils(); // prettier-ignore
+  const { state: { hasPaginated } } = usePageUtils(); // prettier-ignore
   const { tilesToRender } = useTiles();
   const { slideAmount } = useSlide();
   const { isAnimating } = useAnimation();
@@ -27,10 +27,19 @@ const TileContainer = () => {
           { 'transition-transform duration-700': isAnimating },
           'max-sm:hidden'
         )}
-        style={{ transform: slideAmount ? `translate3d(${slideAmount}%, 0, 0)` : undefined }}
+        style={{
+          transform: slideAmount
+            ? `translate3d(${slideAmount}%, 0, 0)`
+            : undefined,
+        }}
       >
         {tilesToRender.map((tile, i) => (
-          <TileItem key={tile?.uuid || i} ref={i === 0 ? tileItemRef : undefined} tile={tile} i={i} />
+          <TileItem
+            key={tile?.uuid || i}
+            ref={i === 0 ? tileItemRef : undefined}
+            tile={tile}
+            i={i}
+          />
         ))}
       </div>
 

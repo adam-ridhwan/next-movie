@@ -54,7 +54,7 @@ const MoviesPage = async () => {
   });
 
   return (
-    <div className='pt-16'>
+    <div className='pt-24'>
       <SliderProvider
         key='Genres'
         content={genresArray}

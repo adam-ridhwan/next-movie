@@ -3,6 +3,7 @@
 import { useEffectOnce } from '@/hooks/use-effect-once';
 import { usePagination } from '@/hooks/use-pagination';
 import { useResizeWindow } from '@/hooks/use-resize-window';
+import { Divider } from '@/components/divider';
 import MediaHeader from '@/components/slider/media-header/media-header';
 import PaginateLeftButton from '@/components/slider/paginate-button/paginate-left-button';
 import PaginateRightButton from '@/components/slider/paginate-button/paginate-right-button';
@@ -13,13 +14,15 @@ type SliderProps = {
 };
 
 const Slider = ({ headerTitle }: SliderProps) => {
-  const { actions: { goToFirstPage } } = usePagination(); // prettier-ignore
+  const {
+    actions: { goToFirstPage },
+  } = usePagination();
 
   useEffectOnce(() => goToFirstPage());
   useResizeWindow();
 
   return (
-    <div className='group/slider flex flex-col'>
+    <div className='group/slider flex flex-col pt-10'>
       <MediaHeader>{headerTitle}</MediaHeader>
 
       <div className='relative flex w-full flex-row'>
@@ -27,6 +30,8 @@ const Slider = ({ headerTitle }: SliderProps) => {
         <TileContainer />
         <PaginateRightButton />
       </div>
+
+      <Divider />
     </div>
   );
 };

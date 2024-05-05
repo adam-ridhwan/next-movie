@@ -1,4 +1,5 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
+import { SliderProvider } from '@/providers/slider/slider-provider';
 
 import {
   FetchTMDBParams,
@@ -6,9 +7,15 @@ import {
   GenreSlug,
   MediaType,
 } from '@/types/global-types';
-import { isMovieGenreId, isTvGenreId } from '@/lib/utils';
+import {
+  capitalizeMedia,
+  deslugify,
+  isMovieGenreId,
+  isTvGenreId,
+} from '@/lib/utils';
 import MediaModal from '@/components/media-modal/media-modal';
 import Overlay from '@/components/media-modal/movie-tv/overlay';
+import Slider from '@/components/slider/slider';
 
 type GenreModalProps = {
   slug: GenreSlug;
@@ -61,9 +68,15 @@ const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
     <>
       <Overlay />
       <MediaModal>
-        <div>
-          {slug}:{genreId}
-        </div>
+        <SliderProvider
+          content={releasedThisYear.results}
+          mediaType={mediaType}
+          section='spotlight'
+        >
+          <Slider
+            headerTitle={`${deslugify(slug)} ${capitalizeMedia(mediaType)} released this year`}
+          />
+        </SliderProvider>
       </MediaModal>
     </>
   );
