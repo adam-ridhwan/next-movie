@@ -95,13 +95,10 @@ export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
     };
 
     const response = await fetch(url, options);
-    const json = await response.json();
-    if (!response.ok) {
-      console.error(json);
-      throw new Error(`HTTP error ${response.status}`);
-    }
+    if (!response.ok)
+      throw new Error(`HTTP error ${response.status} ${response}`);
 
-    return json;
+    return await response.json();
   } catch (error) {
     console.error('fetchTMDB', error);
   }

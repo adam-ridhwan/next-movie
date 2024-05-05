@@ -51,7 +51,6 @@ const Spotlight = async ({ slug, mediaType, genreId }: SpotlightProps) => {
   const releasedThisYear: TODO = await fetchTMDB(getParams(mediaType, genreId));
 
   if (!releasedThisYear.results.length) return null;
-  console.log('releasedThisYear', releasedThisYear.results);
 
   return (
     <SliderProvider
