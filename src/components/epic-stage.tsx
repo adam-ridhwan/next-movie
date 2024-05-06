@@ -49,7 +49,7 @@ const EpicStage = () => {
 
       <div className='absolute bottom-0 left-0 right-0 z-10 h-1/2 bg-gradient-to-t from-black' />
 
-      <div className='absolute bottom-0 left-0 z-40 flex flex-col gap-2 p-10'>
+      <div className='absolute bottom-0 left-0 z-40 mx-[0.5%] flex flex-col gap-2 px-custom py-10'>
         <HeadingLarge className='line-clamp-1'>{title}</HeadingLarge>
 
         <ul className='flex flex-row'>
