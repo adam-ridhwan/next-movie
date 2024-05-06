@@ -17,7 +17,9 @@ export async function Label({ mediaType, id }: ContentRouteParams) {
         id,
         category: 'details',
       });
-    } else if (mediaType === 'tv') {
+    }
+
+    if (mediaType === 'tv') {
       details = await fetchTMDB(DetailsTvResponse, {
         mediaType: 'tv',
         id,

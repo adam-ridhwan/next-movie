@@ -5,7 +5,7 @@ import HighRated from '@/components/media-modal/genre/high-rated';
 import NewMovieTv from '@/components/media-modal/genre/new-movie-tv';
 import Spotlight from '@/components/media-modal/genre/spotlight';
 import MediaModal from '@/components/media-modal/media-modal';
-import Overlay from '@/components/media-modal/movie-tv/overlay';
+import Overlay from '@/components/media-modal/overlay';
 
 type GenreModalProps = {
   slug: GenreSlug;

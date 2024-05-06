@@ -1,4 +1,4 @@
-const overlay = () => {
+const Overlay = () => {
   return (
     <div
       className='fixed inset-0 z-50 bg-black/80
@@ -8,4 +8,4 @@ const overlay = () => {
   );
 };
 
-export default overlay;
+export default Overlay;

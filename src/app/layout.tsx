@@ -9,6 +9,7 @@ import Providers from '@/providers/providers';
 import { FetchTMDBParams, Section } from '@/types/global-types';
 import { MovieResponse, TvResponse } from '@/types/tmdb-types';
 import { cn } from '@/lib/utils';
+import Footer from '@/components/footer';
 import NavBar from '@/components/nav-bar';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -60,7 +61,9 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
       if (params.mediaType === 'movie') {
         const { results } = await fetchTMDB(MovieResponse, { ...params });
         return { ...params, results };
-      } else if (params.mediaType === 'tv') {
+      }
+
+      if (params.mediaType === 'tv') {
         const { results } = await fetchTMDB(TvResponse, { ...params });
         return { ...params, results };
       }
@@ -90,8 +93,8 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
               {modal}
             </div>
           </Providers>
-          <footer className='p-10'></footer>
         </main>
+        <Footer />
       </body>
     </html>
   );
