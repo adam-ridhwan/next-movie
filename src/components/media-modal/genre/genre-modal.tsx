@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { GenreId, GenreSlug, MediaType } from '@/types/global-types';
 import HighRated from '@/components/media-modal/genre/high-rated';
-import NewMovieTv from '@/components/media-modal/genre/new';
+import NewMovieTv from '@/components/media-modal/genre/new-movie-tv';
 import Spotlight from '@/components/media-modal/genre/spotlight';
 import MediaModal from '@/components/media-modal/media-modal';
 import Overlay from '@/components/media-modal/movie-tv/overlay';
@@ -24,7 +24,7 @@ const GenreModal = async ({ slug, genreId, mediaType }: GenreModalProps) => {
     <>
       <Overlay />
       <MediaModal>
-        <div className='pt-10'>
+        <div className='pt-14'>
           <Suspense>
             <Spotlight slug={slug} mediaType={mediaType} genreId={genreId} />
           </Suspense>
