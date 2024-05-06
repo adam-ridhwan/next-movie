@@ -92,9 +92,9 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
               {children}
               {modal}
             </div>
+            <Footer />
           </Providers>
         </main>
-        <Footer />
       </body>
     </html>
   );
