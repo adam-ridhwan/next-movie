@@ -9,16 +9,16 @@ import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ mediaType, id }: ContentRouteParams) {
   try {
-    const videos = await fetchTMDB({ mediaType, id, category: 'videos' });
-    const { success, data, error } = VideoResponse.safeParse(videos);
-    if (!success)
-      throw new Error(`Trailers() Invalid videos schema: ${error.message}`);
+    const { results } = await fetchTMDB(VideoResponse, {
+      mediaType,
+      id,
+      category: 'videos',
+    });
 
-    const trailers = data.results.filter(
+    const trailers = results.filter(
       video =>
         video.official && video.type === 'Trailer' && video.site === 'YouTube'
     );
-
     if (!trailers.length) return null;
 
     return (

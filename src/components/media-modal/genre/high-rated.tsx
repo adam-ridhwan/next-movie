@@ -1,12 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import {
-  FetchTMDBParams,
-  GenreId,
-  MediaType,
-  TODO,
-} from '@/types/global-types';
+import { GenreId, MediaType } from '@/types/global-types';
+import { Movie, MovieResponse, Tv, TvResponse } from '@/types/tmdb-types';
 import {
   capitalizeMedia,
   deslugify,
@@ -21,40 +17,41 @@ type SpotlightProps = {
   genreId: GenreId;
 };
 
-const getParams = (mediaType: MediaType, genreId: GenreId): FetchTMDBParams => {
+const fetchMedia = async (
+  mediaType: MediaType,
+  genreId: GenreId
+): Promise<Movie[] | Tv[] | null> => {
   if (mediaType === 'movie' && isMovieGenreId(genreId)) {
-    return {
+    const { results } = await fetchTMDB(MovieResponse, {
       category: 'discover',
       mediaType: 'movie',
       vote_average_gte: 8,
       page: 1,
       genreId,
-    };
+    });
+    return results;
   }
 
   if (mediaType === 'tv' && isTvGenreId(genreId)) {
-    return {
+    const { results } = await fetchTMDB(TvResponse, {
       category: 'discover',
       mediaType: 'tv',
       vote_average_gte: 8,
       page: 1,
       genreId,
-    };
+    });
+    return results;
   }
 
-  throw new Error('NewMovieTv(): Invalid params');
+  return null;
 };
 
 const NewMovieTv = async ({ slug, mediaType, genreId }: SpotlightProps) => {
-  const newMovies: TODO = await fetchTMDB(getParams(mediaType, genreId));
-  if (!newMovies.results.length) return null;
+  const results = await fetchMedia(mediaType, genreId);
+  if (!results || !results.length) return null;
 
   return (
-    <SliderProvider
-      content={newMovies.results}
-      mediaType={mediaType}
-      section={mediaType}
-    >
+    <SliderProvider content={results} mediaType={mediaType} section={mediaType}>
       <Slider
         headerTitle={`High Rated ${deslugify(slug)} ${capitalizeMedia(mediaType)}`}
       />

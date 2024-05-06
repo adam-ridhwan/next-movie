@@ -57,29 +57,20 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
 
   const homepageContent = await Promise.all(
     fetchTMDBParams.map(async params => {
-      const media = await fetchTMDB({ ...params });
-      const schema = params.mediaType === 'movie' ? MovieResponse : TvResponse;
-
-      const { success, data, error } = schema.safeParse(media);
-      if (!success)
-        throw new Error(
-          `RootLayout() Invalid homepageContent ${params.mediaType}: ${error.message}`
-        );
-
-      return {
-        ...params,
-        results: data.results,
-      };
+      if (params.mediaType === 'movie') {
+        const { results } = await fetchTMDB(MovieResponse, { ...params });
+        return { ...params, results };
+      } else if (params.mediaType === 'tv') {
+        const { results } = await fetchTMDB(TvResponse, { ...params });
+        return { ...params, results };
+      }
     })
   );
 
-  const epicStageContent = await fetchTMDB({
+  const { results: epicStageContent } = await fetchTMDB(MovieResponse, {
     mediaType: 'movie',
     category: 'popular',
   });
-  const { success, data, error } = MovieResponse.safeParse(epicStageContent);
-  if (!success)
-    throw new Error(`RootLayout() Invalid epicStageContent: ${error.message}`);
 
   return (
     <html lang='en' className='dark' style={{ colorScheme: 'dark' }}>
@@ -91,7 +82,7 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
         <main className='flex flex-col overflow-x-hidden'>
           <Providers
             homepageContent={homepageContent}
-            epicStageContent={data.results}
+            epicStageContent={epicStageContent}
           >
             <NavBar />
             <div className='container min-h-[100dvh] flex-1'>

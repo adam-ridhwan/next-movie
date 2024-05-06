@@ -16,28 +16,25 @@ export default async function MoreLikeThis({
       { mediaType, id, category: 'recommendations' },
       { mediaType, id, category: 'similar' },
     ];
-    const schema = mediaType === 'movie' ? MovieResponse : TvResponse;
 
     const contentPromises = content.map(async content => {
-      const movieTvs = await fetchTMDB({ ...content });
-
-      const { success, data, error } = schema.safeParse(movieTvs);
-      if (!success)
-        throw new Error(
-          `MoreLikeThis() Invalid ${mediaType} schema: ${error.message}`
-        );
-
-      return {
-        ...content,
-        results: data.results,
-      };
+      if (content.mediaType === 'movie') {
+        const { results } = await fetchTMDB(MovieResponse, { ...content });
+        return { ...content, results };
+      } else if (content.mediaType === 'tv') {
+        const { results } = await fetchTMDB(TvResponse, { ...content });
+        return { ...content, results };
+      }
     });
 
     const [recommendations, similar] = await Promise.all(contentPromises);
+    if (!recommendations || !similar) {
+      throw new Error('No recommendations found');
+    }
+
     const moreLikesThis = recommendations.results.length
       ? recommendations.results
       : similar.results;
-
     if (!moreLikesThis.length) return null;
 
     return (
