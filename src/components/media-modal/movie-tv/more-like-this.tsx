@@ -21,7 +21,9 @@ export default async function MoreLikeThis({
       if (content.mediaType === 'movie') {
         const { results } = await fetchTMDB(MovieResponse, { ...content });
         return { ...content, results };
-      } else if (content.mediaType === 'tv') {
+      }
+
+      if (content.mediaType === 'tv') {
         const { results } = await fetchTMDB(TvResponse, { ...content });
         return { ...content, results };
       }

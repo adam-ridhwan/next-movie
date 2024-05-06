@@ -60,7 +60,9 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
       if (params.mediaType === 'movie') {
         const { results } = await fetchTMDB(MovieResponse, { ...params });
         return { ...params, results };
-      } else if (params.mediaType === 'tv') {
+      }
+
+      if (params.mediaType === 'tv') {
         const { results } = await fetchTMDB(TvResponse, { ...params });
         return { ...params, results };
       }

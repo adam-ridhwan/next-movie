@@ -42,7 +42,9 @@ export async function Genres({ mediaType, id }: ContentRouteParams) {
         id,
         category: 'details',
       });
-    } else if (mediaType === 'tv') {
+    }
+
+    if (mediaType === 'tv') {
       details = await fetchTMDB(DetailsTvResponse, {
         mediaType: 'tv',
         id,
@@ -73,7 +75,9 @@ export async function Keywords({ mediaType, id }: ContentRouteParams) {
         id,
         category: 'keywords',
       });
-    } else if (mediaType === 'tv') {
+    }
+
+    if (mediaType === 'tv') {
       keywordsResponse = await fetchTMDB(KeywordsTvResponse, {
         mediaType: 'tv',
         id,
@@ -111,7 +115,9 @@ export async function ReleaseDate({ mediaType, id }: ContentRouteParams) {
         id,
         category: 'details',
       });
-    } else if (mediaType === 'tv') {
+    }
+
+    if (mediaType === 'tv') {
       details = await fetchTMDB(DetailsTvResponse, {
         mediaType: 'tv',
         id,
