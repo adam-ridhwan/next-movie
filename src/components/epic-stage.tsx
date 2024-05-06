@@ -3,9 +3,9 @@ import { useHomepageStore } from '@/providers/homepage/homepage-provider';
 import { MediaModal } from '@/routes';
 import { Dot, Info } from 'lucide-react';
 
-import { MOVIE_GENRES, TODO, TV_GENRES } from '@/types/global-types';
+import { TODO } from '@/types/global-types';
 import { Movie, Tv } from '@/types/tmdb-types';
-import { deslugify, isMovie, isNullish } from '@/lib/utils';
+import { deslugify, getGenreSlugById, isMovie, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
@@ -22,8 +22,6 @@ const EpicStage = () => {
   const title = isMovieType
     ? isNullish(firstResult.title)
     : isNullish(firstResult.name);
-
-  const genresObject = isMovieType ? MOVIE_GENRES : TV_GENRES;
 
   const genreIds = firstResult.genre_ids ?? [];
 
@@ -56,8 +54,7 @@ const EpicStage = () => {
           {genreIds.map((genreId: TODO, i: number) => (
             <li key={genreId} className='flex'>
               <BodyMedium className='font-medium text-primary/70'>
-                {/*@ts-expect-error genreid is a number but expecting a literal type */}
-                {deslugify(genresObject[genreId])}
+                {deslugify(getGenreSlugById(genreId, 'movie'))}
               </BodyMedium>
               {i < genreIds.length - 1 && <Dot className='text-primary/70' />}
             </li>
