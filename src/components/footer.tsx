@@ -37,16 +37,13 @@ const Footer = () => (
         </a>
       </div>
 
-      <div className='flex h-10 items-center gap-2'>
-        <BodySmall className='text-sm'>Contribute</BodySmall>
-        <a
-          href='https://github.com/adam-ridhwan/next-imdb'
-          target='_blank'
-          rel='noreferrer'
-        >
-          <GithubIcon />
-        </a>
-      </div>
+      <a
+        href='https://github.com/adam-ridhwan/next-imdb'
+        target='_blank'
+        rel='noreferrer'
+      >
+        <GithubIcon />
+      </a>
     </div>
   </footer>
 );
