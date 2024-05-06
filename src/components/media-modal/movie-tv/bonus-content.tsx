@@ -9,15 +9,13 @@ import Slider from '@/components/slider/slider';
 
 export default async function Trailers({ mediaType, id }: ContentRouteParams) {
   try {
-    const videos = await fetchTMDB({ mediaType, id, category: 'videos' });
-    if (!videos) throw new Error('Failed to fetch details');
+    const { results } = await fetchTMDB(VideoResponse, {
+      mediaType,
+      id,
+      category: 'videos',
+    });
 
-    const { success, data, error } = VideoResponse.safeParse(videos);
-    if (!success) {
-      throw new Error(`Trailers() Invalid videos schema: ${error.message}`);
-    }
-
-    const bonusContent = data.results.filter(
+    const bonusContent = results.filter(
       video =>
         video.official &&
         video.type === 'Featurette' &&

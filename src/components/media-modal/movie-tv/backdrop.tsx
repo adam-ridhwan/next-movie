@@ -9,29 +9,35 @@ import { isMovie, isNullish } from '@/lib/utils';
 
 export default async function Backdrop({ mediaType, id }: ContentRouteParams) {
   try {
-    const details = await fetchTMDB({ mediaType, id, category: 'details' });
-    if (!details) throw new Error('Failed to fetch details');
+    let details: DetailsMovieResponse | DetailsTvResponse | null = null;
 
-    const schema =
-      mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
-    const { success, data, error } = schema.safeParse(details);
-    if (!success) {
-      throw new Error(
-        `Backdrop() Invalid ${mediaType} schema: ${error.message}`
-      );
+    if (mediaType === 'movie') {
+      details = await fetchTMDB(DetailsMovieResponse, {
+        mediaType: 'movie',
+        id,
+        category: 'details',
+      });
+    } else if (mediaType === 'tv') {
+      details = await fetchTMDB(DetailsTvResponse, {
+        mediaType: 'tv',
+        id,
+        category: 'details',
+      });
     }
 
+    if (!details) throw new Error('No details found');
+
     const title = isMovie<DetailsMovieResponse, DetailsTvResponse>(
-      data,
+      details,
       mediaType
     )
-      ? isNullish(data.title, data.original_title)
-      : isNullish(data.name, data.original_name);
+      ? isNullish(details.title, details.original_title)
+      : isNullish(details.name, details.original_name);
 
     return (
       <div className='relative aspect-video overflow-hidden rounded-2xl'>
         <Image
-          src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
           alt={title ?? 'Backdrop'}
           priority
           unoptimized

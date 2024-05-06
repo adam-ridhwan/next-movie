@@ -1,12 +1,8 @@
 import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { SliderProvider } from '@/providers/slider/slider-provider';
 
-import {
-  FetchTMDBParams,
-  GenreId,
-  MediaType,
-  TODO,
-} from '@/types/global-types';
+import { GenreId, MediaType } from '@/types/global-types';
+import { Movie, MovieResponse, Tv, TvResponse } from '@/types/tmdb-types';
 import {
   capitalizeMedia,
   deslugify,
@@ -21,43 +17,43 @@ type SpotlightProps = {
   genreId: GenreId;
 };
 
-const getParams = (mediaType: MediaType, genreId: GenreId): FetchTMDBParams => {
+const fetchMedia = async (
+  mediaType: MediaType,
+  genreId: GenreId
+): Promise<Movie[] | Tv[] | null> => {
   const currentDate = new Date().toLocaleDateString('en-CA');
 
   if (mediaType === 'movie' && isMovieGenreId(genreId)) {
-    return {
+    const { results } = await fetchTMDB(MovieResponse, {
       category: 'discover',
       primary_release_date_gte: '2024-01-01',
       primary_release_date_lte: currentDate,
       mediaType: 'movie',
       genreId,
-    };
+    });
+    return results;
   }
 
   if (mediaType === 'tv' && isTvGenreId(genreId)) {
-    return {
+    const { results } = await fetchTMDB(TvResponse, {
       category: 'discover',
       first_air_date_gte: '2024-01-01',
       first_air_date_lte: currentDate,
       mediaType: 'tv',
       genreId,
-    };
+    });
+    return results;
   }
 
-  throw new Error('getFetchTMDBParamsNew(): Invalid genreId');
+  return null;
 };
 
 const Spotlight = async ({ slug, mediaType, genreId }: SpotlightProps) => {
-  const releasedThisYear: TODO = await fetchTMDB(getParams(mediaType, genreId));
-
-  if (!releasedThisYear.results.length) return null;
+  const results = await fetchMedia(mediaType, genreId);
+  if (!results || !results.length) return null;
 
   return (
-    <SliderProvider
-      content={releasedThisYear.results}
-      mediaType={mediaType}
-      section='spotlight'
-    >
+    <SliderProvider content={results} mediaType={mediaType} section='spotlight'>
       <Slider
         headerTitle={`${deslugify(slug)} ${capitalizeMedia(mediaType)} released this year`}
       />

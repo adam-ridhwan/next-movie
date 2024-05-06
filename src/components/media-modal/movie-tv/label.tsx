@@ -9,25 +9,35 @@ import { HeadingLarge } from '@/components/fonts';
 
 export async function Label({ mediaType, id }: ContentRouteParams) {
   try {
-    const details = await fetchTMDB({ mediaType, id, category: 'details' });
+    let details: DetailsMovieResponse | DetailsTvResponse | null = null;
 
-    const schema =
-      mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
-    const { success, data, error } = schema.safeParse(details);
-    if (!success)
-      throw new Error(`Label() Invalid ${mediaType} schema: ${error.message}`);
+    if (mediaType === 'movie') {
+      details = await fetchTMDB(DetailsMovieResponse, {
+        mediaType: 'movie',
+        id,
+        category: 'details',
+      });
+    } else if (mediaType === 'tv') {
+      details = await fetchTMDB(DetailsTvResponse, {
+        mediaType: 'tv',
+        id,
+        category: 'details',
+      });
+    }
+
+    if (!details) throw new Error('No details found');
 
     const title = isMovie<DetailsMovieResponse, DetailsTvResponse>(
-      data,
+      details,
       mediaType
     )
-      ? isNullish(data.title, data.original_title)
-      : isNullish(data.name, data.original_name);
+      ? isNullish(details.title, details.original_title)
+      : isNullish(details.name, details.original_name);
 
     return (
       <>
         <HeadingLarge>{title}</HeadingLarge>
-        <p className=''>{data.overview}</p>
+        <p className=''>{details.overview}</p>
       </>
     );
   } catch (err) {

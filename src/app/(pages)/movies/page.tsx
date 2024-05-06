@@ -35,17 +35,8 @@ const MoviesPage = async () => {
 
   const content = await Promise.all(
     fetchTMDBParams.map(async params => {
-      const media = await fetchTMDB({ ...params });
-      const { success, data, error } = MovieResponse.safeParse(media);
-      if (!success)
-        throw new Error(
-          `MoviesPage() Invalid Movies schema : ${error.message}`
-        );
-
-      return {
-        ...params,
-        results: data.results,
-      };
+      const { results } = await fetchTMDB(MovieResponse, { ...params });
+      return { ...params, results };
     })
   );
 

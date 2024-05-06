@@ -1,5 +1,7 @@
 'use server';
 
+import { Schema } from 'zod';
+
 import { FetchTMDBParams } from '@/types/global-types';
 import { env } from '@/lib/env';
 
@@ -82,14 +84,16 @@ const createUrl = (params: FetchTMDBParams): string => {
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}?language=en-US`;
 
     default:
-      return '';
+      throw new Error('fetchTMDB() Invalid URL configuration');
   }
 };
 
-export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
+export const fetchTMDB = async <T>(
+  schema: Schema<T>,
+  params: FetchTMDBParams
+): Promise<T> => {
   try {
     const url = createUrl(params);
-    if (!url) throw new Error(`fetchTMDB() Invalid URL configuration ${url}`);
 
     const options = {
       method: 'GET',
@@ -100,11 +104,14 @@ export const fetchTMDB = async (params: FetchTMDBParams): Promise<unknown> => {
     };
 
     const response = await fetch(url, options);
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error(`HTTP error ${response.status} ${response}`);
+    }
 
-    return await response.json();
+    const data = await response.json();
+    return schema.parse(data);
   } catch (error) {
-    console.error('fetchTMDB', error);
+    console.error(error);
+    throw new Error('fetchTMDB() failed');
   }
 };

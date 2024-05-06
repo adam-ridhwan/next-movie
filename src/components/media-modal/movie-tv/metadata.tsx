@@ -14,14 +14,13 @@ import { capitalize, extractYear, isMovie, isMovieDetails } from '@/lib/utils';
 
 export async function Actors({ mediaType, id }: ContentRouteParams) {
   try {
-    const credits = await fetchTMDB({ mediaType, id, category: 'credits' });
+    const { cast } = await fetchTMDB(CreditsResponse, {
+      mediaType,
+      id,
+      category: 'credits',
+    });
 
-    const { success, data, error } = CreditsResponse.safeParse(credits);
-    if (!success)
-      throw new Error(`Actors() Invalid credits schema: ${error.message}`);
-    if (data.cast.length === 0) return null;
-
-    const actors = data.cast
+    const actors = cast
       .filter(({ known_for_department }) => known_for_department === 'Acting')
       .slice(0, 3)
       .map(({ name }) => name ?? '');
@@ -35,16 +34,26 @@ export async function Actors({ mediaType, id }: ContentRouteParams) {
 
 export async function Genres({ mediaType, id }: ContentRouteParams) {
   try {
-    const details = await fetchTMDB({ mediaType, id, category: 'details' });
-    const schema =
-      mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
+    let details: DetailsMovieResponse | DetailsTvResponse | null = null;
 
-    const { success, data, error } = schema.safeParse(details);
-    if (!success)
-      throw new Error(`Genres() Invalid ${mediaType} schema: ${error.message}`);
-    if (!data.genres) return null;
+    if (mediaType === 'movie') {
+      details = await fetchTMDB(DetailsMovieResponse, {
+        mediaType: 'movie',
+        id,
+        category: 'details',
+      });
+    } else if (mediaType === 'tv') {
+      details = await fetchTMDB(DetailsTvResponse, {
+        mediaType: 'tv',
+        id,
+        category: 'details',
+      });
+    }
 
-    const genres = data.genres.map(({ name }) => name).slice(0, 3);
+    if (!details) throw new Error('No details found');
+    if (!details.genres) return null;
+
+    const genres = details.genres.map(({ name }) => name).slice(0, 3);
     if (!genres.length) return null;
 
     return <Metadata label='Genres' metadata={genres} />;
@@ -55,20 +64,31 @@ export async function Genres({ mediaType, id }: ContentRouteParams) {
 
 export async function Keywords({ mediaType, id }: ContentRouteParams) {
   try {
-    const keywords = await fetchTMDB({ mediaType, id, category: 'keywords' });
-    const schema =
-      mediaType === 'movie' ? KeywordsMovieResponse : KeywordsTvResponse;
+    let keywordsResponse: KeywordsMovieResponse | KeywordsTvResponse | null =
+      null;
 
-    const { success, data, error } = schema.safeParse(keywords);
-    if (!success)
-      throw new Error(`Keywords() Invalid keywords schema: ${error.message}`);
+    if (mediaType === 'movie') {
+      keywordsResponse = await fetchTMDB(KeywordsMovieResponse, {
+        mediaType: 'movie',
+        id,
+        category: 'keywords',
+      });
+    } else if (mediaType === 'tv') {
+      keywordsResponse = await fetchTMDB(KeywordsTvResponse, {
+        mediaType: 'tv',
+        id,
+        category: 'keywords',
+      });
+    }
+
+    if (!keywordsResponse) throw new Error('No keywords found');
 
     const parsedKeywords = isMovie<KeywordsMovieResponse, KeywordsTvResponse>(
-      data,
+      keywordsResponse,
       mediaType
     )
-      ? data.keywords
-      : data.results;
+      ? keywordsResponse.keywords
+      : keywordsResponse.results;
     if (!parsedKeywords.length) return null;
 
     const firstThreeKeywords = parsedKeywords
@@ -83,20 +103,28 @@ export async function Keywords({ mediaType, id }: ContentRouteParams) {
 
 export async function ReleaseDate({ mediaType, id }: ContentRouteParams) {
   try {
-    const details = await fetchTMDB({ mediaType, id, category: 'details' });
-    const schema =
-      mediaType === 'movie' ? DetailsMovieResponse : DetailsTvResponse;
+    let details: DetailsMovieResponse | DetailsTvResponse | null = null;
 
-    const { success, data, error } = schema.safeParse(details);
-    if (!success) {
-      throw new Error(
-        `ReleaseDate() Invalid ${mediaType} schema: ${error.message}`
-      );
+    if (mediaType === 'movie') {
+      details = await fetchTMDB(DetailsMovieResponse, {
+        mediaType: 'movie',
+        id,
+        category: 'details',
+      });
+    } else if (mediaType === 'tv') {
+      details = await fetchTMDB(DetailsTvResponse, {
+        mediaType: 'tv',
+        id,
+        category: 'details',
+      });
     }
 
-    const releaseDate = isMovieDetails(data)
-      ? data.release_date
-      : data.first_air_date;
+    if (!details) throw new Error('No details found');
+    if (!details.genres) return null;
+
+    const releaseDate = isMovieDetails(details)
+      ? details.release_date
+      : details.first_air_date;
     if (!releaseDate) return null;
 
     return <Metadata label='Released' metadata={[extractYear(releaseDate)]} />;

@@ -9,19 +9,20 @@ import Slider from '@/components/slider/slider';
 
 export default async function Cast({ id, mediaType }: ContentRouteParams) {
   try {
-    const credits = await fetchTMDB({ mediaType, id, category: 'credits' });
-    const { success, data, error } = CreditsResponse.safeParse(credits);
-    if (!success)
-      throw new Error(`Cast() Invalid credits schema: ${error.message}`);
+    const { cast } = await fetchTMDB(CreditsResponse, {
+      mediaType,
+      id,
+      category: 'credits',
+    });
 
-    const cast = data.cast
+    const actors = cast
       .filter(({ known_for_department }) => known_for_department === 'Acting')
       .slice(0, 15);
 
-    if (!cast.length) return null;
+    if (!actors.length) return null;
 
     return (
-      <SliderProvider content={cast} mediaType={mediaType} section='cast'>
+      <SliderProvider content={actors} mediaType={mediaType} section='cast'>
         <Slider headerTitle='Cast' />
       </SliderProvider>
     );

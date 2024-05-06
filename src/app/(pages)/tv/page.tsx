@@ -35,15 +35,8 @@ const TvPage = async () => {
 
   const content = await Promise.all(
     fetchTMDBParams.map(async params => {
-      const media = await fetchTMDB({ ...params });
-      const { success, data, error } = TvResponse.safeParse(media);
-      if (!success)
-        throw new Error(`TvPage() Invalid Tv schema : ${error.message}`);
-
-      return {
-        ...params,
-        results: data.results,
-      };
+      const { results } = await fetchTMDB(TvResponse, { ...params });
+      return { ...params, results };
     })
   );
 
