@@ -6,10 +6,10 @@ import {
   SearchResultsResponse,
   TvResponse,
 } from '@/types/tmdb-types';
-import { QUERY } from '@/lib/constants';
+import { q } from '@/lib/constants';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const searchParam = request.nextUrl.searchParams.get(QUERY);
+  const searchParam = request.nextUrl.searchParams.get(q);
   if (!searchParam) {
     return NextResponse.json(
       { 'Bad request': 'No search query provided' },
