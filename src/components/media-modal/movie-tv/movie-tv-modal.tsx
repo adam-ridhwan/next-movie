@@ -5,6 +5,7 @@ import MediaModal from '@/components/media-modal/media-modal';
 import Backdrop from '@/components/media-modal/movie-tv/backdrop';
 import BonusContent from '@/components/media-modal/movie-tv/bonus-content';
 import Cast from '@/components/media-modal/movie-tv/cast';
+import ExternalLinks from '@/components/media-modal/movie-tv/external-links';
 import { Label } from '@/components/media-modal/movie-tv/label';
 import {
   Actors,
@@ -37,9 +38,10 @@ const MovieTvModal = ({ mediaType, mediaId }: MediaModalProps) => (
       </Suspense>
 
       <div className='flex flex-col gap-12 px-custom py-4 pb-10 lg:flex-row'>
-        <div className='mx-[0.5%] flex w-full flex-col gap-4 lg:w-3/5'>
+        <div className='mx-[0.5%] flex w-full flex-col gap-6 lg:w-3/5'>
           <Suspense fallback={<OverviewSkeleton />}>
             <Label mediaType={mediaType} id={mediaId} />
+            <ExternalLinks mediaType={mediaType} id={mediaId} />
           </Suspense>
         </div>
 

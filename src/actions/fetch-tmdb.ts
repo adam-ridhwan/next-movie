@@ -12,7 +12,7 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const createUrl = (params: FetchTMDBParams): string => {
   switch (params.category) {
     case 'popular':
-      return `${BASE_URL}/${params.mediaType}/${params.category}`;
+      return `${BASE_URL}/${params.mediaType}/${params.category}?language=en-US&page=1`;
 
     case 'trending':
       return `${BASE_URL}/${params.category}/${params.mediaType}/day`;
@@ -82,6 +82,9 @@ const createUrl = (params: FetchTMDBParams): string => {
     case 'videos':
     case 'images':
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}?language=en-US`;
+
+    case 'external_ids':
+      return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}`;
 
     default:
       throw new Error('fetchTMDB() Invalid URL configuration');

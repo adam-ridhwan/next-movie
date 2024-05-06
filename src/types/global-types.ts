@@ -37,8 +37,8 @@ export const MediaModalSlug = z.union([
 ]);
 
 const Section = z.enum([
-  'movie',
-  'tv',
+  MediaType.enum.movie,
+  MediaType.enum.tv,
   'trailer',
   'bonus',
   'cast',
@@ -58,6 +58,7 @@ const Category = z.enum([
   'trending',
   'discover',
   'search',
+  'external_ids',
 ] as const);
 
 export const Genre = z.enum([
@@ -140,7 +141,6 @@ export type Section = z.infer<typeof Section>;
 export type Pages = Map<number, TODO[]>;
 
 export type Genre = MovieGenre | TvGenre;
-export type GenreObj = typeof MOVIE_GENRES | typeof TV_GENRES;
 export type GenreId = MovieGenreId | TvGenreId;
 export type GenreSlug = z.infer<typeof Genre>;
 
@@ -160,7 +160,8 @@ type CategoryWithIdProps = {
     | typeof Category.enum.recommendations
     | typeof Category.enum.similar
     | typeof Category.enum.videos
-    | typeof Category.enum.images;
+    | typeof Category.enum.images
+    | typeof Category.enum.external_ids;
 };
 
 type CategoryWithoutIdProps = {
