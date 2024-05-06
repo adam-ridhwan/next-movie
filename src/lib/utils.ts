@@ -64,15 +64,25 @@ export const extractInitials = (name: string): string => {
 };
 
 export const getGenreIdBySlug = (
-  value: GenreSlug,
+  slug: GenreSlug,
   mediaType: MediaType
 ): GenreId | undefined => {
   const genreObj = mediaType === 'movie' ? MOVIE_GENRES : TV_GENRES;
-  return objectKeys(genreObj).find(key => genreObj[key] === value);
+  return objectKeys(genreObj).find(key => genreObj[key] === slug);
 };
 
 const objectKeys = <TObj extends object>(obj: TObj): (keyof TObj)[] => {
   return Object.keys(obj) as (keyof TObj)[];
+};
+
+export const getGenreSlugById = (id: GenreId, mediaType: MediaType): Genre => {
+  if (mediaType === 'movie' && isMovieGenreId(id)) {
+    return MOVIE_GENRES[id];
+  }
+  if (mediaType === 'tv' && isTvGenreId(id)) {
+    return TV_GENRES[id];
+  }
+  throw new Error(`getGenreSlugById() Invalid media type: ${mediaType}`);
 };
 
 export const extractGenreMediaTypeSlugs = (
@@ -94,10 +104,11 @@ export const extractGenreMediaTypeSlugs = (
     throw new Error(`extractGenreMediaTypeSlugs() Invalid genre: ${genre}`);
 
   const parsedMediaType = MediaType.safeParse(mediaType);
-  if (!parsedMediaType.success)
+  if (!parsedMediaType.success) {
     throw new Error(
       `extractGenreMediaTypeSlugs() Invalid media type: ${mediaType}`
     );
+  }
 
   return [parsedGenreSlug.data, parsedMediaType.data];
 };
@@ -150,7 +161,6 @@ export const isMovie = <ZMovie, ZTv>(
   return mediaType === 'movie';
 };
 
-// TODO: use __typename to determine mediaType
 export const isMovieGenreId = (genreId: GenreId): genreId is MovieGenreId => {
   return genreId in MOVIE_GENRES;
 };
