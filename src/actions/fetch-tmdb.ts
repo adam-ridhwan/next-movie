@@ -111,7 +111,7 @@ export const fetchTMDB = async <T>(
     const data = await response.json();
     return schema.parse(data);
   } catch (error) {
-    console.error('fetchTMDB', error);
-    throw new Error();
+    console.error(error);
+    throw new Error('fetchTMDB() failed');
   }
 };
