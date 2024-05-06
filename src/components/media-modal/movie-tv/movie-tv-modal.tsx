@@ -13,8 +13,8 @@ import {
   ReleaseDate,
 } from '@/components/media-modal/movie-tv/metadata';
 import MoreLikeThis from '@/components/media-modal/movie-tv/more-like-this';
-import Overlay from '@/components/media-modal/movie-tv/overlay';
 import Trailers from '@/components/media-modal/movie-tv/trailers';
+import Overlay from '@/components/media-modal/overlay';
 import {
   BackdropSkeleton,
   HeadshotsSkeleton,
