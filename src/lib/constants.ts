@@ -1,8 +1,9 @@
-export const DEVELOPMENT_MODE = process.env.NEXT_PUBLIC_NODE_ENV === 'development';
+export const DEVELOPMENT_MODE =
+  process.env.NEXT_PUBLIC_NODE_ENV === 'development';
 
 export const TIMEOUT_DURATION = 700;
 
-export const QUERY = 'q';
+export const q = 'q';
 
 export const MEDIA_QUERY = {
   XS: 640,

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Github } from 'lucide-react';
 
 import { BodySmall } from '@/components/fonts';
 import { GithubIcon, NextjsIcon, VercelIcon } from '@/components/icons';

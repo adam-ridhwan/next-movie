@@ -14,7 +14,7 @@ import {
   Tv,
   TvResponse,
 } from '@/types/tmdb-types';
-import { QUERY } from '@/lib/constants';
+import { q } from '@/lib/constants';
 import { cn, extractYear, fetcher, isMovie, isNullish } from '@/lib/utils';
 import {
   BodyMedium,
@@ -28,7 +28,7 @@ const SearchResult = () => {
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounceValue(query, 300);
 
-  useEffect(() => setQuery(searchParams.get(QUERY) || ''), [searchParams]);
+  useEffect(() => setQuery(searchParams.get(q) || ''), [searchParams]);
 
   const {
     data: swrData,

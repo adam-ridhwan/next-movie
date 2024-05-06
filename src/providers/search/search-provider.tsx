@@ -1,11 +1,19 @@
 'use client';
 
-import { createContext, ReactNode, RefObject, useContext, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  RefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Search } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
-import { QUERY } from '@/lib/constants';
+import { q } from '@/lib/constants';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type SearchContextProps = {
@@ -53,17 +61,18 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffectOnce(() => {
-    if (searchParams.get(QUERY)) focusSearchInput();
+    if (searchParams.get(q)) focusSearchInput();
   });
 
   useEffect(() => {
     if (pathname === Search()) return;
-    if (isSearchInputFocused && searchInputRef.current) searchInputRef.current.focus();
+    if (isSearchInputFocused && searchInputRef.current)
+      searchInputRef.current.focus();
     setLastActiveRoute(pathname);
   }, [isSearchInputFocused, pathname]);
 
   useOnClickOutside(searchContainerRef, () => {
-    if (searchParams.get(QUERY)) return;
+    if (searchParams.get(q)) return;
     blurSearchInput();
     collapseSearchInput();
   });
@@ -91,8 +100,8 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     if (query.length === 0) return replace(lastActiveRoute);
 
     const params = new URLSearchParams(searchParams);
-    if (query) params.set(QUERY, query);
-    else params.delete(QUERY);
+    if (query) params.set(q, query);
+    else params.delete(q);
     replace(Search(undefined, { q: query }));
   };
 
@@ -133,6 +142,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
 
 export const useSearchStore = () => {
   const context = useContext(SearchContext);
-  if (!context) throw new Error('useSearchStore must be used within a SearchProvider');
+  if (!context)
+    throw new Error('useSearchStore must be used within a SearchProvider');
   return context;
 };

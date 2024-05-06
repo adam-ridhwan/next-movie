@@ -35,12 +35,6 @@ const MediaResponse = z.object({
 export const MovieResponse = MediaResponse.extend({ results: z.array(Movie) });
 export const TvResponse = MediaResponse.extend({ results: z.array(Tv) });
 
-export type MovieResponse = z.infer<typeof MovieResponse>;
-export type TvResponse = z.infer<typeof TvResponse>;
-export type MediaResponse = MovieResponse | TvResponse;
-export type Movie = z.infer<typeof Movie>;
-export type Tv = z.infer<typeof Tv>;
-
 export const Cast = z.object({
   id: z.number(),
   cast_id: z.number().optional().nullable(),
@@ -59,9 +53,6 @@ export const CreditsResponse = z.object({
   cast: z.array(Cast),
 });
 
-export type Cast = z.infer<typeof Cast>;
-export type CreditsResponse = z.infer<typeof CreditsResponse>;
-
 const Video = z.object({
   id: z.string(),
   name: z.string().nullable(),
@@ -76,9 +67,6 @@ export const VideoResponse = z.object({
   id: z.number(),
   results: z.array(Video),
 });
-
-export type Video = z.infer<typeof Video>;
-export type VideoResponse = z.infer<typeof VideoResponse>;
 
 const BaseDetails = z.object({
   id: z.number(),
@@ -151,9 +139,6 @@ export const DetailsTvResponse = BaseDetails.extend({
   ),
 });
 
-export type DetailsMovieResponse = z.infer<typeof DetailsMovieResponse>;
-export type DetailsTvResponse = z.infer<typeof DetailsTvResponse>;
-
 const Keyword = z.object({
   id: z.number(),
   name: z.string(),
@@ -169,12 +154,33 @@ export const KeywordsTvResponse = z.object({
   results: z.array(Keyword),
 });
 
-export type KeywordsMovieResponse = z.infer<typeof KeywordsMovieResponse>;
-export type KeywordsTvResponse = z.infer<typeof KeywordsTvResponse>;
-
 export const SearchResultsResponse = z.object({
   movieData: MovieResponse,
   tvData: TvResponse,
 });
+
+export const ExternalIds = z.object({
+  id: z.number(),
+  imdb_id: z.string().nullable(),
+  wikidata_id: z.string().nullable(),
+  facebook_id: z.string().nullable(),
+  instagram_id: z.string().nullable(),
+  twitter_id: z.string().nullable(),
+});
+
+export type MovieResponse = z.infer<typeof MovieResponse>;
+export type TvResponse = z.infer<typeof TvResponse>;
+export type MediaResponse = MovieResponse | TvResponse;
+export type Movie = z.infer<typeof Movie>;
+export type Tv = z.infer<typeof Tv>;
+
+export type Cast = z.infer<typeof Cast>;
+export type CreditsResponse = z.infer<typeof CreditsResponse>;
+export type Video = z.infer<typeof Video>;
+export type VideoResponse = z.infer<typeof VideoResponse>;
+export type DetailsMovieResponse = z.infer<typeof DetailsMovieResponse>;
+export type DetailsTvResponse = z.infer<typeof DetailsTvResponse>;
+export type KeywordsMovieResponse = z.infer<typeof KeywordsMovieResponse>;
+export type KeywordsTvResponse = z.infer<typeof KeywordsTvResponse>;
 
 export type SearchResultsResponse = z.infer<typeof SearchResultsResponse>;
