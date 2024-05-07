@@ -52,7 +52,7 @@ const fetchMedia = async (
 
 const NewMovieTv = async ({ slug, mediaType, genreId }: SpotlightProps) => {
   const newMovies = await fetchMedia(mediaType, genreId);
-  if (!newMovies) return null;
+  if (!newMovies || !newMovies.length) return null;
 
   return (
     <SliderProvider

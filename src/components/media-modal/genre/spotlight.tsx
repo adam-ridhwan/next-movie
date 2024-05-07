@@ -52,6 +52,8 @@ const Spotlight = async ({ slug, mediaType, genreId }: SpotlightProps) => {
   const results = await fetchMedia(mediaType, genreId);
   if (!results || !results.length) return null;
 
+  console.log('spotlight', results);
+
   return (
     <SliderProvider content={results} mediaType={mediaType} section='spotlight'>
       <Slider
