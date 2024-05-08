@@ -8,10 +8,13 @@
 
 <p>🍿 Live Preview www.next-imdb.com</p>
 
-<br />
+<h2>🔰 About</h2
+             
+This is a movie database web application built with `Next.js` . It uses the `TMDB API` to fetch movie data and display it in a carousel slider.
+
 <br />
 
-<h2>Screenshots</h2>
+<h2>✨ Screenshots</h2>
 
 <img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/bd619cdb-57ac-41bc-b64d-a3628ce829b5' alt='screenshot 1' />
 
@@ -33,6 +36,9 @@
   <img width='500px' src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/f6676b72-201d-4268-9ba8-d88b96a7d985' alt='screenshot 4' />
 </div>
 
+<br />
+<br />
+
 ![Slider demo](https://github.com/adam-ridhwan/next-imdb/assets/76563028/15e2c630-8726-4a6a-9a9e-c1dc07701a4b)
 
 <h2>Features</h2>
@@ -46,7 +52,7 @@
 - 🗃️ Zustand State Management
 - 📱 Responsive Design
 
-<h2>Getting Started</h2>
+<h2>🚀 Getting Started</h2>
 
 <h3>Prequisites</h3>
 
@@ -55,7 +61,7 @@
 npm install -g pnpm
 ```
 
-2) Add TMDB API Key and Read Access Token to `.env.local` file
+2) Add TMDB API Key and Read Access Token to `.env.local` file. Keys can be retrieved from [TMDB](https://developer.themoviedb.org/docs/getting-started) webstie
 ```bash
 NEXT_PUBLIC_NODE_ENV=
 TMDB_API_KEY=
@@ -67,21 +73,30 @@ TMDB_READ_ACCESS_TOKEN=
 pnpm install
 ```
 
-4) Start the development server
+4) Testing development code
 ```bash
 pnpm dev
 ```
 
-5) Start the production server
+5) Testing production code
 ```bash
 pnpm prod
 ```
 
-<h2>Acknowledgements</h2>
+<h2>⭐️ Acknowledgements</h2>
 
 <img  alt="TMDB Logo" width="100px" src="https://github.com/adam-ridhwan/next-imdb/assets/76563028/ac3b833f-3b4c-4152-8b78-6431d2731a63"/>
 
+Data provided by [TMDB](https://www.themoviedb.org/)
+
 <br/>
 <br/>
 
-Data provided by [TMDB](https://www.themoviedb.org/)
+<h2>Author</h2>
+
+<p>Adam Ridhwan</p>
+
+- GitHub: [@adam-ridhwan](https://github.com/adam-ridhwan)
+
+
+
