@@ -12,15 +12,12 @@
              
 This is a movie database web application built with `Next.js` . It uses the `TMDB API` to fetch movie data and display it in a carousel slider.
 
-<br />
-
 <h2>✨ Screenshots</h2>
 
 <img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/bd619cdb-57ac-41bc-b64d-a3628ce829b5' alt='screenshot 1' />
 
 <br />
 <br />
-
 
 <img src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/46a4bd4f-9b5e-4375-95df-0ccc0d361277' alt='screenshot 2' />
 
@@ -88,9 +85,6 @@ pnpm prod
 <img  alt="TMDB Logo" width="100px" src="https://github.com/adam-ridhwan/next-imdb/assets/76563028/ac3b833f-3b4c-4152-8b78-6431d2731a63"/>
 
 Data provided by [TMDB](https://www.themoviedb.org/)
-
-<br/>
-<br/>
 
 <h2>Author</h2>
 
