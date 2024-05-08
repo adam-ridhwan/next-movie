@@ -6,7 +6,7 @@
 
 <h1 align="center">Next Imdb</h1>
 
-<p>🍿 Live Preview www.next-imdb.com</p
+<p>🍿 Live Preview www.next-imdb.com</p>
 
 <br />
 <br />
@@ -33,7 +33,7 @@
   <img width='500px' src='https://github.com/adam-ridhwan/next-imdb/assets/76563028/f6676b72-201d-4268-9ba8-d88b96a7d985' alt='screenshot 4' />
 </div>
 
-![Untitled design (1)](https://github.com/adam-ridhwan/next-imdb/assets/76563028/15e2c630-8726-4a6a-9a9e-c1dc07701a4b)
+![Slider demo](https://github.com/adam-ridhwan/next-imdb/assets/76563028/15e2c630-8726-4a6a-9a9e-c1dc07701a4b)
 
 <h2>Features</h2>
 
@@ -45,6 +45,37 @@
 - 🪝 Custom React hooks
 - 🗃️ Zustand State Management
 - 📱 Responsive Design
+
+<h2>Getting Started</h2>
+
+<h3>Prequisites</h3>
+
+1) Install pnpm
+```bash
+npm install -g pnpm
+```
+
+2) Add TMDB API Key and Read Access Token to `.env.local` file
+```bash
+NEXT_PUBLIC_NODE_ENV=
+TMDB_API_KEY=
+TMDB_READ_ACCESS_TOKEN=
+```
+
+3) Install dependencies
+```bash
+pnpm install
+```
+
+4) Start the development server
+```bash
+pnpm dev
+```
+
+5) Start the production server
+```bash
+pnpm prod
+```
 
 <h2>Acknowledgements</h2>
 
