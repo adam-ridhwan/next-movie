@@ -82,7 +82,7 @@ const createUrl = (params: FetchTMDBParams): string => {
     case 'images':
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}?language=en-US`;
 
-    case external_ids:
+    case 'external_ids':
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}`;
 
     default:
