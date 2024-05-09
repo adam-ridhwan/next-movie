@@ -31,9 +31,12 @@ export const GenreSlug = z.string().refine(
   { message: "Must be a valid genre with '-movies' or '-tv' suffix." }
 );
 
+export const PersonSlug = z.enum(['person'] as const);
+
 export const MediaModalSlug = z.union([
   z.tuple([MediaType, z.string()]),
   z.tuple([GenreSlug]),
+  z.tuple([PersonSlug, z.string()]),
 ]);
 
 const Section = z.enum([

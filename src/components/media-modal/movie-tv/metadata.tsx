@@ -26,6 +26,8 @@ export async function Actors({ mediaType, id }: ContentRouteParams) {
       .map(({ name }) => name ?? '');
     if (!actors.length) return null;
 
+    console.log(cast[0]);
+
     return <Metadata label='Actors' metadata={actors} />;
   } catch (err) {
     redirect(ErrorPage());

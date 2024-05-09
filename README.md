@@ -91,6 +91,3 @@ Data provided by [TMDB](https://www.themoviedb.org/)
 <p>Adam Ridhwan</p>
 
 - GitHub: [@adam-ridhwan](https://github.com/adam-ridhwan)
-
-
-

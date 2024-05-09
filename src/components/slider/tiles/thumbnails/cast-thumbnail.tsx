@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { MediaModal } from '@/routes';
 
 import { TODO } from '@/types/global-types';
 import { extractInitials } from '@/lib/utils';
@@ -11,7 +12,11 @@ type CastThumbnailProps = {
 
 export const CastThumbnail = ({ tile, isVisible }: CastThumbnailProps) => {
   return (
-    <>
+    <MediaModal.Link
+      slug={['person', '1136406']}
+      scroll={false}
+      tabIndex={isVisible ? 0 : -1}
+    >
       <div className='group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
         {/*<div className='absolute z-10 h-full w-full bg-black/0 transition-colors duration-300 hover:bg-black/30' />*/}
         {/*<ArrowRightCircleIcon className='pointer-events-none absolute left-1/2 top-1/2 z-20 size-9 -translate-x-[50%] -translate-y-[50%] opacity-0 shadow-xl transition-all group-hover:opacity-100' />*/}
@@ -43,6 +48,6 @@ export const CastThumbnail = ({ tile, isVisible }: CastThumbnailProps) => {
           </BodySmall>
         </div>
       </div>
-    </>
+    </MediaModal.Link>
   );
 };
