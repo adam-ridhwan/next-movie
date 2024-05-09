@@ -31,9 +31,12 @@ export const GenreSlug = z.string().refine(
   { message: "Must be a valid genre with '-movies' or '-tv' suffix." }
 );
 
+export const PersonSlug = z.literal('person');
+
 export const MediaModalSlug = z.union([
   z.tuple([MediaType, z.string()]),
   z.tuple([GenreSlug]),
+  z.tuple([PersonSlug, z.string()]),
 ]);
 
 const Section = z.enum([
@@ -46,7 +49,7 @@ const Section = z.enum([
   'spotlight',
 ] as const);
 
-const Category = z.enum([
+const MediaCategory = z.enum([
   'credits',
   'details',
   'keywords',
@@ -58,6 +61,12 @@ const Category = z.enum([
   'trending',
   'discover',
   'search',
+  'external_ids',
+] as const);
+
+const PersonCategory = z.enum([
+  'details',
+  'combined_credits',
   'external_ids',
 ] as const);
 
@@ -150,23 +159,27 @@ export type MovieGenre = ValueOf<typeof MOVIE_GENRES>;
 export type TvGenreId = KeyOf<typeof TV_GENRES>;
 export type TvGenre = ValueOf<typeof TV_GENRES>;
 
+export type PersonSlug = z.infer<typeof PersonSlug>;
+
 type CategoryWithIdProps = {
   id: string;
   mediaType: MediaType;
   category:
-    | typeof Category.enum.credits
-    | typeof Category.enum.details
-    | typeof Category.enum.keywords
-    | typeof Category.enum.recommendations
-    | typeof Category.enum.similar
-    | typeof Category.enum.videos
-    | typeof Category.enum.images
-    | typeof Category.enum.external_ids;
+    | typeof MediaCategory.enum.credits
+    | typeof MediaCategory.enum.details
+    | typeof MediaCategory.enum.keywords
+    | typeof MediaCategory.enum.recommendations
+    | typeof MediaCategory.enum.similar
+    | typeof MediaCategory.enum.videos
+    | typeof MediaCategory.enum.images
+    | typeof MediaCategory.enum.external_ids;
 };
 
 type CategoryWithoutIdProps = {
   mediaType: MediaType;
-  category: typeof Category.enum.popular | typeof Category.enum.trending;
+  category:
+    | typeof MediaCategory.enum.popular
+    | typeof MediaCategory.enum.trending;
 };
 
 export type DiscoverMovieProps = {
@@ -184,7 +197,7 @@ export type DiscoverTvProps = {
 };
 
 export type DiscoverProps = {
-  category: typeof Category.enum.discover;
+  category: typeof MediaCategory.enum.discover;
   page?: number;
   language?: string;
   vote_average_gte?: number;
@@ -193,10 +206,23 @@ export type DiscoverProps = {
 
 type SearchProps = {
   mediaType: MediaType;
-  category: typeof Category.enum.search;
+  category: typeof MediaCategory.enum.search;
   q: string;
 };
 
+type PersonProps = {
+  mediaType: PersonSlug;
+  category:
+    | typeof PersonCategory.enum.details
+    | typeof PersonCategory.enum.external_ids
+    | typeof PersonCategory.enum.combined_credits;
+  personId: string;
+};
+
 export type FetchTMDBParams = Prettify<
-  CategoryWithIdProps | CategoryWithoutIdProps | DiscoverProps | SearchProps
+  | CategoryWithIdProps
+  | CategoryWithoutIdProps
+  | DiscoverProps
+  | SearchProps
+  | PersonProps
 >;
