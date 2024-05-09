@@ -9,7 +9,7 @@ type SpotlightProps = {
   personId: string;
 };
 
-const Spotlight = async ({ personId }: SpotlightProps) => {
+const PersonSpotlight = async ({ personId }: SpotlightProps) => {
   const results = await fetchTMDB(DetailsPersonResponse, {
     mediaType: 'person',
     category: 'details',
@@ -18,7 +18,7 @@ const Spotlight = async ({ personId }: SpotlightProps) => {
   if (!results) return null;
 
   return (
-    <div className='mx-[0.5%] flex flex-col items-center gap-4 px-custom md:flex-row md:justify-center md:gap-8'>
+    <div className='mx-[0.5%] flex flex-col items-center gap-4 px-custom pb-12 md:flex-row md:justify-center md:gap-8'>
       <div className='relative flex aspect-[4/5] h-[150px] flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
         {results.profile_path ? (
           <Image
@@ -48,4 +48,4 @@ const Spotlight = async ({ personId }: SpotlightProps) => {
   );
 };
 
-export default Spotlight;
+export default PersonSpotlight;

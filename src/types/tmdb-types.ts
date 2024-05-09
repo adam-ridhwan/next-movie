@@ -196,7 +196,7 @@ export const MoviePersonCreditsSchema = z.object({
   media_type: z.literal('movie').nullable(),
 });
 
-const TvPersonCreditsSchema = z.object({
+export const TvPersonCreditsSchema = z.object({
   adult: z.boolean(),
   backdrop_path: z.string().nullable(),
   genre_ids: z.array(z.number()),
@@ -241,3 +241,6 @@ export type SearchResultsResponse = z.infer<typeof SearchResultsResponse>;
 
 export type DetailsPersonResponse = z.infer<typeof DetailsPersonResponse>;
 export type CombinedCreditsSchema = z.infer<typeof CombinedCreditsSchema>;
+
+export type MoviePersonCreditsSchema = z.infer<typeof MoviePersonCreditsSchema>;
+export type TvPersonCreditsSchema = z.infer<typeof TvPersonCreditsSchema>;

@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 
 import MediaModal from '@/components/media-modal/media-modal';
 import Overlay from '@/components/media-modal/overlay';
-import Spotlight from '@/components/media-modal/person/spotlight';
+import PersonMovieTv from '@/components/media-modal/person/person-movie-tv';
+import PersonSpotlight from '@/components/media-modal/person/person-spotlight';
 
 type PersonModalProps = {
   personId: string;
@@ -15,12 +16,12 @@ const PersonModal = async ({ personId }: PersonModalProps) => {
       <MediaModal>
         <div className='pt-14'>
           <Suspense>
-            <Spotlight personId={personId} />
+            <PersonSpotlight personId={personId} />
           </Suspense>
 
-          {/*<Suspense>*/}
-          {/*  <NewMovieTv slug={slug} mediaType={mediaType} genreId={genreId} />*/}
-          {/*</Suspense>*/}
+          <Suspense>
+            <PersonMovieTv personId={personId} />
+          </Suspense>
 
           {/*<Suspense>*/}
           {/*  <HighRated slug={slug} mediaType={mediaType} genreId={genreId} />*/}
