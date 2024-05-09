@@ -63,7 +63,6 @@ const createUrl = (params: FetchTMDBParams): string => {
     }
 
     case 'search': {
-      1;
       const url = new URL(`${BASE_URL}/${params.category}/${params.mediaType}`);
       url.searchParams.append('query', params.q);
       url.searchParams.append('include_adult', 'false');
@@ -83,7 +82,7 @@ const createUrl = (params: FetchTMDBParams): string => {
     case 'images':
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}?language=en-US`;
 
-    case 'external_ids':
+    case 'media_external_ids':
       return `${BASE_URL}/${params.mediaType}/${params.id}/${params.category}`;
 
     default:

@@ -12,7 +12,7 @@ import {
 const ExternalLinks = async ({ id, mediaType }: ContentRouteParams) => {
   const { imdb_id, instagram_id, twitter_id, facebook_id } = await fetchTMDB(
     ExternalIds,
-    { mediaType, id, category: 'external_ids' }
+    { mediaType, id, category: 'media_external_ids' }
   );
 
   return (

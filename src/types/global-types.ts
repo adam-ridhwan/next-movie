@@ -61,7 +61,7 @@ const Category = z.enum([
   'trending',
   'discover',
   'search',
-  'external_ids',
+  'media_external_ids',
 ] as const);
 
 export const Genre = z.enum([
@@ -164,7 +164,7 @@ type CategoryWithIdProps = {
     | typeof Category.enum.similar
     | typeof Category.enum.videos
     | typeof Category.enum.images
-    | typeof Category.enum.external_ids;
+    | typeof Category.enum.media_external_ids;
 };
 
 type CategoryWithoutIdProps = {
