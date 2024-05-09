@@ -15,23 +15,23 @@ const defaultInfo = {
   search: z.object({}),
 };
 
-export const ErrorPage = makeRoute('/(pages)/error', {
+export const ErrorPage = makeRoute('/error', {
   ...defaultInfo,
   ...ErrorPageRoute.Route,
 });
-export const Home = makeRoute('/(pages)/home', {
+export const Home = makeRoute('/home', {
   ...defaultInfo,
   ...HomeRoute.Route,
 });
-export const Movies = makeRoute('/(pages)/movies', {
+export const Movies = makeRoute('/movies', {
   ...defaultInfo,
   ...MoviesRoute.Route,
 });
-export const Search = makeRoute('/(pages)/search', {
+export const Search = makeRoute('/search', {
   ...defaultInfo,
   ...SearchRoute.Route,
 });
-export const Tv = makeRoute('/(pages)/tv', {
+export const Tv = makeRoute('/tv', {
   ...defaultInfo,
   ...TvRoute.Route,
 });

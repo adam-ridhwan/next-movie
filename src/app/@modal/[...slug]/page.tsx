@@ -5,13 +5,11 @@ import {
   GenreSlug,
   MediaModalSlug,
   MediaType,
-  PersonSlug,
   TODO,
 } from '@/types/global-types';
 import { extractGenreMediaTypeSlugs, getGenreIdBySlug } from '@/lib/utils';
 import GenreModal from '@/components/media-modal/genre/genre-modal';
 import MovieTvModal from '@/components/media-modal/movie-tv/movie-tv-modal';
-import PersonModal from '@/components/media-modal/person/person-modal';
 
 type MediaPageProps = {
   params: {
@@ -20,16 +18,14 @@ type MediaPageProps = {
 };
 
 /**
- * First slug: [movie, tv, genre, person]
+ * First slug: [movie, tv, genre]
  *  - movie
  *  - tv
  *  - [genre]-movies | [genre]-tv
- *  - person
  *
  * Second slug: [id]
  *  - movie/[id]
  *  - tv/[id]
- *  - person/[id]
  *
  * */
 
@@ -63,11 +59,6 @@ const MediaModalPage = async ({ params }: MediaPageProps) => {
     return (
       <GenreModal mediaType={mediaType} slug={genre} genreId={genreIdSlug} />
     );
-  }
-
-  const parsedPersonSlug = PersonSlug.safeParse(mediaCategorySlug);
-  if (parsedPersonSlug.success) {
-    return <PersonModal personId={mediaIdSlug} />;
   }
 };
 export default MediaModalPage;
