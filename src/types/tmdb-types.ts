@@ -175,7 +175,7 @@ export const DetailsPersonResponse = z.object({
   profile_path: z.string().nullable(),
 });
 
-export const MoviePersonCreditsSchema = z.object({
+export const MoviePersonCredits = z.object({
   id: z.number(),
   adult: z.boolean().nullable(),
   backdrop_path: z.string().nullable(),
@@ -193,10 +193,10 @@ export const MoviePersonCreditsSchema = z.object({
   character: z.string().nullable(),
   credit_id: z.string().nullable(),
   order: z.number().nullable(),
-  media_type: z.literal('movie').nullable(),
+  media_type: z.literal('movie'),
 });
 
-export const TvPersonCreditsSchema = z.object({
+export const TvPersonCredits = z.object({
   adult: z.boolean(),
   backdrop_path: z.string().nullable(),
   genre_ids: z.array(z.number()),
@@ -217,9 +217,9 @@ export const TvPersonCreditsSchema = z.object({
   media_type: z.literal('tv'),
 });
 
-export const CombinedCreditsSchema = z.object({
+export const CombinedCreditsResponse = z.object({
   id: z.number(),
-  cast: z.array(z.union([MoviePersonCreditsSchema, TvPersonCreditsSchema])),
+  cast: z.array(z.union([MoviePersonCredits, TvPersonCredits])),
 });
 
 export type MovieResponse = z.infer<typeof MovieResponse>;
@@ -240,7 +240,7 @@ export type KeywordsTvResponse = z.infer<typeof KeywordsTvResponse>;
 export type SearchResultsResponse = z.infer<typeof SearchResultsResponse>;
 
 export type DetailsPersonResponse = z.infer<typeof DetailsPersonResponse>;
-export type CombinedCreditsSchema = z.infer<typeof CombinedCreditsSchema>;
+export type CombinedCreditsResponse = z.infer<typeof CombinedCreditsResponse>;
 
-export type MoviePersonCreditsSchema = z.infer<typeof MoviePersonCreditsSchema>;
-export type TvPersonCreditsSchema = z.infer<typeof TvPersonCreditsSchema>;
+export type MoviePersonCredits = z.infer<typeof MoviePersonCredits>;
+export type TvPersonCredits = z.infer<typeof TvPersonCredits>;

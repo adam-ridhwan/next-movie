@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import { fetchTMDB } from '@/actions/fetch-tmdb';
+import { Dot } from 'lucide-react';
 
-import { CombinedCreditsSchema, Movie, Tv } from '@/types/tmdb-types';
+import {
+  CombinedCreditsResponse,
+  MoviePersonCredits,
+  TvPersonCredits,
+} from '@/types/tmdb-types';
 import { cn, extractYear, isMovie, isNullish } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
 
@@ -10,12 +15,22 @@ type PersonMovieTvProps = {
 };
 
 const PersonMovieTv = async ({ personId }: PersonMovieTvProps) => {
-  const results = await fetchTMDB(CombinedCreditsSchema, {
+  const results = await fetchTMDB(CombinedCreditsResponse, {
     mediaType: 'person',
     category: 'combined_credits',
     personId,
   });
   if (!results) return null;
+
+  const uniqueMedia: Array<MoviePersonCredits | TvPersonCredits> = [];
+  const ids = new Set();
+
+  results.cast.forEach(movie => {
+    if (!ids.has(movie.id)) {
+      ids.add(movie.id);
+      uniqueMedia.push(movie);
+    }
+  });
 
   return (
     <div
@@ -27,14 +42,27 @@ const PersonMovieTv = async ({ personId }: PersonMovieTvProps) => {
         'custom-lg:grid-cols-5'
       )}
     >
-      {results.cast.map(tile => {
-        const title = isMovie<Movie, Tv>(tile, 'movie')
+      {uniqueMedia.map(tile => {
+        const title = isMovie<MoviePersonCredits, TvPersonCredits>(
+          tile,
+          tile.media_type
+        )
           ? isNullish(tile.title, tile.original_title)
           : isNullish(tile.name, tile.original_name);
 
-        const releaseDate = isMovie<Movie, Tv>(tile, 'movie')
+        const releaseDate = isMovie<MoviePersonCredits, TvPersonCredits>(
+          tile,
+          tile.media_type
+        )
           ? isNullish(tile.release_date)
           : isNullish(tile.first_air_date);
+
+        const mediaType = isMovie<MoviePersonCredits, TvPersonCredits>(
+          tile,
+          tile.media_type
+        )
+          ? 'Movie'
+          : 'TV Series';
 
         return (
           <div key={tile.id} className='flex flex-col'>
@@ -73,9 +101,13 @@ const PersonMovieTv = async ({ personId }: PersonMovieTvProps) => {
             <div className='pt-3 max-sm:hidden'>
               <div className='flex flex-col'>
                 <BodyMedium className='line-clamp-1'>{title}</BodyMedium>
-                <BodySmall className='line-clamp-1'>
-                  {extractYear(releaseDate)}
-                </BodySmall>
+                <div className='flex flex-row items-center'>
+                  <BodySmall className='line-clamp-1'>
+                    {extractYear(releaseDate)}
+                  </BodySmall>
+                  <Dot />
+                  <BodySmall>{mediaType}</BodySmall>
+                </div>
               </div>
             </div>
           </div>
