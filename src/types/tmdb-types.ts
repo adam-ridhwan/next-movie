@@ -168,6 +168,60 @@ export const ExternalIds = z.object({
   twitter_id: z.string().nullable(),
 });
 
+export const DetailsPersonResponse = z.object({
+  id: z.number(),
+  biography: z.string().nullable(),
+  name: z.string().nullable(),
+  profile_path: z.string().nullable(),
+});
+
+export const MoviePersonCredits = z.object({
+  id: z.number(),
+  adult: z.boolean().nullable(),
+  backdrop_path: z.string().nullable(),
+  genre_ids: z.array(z.number()).nullable(),
+  original_language: z.string().nullable(),
+  original_title: z.string().nullable(),
+  overview: z.string().nullable(),
+  popularity: z.number().nullable(),
+  poster_path: z.string().nullable(),
+  release_date: z.string().nullable(),
+  title: z.string().nullable(),
+  video: z.boolean().nullable(),
+  vote_average: z.number().nullable(),
+  vote_count: z.number().nullable(),
+  character: z.string().nullable(),
+  credit_id: z.string().nullable(),
+  order: z.number().nullable(),
+  media_type: z.literal('movie'),
+});
+
+export const TvPersonCredits = z.object({
+  adult: z.boolean(),
+  backdrop_path: z.string().nullable(),
+  genre_ids: z.array(z.number()),
+  id: z.number(),
+  origin_country: z.array(z.string()),
+  original_language: z.string(),
+  original_name: z.string(),
+  overview: z.string(),
+  popularity: z.number(),
+  poster_path: z.string().nullable(),
+  first_air_date: z.string(),
+  name: z.string(),
+  vote_average: z.number(),
+  vote_count: z.number(),
+  character: z.string(),
+  credit_id: z.string(),
+  episode_count: z.number(),
+  media_type: z.literal('tv'),
+});
+
+export const CombinedCreditsResponse = z.object({
+  id: z.number(),
+  cast: z.array(z.union([MoviePersonCredits, TvPersonCredits])),
+});
+
 export type MovieResponse = z.infer<typeof MovieResponse>;
 export type TvResponse = z.infer<typeof TvResponse>;
 export type MediaResponse = MovieResponse | TvResponse;
@@ -184,3 +238,9 @@ export type KeywordsMovieResponse = z.infer<typeof KeywordsMovieResponse>;
 export type KeywordsTvResponse = z.infer<typeof KeywordsTvResponse>;
 
 export type SearchResultsResponse = z.infer<typeof SearchResultsResponse>;
+
+export type DetailsPersonResponse = z.infer<typeof DetailsPersonResponse>;
+export type CombinedCreditsResponse = z.infer<typeof CombinedCreditsResponse>;
+
+export type MoviePersonCredits = z.infer<typeof MoviePersonCredits>;
+export type TvPersonCredits = z.infer<typeof TvPersonCredits>;

@@ -6,7 +6,11 @@ type FontProps = {
 };
 
 const HeadingLarge = ({ children, className }: FontProps) => (
-  <span className={cn('text-[32px] font-bold leading-9 text-primary/90', className)}>{children}</span>
+  <span
+    className={cn('text-[32px] font-bold leading-9 text-primary/90', className)}
+  >
+    {children}
+  </span>
 );
 
 const HeadingMedium = ({ children, className }: FontProps) => (
@@ -22,15 +26,29 @@ const HeadingExtraSmall = ({ children, className }: FontProps) => (
 );
 
 const BodyMedium = ({ children, className }: FontProps) => (
-  <span className={cn('text-[15px] font-light text-primary', className)}>{children}</span>
+  <span className={cn('text-[15px] font-light text-primary/80', className)}>
+    {children}
+  </span>
 );
 
 const BodySmall = ({ children, className }: FontProps) => (
-  <span className={cn('text-[13px] font-light text-primary/70', className)}>{children}</span>
+  <span className={cn('text-[13px] font-light text-primary/70', className)}>
+    {children}
+  </span>
 );
 
 const NumberLabel = ({ children, className }: FontProps) => (
-  <span className={cn('text-[40px] font-medium text-primary/80', className)}>{children}</span>
+  <span className={cn('text-[40px] font-medium text-primary/80', className)}>
+    {children}
+  </span>
 );
 
-export { HeadingLarge, HeadingMedium, HeadingSmall, HeadingExtraSmall, BodyMedium, BodySmall, NumberLabel };
+export {
+  HeadingLarge,
+  HeadingMedium,
+  HeadingSmall,
+  HeadingExtraSmall,
+  BodyMedium,
+  BodySmall,
+  NumberLabel,
+};
