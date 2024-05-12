@@ -22,10 +22,19 @@ export const useMapPages = () => {
 
   const { validatePages } = useValidators();
   const {
-    actions: { getTileCountPerPage, getTileCountBidirectional, getStartIndex, updateUuids },
+    actions: {
+      getTileCountPerPage,
+      getTileCountBidirectional,
+      getStartIndex,
+      updateUuids,
+    },
   } = usePageUtils();
 
-  const setMapPages = ({ firstTileCurrentPageIndex, isFirstPage, isLastPage }: SetMapTilesParams) => {
+  const setMapPages = ({
+    firstTileCurrentPageIndex,
+    isFirstPage,
+    isLastPage,
+  }: SetMapTilesParams) => {
     const newPages: Pages = new Map<number, TODO[]>();
     const newTileCountPerPage = getTileCountPerPage();
     let newFirstPageLength = newTileCountPerPage;
@@ -37,7 +46,9 @@ export const useMapPages = () => {
       key: currentPage,
     });
 
-    const leftTileCount = getTileCountBidirectional(firstTileCurrentPageIndex / newTileCountPerPage);
+    const leftTileCount = getTileCountBidirectional(
+      firstTileCurrentPageIndex / newTileCountPerPage
+    );
     const rightTileCount = getTileCountBidirectional(
       (CONTENT.length - firstTileCurrentPageIndex) / newTileCountPerPage
     );
@@ -58,29 +69,43 @@ export const useMapPages = () => {
       const isLeftPlaceholder = pageNumber === 0;
       const isRightPlaceholder = pageNumber === newMaxPages - 1;
 
-      const idMatches = newContentList.some(tile => tile.id === firstTileCurrentPage.id);
-      if (idMatches && pageNumber > 1 && newCurrentPage === -1) newCurrentPage = pageNumber;
+      const idMatches = newContentList.some(
+        tile => tile.id === firstTileCurrentPage.id
+      );
+      if (idMatches && pageNumber > 1 && newCurrentPage === -1) {
+        newCurrentPage = pageNumber;
+      }
 
       const newContentItem = CONTENT[startIndex++];
 
       newContentList.push(
         isLeftPlaceholder || isRightPlaceholder
           ? { ...newContentItem, uuid: uuid() }
-          : newContentItem // prettier-ignore
+          : newContentItem
       );
 
       if (newContentList.length !== newTileCountPerPage) continue;
 
-      const firstTileIndex = newContentList.findIndex(tile => tile.id === CONTENT[0].id);
+      const firstTileIndex = newContentList.findIndex(
+        tile => tile.id === CONTENT[0].id
+      );
 
       if (isNewFirstPage && firstTileIndex > 0) {
         newFirstPageLength = newTileCountPerPage - firstTileIndex;
-        newContentList = updateUuids({ newContentList, firstTileIndex, isFirstPage: true });
+        newContentList = updateUuids({
+          newContentList,
+          firstTileIndex,
+          isFirstPage: true,
+        });
       }
 
       if (isNewLastPage && firstTileIndex > 0) {
         newLastPageLength = firstTileIndex;
-        newContentList = updateUuids({ newContentList, firstTileIndex, isLastPage: true });
+        newContentList = updateUuids({
+          newContentList,
+          firstTileIndex,
+          isLastPage: true,
+        });
       }
 
       newPages.set(pageNumber, newContentList);
