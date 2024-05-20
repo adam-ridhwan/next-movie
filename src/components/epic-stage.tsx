@@ -1,28 +1,24 @@
 import Image from 'next/image';
-import { useHomepageStore } from '@/providers/homepage/homepage-provider';
+import { fetchTMDB } from '@/actions/fetch-tmdb';
 import { MediaModal } from '@/routes';
 import { Dot, Info } from 'lucide-react';
 
 import { TODO } from '@/types/global-types';
-import { Movie, Tv } from '@/types/tmdb-types';
-import { deslugify, getGenreSlugById, isMovie, isNullish } from '@/lib/utils';
+import { MovieResponse } from '@/types/tmdb-types';
+import { deslugify, getGenreSlugById, isNullish } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { BodyMedium, HeadingLarge } from '@/components/fonts';
 
 // TODO: Create carousel component for epic stage
-const EpicStage = () => {
-  const { epicStageContent } = useHomepageStore();
-  const firstResult = epicStageContent[0];
-  const isMovieType = isMovie<Movie, Tv>(firstResult, 'movie');
+const EpicStage = async () => {
+  const { results } = await fetchTMDB(MovieResponse, {
+    mediaType: 'movie',
+    category: 'popular',
+  });
 
-  const alt = isMovieType
-    ? isNullish(firstResult.title, firstResult.original_title)
-    : isNullish(firstResult.name, firstResult.original_name);
-
-  const title = isMovieType
-    ? isNullish(firstResult.title)
-    : isNullish(firstResult.name);
-
+  const firstResult = results[0];
+  const alt = isNullish(firstResult.title, firstResult.original_title);
+  const title = isNullish(firstResult.title);
   const genreIds = firstResult.genre_ids ?? [];
 
   return (
