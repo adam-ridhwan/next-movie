@@ -26,7 +26,7 @@ import {
 const SearchResult = () => {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounceValue(query, 300);
+  const [debouncedQuery] = useDebounceValue(query, 500);
 
   useEffect(() => setQuery(searchParams.get(q) || ''), [searchParams]);
 
@@ -41,7 +41,7 @@ const SearchResult = () => {
     fetcher
   );
 
-  if (isLoading || !swrData) return <></>;
+  if (isLoading || !swrData) return null;
   if (swrError) throw new Error('Failed to load search results');
 
   const {
@@ -49,10 +49,11 @@ const SearchResult = () => {
     data: mediaData,
     error,
   } = SearchResultsResponse.safeParse(swrData.data);
-  if (!success)
+  if (!success) {
     throw new Error(
       `SearchResult() Invalid search results schema: ${error.message}`
     );
+  }
 
   return (
     <div className='flex flex-col gap-8 px-custom pt-24'>
@@ -98,7 +99,13 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
       ? isNullish(tile.release_date)
       : isNullish(tile.first_air_date);
 
+    // FIXME: Add MediaModal.Link
     return (
+      // <MediaModal.Link
+      //   key={tile.id}
+      //   slug={[mediaType, tile.id.toString()]}
+      //   scroll={false}
+      // >
       <div key={tile.id} className='flex flex-col'>
         <div
           className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'
@@ -141,6 +148,7 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
           </div>
         </div>
       </div>
+      // </MediaModal.Link>
     );
   });
 };
