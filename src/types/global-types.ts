@@ -49,7 +49,7 @@ const Section = z.enum([
   'spotlight',
 ] as const);
 
-const MediaCategory = z.enum([
+const Category = z.enum([
   'credits',
   'details',
   'keywords',
@@ -62,12 +62,7 @@ const MediaCategory = z.enum([
   'discover',
   'search',
   'external_ids',
-] as const);
-
-const PersonCategory = z.enum([
-  'details',
   'combined_credits',
-  'external_ids',
 ] as const);
 
 export const Genre = z.enum([
@@ -162,24 +157,22 @@ export type TvGenre = ValueOf<typeof TV_GENRES>;
 export type PersonSlug = z.infer<typeof PersonSlug>;
 
 type CategoryWithIdProps = {
-  id: string;
   mediaType: MediaType;
+  id: string;
   category:
-    | typeof MediaCategory.enum.credits
-    | typeof MediaCategory.enum.details
-    | typeof MediaCategory.enum.keywords
-    | typeof MediaCategory.enum.recommendations
-    | typeof MediaCategory.enum.similar
-    | typeof MediaCategory.enum.videos
-    | typeof MediaCategory.enum.images
-    | typeof MediaCategory.enum.external_ids;
+    | typeof Category.enum.credits
+    | typeof Category.enum.details
+    | typeof Category.enum.keywords
+    | typeof Category.enum.recommendations
+    | typeof Category.enum.similar
+    | typeof Category.enum.videos
+    | typeof Category.enum.images
+    | typeof Category.enum.external_ids;
 };
 
 type CategoryWithoutIdProps = {
   mediaType: MediaType;
-  category:
-    | typeof MediaCategory.enum.popular
-    | typeof MediaCategory.enum.trending;
+  category: typeof Category.enum.popular | typeof Category.enum.trending;
 };
 
 export type DiscoverMovieProps = {
@@ -197,7 +190,7 @@ export type DiscoverTvProps = {
 };
 
 export type DiscoverProps = {
-  category: typeof MediaCategory.enum.discover;
+  category: typeof Category.enum.discover;
   page?: number;
   language?: string;
   vote_average_gte?: number;
@@ -206,17 +199,17 @@ export type DiscoverProps = {
 
 type SearchProps = {
   mediaType: MediaType;
-  category: typeof MediaCategory.enum.search;
+  category: typeof Category.enum.search;
   q: string;
 };
 
 type PersonProps = {
   mediaType: PersonSlug;
-  category:
-    | typeof PersonCategory.enum.details
-    | typeof PersonCategory.enum.external_ids
-    | typeof PersonCategory.enum.combined_credits;
   personId: string;
+  category:
+    | typeof Category.enum.details
+    | typeof Category.enum.external_ids
+    | typeof Category.enum.combined_credits;
 };
 
 export type FetchTMDBParams = Prettify<

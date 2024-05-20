@@ -1,7 +1,10 @@
 'use client';
 
 import { createContext, ReactNode, useContext, useRef } from 'react';
-import { createSliderStore, SliderStore } from '@/providers/slider/create-slider-store';
+import {
+  createSliderStore,
+  SliderStore,
+} from '@/providers/slider/create-slider-store';
 import { RefProvider } from '@/providers/slider/ref-provider';
 import { StoreApi, useStore } from 'zustand';
 
@@ -18,9 +21,17 @@ type SliderProviderProps = {
 
 const SliderContext = createContext<SliderContextProps>(null);
 
-export const SliderProvider = ({ children, content, mediaType, section }: SliderProviderProps) => {
+export const SliderProvider = ({
+  children,
+  content,
+  mediaType,
+  section,
+}: SliderProviderProps) => {
   const storeRef = useRef<StoreApi<SliderStore>>();
-  if (!storeRef.current) storeRef.current = createSliderStore(content, mediaType, section);
+  if (!storeRef.current) {
+    storeRef.current = createSliderStore(content, mediaType, section);
+  }
+
   return (
     <RefProvider>
       <SliderContext.Provider value={storeRef.current}>
@@ -32,6 +43,8 @@ export const SliderProvider = ({ children, content, mediaType, section }: Slider
 
 export const useSliderStore = <T,>(selector: (store: SliderStore) => T): T => {
   const store = useContext(SliderContext);
-  if (!store) throw new Error(`useSliderStore must be use within SliderProvider`);
+  if (!store) {
+    throw new Error(`useSliderStore must be use within SliderProvider`);
+  }
   return useStore(store, selector);
 };
