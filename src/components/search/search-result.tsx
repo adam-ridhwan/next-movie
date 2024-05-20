@@ -100,6 +100,7 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
       : isNullish(tile.first_air_date);
 
     // FIXME: Add MediaModal.Link
+    //  Figure out a way open modal without losing the previous search query
     return (
       // <MediaModal.Link
       //   key={tile.id}
