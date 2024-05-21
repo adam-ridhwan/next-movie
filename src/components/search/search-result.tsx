@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import useSWR from 'swr';
@@ -25,19 +24,14 @@ import {
 
 const SearchResult = () => {
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounceValue(query, 500);
-
-  useEffect(() => setQuery(searchParams.get(q) || ''), [searchParams]);
+  const [query] = useDebounceValue(searchParams.get(q), 500);
 
   const {
     data: swrData,
     error: swrError,
     isLoading,
   } = useSWR(
-    debouncedQuery
-      ? `/api/search?q=${encodeURIComponent(debouncedQuery)}`
-      : null,
+    query ? `/api/search?q=${encodeURIComponent(query)}` : null,
     fetcher
   );
 
@@ -61,8 +55,10 @@ const SearchResult = () => {
         <HeadingSmall className='text-muted-foreground'>
           Search results for:
         </HeadingSmall>
-        <HeadingSmall>{query}</HeadingSmall>
+        <HeadingSmall>{String(searchParams.get(q) ?? '')}</HeadingSmall>
       </div>
+
+      {/*<MovieTvModal mediaType='movie' mediaId='823464' />*/}
 
       <div
         className={cn(
@@ -99,19 +95,9 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
       ? isNullish(tile.release_date)
       : isNullish(tile.first_air_date);
 
-    // FIXME: Add MediaModal.Link
-    //  Figure out a way open modal without losing the previous search query
     return (
-      // <MediaModal.Link
-      //   key={tile.id}
-      //   slug={[mediaType, tile.id.toString()]}
-      //   scroll={false}
-      // >
       <div key={tile.id} className='flex flex-col'>
-        <div
-          className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'
-          key={tile.id}
-        >
+        <div className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'>
           {tile.backdrop_path || tile.poster_path ? (
             <>
               <Image
@@ -149,7 +135,6 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
           </div>
         </div>
       </div>
-      // </MediaModal.Link>
     );
   });
 };

@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Search } from '@/routes';
+import { Home, Search } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
 import { q } from '@/lib/constants';
@@ -43,7 +43,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [lastActiveRoute, setLastActiveRoute] = useState(pathname);
+  const [lastActiveRoute, setLastActiveRoute] = useState(Home());
 
   const {
     value: isSearchInputExpanding,

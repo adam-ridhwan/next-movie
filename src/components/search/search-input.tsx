@@ -19,9 +19,7 @@ const SearchInput = () => {
     <div
       className={cn(
         'absolute right-0 flex flex-row items-center border border-transparent bg-black',
-        {
-          'border-primary/80': isSearchInputFocused,
-        }
+        { 'border-primary/80': isSearchInputFocused }
       )}
     >
       <button
