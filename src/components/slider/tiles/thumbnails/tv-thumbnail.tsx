@@ -4,7 +4,7 @@ import { MediaModal } from '@/routes';
 import { TODO } from '@/types/global-types';
 import { extractYear } from '@/lib/utils';
 import { BodyMedium, BodySmall, HeadingExtraSmall } from '@/components/fonts';
-import ThumbnailWrapper from '@/components/slider/tiles/thumbnails/thumbnail-wrapper';
+import ThumbnailWrapper from '@/components/thumbnail-wrapper';
 
 type TvThumbnailProps = {
   tile: TODO;

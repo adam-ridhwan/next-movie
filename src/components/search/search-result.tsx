@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchStore } from '@/providers/search/search-provider';
+import { MediaModal } from '@/routes';
 import useSWR from 'swr';
 import { useDebounceValue } from 'usehooks-ts';
 
@@ -13,7 +14,6 @@ import {
   Tv,
   TvResponse,
 } from '@/types/tmdb-types';
-import { q } from '@/lib/constants';
 import { cn, extractYear, fetcher, isMovie, isNullish } from '@/lib/utils';
 import {
   BodyMedium,
@@ -22,16 +22,23 @@ import {
   HeadingSmall,
 } from '@/components/fonts';
 
+import ThumbnailWrapper from '../thumbnail-wrapper';
+
 const SearchResult = () => {
-  const searchParams = useSearchParams();
-  const [query] = useDebounceValue(searchParams.get(q), 500);
+  const {
+    state: { query },
+  } = useSearchStore();
+
+  const [debouncedQuery] = useDebounceValue(query, 500);
 
   const {
     data: swrData,
     error: swrError,
     isLoading,
   } = useSWR(
-    query ? `/api/search?q=${encodeURIComponent(query)}` : null,
+    debouncedQuery
+      ? `/api/search?q=${encodeURIComponent(debouncedQuery)}`
+      : null,
     fetcher
   );
 
@@ -55,10 +62,8 @@ const SearchResult = () => {
         <HeadingSmall className='text-muted-foreground'>
           Search results for:
         </HeadingSmall>
-        <HeadingSmall>{String(searchParams.get(q) ?? '')}</HeadingSmall>
+        <HeadingSmall>{query}</HeadingSmall>
       </div>
-
-      {/*<MovieTvModal mediaType='movie' mediaId='823464' />*/}
 
       <div
         className={cn(
@@ -96,35 +101,41 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
       : isNullish(tile.first_air_date);
 
     return (
-      <div key={tile.id} className='flex flex-col'>
-        <div className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'>
-          {tile.backdrop_path || tile.poster_path ? (
-            <>
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
-                alt={title}
-                priority
-                unoptimized
-                fill
-                className='object-cover max-sm:hidden'
-              />
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
-                alt={title}
-                priority
-                unoptimized
-                fill
-                className='object-cover sm:hidden'
-              />
-            </>
-          ) : (
-            <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
-              <HeadingExtraSmall className='line-clamp-2'>
-                {title}
-              </HeadingExtraSmall>
-            </div>
-          )}
-        </div>
+      <MediaModal.Link
+        key={tile.id}
+        slug={[mediaType, tile.id.toString()]}
+        scroll={false}
+      >
+        <ThumbnailWrapper>
+          <div className='relative aspect-poster w-full overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow sm:aspect-video'>
+            {tile.backdrop_path || tile.poster_path ? (
+              <>
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${tile.backdrop_path || tile.poster_path}`}
+                  alt={title}
+                  priority
+                  unoptimized
+                  fill
+                  className='object-cover max-sm:hidden'
+                />
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${tile.poster_path || tile.backdrop_path}`}
+                  alt={title}
+                  priority
+                  unoptimized
+                  fill
+                  className='object-cover sm:hidden'
+                />
+              </>
+            ) : (
+              <div className='absolute bottom-0 z-50 flex h-full w-full items-end justify-center bg-gradient-to-t from-black/50 via-transparent to-transparent px-4 py-8'>
+                <HeadingExtraSmall className='line-clamp-2'>
+                  {title}
+                </HeadingExtraSmall>
+              </div>
+            )}
+          </div>
+        </ThumbnailWrapper>
 
         <div className='pt-3 max-sm:hidden'>
           <div className='flex flex-col'>
@@ -134,7 +145,7 @@ const Tiles = ({ data, mediaType }: TilesProps) => {
             </BodySmall>
           </div>
         </div>
-      </div>
+      </MediaModal.Link>
     );
   });
 };

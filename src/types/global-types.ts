@@ -10,6 +10,7 @@ export const NAV_ROUTES = {
   home: '/home',
   movies: '/movies',
   tv: '/tv',
+  search: '/search',
 } as const;
 export type NavRoute = ValueOf<typeof NAV_ROUTES>;
 

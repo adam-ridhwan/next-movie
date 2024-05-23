@@ -1,16 +1,12 @@
-import { useSearchParams } from 'next/navigation';
 import { useSearchStore } from '@/providers/search/search-provider';
 import { X } from 'lucide-react';
 
-import { q } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
-  const searchParams = useSearchParams();
-
   const {
-    state: { isSearchInputExpanding, isSearchInputFocused },
+    state: { query, isSearchInputExpanded, isSearchInputFocused },
     actions: { handleFocus, handleSearch, handleClear },
     refs: { searchInputRef, searchContainerRef },
   } = useSearchStore();
@@ -24,7 +20,7 @@ const SearchInput = () => {
     >
       <button
         type='button'
-        disabled={isSearchInputExpanding}
+        disabled={isSearchInputExpanded}
         onClick={handleFocus}
         className='grid size-8 place-items-center'
       >
@@ -40,25 +36,25 @@ const SearchInput = () => {
         className={cn(
           'flex h-8 overflow-hidden',
           { 'w-0': !isSearchInputFocused },
-          { 'w-52  transition-all duration-300': isSearchInputFocused }
+          { 'w-52 transition-all duration-300': isSearchInputFocused }
         )}
       >
         <input
           id='search-input'
           ref={searchInputRef}
-          disabled={isSearchInputExpanding}
+          disabled={isSearchInputExpanded}
           type='text'
-          defaultValue={searchParams.get(q)?.toString()}
+          value={query}
           onChange={e => handleSearch(e.target.value)}
-          placeholder='Movies, TV shows, genres'
+          placeholder='Search'
           className={cn('w-full bg-black text-sm')}
         />
 
         <button
-          disabled={isSearchInputExpanding}
+          disabled={isSearchInputExpanded}
           onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
-            hidden: (searchParams.get(q)?.length ?? 0) < 1,
+            hidden: query.length < 1,
           })}
         >
           <X className='size-4' />
