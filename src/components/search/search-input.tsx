@@ -1,16 +1,12 @@
-import { useSearchParams } from 'next/navigation';
 import { useSearchStore } from '@/providers/search/search-provider';
 import { X } from 'lucide-react';
 
-import { q } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { SearchIcon } from '@/components/icons';
 
 const SearchInput = () => {
-  const searchParams = useSearchParams();
-
   const {
-    state: { isSearchInputExpanded, isSearchInputFocused },
+    state: { query, isSearchInputExpanded, isSearchInputFocused },
     actions: { handleFocus, handleSearch, handleClear },
     refs: { searchInputRef, searchContainerRef },
   } = useSearchStore();
@@ -48,9 +44,9 @@ const SearchInput = () => {
           ref={searchInputRef}
           disabled={isSearchInputExpanded}
           type='text'
-          defaultValue={searchParams.get(q)?.toString()}
+          value={query}
           onChange={e => handleSearch(e.target.value)}
-          placeholder='Movies, TV shows, genres'
+          placeholder='Search'
           className={cn('w-full bg-black text-sm')}
         />
 
@@ -58,7 +54,7 @@ const SearchInput = () => {
           disabled={isSearchInputExpanded}
           onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
-            hidden: (searchParams.get(q)?.length ?? 0) < 1,
+            hidden: query.length < 1,
           })}
         >
           <X className='size-4' />

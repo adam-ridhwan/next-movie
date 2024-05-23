@@ -9,11 +9,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Home, Search } from '@/routes';
 import { useBoolean, useOnClickOutside } from 'usehooks-ts';
 
-import { q } from '@/lib/constants';
 import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type SearchContextProps = {
@@ -21,6 +20,7 @@ type SearchContextProps = {
     isSearchInputExpanded: boolean;
     isSearchInputFocused: boolean;
     lastActiveRoute: string;
+    query: string;
   };
   actions: {
     handleFocus: () => void;
@@ -41,9 +41,13 @@ const SearchContext = createContext<SearchContextProps>(null);
 export const SearchProvider = ({ children }: SearchProviderProps) => {
   const { replace } = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [lastActiveRoute, setLastActiveRoute] = useState(Home());
+
+  const [query, setQuery] = useState('');
+
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   const {
     value: isSearchInputExpanded,
@@ -57,35 +61,33 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     setFalse: blurSearchInput,
   } = useBoolean(false);
 
-  const searchContainerRef = useRef<HTMLDivElement | null>(null);
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-
   useEffectOnce(() => {
-    if (searchParams.get(q)) focusSearchInput();
+    if (!query && pathname === Search()) replace(Home());
   });
 
   useEffect(() => {
-    if (pathname === Search()) return;
-    if (isSearchInputFocused && searchInputRef.current)
+    if (isSearchInputFocused && searchInputRef.current) {
       searchInputRef.current.focus();
+    }
+    if (pathname === Search()) return;
     setLastActiveRoute(pathname);
   }, [isSearchInputFocused, pathname]);
 
   useOnClickOutside(searchContainerRef, () => {
-    if (searchParams.get(q)) return;
+    if (query) return;
     blurSearchInput();
     collapseSearchInput();
   });
 
   const handleFocusSearchInput = () => {
-    if (!searchInputRef.current) return;
-    searchInputRef.current.focus();
+    if (query) return;
     focusSearchInput();
   };
+
   const handleBlurSearchInput = () => {
     if (!searchInputRef.current) return;
     searchInputRef.current.blur();
-    searchInputRef.current.value = '';
+    setQuery('');
     blurSearchInput();
   };
 
@@ -96,23 +98,21 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     collapseSearchInput();
   };
 
-  const handleSearch = (query: string) => {
-    if (query.length === 0) return replace(lastActiveRoute);
-
-    const params = new URLSearchParams(searchParams);
-    if (query) params.set(q, query);
-    else params.delete(q);
-    replace(Search(undefined, { q: query }));
+  const handleSearch = (inputQuery: string) => {
+    setQuery(inputQuery);
+    if (inputQuery.length === 0) return replace(lastActiveRoute);
+    replace(Search());
   };
 
   const handleClear = () => {
-    if (searchInputRef.current) searchInputRef.current.value = '';
+    setQuery('');
     replace(lastActiveRoute);
   };
 
   const handleNavigate = () => {
-    handleClear();
+    setQuery('');
     blurSearchInput();
+    replace(lastActiveRoute);
   };
 
   return (
@@ -122,6 +122,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
           isSearchInputExpanded,
           isSearchInputFocused,
           lastActiveRoute,
+          query,
         },
         actions: {
           handleFocus,
