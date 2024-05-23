@@ -40,7 +40,7 @@ const SearchInput = () => {
         className={cn(
           'flex h-8 overflow-hidden',
           { 'w-0': !isSearchInputFocused },
-          { 'w-52  transition-all duration-300': isSearchInputFocused }
+          { 'w-52 transition-all duration-300': isSearchInputFocused }
         )}
       >
         <input
