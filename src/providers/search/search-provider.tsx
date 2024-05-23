@@ -18,7 +18,7 @@ import { useEffectOnce } from '@/hooks/use-effect-once';
 
 type SearchContextProps = {
   state: {
-    isSearchInputExpanding: boolean;
+    isSearchInputExpanded: boolean;
     isSearchInputFocused: boolean;
     lastActiveRoute: string;
   };
@@ -46,7 +46,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
   const [lastActiveRoute, setLastActiveRoute] = useState(Home());
 
   const {
-    value: isSearchInputExpanding,
+    value: isSearchInputExpanded,
     setTrue: expandSearchInput,
     setFalse: collapseSearchInput,
   } = useBoolean(false);
@@ -119,7 +119,7 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
     <SearchContext.Provider
       value={{
         state: {
-          isSearchInputExpanding,
+          isSearchInputExpanded,
           isSearchInputFocused,
           lastActiveRoute,
         },
@@ -142,7 +142,8 @@ export const SearchProvider = ({ children }: SearchProviderProps) => {
 
 export const useSearchStore = () => {
   const context = useContext(SearchContext);
-  if (!context)
+  if (!context) {
     throw new Error('useSearchStore must be used within a SearchProvider');
+  }
   return context;
 };

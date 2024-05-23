@@ -10,7 +10,7 @@ const SearchInput = () => {
   const searchParams = useSearchParams();
 
   const {
-    state: { isSearchInputExpanding, isSearchInputFocused },
+    state: { isSearchInputExpanded, isSearchInputFocused },
     actions: { handleFocus, handleSearch, handleClear },
     refs: { searchInputRef, searchContainerRef },
   } = useSearchStore();
@@ -24,7 +24,7 @@ const SearchInput = () => {
     >
       <button
         type='button'
-        disabled={isSearchInputExpanding}
+        disabled={isSearchInputExpanded}
         onClick={handleFocus}
         className='grid size-8 place-items-center'
       >
@@ -46,7 +46,7 @@ const SearchInput = () => {
         <input
           id='search-input'
           ref={searchInputRef}
-          disabled={isSearchInputExpanding}
+          disabled={isSearchInputExpanded}
           type='text'
           defaultValue={searchParams.get(q)?.toString()}
           onChange={e => handleSearch(e.target.value)}
@@ -55,7 +55,7 @@ const SearchInput = () => {
         />
 
         <button
-          disabled={isSearchInputExpanding}
+          disabled={isSearchInputExpanded}
           onClick={handleClear}
           className={cn('flex aspect-square items-center justify-center', {
             hidden: (searchParams.get(q)?.length ?? 0) < 1,
