@@ -22,6 +22,7 @@ export const SpotlightThumbnail = ({
       slug={[mediaType, tile.id.toString()]}
       scroll={false}
       tabIndex={isVisible ? 0 : -1}
+      prefetch={true}
     >
       <div className='group relative flex aspect-poster flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow max-sm:aspect-poster'>
         <div className='absolute z-10 h-full w-full bg-black/0 transition-colors duration-300 hover:bg-black/30' />

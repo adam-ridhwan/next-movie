@@ -16,6 +16,7 @@ export const TvThumbnail = ({ tile, isVisible }: TvThumbnailProps) => (
     slug={['tv', tile.id.toString()]}
     scroll={false}
     tabIndex={isVisible ? 0 : -1}
+    prefetch={true}
   >
     <ThumbnailWrapper>
       {tile.backdrop_path || tile.poster_path ? (

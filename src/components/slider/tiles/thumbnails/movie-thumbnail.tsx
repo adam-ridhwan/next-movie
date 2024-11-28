@@ -16,6 +16,7 @@ export const MovieThumbnail = ({ tile, isVisible }: MovieThumbnailProps) => (
     slug={['movie', tile.id.toString()]}
     scroll={false}
     tabIndex={isVisible ? 0 : -1}
+    prefetch={true}
   >
     <ThumbnailWrapper>
       {tile.backdrop_path || tile.poster_path ? (

@@ -20,6 +20,7 @@ export const BonusTrailerThumbnail = ({
     target='_blank'
     rel='noreferrer'
     tabIndex={isVisible ? 0 : -1}
+    prefetch={true}
   >
     <div className='group relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl bg-muted/50 shadow-tileShadow'>
       <div className='absolute z-10 h-full w-full bg-black/0 transition-colors duration-300 hover:bg-black/30' />
