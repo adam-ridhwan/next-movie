@@ -12,7 +12,6 @@ import {
   MovieGenreId,
   NAV_ROUTES,
   NavRoute,
-  TODO,
   TV_GENRES,
   TvGenreId,
 } from '@/types/global-types';

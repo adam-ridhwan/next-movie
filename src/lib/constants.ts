@@ -12,5 +12,6 @@ export const MEDIA_QUERY = {
   LG: 1300,
 } as const;
 
+
 export type SlideDirection = 'left' | 'right';
 export type ResizeDirection = 'maximizing' | 'minimizing';
